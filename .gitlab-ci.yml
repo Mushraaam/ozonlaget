@@ -16,11 +16,11 @@ variables:
 
 include:
   - template: Security/Secret-Detection.gitlab-ci.yml
-  - template: Code-Quality.gitlab-ci.yml
+#  - template: Code-Quality.gitlab-ci.yml
 
-code_quality:
-  artifacts:
-    paths: [gl-code-quality-report.json]
+#code_quality:
+#  artifacts:
+#    paths: [gl-code-quality-report.json]
     
 workflow:
   rules:
