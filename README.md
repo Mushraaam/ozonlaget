@@ -39,7 +39,14 @@ You can run the project with Maven using `mvn exec:java`. Change the main class 
 		<main.class>inf112.skeleton.app.Main</main.class>
 ```
 
-Running the program should open a window with the text “Hello, world!” and an alligator in the lower left corner.  Clicking inside the window should play a *blipp* sound. Exit by pressing *Escape* or closing the window.
+Running the program should open a window with the text “Hello, world!” and an alligator in the lower left corner.  Clicking inside the window should play a *blip* sound. Exit by pressing *Escape* or closing the window.
+
+You may have to compile first, with `mvn compile` – or in a single step, `mvn compile exec:java`.
+
+## Testing
+Run unit tests with `mvn test` – unit test files should have `Test` in the file name, e.g., `ExampleTest.java`. This will also generate a [JaCoCo](https://www.jacoco.org/jacoco) code coverage report, which you can find in [target/site/jacoco/index.html](target/site/jacoco/index.html).
+
+Use `mvn verify` to run integration tests, if you have any. This will do everything up to and including `mvn package`, and then run all the tests with `IT` in the name, e.g., `ExampleIT.java`.
 
 ## Jar Files
 
@@ -50,13 +57,16 @@ If you run `mvn package` you get everything bundled up into a `.jar` file + a �
 
 Run Jar files with, for example, `java -jar target/NAME-VERSION-fat.jar`.
 
+
+If you have test failures, and *really* need to build a jar anyway, you can skip testing with `mvn -Dmaven.test.skip=true package`.
+
 ## Git Setup
 If you look at *Settings → Repository* in GitLab, you can protect branches – for example, forbid pushing to the `main` branch so everyone have to use merge requests.
 
 
 # Credits
 
-## Template example files
+### Template example files
 * `src/main/resources/obligator.png` – Ingrid Næss Johansen
 * `src/main/resources/blipp.ogg`– Dr. Richard Boulanger et al (CC-BY-3.0)
 

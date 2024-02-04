@@ -6,7 +6,12 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class AppTest {
+/**
+ * Unit tests (example).
+ * 
+ * (Run using `mvn test`)
+ */
+public class ExampleTest {
 	/**
 	 * Static method run before everything else
 	 */
