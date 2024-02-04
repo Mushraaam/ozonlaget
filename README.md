@@ -1,13 +1,8 @@
 # INF112 libGDX + Maven template 
 Simple skeleton with [libGDX](https://libgdx.com/). 
 
-# ~~Known problems~~
+**Important:** Replace this README with info about *your* project!
 
-~~On Mac OS X:~~
-
-* ~~The application won't start without giving the JVM the `-XstartOnFirstThread` option. In Eclipse, you can set this up with *Run → Run Configurations...*, then choosing the *Arguments* tab and adding `-XstartOnFirstThread` to *VM argument*. [Check this screenshot.](https://git.app.uib.no/inf112/22v/lectures/-/raw/master/img/eclipse-vm-args.png)~~
-
-* ~~On Macs with the M1 processor, a newer version of libgdx is needed. The Maven [`pom.xml`](pom.xml) file has been set up to use version `1.10.1-SNAPSHOT` automatically.~~
 
 # Maven Setup
 This project comes with a working Maven `pom.xml` file. You should be able to import it into Eclipse using *File → Import → Maven → Existing Maven Projects* (or *Check out Maven Projects from SCM* to do Git cloning as well). You can also build the project from the command line with `mvn clean compile` and test it with `mvn clean test`.
@@ -38,11 +33,13 @@ Pay attention to these folders:
 
 	
 ## Running
-You can run the project from Eclipse, or with Maven using `mvn exec:java`. Change the main class by modifying the `main.class` setting in `pom.xml`:
+You can run the project with Maven using `mvn exec:java`. Change the main class by modifying the `main.class` setting in `pom.xml`:
 
 ```
 		<main.class>inf112.skeleton.app.Main</main.class>
 ```
+
+Running the program should open a window with the text “Hello, world!” and an alligator in the lower left corner.  Clicking inside the window should play a *blipp* sound. Exit by pressing *Escape* or closing the window.
 
 ## Jar Files
 
@@ -56,8 +53,12 @@ Run Jar files with, for example, `java -jar target/NAME-VERSION-fat.jar`.
 ## Git Setup
 If you look at *Settings → Repository* in GitLab, you can protect branches – for example, forbid pushing to the `main` branch so everyone have to use merge requests.
 
-## Eclipse Setup
 
-It's usually smart to change Eclipse's Maven settings so that it'll automatically download Javadocs and the source code for your dependencies:
+# Credits
 
-![Turn on Download Sources and Javadoc](https://git.app.uib.no/inf112/22v/lectures/-/raw/master/img/eclipse-maven.png)
+## Template example files
+* `src/main/resources/obligator.png` – Ingrid Næss Johansen
+* `src/main/resources/blipp.ogg`– Dr. Richard Boulanger et al (CC-BY-3.0)
+
+(You should probably delete these if you don't need them!)
+
