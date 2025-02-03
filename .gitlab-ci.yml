@@ -25,12 +25,14 @@ include:
 workflow:
   rules:
     # run a merge request pipeline if that makes sense
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    # run if we're committing to the default branch
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     # don't run a branch pipeline on commits if we'll run a merge request pipeline
-    - if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
       when: never
     # do run a branch pipeline for other commits
-    - if: '$CI_COMMIT_BRANCH'
+    - if: $CI_COMMIT_BRANCH
 
 #  rules:
 #      - changes:  
@@ -65,6 +67,9 @@ verify:
   artifacts:
     reports:
       junit: target/surefire-reports/TEST-*.xml
+      coverage_report:
+        coverage_format: jacoco
+        path: target/site/jacoco/jacoco.xml
     paths:
       - target/
   coverage: '/Total.*?([0-9]{1,3})%/'
