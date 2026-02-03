@@ -4,7 +4,7 @@
 	<!-- FIXME - set group id -->
 	<groupId>no.uib.ii.inf112</groupId>
 	<!-- FIXME - set artifact name -->
-	<artifactId>gdx-template-25v</artifactId>
+	<artifactId>gdx-template-26v</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<!-- FIXME - set app name -->
@@ -13,11 +13,11 @@
 	<url>http://www.example.com</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.release>17</maven.compiler.release>
+		<maven.compiler.release>25</maven.compiler.release>
 		<libgdx.version>1.13.1</libgdx.version>
 		<slf4j.version>2.0.16</slf4j.version>
 		<!-- FIXME - set to app's main class' -->
-		<main.class>inf112.skeleton.app.Main</main.class>
+		<main.class>inf112.skeleton.app.MvcMain</main.class>
 		<jvm.extra.args></jvm.extra.args>
 	</properties>
 	<dependencies>

@@ -1,24 +1,36 @@
 package inf112.skeleton.app;
 
+import org.lwjgl.system.Configuration;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Os;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.badlogic.gdx.graphics.Texture;
 
-public class HelloWorld implements ApplicationListener {
+public class HelloWorldMain implements ApplicationListener {
 	private SpriteBatch batch;
 	private BitmapFont font;
 	private Texture spriteImage;
-	private Sound bellSound;
-	private Rectangle spriteRect;
-	private Rectangle screenRect = new Rectangle();
-	private float dx = 1, dy = 1;
+
+	public static void main(String[] args) {
+		if (SharedLibraryLoader.os == Os.MacOsX) {
+			Configuration.GLFW_LIBRARY_NAME.set("glfw_async");
+		}
+		Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
+		cfg.setTitle("Hello World Example");
+		cfg.setWindowedMode(1280, 768);
+
+		new Lwjgl3Application(new HelloWorldMain(), cfg);
+	}
 
 	@Override
 	public void create() {
@@ -28,8 +40,6 @@ public class HelloWorld implements ApplicationListener {
 		font = new BitmapFont();
 		font.setColor(Color.RED);
 		spriteImage = new Texture(Gdx.files.internal("obligator.png"));
-		spriteRect = new Rectangle(1, 1, spriteImage.getWidth() / 2, spriteImage.getHeight() / 2);
-		bellSound = Gdx.audio.newSound(Gdx.files.internal("blipp.ogg"));
 		Gdx.graphics.setForegroundFPS(60);
 	}
 
@@ -47,7 +57,6 @@ public class HelloWorld implements ApplicationListener {
 		batch.dispose();
 		font.dispose();
 		spriteImage.dispose();
-		bellSound.dispose();
 	}
 
 	@Override
@@ -62,28 +71,12 @@ public class HelloWorld implements ApplicationListener {
 		// Draw calls should be wrapped in batch.begin() ... batch.end()
 		batch.begin();
 		font.draw(batch, "Hello, World!", 200, 200);
-		batch.draw(spriteImage, spriteRect.x, spriteRect.y, spriteRect.width, spriteRect.height);
+		batch.draw(spriteImage, 300, 300, 100, 100);
 		batch.end();
-
-		// Move the alligator a bit. You normally shouldn't mix rendering with logic in
-		// this way. (Also, movement should probably be based on *time*, not on how
-		// often we update the graphics!)
-		Rectangle.tmp.set(spriteRect);
-		Rectangle.tmp.x += dx;
-		Rectangle.tmp2.set(spriteRect);
-		Rectangle.tmp2.y += dy;
-		if (screenRect.contains(Rectangle.tmp))
-			spriteRect.x += dx;
-		else
-			dx = -dx;
-		if (screenRect.contains(Rectangle.tmp2))
-			spriteRect.y += dy;
-		else
-			dy = -dy;
 
 		// Don't handle input this way – use event handlers!
 		if (Gdx.input.justTouched()) { // check for mouse click
-			bellSound.play();
+			System.out.println("Click!");
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) { // check for key press
 			Gdx.app.exit();
@@ -94,9 +87,6 @@ public class HelloWorld implements ApplicationListener {
 	public void resize(int width, int height) {
 		// Called whenever the window is resized (including with its original site at
 		// startup)
-
-		screenRect.width = width;
-		screenRect.height = height;
 	}
 
 	@Override
