@@ -20,7 +20,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 
-
 import com.badlogic.gdx.graphics.Texture;
 
 public class AppView implements Painter {
@@ -119,6 +118,7 @@ public class AppView implements Painter {
 		// TODO: play different sounds
 		blippSound.play();
 	}
+
 	/**
 	 * Example:
 	 * 
@@ -169,8 +169,9 @@ public class AppView implements Painter {
 		// startup)
 
 		viewport.update(width, height, true);
-		System.out.printf("%dx%d, %fx%f%n", viewport.getScreenWidth(), viewport.getScreenHeight(),
-				viewport.getWorldWidth(), viewport.getWorldHeight());
+		// System.out.printf("%dx%d, %fx%f%n", viewport.getScreenWidth(),
+		// viewport.getScreenHeight(),
+		// viewport.getWorldWidth(), viewport.getWorldHeight());
 	}
 
 	// If we use ExtendViewport, the world size might change when the window is
