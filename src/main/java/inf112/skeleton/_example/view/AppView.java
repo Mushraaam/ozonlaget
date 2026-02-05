@@ -1,6 +1,5 @@
 package inf112.skeleton._example.view;
 
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.*;
 
 import com.badlogic.gdx.graphics.Texture;
 
@@ -122,12 +118,12 @@ public class AppView implements Painter {
 	/**
 	 * Example:
 	 * 
-	 * <pre>
+	 * {@snippet :
 	 * appView.render(painter -> {
 	 * 	painter.draw(x, y, w, h, tex1);
 	 * 	painter.draw(x, y, w, h, tex2);
 	 * });
-	 * </pre>
+	 * }
 	 * 
 	 * TODO: probably easier to just accept a list of objects to draw.
 	 * 
