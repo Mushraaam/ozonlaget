@@ -154,6 +154,7 @@
 								<excludes>
 									<exclude>META-INF/**/*.sha1</exclude>
 									<exclude>META-INF/**/module-info.class</exclude>
+									<exclude>META-INF/**/*MultiReleaseMemCopy.class</exclude>
 									<exclude>META-INF/MANIFEST.MF</exclude>
 								</excludes>
 								</filter>
