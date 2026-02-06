@@ -3,6 +3,12 @@ Simple skeleton with [libGDX](https://libgdx.com/).
 
 **Important:** Replace this README with info about *your* project!
 
+# Java Requirements
+
+This project requires [JDK 25](https://jdk.java.net/25/) or later to build and run. Java 25 has some nice new features, including support for Markdown in Javadoc comments (use `///` instead of `/**`), better support for pattern matching, simplified `main()` and console I/O (use `IO.*` instead of `System.in/out.*`).
+
+If you prefer, you can use an earlier version instead (Java 21 and Java 17 are still officially supported) – to do this, simply edit `pom.xml` and change `<maven.compiler.release>25</maven.compiler.release>` to whatever version you prefer. Also, you need to edit `.mvn/jvm.config` and delete the line `--sun-misc-unsafe-memory-access=allow` (which suppresses an annoying warning you'd get from Java 25).
+
 
 # Maven Setup
 This project comes with a working Maven `pom.xml` file. You should be able to import it into Eclipse using *File → Import → Maven → Existing Maven Projects* (or *Check out Maven Projects from SCM* to do Git cloning as well). You can also build the project from the command line with `mvn clean compile` and test it with `mvn clean test`.
@@ -31,7 +37,7 @@ Pay attention to these folders:
 	<url>http://www.example.com</url>
 ```
 
-## Structure
+## Code Structure
 * `inf112.skeleton` – code you can use as a starting point (rename to something sensible!)
 	* `inf112.skeleton.app` – classes for launching the program
 	* `inf112.skeleton.model` – empty (you might put your model classes here)
@@ -69,6 +75,8 @@ If you have test failures, and *really* need to build a jar anyway, you can skip
 
 ## Git Setup
 If you look at *Settings → Repository* in GitLab, you can protect branches – for example, forbid pushing to the `main` branch so everyone have to use merge requests.
+
+## Good luck!
 
 *↑ TODO: delete above text and make your own README*
 
