@@ -16,8 +16,7 @@ public class Main {
     
 
     public static void main(String[] args) {
-        IPlayer player = new Player(new Rectangle2D.Double(950, 250, 100, 100));
-        IMap map = new Map(player);
+        IMap map = new Map();
         new Controller(map);
         GameDrawer view = new GameDrawer(map);
         JFrame frame = new JFrame("yeahboi");
