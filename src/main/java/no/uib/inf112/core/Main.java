@@ -16,7 +16,7 @@ public class Main {
     
 
     public static void main(String[] args) {
-        IPlayer player = new Player(new Rectangle2D.Double(300, 300, 400, 400));
+        IPlayer player = new Player(new Rectangle2D.Double(950, 250, 100, 100));
         IMap map = new Map(player);
         new Controller(map);
         GameDrawer view = new GameDrawer(map);

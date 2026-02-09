@@ -1,5 +1,7 @@
 package no.uib.inf112.map;
 
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 
 import no.uib.inf112.enums.GameState;
@@ -11,10 +13,14 @@ public class Map implements IMap {
     
     private IPlayer player;
     private GameState gameState;
+    private Rectangle2D.Double bounds;
 
     public Map(IPlayer player){
         this.player = player;
         this.gameState = GameState.ACTIVE_GAME;
+
+        this.bounds = new Rectangle2D.Double(-1000, -1000, 3000, 3000);
+
     }
 
     
@@ -35,6 +41,13 @@ public class Map implements IMap {
     @Override
     public GameState getGameState() {
         return this.gameState;
+    }
+
+
+
+    @Override
+    public Double getBounds() {
+        return this.bounds;
     }
 }
 
