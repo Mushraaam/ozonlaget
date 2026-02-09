@@ -20,7 +20,7 @@ public class Map implements IMap {
 
         //senere: Skaffe modul som leser inn og returnerer disse verdiene fra fil
         this.player = new Player(new Rectangle2D.Double(950, 250, 100, 100));
-        this.bounds = new Rectangle2D.Double(-1000, -1000, 3000, 3000);
+        this.bounds = new Rectangle2D.Double(-700, -700, 2500, 2500);
 
 
         // Bør senere starte i main menu

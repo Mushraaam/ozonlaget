@@ -39,17 +39,14 @@ public class GameScreen implements IDrawer {
     private void centerCamera(Graphics2D graphic) {
 
         Rectangle2D.Double bounds = this.player.getBounds();
-
         int screenX = graphic.getClipBounds().width / 2;
         int screenY = graphic.getClipBounds().height / 2;
-
         graphic.translate(
                 screenX - (bounds.getX() + bounds.getWidth() / 2),
                 screenY - (bounds.getY() + bounds.getHeight() / 2));
     }
 
     private void drawBackground(Graphics2D graphic) {
-
         Rectangle2D.Double bounds = this.map.getBounds();
         drawImage(graphic, this.tempBackground, bounds);
     }
@@ -57,15 +54,6 @@ public class GameScreen implements IDrawer {
     private void drawPlayer(Graphics2D graphic) {
         Rectangle2D.Double bounds = this.player.getBounds();
         drawImage(graphic, this.tempDuck, bounds);
-    }
-
-    private void drawImage(Graphics2D graphic, BufferedImage image, Rectangle2D.Double bounds) {
-        graphic.drawImage(image,
-                (int) bounds.getX(),
-                (int) bounds.getY(),
-                (int) bounds.getWidth(),
-                (int) bounds.getHeight(),
-                null);
     }
 
 }

@@ -18,6 +18,8 @@ public class Main {
     public static void main(String[] args) {
         IMap map = new Map();
         new Controller(map);
+
+        //TODO: Gjøre fullscreen
         GameDrawer view = new GameDrawer(map);
         JFrame frame = new JFrame("yeahboi");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

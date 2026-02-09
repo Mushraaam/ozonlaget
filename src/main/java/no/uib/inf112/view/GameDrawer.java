@@ -22,12 +22,11 @@ public class GameDrawer extends JPanel {
     public GameDrawer(IMap map) {
         this.map = map;
 
-        //Screens
+        // Screens
         this.gameScreen = new GameScreen(this.map);
         this.mainMenu = new MainMenu();
 
-
-        //Options
+        // Options
         this.setPreferredSize(new Dimension(1200, 800));
     }
 
@@ -38,8 +37,12 @@ public class GameDrawer extends JPanel {
         GameState gameState = map.getGameState();
 
         switch (gameState) {
-            case ACTIVE_GAME -> {this.gameScreen.draw(g2);}
-            case MAIN_MENU -> {this.mainMenu.draw(g2);}
+            case ACTIVE_GAME -> {
+                this.gameScreen.draw(g2);
+            }
+            case MAIN_MENU -> {
+                this.mainMenu.draw(g2);
+            }
             default -> {
                 throw new IllegalArgumentException(String.format("Unknown GameState: %s", gameState));
             }
