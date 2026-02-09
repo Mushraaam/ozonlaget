@@ -1,5 +1,8 @@
 package no.uib.inf112.interfaces;
 
-public class IDrawer {
+import java.awt.Graphics2D;
+
+public interface IDrawer {
     
+    public void draw(Graphics2D graphic);
 }
