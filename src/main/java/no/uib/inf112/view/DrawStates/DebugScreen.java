@@ -24,11 +24,12 @@ public class DebugScreen implements IDrawer {
 
         for (ArrayList<ICell> row : grid) {
             for (ICell cell : row) {
-
-                if (cell.isBlocked()) {
-                    graphic.fill(cell.getBounds());
-                } else {
-                    graphic.draw(cell.getBounds());
+                if (isVisible(graphic, cell.getBounds())) {
+                    if (cell.isBlocked()) {
+                        graphic.fill(cell.getBounds());
+                    } else {
+                        graphic.draw(cell.getBounds());
+                    }
                 }
             }
         }

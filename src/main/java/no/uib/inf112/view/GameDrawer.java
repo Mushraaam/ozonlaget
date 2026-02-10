@@ -41,7 +41,6 @@ public class GameDrawer extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         GameState gameState = map.getGameState();
-        boolean debugMode = true; //Bør hentes fra MAP senere
 
         switch (gameState) {
             case ACTIVE_GAME -> {
@@ -55,7 +54,7 @@ public class GameDrawer extends JPanel {
             }
         }
 
-        if (debugMode){
+        if (map.debugMode()){
             this.debugScreen.draw(g2);
         }
 

@@ -41,4 +41,18 @@ public interface IMap {
      */
     public IGrid getGrid();
 
+    /**
+     * @return true if debug mode active
+     */
+    public boolean debugMode();
+
+    /**
+     * Turns on debug mode
+     */
+    public void debugOn();
+
+    /**
+     * Turns off debug mode
+     */
+    public void debugOff();
 }
