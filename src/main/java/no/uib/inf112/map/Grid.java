@@ -17,8 +17,8 @@ public class Grid implements IGrid {
     private IMap map;
 
     // Represent pixel width
-    private final static int CELLWIDTH = 5;
-    private final static int CELLHEIGHT = 5;
+    private final static int CELLWIDTH = 40;
+    private final static int CELLHEIGHT = 40;
     
     private int colCount;
     private int rowCount;
