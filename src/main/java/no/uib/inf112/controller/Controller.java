@@ -46,6 +46,9 @@ public class Controller implements java.awt.event.KeyListener {
 
         @Override
     public void keyTyped(KeyEvent e) {
+
+
+
         //not implemented
     }
 
@@ -64,6 +67,7 @@ public class Controller implements java.awt.event.KeyListener {
 
 
     //////////////// HELPER METHODS - THESE SHOULD BE SHORT AND SELF EXPLANATORY ///////////////
+    /// Maybe move the helpers to their classes, at a later occasion. e.g map.flipDebug() ////
     
     
     private void flipDebug() {

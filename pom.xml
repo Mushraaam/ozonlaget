@@ -15,12 +15,12 @@
 	<url>http://www.example.com</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.release>25</maven.compiler.release>
+		<maven.compiler.release>21</maven.compiler.release>
 		<libgdx.version>1.14.0</libgdx.version>
 		<slf4j.version>2.0.17</slf4j.version>
 		<junit.version>6.0.2</junit.version>
 		<!-- FIXME - set to app's main class' -->
-		<main.class>inf112.skeleton.app.MvcMain</main.class>
+		<main.class>no.uib.inf112.core.Main</main.class>
 		<jvm.extra.args>--enable-native-access=ALL-UNNAMED</jvm.extra.args>
 	</properties>
 	<dependencies>
