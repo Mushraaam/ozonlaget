@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-public abstract interface IDrawer {
+public interface IDrawer {
     
     
     default void drawImage(Graphics2D graphic, BufferedImage image, Rectangle2D.Double bounds) {
@@ -16,8 +16,6 @@ public abstract interface IDrawer {
                 null);
     }
 
-
     public void draw(Graphics2D graphic);
-
 
 }

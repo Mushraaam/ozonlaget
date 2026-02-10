@@ -1,5 +1,3 @@
-
-
 FØRSTE UKE:
 Find sprites (foreløpig dog and player) -> no strekmann -> Johs
 Implementere WASD logikk -> William (4 retninger, to knapper samtidig )
@@ -18,3 +16,5 @@ Implementere Map, GridFromMapConverter og Grid -> Rein
 Startmeny -> Sander (tastetrykk -> museklikk?)
 Alexander -> se pen ut
 
+ANDRE UKE:
+Gjøre grid itererbar, implementere neighbours, rask indeksering etc. - Rein

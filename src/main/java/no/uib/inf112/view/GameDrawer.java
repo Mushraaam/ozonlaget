@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.view.DrawStates.DebugScreen;
 import no.uib.inf112.view.DrawStates.GameScreen;
 import no.uib.inf112.view.DrawStates.MainMenu;
 
@@ -18,6 +19,7 @@ public class GameDrawer extends JPanel {
     private IMap map;
     private IDrawer gameScreen;
     private IDrawer mainMenu;
+    private IDrawer debugScreen;
 
     public GameDrawer(IMap map) {
         this.map = map;
@@ -25,6 +27,8 @@ public class GameDrawer extends JPanel {
         // Screens
         this.gameScreen = new GameScreen(this.map);
         this.mainMenu = new MainMenu();
+        this.debugScreen = new DebugScreen(this.map);
+
 
         // Options
         this.setPreferredSize(new Dimension(1200, 800));
@@ -35,6 +39,7 @@ public class GameDrawer extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         GameState gameState = map.getGameState();
+        boolean debugMode = true; //Bør hentes fra MAP senere
 
         switch (gameState) {
             case ACTIVE_GAME -> {
@@ -46,6 +51,10 @@ public class GameDrawer extends JPanel {
             default -> {
                 throw new IllegalArgumentException(String.format("Unknown GameState: %s", gameState));
             }
+        }
+
+        if (debugMode){
+            this.debugScreen.draw(g2);
         }
 
     }
