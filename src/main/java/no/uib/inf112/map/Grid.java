@@ -19,6 +19,9 @@ public class Grid implements IGrid {
     // Represent pixel width
     private final static int CELLWIDTH = 5;
     private final static int CELLHEIGHT = 5;
+    
+    private int colCount;
+    private int rowCount;
 
     public Grid(IMap map){
         this.map = map;
@@ -28,25 +31,26 @@ public class Grid implements IGrid {
             throw new IllegalArgumentException("Bounds for Map must start with x, y = 0");
         }
 
+        double height = this.bounds.getHeight();
+        double width = this.bounds.getWidth();
+
+        //Not sure if i shuld bother with ceil/floor
+        this.colCount = (int) Math.floor(width / CELLWIDTH);
+        this.rowCount = (int) Math.floor(height / CELLHEIGHT);
+        
+
         this.cellGrid = makeGrid();
         
     }
 
     public ArrayList<ArrayList<ICell>> makeGrid() {
-        ArrayList<ArrayList<ICell>> grid = new ArrayList<>();
 
-        double height = this.bounds.getHeight();
-        double width = this.bounds.getWidth();
+        ArrayList<ArrayList<ICell>> grid = new ArrayList<>(this.rowCount);
 
-        //Not sure if i shuld bother with ceil/floor
-        int colCount = (int) Math.floor(width / CELLWIDTH);
-        int rowCount = (int) Math.floor(height / CELLHEIGHT);
+        for (int row = 0; row < this.rowCount; row++){
+            ArrayList<ICell> cellRow = new ArrayList<>(this.colCount);
 
-
-        for (int row = 0; row < rowCount; row++){
-            ArrayList<ICell> cellRow = new ArrayList<>();
-
-            for (int col = 0; col < colCount; col++){
+            for (int col = 0; col < this.colCount; col++){
 
                 Rectangle2D.Double cellBounds = new Rectangle2D.Double(
                     col * CELLWIDTH,

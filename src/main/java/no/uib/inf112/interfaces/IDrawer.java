@@ -16,6 +16,11 @@ public interface IDrawer {
                 null);
     }
 
+    //Skal implementeres senere for optimalisering
+    default boolean isVisible(){
+        return true;
+    }
+
     public void draw(Graphics2D graphic);
 
 }

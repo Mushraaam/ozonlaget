@@ -2,6 +2,7 @@ package no.uib.inf112.view;
 
 import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -32,6 +33,7 @@ public class GameDrawer extends JPanel {
 
         // Options
         this.setPreferredSize(new Dimension(1200, 800));
+        this.setBackground(Color.DARK_GRAY);
     }
 
     @Override
