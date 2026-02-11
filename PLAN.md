@@ -14,7 +14,7 @@ Implementere WASD logikk -> William (4 retninger, to knapper samtidig )
 
 Implementere Map, GridFromMapConverter og Grid -> Rein
 Startmeny -> Sander (tastetrykk -> museklikk?)
-Alexander -> Implementere A*
+Alexander -> Implementere A* (og test fiende)
 
 ANDRE UKE:
 Gjøre grid itererbar, implementere neighbours, rask indeksering etc. - Rein

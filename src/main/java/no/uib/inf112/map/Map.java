@@ -1,18 +1,13 @@
 package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 
+import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
-import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IMovingDrawableObject;
-import no.uib.inf112.interfaces.IPlayer;
-import no.uib.inf112.interfaces.IGrid;
-import no.uib.inf112.interfaces.ILevel;
-import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.interfaces.*;
 import no.uib.inf112.map.levels.Level1;
-import no.uib.inf112.player.Player;
+import no.uib.inf112.map.npcs.Thug;
 
 public class Map implements IMap {
 
@@ -24,13 +19,15 @@ public class Map implements IMap {
     private IGrid grid;
     private boolean debug;
 
+    ArrayList<IEnemy> enemies;
+    private final Spawner spawner;
     public Map() {
 
-        
+
         this.level = new Level1();
         this.player = this.level.getPlayer();
         this.bounds = this.level.getBounds();
-
+        this.enemies = new ArrayList<IEnemy>();
         // Start with debug during development
         this.debug = true;
 
@@ -41,6 +38,7 @@ public class Map implements IMap {
         this.gameState = GameState.ACTIVE_GAME;
 
         this.grid = new Grid(this);
+        this.spawner = new Spawner(this); //Spawner comes after grid, or else uh-oh.
 
     }
 
@@ -50,27 +48,17 @@ public class Map implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public Spawner getSpawner(){
+        return this.spawner;
+    }
 
 
 
     ////////////////// GETTERS AND SETTERS ////////////////////
 
+    public ArrayList<IEnemy> getEnemies(){
+        return enemies;
+    }
     @Override
     public IPlayer getPlayer() {
         return this.player;
@@ -109,5 +97,10 @@ public class Map implements IMap {
     @Override
     public void debugOff() {
         this.debug = false;
+    }
+
+    @Override
+    public void addEnemy(IEnemy thug) {
+        enemies.add(thug);
     }
 }

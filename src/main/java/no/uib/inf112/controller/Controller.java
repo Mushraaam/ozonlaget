@@ -5,6 +5,7 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.view.GameDrawer;
 
 import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
 
 public class Controller implements java.awt.event.KeyListener {
     private IMap map;
@@ -33,6 +34,14 @@ public class Controller implements java.awt.event.KeyListener {
             default -> {
             }
         }
+
+        switch (e.getKeyCode()){
+            case KeyEvent.VK_O -> {
+                map.getSpawner().spawnThug();
+        }}
+
+
+
         this.view.repaint();
     }
 
