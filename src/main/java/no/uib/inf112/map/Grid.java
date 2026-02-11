@@ -2,6 +2,7 @@ package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.ICell;
@@ -82,9 +83,50 @@ public class Grid implements IGrid {
         }
     }
 
+    public ICell getCell(int row, int col){
+        return this.cellGrid.get(row).get(col);
+    }
+
+    public ArrayList<ICell> getNeighbours(ICell cell){
+
+        if (cell == null){
+            throw new NullPointerException("Cell cannot be null");
+        }
+
+        int row = cell.row();
+        int col = cell.col();
+
+        if (row < 0 || col < 0 || row >= this.rowCount || col >= this.colCount){
+            throw new IllegalArgumentException(String.format("Cell: Row %s, Col %s is out of bounds", row, col));
+        }
+
+        ArrayList<ICell> neighbours = new ArrayList<>();
+        if (row > 0){
+            ICell over = getCell(row - 1, colCount);
+            neighbours.add(over);
+        }
+        if (row < this.rowCount){
+            ICell under = getCell(row + 1, col);
+            neighbours.add(under);
+        }
+        if (col > 0){
+            ICell left = getCell(row, col - 1);
+            neighbours.add(left);
+        }
+        if (col < this.colCount){
+            ICell right = getCell(row, col + 1);
+            neighbours.add(right);
+        }
+        return neighbours;
+    }
+
     @Override
-    public ArrayList<ArrayList<ICell>> getGrid() {
-        return this.cellGrid;
+    public Iterator<ICell> iterator() {
+        ArrayList<ICell> flattenedList = new ArrayList<>(rowCount * colCount);
+        for (ArrayList<ICell> row : this.cellGrid){
+            flattenedList.addAll(row);
+        }
+        return flattenedList.iterator();
     }
 
     

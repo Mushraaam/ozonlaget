@@ -17,4 +17,6 @@ public class Player implements IControllablePlayer, IViewablePlayer{
         return this.pos;
     }
     
+
+
 }

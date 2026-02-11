@@ -80,7 +80,7 @@ public class Map implements IMap {
     }
 
     @Override
-    public Double getBounds() {
+    public Rectangle2D.Double getBounds() {
         return this.bounds;
     }
 
