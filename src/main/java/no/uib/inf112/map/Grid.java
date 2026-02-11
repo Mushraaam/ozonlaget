@@ -1,6 +1,5 @@
 package no.uib.inf112.map;
 
-import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -127,8 +126,8 @@ public class Grid implements IGrid {
         return flattenedList.iterator();
     }
 
+    @Override
     public double distance(ICell from, ICell to) {
-
         int dx = from.col() - to.col();
         int dy = from.row() - to.row();
         return Math.sqrt(dx * dx + dy * dy);

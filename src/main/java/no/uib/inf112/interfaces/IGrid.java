@@ -35,4 +35,5 @@ public interface IGrid extends Iterable<ICell>{
      * @return ICell that is closest to 
      */
     public ICell getCellFromPos(Rectangle2D.Double pos);
+
 }
