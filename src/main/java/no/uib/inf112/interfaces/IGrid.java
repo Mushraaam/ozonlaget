@@ -1,6 +1,5 @@
 package no.uib.inf112.interfaces;
 
-import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -35,5 +34,17 @@ public interface IGrid extends Iterable<ICell>{
      * @return ICell that is closest to 
      */
     public ICell getCellFromPos(Rectangle2D.Double pos);
+
+    /**
+     * @return width of each cell
+     * Used for testing
+     */
+    public int getCellWidth();
+
+    /**
+     * @return height of each cell
+     * Used for testing
+     */
+    public int getCellHeight();
 
 }

@@ -1,7 +1,6 @@
 package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 
 import no.uib.inf112.enums.GameState;
@@ -12,7 +11,6 @@ import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.ILevel;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.levels.Level1;
-import no.uib.inf112.player.Player;
 
 public class Map implements IMap {
 
@@ -26,7 +24,7 @@ public class Map implements IMap {
 
     public Map() {
 
-        
+
         this.level = new Level1();
         this.player = this.level.getPlayer();
         this.bounds = this.level.getBounds();

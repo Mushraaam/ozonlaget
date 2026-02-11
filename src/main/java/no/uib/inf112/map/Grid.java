@@ -99,7 +99,7 @@ public class Grid implements IGrid {
 
         ArrayList<ICell> neighbours = new ArrayList<>();
         if (row > 0) {
-            ICell over = getCell(row - 1, colCount);
+            ICell over = getCell(row - 1, col);
             neighbours.add(over);
         }
         if (row < this.rowCount) {
@@ -138,6 +138,30 @@ public class Grid implements IGrid {
         int col = (int) Math.floor(pos.getCenterX() / CELLWIDTH);
         int row = (int) Math.floor(pos.getCenterY() / CELLHEIGHT);
         return getCell(row, col);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    ///////////////// METHODS FOR TESTING //////////////////
+    /// 
+
+    @Override
+    public int getCellWidth() {
+        return CELLWIDTH;
+    }
+
+    @Override
+    public int getCellHeight() {
+        return CELLHEIGHT;
     }
 
 }

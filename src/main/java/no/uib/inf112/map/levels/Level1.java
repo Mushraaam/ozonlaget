@@ -1,7 +1,6 @@
 package no.uib.inf112.map.levels;
 
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 
 import no.uib.inf112.interfaces.ILevel;

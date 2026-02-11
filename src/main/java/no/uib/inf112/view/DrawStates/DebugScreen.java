@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IDrawer;
-import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 
 public class DebugScreen implements IDrawer {
