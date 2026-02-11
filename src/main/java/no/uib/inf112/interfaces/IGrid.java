@@ -1,5 +1,7 @@
 package no.uib.inf112.interfaces;
 
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public interface IGrid extends Iterable<ICell>{
@@ -26,4 +28,11 @@ public interface IGrid extends Iterable<ICell>{
      * @return Euclidean distance
      */
     public double distance(ICell from, ICell to);
+
+    /**
+     * Calculates current cell of a Rectangle object
+     * @param pos - Shape from java.awt.geom
+     * @return ICell that is closest to 
+     */
+    public ICell getCellFromPos(Rectangle2D.Double pos);
 }
