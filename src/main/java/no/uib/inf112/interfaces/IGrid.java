@@ -18,4 +18,12 @@ public interface IGrid extends Iterable<ICell>{
      * @throws IllegalArgumentException when out of bounds
      */
     public ArrayList<ICell> getNeighbours(ICell cell);
+
+    /**
+     * Calculates the Euclidean distance between two cells
+     * @param from
+     * @param to
+     * @return Euclidean distance
+     */
+    public double distance(ICell from, ICell to);
 }

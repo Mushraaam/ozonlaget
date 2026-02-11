@@ -129,6 +129,12 @@ public class Grid implements IGrid {
         return flattenedList.iterator();
     }
 
+    public double distance(ICell from, ICell to){
+
+        int dx = from.col() - to.col();
+        int dy = from.row() - to.row();
+        return Math.sqrt(dx*dx + dy*dy);
+    }
     
 
 }
