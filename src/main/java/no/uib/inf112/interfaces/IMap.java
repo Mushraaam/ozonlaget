@@ -3,7 +3,9 @@ package no.uib.inf112.interfaces;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
+import no.uib.inf112.map.npcs.Thug;
 
 public interface IMap {
     
@@ -55,4 +57,10 @@ public interface IMap {
      * Turns off debug mode
      */
     public void debugOff();
+
+    void addEnemy(IEnemy enemy);
+
+    Spawner getSpawner();
+
+    ArrayList<IEnemy> getEnemies();
 }

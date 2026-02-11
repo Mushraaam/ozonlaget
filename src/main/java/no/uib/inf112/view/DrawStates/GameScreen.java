@@ -3,8 +3,11 @@ package no.uib.inf112.view.DrawStates;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.interfaces.IDrawer;
+import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.utility.ImageReader;
@@ -33,6 +36,7 @@ public class GameScreen implements IDrawer {
         centerCamera(graphic);
         drawBackground(graphic);
         drawPlayer(graphic);
+        drawEnemies(graphic);
     }
 
     /* Sentrerer kamera på player, holder seg innenfor bounds */
@@ -66,6 +70,14 @@ public class GameScreen implements IDrawer {
     private void drawPlayer(Graphics2D graphic) {
         Rectangle2D.Double bounds = this.player.getBounds();
         drawImage(graphic, this.tempDuck, bounds);
+    }
+
+    private void drawEnemies(Graphics2D graphic){
+        ArrayList<IEnemy> enemies = this.map.getEnemies();
+        for(IEnemy enemy : enemies){
+            Rectangle2D.Double bounds = enemy.getBounds();
+            drawImage(graphic, enemy.getImg(), bounds );
+        }
     }
 
 }
