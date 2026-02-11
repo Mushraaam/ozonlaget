@@ -35,15 +35,27 @@ public class GameScreen implements IDrawer {
         drawPlayer(graphic);
     }
 
-    /* Sentrerer kamera på player */
+    /* Sentrerer kamera på player, holder seg innenfor bounds */
     private void centerCamera(Graphics2D graphic) {
 
-        Rectangle2D.Double bounds = this.player.getBounds();
-        int screenX = graphic.getClipBounds().width / 2;
-        int screenY = graphic.getClipBounds().height / 2;
-        graphic.translate(
-                screenX - (bounds.getX() + bounds.getWidth() / 2),
-                screenY - (bounds.getY() + bounds.getHeight() / 2));
+        Rectangle2D.Double playerBounds = this.player.getBounds();
+        Rectangle2D.Double mapBounds = this.map.getBounds();
+
+        double screenWidth = graphic.getClipBounds().getWidth();
+        double screenHeight = graphic.getClipBounds().getHeight();
+        double playerCenterX = playerBounds.getCenterX();
+        double playerCenterY = playerBounds.getCenterY();
+
+        double translatedX = screenWidth / 2 - playerCenterX;
+        double translatedY = screenHeight / 2 - playerCenterY;
+
+        double minTranslateX = screenWidth - mapBounds.getWidth();
+        double minTranslateY = screenHeight - mapBounds.getHeight();
+
+        translatedX = Math.min(0, Math.max(translatedX, minTranslateX));
+        translatedY = Math.min(0, Math.max(translatedY, minTranslateY));
+
+        graphic.translate(translatedX, translatedY);
     }
 
     private void drawBackground(Graphics2D graphic) {

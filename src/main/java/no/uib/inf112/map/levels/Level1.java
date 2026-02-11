@@ -1,17 +1,39 @@
 package no.uib.inf112.map.levels;
 
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 
 import no.uib.inf112.interfaces.ILevel;
+import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.player.Player;
 import no.uib.inf112.static_objects.TestWall;
 
 public class Level1 implements ILevel{
 
+    private IPlayer player;
+    private Rectangle2D.Double bounds;
     private ArrayList<IStaticObject> staticObjects;
+
+    //Player
+    private static final int STARTX = 50;
+    private static final int STARTY = 50;
+    private static final int PLAYERWIDTH = 100;
+    private static final int PLAYERHEIGHT = 100;
+
+    //Map
+    private static final int MAPX = 0;
+    private static final int MAPY = 0;
+    private static final int MAPWIDTH = 2500;
+    private static final int MAPHEIGHT = 2500;
+
     public Level1(){
+
         this.staticObjects = new ArrayList<>();
+        this.player = new Player(new Rectangle2D.Double(STARTX, STARTY, PLAYERWIDTH, PLAYERHEIGHT));
+        this.bounds = new Rectangle2D.Double(MAPX, MAPY, MAPWIDTH, MAPHEIGHT);
+
 
         generateStaticObjects();
     }
@@ -35,5 +57,18 @@ public class Level1 implements ILevel{
     public ArrayList<IStaticObject> getStaticObjects() {
         return this.staticObjects;
     }
+
+
+    @Override
+    public IPlayer getPlayer() {
+        return this.player;
+    }
+
+
+    @Override
+    public Rectangle2D.Double getBounds() {
+        return this.bounds;
+    }
+    
     
 }
