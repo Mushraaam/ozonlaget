@@ -30,6 +30,12 @@ public class Map implements IMap {
         // Start with debug during development
         this.debug = true;
 
+        //TODO merge conflict, fix after push
+        // senere: Skaffe modul som leser inn og returnerer disse verdiene fra fil
+        this.player = new Player(new Rectangle2D.Double(1000, 1000, 100, 100), this);
+        this.bounds = new Rectangle2D.Double(0, 0, 2500, 2500);
+        this.debug = false;
+
         // Implementer egen metode/meny for denne
         this.staticObjects = this.level.getStaticObjects();
 
