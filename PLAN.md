@@ -18,3 +18,4 @@ Alexander -> Implementere A* (og test fiende)
 
 ANDRE UKE:
 Gjøre grid itererbar, implementere neighbours, rask indeksering etc. - Rein
+Fix object and wall collision, implement normalized diagonal movement - William 
