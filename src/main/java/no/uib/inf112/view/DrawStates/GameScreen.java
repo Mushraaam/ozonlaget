@@ -83,7 +83,7 @@ public class GameScreen implements IDrawer {
     private void drawEnemies(Graphics2D graphic){
         ArrayList<IEnemy> enemies = this.map.getEnemies();
         for(IEnemy enemy : enemies){
-            Rectangle2D.Double hitbox = enemy.getBounds();
+            Rectangle2D.Double hitbox = enemy.getHitbox();
             if(map.debugMode()){
                 graphic.setColor(new Color(255, 0, 0, 120));
                 graphic.fill(hitbox);}
