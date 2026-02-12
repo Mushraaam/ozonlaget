@@ -21,8 +21,7 @@ public class Map implements IMap {
     ArrayList<IEnemy> enemies;
     private final Spawner spawner;
     public Map() {
-
-
+        
         this.level = new Level1();
         this.player = this.level.getPlayer();
         this.bounds = this.level.getBounds();

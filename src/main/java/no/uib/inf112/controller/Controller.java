@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 
 public class Controller implements java.awt.event.KeyListener {
+    
     private IMap map;
     private IControllablePlayer player;
     private GameDrawer view;
