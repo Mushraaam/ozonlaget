@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import no.uib.inf112.interfaces.ILevel;
+import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.player.Player;
@@ -27,10 +28,13 @@ public class Level1 implements ILevel{
     private static final int MAPWIDTH = 2500;
     private static final int MAPHEIGHT = 2500;
 
-    public Level1(){
+    private IMap map;
 
+    public Level1(IMap map){
+
+        this.map = map;
         this.staticObjects = new ArrayList<>();
-        this.player = new Player(new Rectangle2D.Double(STARTX, STARTY, PLAYERWIDTH, PLAYERHEIGHT));
+        this.player = new Player(new Rectangle2D.Double(STARTX, STARTY, PLAYERWIDTH, PLAYERHEIGHT), this.map);
         this.bounds = new Rectangle2D.Double(MAPX, MAPY, MAPWIDTH, MAPHEIGHT);
 
 
