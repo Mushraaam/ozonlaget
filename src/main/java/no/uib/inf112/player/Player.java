@@ -4,28 +4,23 @@ import java.awt.geom.Rectangle2D;
 
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.interfaces.IControllablePlayer;
-import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IViewablePlayer;
 
 public class Player implements IControllablePlayer, IViewablePlayer{
     public static final int PLAYER_MOVE_SPEED = 5;
-    public static final int PLAYER_HEIGHT = 50;
-    public static final int PLAYER_WIDTH = 50;
+    //public static final int PLAYER_HEIGHT = 100;
+    //public static final int PLAYER_WIDTH = 100;
         
     private Rectangle2D.Double hitbox;
     private Rectangle2D.Double bounds;
     private Direction currentDirection;
 
-    public Player(Rectangle2D.Double pos, Rectangle2D.Double bounds){
-        this.hitbox = new Rectangle2D.Double(
-            0,
-            0,
-            PLAYER_WIDTH,
-            PLAYER_HEIGHT
-        );      
+    public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds){
+        this.hitbox = hitbox;   
         this.bounds = bounds;
+        
     }
-
+    
     @Override
     public Rectangle2D.Double getHitbox() {
         return this.hitbox;
@@ -71,10 +66,10 @@ public class Player implements IControllablePlayer, IViewablePlayer{
         Rectangle2D possibleMove = testPossibleMove(dir);
 
         //TODO comment
-        if(possibleMove.getX() + PLAYER_WIDTH > bounds.getWidth() ||
-            possibleMove.getY() + PLAYER_HEIGHT > bounds.getHeight()||
-            possibleMove.getX() + PLAYER_WIDTH < 0||
-            possibleMove.getY() + PLAYER_HEIGHT < 0){
+        if(possibleMove.getX() + possibleMove.getWidth() > bounds.getMaxX() ||
+            possibleMove.getY() + possibleMove.getHeight() > bounds.getMaxY()||
+            possibleMove.getX() < bounds.getMinX()||
+            possibleMove.getY() < bounds.getMinY()){
             return false;
            }
         
@@ -110,8 +105,8 @@ public class Player implements IControllablePlayer, IViewablePlayer{
         return new Rectangle2D.Double(
             this.hitbox.getX() + deltaX,
             this.hitbox.getY() + deltaY,
-            PLAYER_WIDTH,
-            PLAYER_HEIGHT
+            hitbox.getWidth(),
+            hitbox.getHeight()
         );
     }
     @Override
