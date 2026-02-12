@@ -8,7 +8,7 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IViewablePlayer;
 
 public class Player implements IControllablePlayer, IViewablePlayer{
-    public static final int PLAYER_MOVE_SPEED = 1;
+    public static final int PLAYER_MOVE_SPEED = 5;
     public static final int PLAYER_HEIGHT = 50;
     public static final int PLAYER_WIDTH = 50;
         
@@ -16,14 +16,14 @@ public class Player implements IControllablePlayer, IViewablePlayer{
     private Rectangle2D.Double bounds;
     private Direction currentDirection;
 
-    public Player(Rectangle2D.Double pos, IMap map){
+    public Player(Rectangle2D.Double pos, Rectangle2D.Double bounds){
         this.hitbox = new Rectangle2D.Double(
             0,
             0,
             PLAYER_WIDTH,
             PLAYER_HEIGHT
         );      
-        this.bounds = map.getBounds();
+        this.bounds = bounds;
     }
 
     @Override
@@ -39,16 +39,16 @@ public class Player implements IControllablePlayer, IViewablePlayer{
             if(legalMove(dir)){
                 switch (dir) {
                     case UP:
-                        deltaX = -PLAYER_MOVE_SPEED;
+                        deltaY = -PLAYER_MOVE_SPEED;
                         break;
                     case DOWN:
-                        deltaX = PLAYER_MOVE_SPEED;
-                        break;
-                    case RIGHT:
                         deltaY = PLAYER_MOVE_SPEED;
                         break;
+                    case RIGHT:
+                        deltaX = PLAYER_MOVE_SPEED;
+                        break;
                     case LEFT:
-                        deltaY = -PLAYER_MOVE_SPEED;
+                        deltaX = -PLAYER_MOVE_SPEED;
                         break;
                     default:
                         break;

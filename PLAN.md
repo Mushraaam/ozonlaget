@@ -1,4 +1,4 @@
-FØRSTE UKE:
+idthFØRSTE UKE:
 Find sprites (foreløpig dog and player) -> no strekmann -> Johs
 Implementere WASD logikk -> William (4 retninger, to knapper samtidig )
     """

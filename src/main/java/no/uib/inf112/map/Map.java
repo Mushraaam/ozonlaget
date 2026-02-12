@@ -23,8 +23,9 @@ public class Map implements IMap {
     public Map() {
         
         this.level = new Level1(this);
-        this.player = this.level.getPlayer();
         this.bounds = this.level.getBounds();
+        this.player = this.level.getPlayer();
+        
         this.enemies = new ArrayList<IEnemy>();
         // Start with debug during development
         this.debug = true;
