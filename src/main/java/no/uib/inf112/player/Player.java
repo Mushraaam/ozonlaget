@@ -61,18 +61,18 @@ public class Player implements IControllablePlayer, IViewablePlayer{
         }
 
     /**
-     * TODO fix javadoc
-     * @param dir
-     * @return
+     * Checks that the player can move in a proposed direction.
+     * @param dir proposed movement direction.
+     * @return true if move is within map, false if else.
      */
     private boolean legalMove(Direction dir){
-        Rectangle2D possibleMove = testPossibleMove(dir);
+        Rectangle2D proposedMove = possibleMove(dir);
 
-        //TODO comment
-        if(possibleMove.getX() + possibleMove.getWidth() > bounds.getMaxX() ||
-            possibleMove.getY() + possibleMove.getHeight() > bounds.getMaxY()||
-            possibleMove.getX() < bounds.getMinX()||
-            possibleMove.getY() < bounds.getMinY()){
+        //checks for map border
+        if(proposedMove.getX() + proposedMove.getWidth() > bounds.getMaxX() ||
+            proposedMove.getY() + proposedMove.getHeight() > bounds.getMaxY()||
+            proposedMove.getX() < bounds.getMinX()||
+            proposedMove.getY() < bounds.getMinY()){
             return false;
            }
         
@@ -80,11 +80,11 @@ public class Player implements IControllablePlayer, IViewablePlayer{
     }
 
     /**
-     * TODO fix javadoc
-     * @param dir
-     * @return
+     * Gives a new player position based on proposed direction.
+     * @param dir proposed movement direction.
+     * @return a new position for player 
      */
-    private Rectangle2D testPossibleMove(Direction dir){
+    private Rectangle2D possibleMove(Direction dir){
         int deltaX = 0;
         int deltaY = 0;
 
