@@ -4,7 +4,9 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 
+import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
+import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IMovingDrawableObject;
@@ -92,6 +94,24 @@ public class TestMap implements IMap {
     public void debugOff() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'debugOff'");
+    }
+
+    @Override
+    public void addEnemy(IEnemy enemy) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addEnemy'");
+    }
+
+    @Override
+    public Spawner getSpawner() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSpawner'");
+    }
+
+    @Override
+    public ArrayList<IEnemy> getEnemies() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEnemies'");
     }
     
 }

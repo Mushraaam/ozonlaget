@@ -22,7 +22,7 @@ public class Map implements IMap {
     private final Spawner spawner;
     public Map() {
         
-        this.level = new Level1();
+        this.level = new Level1(this);
         this.player = this.level.getPlayer();
         this.bounds = this.level.getBounds();
         this.enemies = new ArrayList<IEnemy>();
@@ -46,6 +46,7 @@ public class Map implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
     }
 
+    
     public Spawner getSpawner(){
         return this.spawner;
     }
