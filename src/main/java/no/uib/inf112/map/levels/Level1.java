@@ -34,8 +34,9 @@ public class Level1 implements ILevel{
 
         this.map = map;
         this.staticObjects = new ArrayList<>();
-        this.player = new Player(new Rectangle2D.Double(STARTX, STARTY, PLAYERWIDTH, PLAYERHEIGHT), this.map);
+
         this.bounds = new Rectangle2D.Double(MAPX, MAPY, MAPWIDTH, MAPHEIGHT);
+        this.player = new Player(new Rectangle2D.Double(STARTX, STARTY, PLAYERWIDTH, PLAYERHEIGHT), this.bounds);
 
 
         generateStaticObjects();
