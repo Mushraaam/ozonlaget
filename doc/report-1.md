@@ -20,7 +20,7 @@
 
     - William:
         - Character controls
-        - Bøllefrø
+        - Bøllefrø (les: idemyldrer)
 
     
 
