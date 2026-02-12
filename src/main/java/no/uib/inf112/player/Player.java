@@ -12,12 +12,12 @@ public class Player implements IControllablePlayer, IViewablePlayer{
     public static final int PLAYER_HEIGHT = 50;
     public static final int PLAYER_WIDTH = 50;
         
-    private Rectangle2D.Double pos;
+    private Rectangle2D.Double hitbox;
     private Rectangle2D.Double bounds;
     private Direction currentDirection;
 
     public Player(Rectangle2D.Double pos, IMap map){
-        this.pos = new Rectangle2D.Double(
+        this.hitbox = new Rectangle2D.Double(
             0,
             0,
             PLAYER_WIDTH,
@@ -27,8 +27,8 @@ public class Player implements IControllablePlayer, IViewablePlayer{
     }
 
     @Override
-    public Rectangle2D.Double getPosition() {
-        return this.pos;
+    public Rectangle2D.Double getHitbox() {
+        return this.hitbox;
     }
 
     @Override
@@ -54,11 +54,11 @@ public class Player implements IControllablePlayer, IViewablePlayer{
                         break;
                 }
             }
-            this.pos.setFrame(
-                this.pos.getX() + deltaX,
-                this.pos.getY() + deltaY,
-                this.pos.getWidth(),
-                this.pos.getHeight()
+            this.hitbox.setFrame(
+                this.hitbox.getX() + deltaX,
+                this.hitbox.getY() + deltaY,
+                this.hitbox.getWidth(),
+                this.hitbox.getHeight()
             );
         }
 
@@ -108,8 +108,8 @@ public class Player implements IControllablePlayer, IViewablePlayer{
                 break;
         }
         return new Rectangle2D.Double(
-            this.pos.getX() + deltaX,
-            this.pos.getY() + deltaY,
+            this.hitbox.getX() + deltaX,
+            this.hitbox.getY() + deltaY,
             PLAYER_WIDTH,
             PLAYER_HEIGHT
         );

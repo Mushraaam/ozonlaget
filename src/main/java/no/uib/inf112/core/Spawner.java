@@ -17,7 +17,7 @@ public class Spawner {
     }
 
     public boolean spawnThug() {
-        var p = map.getPlayer().getBounds();
+        var p = map.getPlayer().getHitbox();
 
         double xOffset = ThreadLocalRandom.current().nextDouble(20, 1000);
         double yOffset = ThreadLocalRandom.current().nextDouble(20, 1000);

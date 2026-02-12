@@ -42,13 +42,13 @@ public class GameScreen implements IDrawer {
     /* Sentrerer kamera på player, holder seg innenfor bounds */
     private void centerCamera(Graphics2D graphic) {
 
-        Rectangle2D.Double playerBounds = this.player.getBounds();
+        Rectangle2D.Double playerHitbox = this.player.getHitbox();
         Rectangle2D.Double mapBounds = this.map.getBounds();
 
         double screenWidth = graphic.getClipBounds().getWidth();
         double screenHeight = graphic.getClipBounds().getHeight();
-        double playerCenterX = playerBounds.getCenterX();
-        double playerCenterY = playerBounds.getCenterY();
+        double playerCenterX = playerHitbox.getCenterX();
+        double playerCenterY = playerHitbox.getCenterY();
 
         double translatedX = screenWidth / 2 - playerCenterX;
         double translatedY = screenHeight / 2 - playerCenterY;
@@ -68,8 +68,8 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawPlayer(Graphics2D graphic) {
-        Rectangle2D.Double bounds = this.player.getBounds();
-        drawImage(graphic, this.tempDuck, bounds);
+        Rectangle2D.Double hitbox = this.player.getHitbox();
+        drawImage(graphic, this.tempDuck, hitbox);
     }
 
     private void drawEnemies(Graphics2D graphic){

@@ -4,5 +4,5 @@ import java.awt.geom.Rectangle2D;
 
 public interface IPlayer {
 
-    public Rectangle2D.Double getPosition();
+    public Rectangle2D.Double getHitbox();
 }
