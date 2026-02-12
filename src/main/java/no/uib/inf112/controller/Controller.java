@@ -37,14 +37,6 @@ public class Controller implements java.awt.event.KeyListener {
             default -> {
             }
         }
-
-        switch (e.getKeyCode()){
-            case KeyEvent.VK_O -> {
-                map.getSpawner().spawnThug();
-        }}
-
-
-
         this.view.repaint();
     }
 
@@ -67,7 +59,9 @@ public class Controller implements java.awt.event.KeyListener {
             case KeyEvent.VK_P -> {
                 flipDebug();
             }
-            
+            case KeyEvent.VK_O -> {
+                map.getSpawner().spawnThug();
+        }
         }
     }
 
