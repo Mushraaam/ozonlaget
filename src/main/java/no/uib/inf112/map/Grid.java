@@ -94,28 +94,52 @@ public class Grid implements IGrid {
         int col = cell.col();
 
         if (row < 0 || col < 0 || row >= this.rowCount || col >= this.colCount) {
-            throw new IllegalArgumentException(String.format("Cell: Row %s, Col %s is out of bounds", row, col));
+            throw new IllegalArgumentException(
+                    String.format("Cell: Row %s, Col %s is out of bounds", row, col)
+            );
         }
 
         ArrayList<ICell> neighbours = new ArrayList<>();
+
+        ICell over  = null;
+        ICell under = null;
+        ICell left  = null;
+        ICell right = null;
+
+
         if (row > 0) {
-            ICell over = getCell(row - 1, col);
+            over = getCell(row - 1, col);
             neighbours.add(over);
         }
-        if (row < this.rowCount) {
-            ICell under = getCell(row + 1, col);
+        if (row < this.rowCount - 1) {
+            under = getCell(row + 1, col);
             neighbours.add(under);
         }
         if (col > 0) {
-            ICell left = getCell(row, col - 1);
+            left = getCell(row, col - 1);
             neighbours.add(left);
         }
-        if (col < this.colCount) {
-            ICell right = getCell(row, col + 1);
+        if (col < this.colCount - 1) {
+            right = getCell(row, col + 1);
             neighbours.add(right);
         }
+
+        if (over != null && left != null && !over.isBlocked() && !left.isBlocked()) {
+            neighbours.add(getCell(row - 1, col - 1)); // up-left
+        }
+        if (over != null && right != null && !over.isBlocked() && !right.isBlocked()) {
+            neighbours.add(getCell(row - 1, col + 1)); // up-right
+        }
+        if (under != null && left != null && !under.isBlocked() && !left.isBlocked()) {
+            neighbours.add(getCell(row + 1, col - 1)); // down-left
+        }
+        if (under != null && right != null && !under.isBlocked() && !right.isBlocked()) {
+            neighbours.add(getCell(row + 1, col + 1)); // down-right
+        }
+
         return neighbours;
     }
+
 
     @Override
     public Iterator<ICell> iterator() {
