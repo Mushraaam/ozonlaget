@@ -38,16 +38,16 @@ public class Player implements IControllablePlayer, IViewablePlayer{
 
             if(legalMove(dir)){
                 switch (dir) {
-                    case UP:
+                    case NORTH:
                         deltaY = -PLAYER_MOVE_SPEED;
                         break;
-                    case DOWN:
+                    case SOUTH:
                         deltaY = PLAYER_MOVE_SPEED;
                         break;
-                    case RIGHT:
+                    case EAST:
                         deltaX = PLAYER_MOVE_SPEED;
                         break;
-                    case LEFT:
+                    case WEST:
                         deltaX = -PLAYER_MOVE_SPEED;
                         break;
                     default:
@@ -91,16 +91,16 @@ public class Player implements IControllablePlayer, IViewablePlayer{
         int deltaY = 0;
 
         switch (dir) {
-            case UP:
+            case NORTH:
                 deltaY = -PLAYER_MOVE_SPEED;
                 break;
-            case DOWN:
+            case SOUTH:
                 deltaY = PLAYER_MOVE_SPEED;
                 break;
-            case RIGHT:
+            case EAST:
                 deltaX = PLAYER_MOVE_SPEED;
                 break;
-            case LEFT:
+            case WEST:
                 deltaX = -PLAYER_MOVE_SPEED;
                 break;
             

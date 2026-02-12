@@ -44,16 +44,16 @@ public class Controller implements java.awt.event.KeyListener {
         switch (e.getKeyCode()) {
             //movement
             case KeyEvent.VK_W -> {
-                player.movePlayer(Direction.UP);
+                player.movePlayer(Direction.NORTH);
             }
             case KeyEvent.VK_S -> {
-                player.movePlayer(Direction.DOWN);
+                player.movePlayer(Direction.SOUTH);
             }
             case KeyEvent.VK_A -> {
-                player.movePlayer(Direction.LEFT);
+                player.movePlayer(Direction.WEST);
             }
             case KeyEvent.VK_D -> {
-                player.movePlayer(Direction.RIGHT);
+                player.movePlayer(Direction.EAST);
             }
             
             case KeyEvent.VK_P -> {

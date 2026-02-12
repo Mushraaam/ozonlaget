@@ -1,8 +1,12 @@
 package no.uib.inf112.enums;
 
 public enum Direction {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
+    NORTH,
+    SOUTH,
+    WEST,
+    EAST,
+    NORTH_WEST,
+    NORTH_EAST,
+    SOUTH_WEST,
+    SOUTH_EAST
 }
