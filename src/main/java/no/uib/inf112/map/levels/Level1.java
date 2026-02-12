@@ -17,8 +17,8 @@ public class Level1 implements ILevel{
     private ArrayList<IStaticObject> staticObjects;
 
     //Player
-    private static final int STARTX = 50;
-    private static final int STARTY = 50;
+    private static final int STARTX = 1250;
+    private static final int STARTY = 1250;
     private static final int PLAYERWIDTH = 100;
     private static final int PLAYERHEIGHT = 100;
 

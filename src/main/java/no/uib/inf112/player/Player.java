@@ -8,17 +8,20 @@ import no.uib.inf112.interfaces.IViewablePlayer;
 
 public class Player implements IControllablePlayer, IViewablePlayer{
     public static final int PLAYER_MOVE_SPEED = 5;
-    //public static final int PLAYER_HEIGHT = 100;
-    //public static final int PLAYER_WIDTH = 100;
+    public static final int PLAYER_HEIGHT = 50;
+    public static final int PLAYER_WIDTH = 50;
+    public static final int ANIMATION_COUNT = 8;
         
     private Rectangle2D.Double hitbox;
     private Rectangle2D.Double bounds;
     private Direction currentDirection;
+    private int animationIndex;
 
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds){
         this.hitbox = hitbox;   
         this.bounds = bounds;
-        
+        this.animationIndex = 0;
+        setDirection(Direction.WEST);
     }
     
     @Override
@@ -33,16 +36,16 @@ public class Player implements IControllablePlayer, IViewablePlayer{
 
             if(legalMove(dir)){
                 switch (dir) {
-                    case UP:
+                    case NORTH:
                         deltaY = -PLAYER_MOVE_SPEED;
                         break;
-                    case DOWN:
+                    case SOUTH:
                         deltaY = PLAYER_MOVE_SPEED;
                         break;
-                    case RIGHT:
+                    case EAST:
                         deltaX = PLAYER_MOVE_SPEED;
                         break;
-                    case LEFT:
+                    case WEST:
                         deltaX = -PLAYER_MOVE_SPEED;
                         break;
                     default:
@@ -86,16 +89,16 @@ public class Player implements IControllablePlayer, IViewablePlayer{
         int deltaY = 0;
 
         switch (dir) {
-            case UP:
+            case NORTH:
                 deltaY = -PLAYER_MOVE_SPEED;
                 break;
-            case DOWN:
+            case SOUTH:
                 deltaY = PLAYER_MOVE_SPEED;
                 break;
-            case RIGHT:
+            case EAST:
                 deltaX = PLAYER_MOVE_SPEED;
                 break;
-            case LEFT:
+            case WEST:
                 deltaX = -PLAYER_MOVE_SPEED;
                 break;
             
@@ -117,6 +120,16 @@ public class Player implements IControllablePlayer, IViewablePlayer{
     @Override
     public void setDirection(Direction dir) {
         this.currentDirection = dir;   
+    }
+
+    @Override
+    public int getAnimationIndex() {
+        return this.animationIndex;
+    }
+
+    @Override
+    public void incrementAnimationIndex() {
+        this.animationIndex = (this.animationIndex + 1) % ANIMATION_COUNT;
     }
     
 

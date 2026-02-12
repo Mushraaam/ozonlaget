@@ -10,22 +10,26 @@ import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
+import no.uib.inf112.interfaces.IViewablePlayer;
+import no.uib.inf112.utility.ImageHandler;
 import no.uib.inf112.utility.ImageReader;
 
 public class GameScreen implements IDrawer {
 
     private IMap map;
-    private IPlayer player;
+    private IViewablePlayer player;
+    private ImageHandler handler;
 
-    private BufferedImage tempDuck;
+    private BufferedImage playerSprite;
     private BufferedImage tempBackground;
 
-    public GameScreen(IMap map) {
+    public GameScreen(IMap map, ImageHandler handler) {
         this.map = map;
-        this.player = map.getPlayer();
+        this.player = (IViewablePlayer) map.getPlayer();
+        this.handler = handler;
 
         // Bør skaleres kun en gang, dette flyttes senere til ny klasse
-        this.tempDuck = ImageReader.fetcImage("src\\main\\java\\no\\resources\\tempduck.png");
+        this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
         this.tempBackground = ImageReader.fetcImage("src\\main\\java\\no\\resources\\parkbackground.png");
     }
 
@@ -68,8 +72,9 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawPlayer(Graphics2D graphic) {
+        this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
         Rectangle2D.Double hitbox = this.player.getHitbox();
-        drawImage(graphic, this.tempDuck, hitbox);
+        drawImage(graphic, this.playerSprite, hitbox);
     }
 
     private void drawEnemies(Graphics2D graphic){

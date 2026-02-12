@@ -19,6 +19,11 @@ public interface IControllablePlayer extends IPlayer{
      * Sets the current direction.
      */
     public void setDirection(Direction dir);
+
+    /**
+     * Used by controller, increments animation.
+     */
+    public void incrementAnimationIndex();
 }
 
 
