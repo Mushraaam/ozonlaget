@@ -22,17 +22,17 @@ public class Spawner {
         double xOffset = ThreadLocalRandom.current().nextDouble(20, 1000);
         double yOffset = ThreadLocalRandom.current().nextDouble(20, 1000);
 
-        Rectangle2D.Double bounds = new Rectangle2D.Double(
+        Rectangle2D.Double hitbox = new Rectangle2D.Double(
                 p.getX() + xOffset,
                 p.getY() + yOffset,
                 THUG_WIDTH,
                 THUG_HEIGHT
         );
 
-        if (!map.getBounds().contains(bounds)) return false;
-        if (map.getGrid().getCellFromPos(bounds).isBlocked()) return false;
+        if (!map.getBounds().contains(hitbox)) return false;
+        if (map.getGrid().getCellFromPos(hitbox).isBlocked()) return false;
 
-        map.addEnemy(new Thug(bounds));
+        map.addEnemy(new Thug(hitbox));
         return true;
     }
 }

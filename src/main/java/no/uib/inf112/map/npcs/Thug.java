@@ -18,7 +18,7 @@ public class Thug implements IEnemy {
     }
 
     @Override
-    public Rectangle2D.Double getBounds() {
+    public Rectangle2D.Double getHitbox() {
         return this.pos;
     }
 

@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 public interface IEnemy extends IMovingDrawableObject {
 
-    Rectangle2D.Double getBounds();
+    Rectangle2D.Double getHitbox();
 
     public EnemyType getEnemyType();
 

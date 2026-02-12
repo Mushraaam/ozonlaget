@@ -80,8 +80,8 @@ public class GameScreen implements IDrawer {
     private void drawEnemies(Graphics2D graphic){
         ArrayList<IEnemy> enemies = this.map.getEnemies();
         for(IEnemy enemy : enemies){
-            Rectangle2D.Double bounds = enemy.getBounds();
-            drawImage(graphic, enemy.getImg(), bounds );
+            Rectangle2D.Double hitbox = enemy.getHitbox();
+            drawImage(graphic, enemy.getImg(), hitbox );
         }
     }
 
