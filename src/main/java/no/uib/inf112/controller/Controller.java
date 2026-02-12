@@ -9,14 +9,21 @@ import no.uib.inf112.view.GameDrawer;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
+import java.util.Set;
+import java.util.EnumSet;
+
 import javax.swing.Timer;
 
 public class Controller implements java.awt.event.KeyListener {
+
+    private final Set<Direction> currentDirections = EnumSet.noneOf(Direction.class);
 
     private IMap map;
     private IControllablePlayer player;
     private GameDrawer view;
     private Timer playerAnimationTimer;
+    private Timer movementTimer;
+    
 
     public Controller(IMap map, GameDrawer view) {
 
@@ -35,6 +42,17 @@ public class Controller implements java.awt.event.KeyListener {
             }
         });
         this.playerAnimationTimer.start(); //senere endre til if (moving) elns
+
+        this.movementTimer = new Timer(16, e ->{
+            if(map.getGameState() == GameState.ACTIVE_GAME){
+                for (Direction dir : currentDirections){
+                    player.movePlayer(dir);
+                    player.setDirection(dir);
+                }
+                view.repaint();
+            }
+        });
+        this.movementTimer.start();
     }
 
 
@@ -43,7 +61,7 @@ public class Controller implements java.awt.event.KeyListener {
         switch (this.map.getGameState()) {
 
             case ACTIVE_GAME -> {
-                activeGameButton(e);
+                activeGamePressEvent(e);
             }
 
             default -> {
@@ -52,23 +70,24 @@ public class Controller implements java.awt.event.KeyListener {
         this.view.repaint();
     }
 
-    private void activeGameButton(KeyEvent e) {
+    //GAMESTATE BOUND KEY EVENTS FOR KEY PRESSED
+    private void activeGamePressEvent(KeyEvent e) {
         switch (e.getKeyCode()) {
             // movement
             case KeyEvent.VK_W -> {
-                player.movePlayer(Direction.NORTH);
+                currentDirections.add(Direction.NORTH);
                 player.setDirection(Direction.NORTH);
             }
             case KeyEvent.VK_S -> {
-                player.movePlayer(Direction.SOUTH);
+                currentDirections.add(Direction.SOUTH);
                 player.setDirection(Direction.SOUTH);
             }
             case KeyEvent.VK_A -> {
-                player.movePlayer(Direction.WEST);
+                currentDirections.add(Direction.WEST);
                 player.setDirection(Direction.WEST);
             }
             case KeyEvent.VK_D -> {
-                player.movePlayer(Direction.EAST);
+                currentDirections.add(Direction.EAST);
                 player.setDirection(Direction.EAST);
             }
 
@@ -81,17 +100,43 @@ public class Controller implements java.awt.event.KeyListener {
         }
     }
 
+    
+    @Override
+    public void keyReleased(KeyEvent e) {
+        switch (this.map.getGameState()) {
+
+            case ACTIVE_GAME -> {
+                activeGameReleaseEvent(e);
+            }
+
+            default -> {
+            }
+        }
+    }
+
+    //GAMESTATE BOUND KEY EVENTS FOR KEY RELEASED
+    private void activeGameReleaseEvent(KeyEvent e){
+        switch (e.getKeyCode()){
+            case KeyEvent.VK_W -> {
+                currentDirections.remove(Direction.NORTH);
+            } 
+            case KeyEvent.VK_S -> {
+                currentDirections.remove(Direction.SOUTH);
+            } 
+            case KeyEvent.VK_A -> {
+                currentDirections.remove(Direction.WEST);
+            } 
+            case KeyEvent.VK_D -> {
+                currentDirections.remove(Direction.EAST);
+            } 
+        }
+    }
+    
     @Override
     public void keyTyped(KeyEvent e) {
 
         // not implemented
     }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        // not implemented
-    }
-
     //////////////// HELPER METHODS - THESE SHOULD BE SHORT AND SELF EXPLANATORY
     /// /////////////// Maybe move the helpers to their classes, at a later occasion.
     /// e.g map.flipDebug()
