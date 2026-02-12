@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
-import no.uib.inf112.map.npcs.Thug;
 
 public interface IMap {
     

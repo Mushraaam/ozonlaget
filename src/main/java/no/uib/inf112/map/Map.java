@@ -47,6 +47,7 @@ public class Map implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
     }
 
+    
     public Spawner getSpawner(){
         return this.spawner;
     }
