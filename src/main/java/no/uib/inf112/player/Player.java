@@ -11,10 +11,12 @@ public class Player implements IControllablePlayer, IViewablePlayer{
     public static final int PLAYER_MOVE_SPEED = 5;
     public static final int PLAYER_HEIGHT = 50;
     public static final int PLAYER_WIDTH = 50;
+    public static final int ANIMATION_COUNT = 8;
         
     private Rectangle2D.Double hitbox;
     private Rectangle2D.Double bounds;
     private Direction currentDirection;
+    private int animationIndex;
 
     public Player(Rectangle2D.Double pos, Rectangle2D.Double bounds){
         this.hitbox = new Rectangle2D.Double(
@@ -24,6 +26,8 @@ public class Player implements IControllablePlayer, IViewablePlayer{
             PLAYER_HEIGHT
         );      
         this.bounds = bounds;
+        this.animationIndex = 0;
+        setDirection(Direction.WEST);
     }
 
     @Override
@@ -122,6 +126,16 @@ public class Player implements IControllablePlayer, IViewablePlayer{
     @Override
     public void setDirection(Direction dir) {
         this.currentDirection = dir;   
+    }
+
+    @Override
+    public int getAnimationIndex() {
+        return this.animationIndex;
+    }
+
+    @Override
+    public void incrementAnimationIndex() {
+        this.animationIndex = (this.animationIndex + 1) % ANIMATION_COUNT;
     }
     
 

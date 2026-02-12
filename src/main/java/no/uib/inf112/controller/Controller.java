@@ -45,15 +45,19 @@ public class Controller implements java.awt.event.KeyListener {
             //movement
             case KeyEvent.VK_W -> {
                 player.movePlayer(Direction.NORTH);
+                player.setDirection(Direction.NORTH);
             }
             case KeyEvent.VK_S -> {
                 player.movePlayer(Direction.SOUTH);
+                player.setDirection(Direction.SOUTH);
             }
             case KeyEvent.VK_A -> {
                 player.movePlayer(Direction.WEST);
+                player.setDirection(Direction.SOUTH);
             }
             case KeyEvent.VK_D -> {
                 player.movePlayer(Direction.EAST);
+                player.setDirection(Direction.EAST);
             }
             
             case KeyEvent.VK_P -> {

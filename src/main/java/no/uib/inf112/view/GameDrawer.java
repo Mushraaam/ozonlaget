@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.utility.ImageHandler;
 import no.uib.inf112.view.DrawStates.DebugScreen;
 import no.uib.inf112.view.DrawStates.GameScreen;
 import no.uib.inf112.view.DrawStates.MainMenu;
@@ -20,12 +21,14 @@ public class GameDrawer extends JPanel {
     private IDrawer gameScreen;
     private IDrawer mainMenu;
     private IDrawer debugScreen;
+    private ImageHandler handler;
 
     public GameDrawer(IMap map) {
         this.map = map;
+        this.handler = new ImageHandler();
 
         // Screens
-        this.gameScreen = new GameScreen(this.map);
+        this.gameScreen = new GameScreen(this.map, this.handler);
         this.mainMenu = new MainMenu();
         this.debugScreen = new DebugScreen(this.map);
 
