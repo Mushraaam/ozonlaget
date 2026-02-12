@@ -104,14 +104,14 @@ public class GridTest {
 
         ICell cell = grid.getCell(0, 0);
 
-        assertEquals(2, grid.getNeighbours(cell).size());
+        assertEquals(3, grid.getNeighbours(cell).size()); //Expect diagonals now, down, left and down right.
 
         ArrayList<ICell> expected = new ArrayList<>();
 
 
         cell = grid.getCell(2, 2);
 
-        assertEquals(4, grid.getNeighbours(cell).size());
+        assertEquals(8, grid.getNeighbours(cell).size()); //All directions should be open -> 8
 
         // Implement logic for "correct" neighbours also
 
