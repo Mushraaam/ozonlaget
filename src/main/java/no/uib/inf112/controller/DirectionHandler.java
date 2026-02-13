@@ -50,7 +50,7 @@ public class DirectionHandler {
         if (west){
             return Direction.WEST;
         }
-        return null; //This should never happen
+        return Direction.NONE; //This should never happen
         
 
     }
@@ -70,11 +70,4 @@ public class DirectionHandler {
     public boolean isMoving(){
         return !this.currentDirections.isEmpty();
     }
-
-
-
-
-
-
-
 }

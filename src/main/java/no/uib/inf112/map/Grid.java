@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import no.uib.inf112.config.Config;
+import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IMap;
@@ -58,7 +59,8 @@ public class Grid implements IGrid {
                         CELLWIDTH,
                         CELLHEIGHT);
 
-                cellRow.add(new Cell(cellBounds, row, col));
+                //TODO: fix floortype logic
+                cellRow.add(new Cell(cellBounds, row, col, FloorType.GRASS_TILES));
             }
 
             grid.add(cellRow);

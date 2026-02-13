@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import no.uib.inf112.enums.Direction;
+import no.uib.inf112.enums.EnemyType;
+import no.uib.inf112.enums.FloorType;
+import no.uib.inf112.enums.walls.WallDirection;
+import no.uib.inf112.enums.walls.WallType;
 
 public class ImageHandler {
 
@@ -12,9 +16,29 @@ public class ImageHandler {
     private static final int PLAYER_SPRITE_COUNT = 8;
     private HashMap<Direction, ArrayList<BufferedImage>> playerSprites;
 
+
+    //Wall images
+    private HashMap<WallType, HashMap<WallDirection, BufferedImage>> walls;
+
+
+    //Enemy image
+    private HashMap<EnemyType, ArrayList<BufferedImage>> enemies;
+
+    private HashMap<FloorType, BufferedImage> floors;
+
+
     public ImageHandler(){
         this.playerSprites = new HashMap<>();
         loadPlayerSprite();
+
+        this.walls = new HashMap<>();
+        loadWalls();
+
+        this.enemies = new HashMap<>();
+        loadEnemies();
+
+        this.floors = new HashMap<>();
+        loadFloors();
     }
 
 
@@ -63,6 +87,58 @@ public class ImageHandler {
 
 
     //////////////////////////////// END PLAYER METHODS //////////////////////////
+    /// 
+    /// //////////////////////////// START WALL METHODS //////////////////////////
+    /// 
+    
+    private void loadWalls(){
+
+        HashMap<WallDirection, BufferedImage> shortWoodenWalls = new HashMap<>();
+        shortWoodenWalls.put(WallDirection.HORIZONTAL, ImageReader.fetchImage("/no/uib/inf112/walls/ShortWall1_1.png"));
+        shortWoodenWalls.put(WallDirection.VERTICAL, ImageReader.fetchImage("/no/uib/inf112/walls/ShortWall1_2.png"));
+
+        HashMap<WallDirection, BufferedImage> longWoodenWalls = new HashMap<>();
+        longWoodenWalls.put(WallDirection.VERTICAL, ImageReader.fetchImage("/no/uib/inf112/walls/LongWall1_1.png"));
+        longWoodenWalls.put(WallDirection.HORIZONTAL, ImageReader.fetchImage("/no/uib/inf112/walls/LongWall1_2.png"));
+
+        this.walls.put(WallType.WOODEN_WALL, shortWoodenWalls);
+        this.walls.put(WallType.LONG_WOODEN_WALL, longWoodenWalls);
+
+    }
+
+    public BufferedImage getWallImage(WallType type, WallDirection dir){
+        return this.walls.get(type).get(dir);
+    }
+
+
+    //////////////// END WALL LOGIC//////////////
+    /// 
+    /// /////////// START ENEMY LOGIC //////////////
+    
+    private void loadEnemies(){
+        ArrayList<BufferedImage> thugs = new ArrayList<>();
+        thugs.add(ImageReader.fetchImage("/no/uib/inf112/map/npcs/thug.png"));
+        this.enemies.put(EnemyType.THUG, thugs);
+
+    }
+
+    public BufferedImage getEnemyImage(EnemyType type, int Index){
+        return this.enemies.get(type).get(Index);
+    }
+
+    ///////////////////// END ENEMY LOGIC ////////////////////
+    /// 
+    /// ////////////////START FLOOR LOGIC ////////////////////
+    /// 
+    
+    private void loadFloors(){
+        this.floors.put(FloorType.STONE_TILES, ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"));
+        this.floors.put(FloorType.GRASS_TILES, ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"));
+    }
+
+    public BufferedImage getFloor(FloorType type){
+        return this.floors.get(type);
+    }
 }
 
 

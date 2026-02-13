@@ -2,6 +2,7 @@ package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
 
+import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.interfaces.ICell;
 
 public class Cell implements ICell {
@@ -10,12 +11,14 @@ public class Cell implements ICell {
     private Rectangle2D.Double bounds;
     private int row;
     private int col;
+    private FloorType floorType;
 
-    public Cell(Rectangle2D.Double bounds, int row, int col){
+    public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType){
         this.bounds = bounds;
         this.blocked = false;
         this.row = row;
         this.col = col;
+        this.floorType = floorType;
     }
 
     public Rectangle2D.Double getBounds(){
@@ -44,6 +47,10 @@ public class Cell implements ICell {
         return this.col;
     }
 
+    @Override
+    public FloorType floorType() {
+        return this.floorType;
+    }
 
 
 
@@ -70,6 +77,7 @@ public class Cell implements ICell {
             this.blocked
         );
     }
+
 
     
 }

@@ -7,7 +7,15 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import no.uib.inf112.interfaces.*;
+
+import no.uib.inf112.interfaces.ICell;
+import no.uib.inf112.interfaces.IDrawer;
+import no.uib.inf112.interfaces.IEnemy;
+import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.interfaces.IStaticDrawableObject;
+import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.interfaces.IViewablePlayer;
+import no.uib.inf112.interfaces.IWall;
 import no.uib.inf112.utility.ImageHandler;
 import no.uib.inf112.utility.ImageReader;
 
@@ -36,8 +44,27 @@ public class GameScreen implements IDrawer {
         /* Order matters(tror jeg) */
         centerCamera(graphic);
         drawBackground(graphic);
+        drawStaticObjects(graphic);
         drawPlayer(graphic);
         drawEnemies(graphic);
+    }
+
+    private void drawStaticObjects(Graphics2D graphic) {
+        for (IStaticObject o : map.getStaticObjects()){
+
+            //Optimize later
+            if (!(o instanceof IStaticDrawableObject)){
+                throw new IllegalArgumentException("Object should be instance of IStaticDrawableObject");
+            }
+
+            IStaticDrawableObject obj = (IStaticDrawableObject) o;
+
+            if (obj instanceof IWall){
+                IWall wall = (IWall) obj;
+                BufferedImage image = handler.getWallImage(wall.wallType(), wall.getWallDirection());
+                drawImage(graphic, image, wall.getBounds());
+            }
+        }
     }
 
     /* Sentrerer kamera på player, holder seg innenfor bounds */
@@ -64,37 +91,27 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawBackground(Graphics2D graphic) {
-        Rectangle2D.Double bounds = this.map.getBounds();
-        drawImage(graphic, this.tempBackground, bounds);
+        // Rectangle2D.Double bounds = this.map.getBounds();
+        // drawImage(graphic, this.tempBackground, bounds);
+
+        for (ICell cell : this.map.getGrid()){
+            drawImage(graphic, handler.getFloor(cell.floorType()), cell.getBounds());
+        }
     }
 
     private void drawPlayer(Graphics2D graphic) {
         this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
         Rectangle2D.Double hitbox = this.player.getHitbox();
-        if(map.debugMode()){
-            graphic.setColor(new Color(255, 0, 0, 120));
-            graphic.fill(hitbox);}
         drawImage(graphic, this.playerSprite, hitbox);
     }
 
     private void drawEnemies(Graphics2D graphic){
         ArrayList<IEnemy> enemies = this.map.getEnemies();
         for(IEnemy enemy : enemies){
-            List<ICell> path = enemy.getCurrentPath();
-            Rectangle2D.Double hitbox = enemy.getHitbox();
-            if(map.debugMode()){
-                graphic.setColor(new Color(255, 0, 0, 120));
-                for (ICell step : path) {
-                    Rectangle2D r = step.getBounds();
-                    double cx = r.getCenterX();
-                    double cy = r.getCenterY();
-                    double radius = Math.min(r.getWidth(), r.getHeight()) * 0.25;
-                    double d = radius * 2;
-                    graphic.fill(new Ellipse2D.Double(cx - radius, cy - radius, d, d
-                    ));
-                graphic.fill(hitbox);}
-            }
-            drawImage(graphic, enemy.getImg(), hitbox );
+            drawImage(graphic, handler.getEnemyImage(
+                enemy.getEnemyType(), 
+                enemy.getAnimationIndex()), 
+                enemy.getHitbox());
         }
     }
 
