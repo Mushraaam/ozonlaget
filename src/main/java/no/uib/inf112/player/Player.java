@@ -2,12 +2,13 @@ package no.uib.inf112.player;
 
 import java.awt.geom.Rectangle2D;
 
+import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.interfaces.IControllablePlayer;
 import no.uib.inf112.interfaces.IViewablePlayer;
 
 public class Player implements IControllablePlayer, IViewablePlayer{
-    public static final int PLAYER_MOVE_SPEED = 5;
+    public static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
     public static final int ANIMATION_COUNT = 8;
         
     private Rectangle2D.Double hitbox;
