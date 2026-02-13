@@ -14,7 +14,7 @@ public class Thug implements IEnemy {
     public Thug(Rectangle2D.Double pos){
 
         this.pos = pos;
-        this.tempImg = ImageReader.fetcImage("src\\main\\java\\no\\resources\\thug.png");
+        this.tempImg = ImageReader.fetchImage("/no/uib/inf112/map/npcs/thug.png");
     }
 
     @Override
