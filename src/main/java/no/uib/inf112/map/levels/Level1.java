@@ -3,6 +3,7 @@ package no.uib.inf112.map.levels;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import no.uib.inf112.enums.walls.WallType;
 import no.uib.inf112.interfaces.ILevel;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
@@ -46,11 +47,11 @@ public class Level1 implements ILevel{
     private void generateStaticObjects() {
 
         //start box testing
-        staticObjects.add(new TestWall(new Rectangle2D.Double(900, 900, 15, 300)));         //left wall
-        staticObjects.add(new TestWall(new Rectangle2D.Double(900, 900+300, 300, 15)));         //bottom wallp
-        staticObjects.add(new TestWall(new Rectangle2D.Double(900, 900, 300, 15)));         //top wall
-        staticObjects.add(new TestWall(new Rectangle2D.Double(900+300, 900, 15, 70)));         //right top
-        staticObjects.add(new TestWall(new Rectangle2D.Double(900+300, 900+300-70, 15, 85)));     //right bot
+        staticObjects.add(new TestWall(new Rectangle2D.Double(900, 900, 15, 300), WallType.WOODEN_WALL));         //left wall
+        staticObjects.add(new TestWall(new Rectangle2D.Double(900, 900+300, 300, 15), WallType.WOODEN_WALL));         //bottom wallp
+        staticObjects.add(new TestWall(new Rectangle2D.Double(900, 900, 300, 15), WallType.WOODEN_WALL));         //top wall
+        staticObjects.add(new TestWall(new Rectangle2D.Double(900+300, 900, 15, 70), WallType.WOODEN_WALL));         //right top
+        staticObjects.add(new TestWall(new Rectangle2D.Double(900+300, 900+300-70, 15, 85), WallType.WOODEN_WALL));     //right bot
 
 
 

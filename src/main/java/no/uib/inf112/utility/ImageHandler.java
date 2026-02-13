@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import no.uib.inf112.enums.Direction;
+import no.uib.inf112.enums.walls.WallDirection;
+import no.uib.inf112.enums.walls.WallType;
 
 public class ImageHandler {
 
@@ -12,9 +14,16 @@ public class ImageHandler {
     private static final int PLAYER_SPRITE_COUNT = 8;
     private HashMap<Direction, ArrayList<BufferedImage>> playerSprites;
 
+
+    //Wall images
+    private HashMap<WallType, HashMap<WallDirection, BufferedImage>> walls;
+
+
     public ImageHandler(){
         this.playerSprites = new HashMap<>();
         loadPlayerSprite();
+
+        this.walls = new HashMap<>();
     }
 
 
@@ -62,6 +71,28 @@ public class ImageHandler {
 
 
     //////////////////////////////// END PLAYER METHODS //////////////////////////
+    /// 
+    /// //////////////////////////// START WALL METHODS //////////////////////////
+    /// 
+    
+    private void loadWalls(){
+
+        HashMap<WallDirection, BufferedImage> shortWoodenWalls = new HashMap<>();
+        shortWoodenWalls.put(WallDirection.HORIZONTAL, ImageReader.fetcImage("src\\main\\java\\no\\resources\\walls\\ShortWall1_1.png"));
+        shortWoodenWalls.put(WallDirection.VERTICAL, ImageReader.fetcImage("src\\main\\java\\no\\resources\\walls\\ShortWall1_2.png"));
+
+        HashMap<WallDirection, BufferedImage> longWoodenWalls = new HashMap<>();
+        longWoodenWalls.put(WallDirection.VERTICAL, ImageReader.fetcImage("src\\main\\java\\no\\resources\\walls\\LongWall1_1.png"));
+        longWoodenWalls.put(WallDirection.HORIZONTAL, ImageReader.fetcImage("src\\main\\java\\no\\resources\\walls\\LongWall1_2.png"));
+
+        this.walls.put(WallType.WOODEN_WALL, shortWoodenWalls);
+        this.walls.put(WallType.LONG_WOODEN_WALL, longWoodenWalls);
+
+    }
+
+    public BufferedImage getWallImage(WallType type, WallDirection dir){
+        return this.walls.get(type).get(dir);
+    }
 }
 
 
