@@ -13,6 +13,8 @@ public interface IDrawer {
      * @param bounds - Bounds for the image
      */
     default void drawImage(Graphics2D graphic, BufferedImage image, Rectangle2D.Double bounds) {
+
+        
         graphic.drawImage(image,
                 (int) bounds.getX(),
                 (int) bounds.getY(),

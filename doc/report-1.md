@@ -48,25 +48,25 @@
 
 **A5: Kort oppsummering av status**
 
-    - Vi har så langt:
-        - Laget et kart som tegnes
-            - Generert et underliggende grid derivert fra kartet som senere skal brukes til stifinning
+Vi har så langt:
+    - Laget et kart som tegnes
+        - Generert et underliggende grid derivert fra kartet som senere skal brukes til stifinning
 
-        - Generert en player som kan bevege seg med piltastene
-            - player sprite er animert og endrer seg ut fra hvilken retning den beveger seg i
+    - Generert en player som kan bevege seg med piltastene
+        - player sprite er animert og endrer seg ut fra hvilken retning den beveger seg i
 
     - Utover dette så har vi bygget et rammeverk som er modulært og vil gjøre det enkelt for flere å jobbe samtidig
         - Vi har også en del kjerneklasser og interfacer som skal gjøre det lett å utvikle videre
 
-    Dynamikken mellom medlemmene er grei og vi har mye kommunikasjon både ved fysiske møter og igjennom discord.
+Dynamikken mellom medlemmene er grei og vi har mye kommunikasjon både ved fysiske møter og igjennom discord.
 
-    Foreløpige mål videre:
+**Foreløpige mål videre:**
 
-        - Bli ferdig med stifinning
-        - Komme i gang med menyer
-        - Implementere første fiende/npc som beveger seg selv
-        - Ordne kollisjon med statiske objekter
-        - Implementere/utbedre flere statiske objekter en nåværende TestWall
+    - Bli ferdig med stifinning
+    - Komme i gang med menyer
+    - Implementere første fiende/npc som beveger seg selv
+    - Ordne kollisjon med statiske objekter
+    - Implementere/utbedre flere statiske objekter en nåværende TestWall
 
     
 

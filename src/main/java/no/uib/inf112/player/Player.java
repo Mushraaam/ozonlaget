@@ -8,8 +8,6 @@ import no.uib.inf112.interfaces.IViewablePlayer;
 
 public class Player implements IControllablePlayer, IViewablePlayer{
     public static final int PLAYER_MOVE_SPEED = 5;
-    public static final int PLAYER_HEIGHT = 50;
-    public static final int PLAYER_WIDTH = 50;
     public static final int ANIMATION_COUNT = 8;
         
     private Rectangle2D.Double hitbox;
@@ -17,6 +15,7 @@ public class Player implements IControllablePlayer, IViewablePlayer{
     private Direction currentDirection;
     private int animationIndex;
 
+    //TODO: movePlayer og legalMove har unødvendig duplikatkode
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds){
         this.hitbox = hitbox;   
         this.bounds = bounds;
@@ -35,6 +34,7 @@ public class Player implements IControllablePlayer, IViewablePlayer{
             int deltaY = 0;
 
             if(legalMove(dir)){
+
                 switch (dir) {
                     case NORTH:
                         deltaY = -PLAYER_MOVE_SPEED;
@@ -48,6 +48,10 @@ public class Player implements IControllablePlayer, IViewablePlayer{
                     case WEST:
                         deltaX = -PLAYER_MOVE_SPEED;
                         break;
+                    case NORTH_EAST: { deltaX =  PLAYER_MOVE_SPEED; deltaY = -PLAYER_MOVE_SPEED; break;}
+                    case NORTH_WEST: { deltaX = -PLAYER_MOVE_SPEED; deltaY = -PLAYER_MOVE_SPEED; break;}
+                    case SOUTH_EAST: { deltaX =  PLAYER_MOVE_SPEED; deltaY =  PLAYER_MOVE_SPEED; break;}
+                    case SOUTH_WEST: { deltaX = -PLAYER_MOVE_SPEED; deltaY =  PLAYER_MOVE_SPEED; break;}
                     default:
                         break;
                 }
@@ -101,6 +105,10 @@ public class Player implements IControllablePlayer, IViewablePlayer{
             case WEST:
                 deltaX = -PLAYER_MOVE_SPEED;
                 break;
+            case NORTH_EAST: { deltaX =  PLAYER_MOVE_SPEED; deltaY = -PLAYER_MOVE_SPEED; break;}
+            case NORTH_WEST: { deltaX = -PLAYER_MOVE_SPEED; deltaY = -PLAYER_MOVE_SPEED; break;}
+            case SOUTH_EAST: { deltaX =  PLAYER_MOVE_SPEED; deltaY =  PLAYER_MOVE_SPEED; break;}
+            case SOUTH_WEST: { deltaX = -PLAYER_MOVE_SPEED; deltaY =  PLAYER_MOVE_SPEED; break;}
             
             default:
                 break;
