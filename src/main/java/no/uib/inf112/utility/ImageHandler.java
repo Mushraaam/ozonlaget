@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import no.uib.inf112.enums.Direction;
+import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.enums.walls.WallDirection;
 import no.uib.inf112.enums.walls.WallType;
 
@@ -19,12 +20,19 @@ public class ImageHandler {
     private HashMap<WallType, HashMap<WallDirection, BufferedImage>> walls;
 
 
+    //Enemy image
+    private HashMap<EnemyType, ArrayList<BufferedImage>> enemies;
+
+
     public ImageHandler(){
         this.playerSprites = new HashMap<>();
         loadPlayerSprite();
 
         this.walls = new HashMap<>();
         loadWalls();
+
+        this.enemies = new HashMap<>();
+        loadEnemies();
     }
 
 
@@ -95,6 +103,24 @@ public class ImageHandler {
     public BufferedImage getWallImage(WallType type, WallDirection dir){
         return this.walls.get(type).get(dir);
     }
+
+
+    //////////////// END WALL LOGIC//////////////
+    /// 
+    /// /////////// START ENEMY LOGIC //////////////
+    
+    private void loadEnemies(){
+        ArrayList<BufferedImage> thugs = new ArrayList<>();
+        thugs.add(ImageReader.fetchImage("/no/uib/inf112/map/npcs/thug.png"));
+        this.enemies.put(EnemyType.THUG, thugs);
+
+    }
+
+    public BufferedImage getEnemyImage(EnemyType type, int Index){
+        return this.enemies.get(type).get(Index);
+    }
+
+
 }
 
 
