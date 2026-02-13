@@ -3,12 +3,13 @@ package no.uib.inf112.core;
 import java.awt.geom.Rectangle2D;
 import java.util.concurrent.ThreadLocalRandom;
 
+import no.uib.inf112.config.Config;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.map.npcs.Thug;
 
 public class Spawner {
-    private static final double THUG_WIDTH = 80;
-    private static final double THUG_HEIGHT = 80;
+    private static final double THUG_WIDTH = Config.getInt("thugWidth");
+    private static final double THUG_HEIGHT = Config.getInt("thugHeight");
 
     private final IMap map;
 
