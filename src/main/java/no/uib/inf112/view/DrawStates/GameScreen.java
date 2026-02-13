@@ -1,14 +1,13 @@
 package no.uib.inf112.view.DrawStates;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.util.List;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import no.uib.inf112.interfaces.IDrawer;
-import no.uib.inf112.interfaces.IEnemy;
-import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IViewablePlayer;
+import no.uib.inf112.interfaces.*;
 import no.uib.inf112.utility.ImageHandler;
 import no.uib.inf112.utility.ImageReader;
 
@@ -81,10 +80,20 @@ public class GameScreen implements IDrawer {
     private void drawEnemies(Graphics2D graphic){
         ArrayList<IEnemy> enemies = this.map.getEnemies();
         for(IEnemy enemy : enemies){
+            List<ICell> path = enemy.getCurrentPath();
             Rectangle2D.Double hitbox = enemy.getHitbox();
             if(map.debugMode()){
                 graphic.setColor(new Color(255, 0, 0, 120));
+                for (ICell step : path) {
+                    Rectangle2D r = step.getBounds();
+                    double cx = r.getCenterX();
+                    double cy = r.getCenterY();
+                    double radius = Math.min(r.getWidth(), r.getHeight()) * 0.25;
+                    double d = radius * 2;
+                    graphic.fill(new Ellipse2D.Double(cx - radius, cy - radius, d, d
+                    ));
                 graphic.fill(hitbox);}
+            }
             drawImage(graphic, enemy.getImg(), hitbox );
         }
     }
