@@ -26,6 +26,8 @@ public class Controller implements java.awt.event.KeyListener {
         this.map = map;
         this.player = (IControllablePlayer) map.getPlayer();
         this.view = view;
+
+        //TODO: Move dirHandler to player
         this.dirHandler = new DirectionHandler();
 
         this.view.addKeyListener(this);
@@ -34,7 +36,9 @@ public class Controller implements java.awt.event.KeyListener {
         // TIMERS
         this.playerAnimationTimer = new Timer(100, (ActionEvent e) -> {
             if (map.getGameState() == GameState.ACTIVE_GAME) {
-                this.player.incrementAnimationIndex();
+                if (this.dirHandler.isMoving()) {
+                    this.player.incrementAnimationIndex();
+                }
                 this.view.repaint();
             }
         });

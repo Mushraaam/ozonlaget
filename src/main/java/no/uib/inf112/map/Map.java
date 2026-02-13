@@ -37,7 +37,7 @@ public class Map implements IMap {
         this.gameState = GameState.ACTIVE_GAME;
 
         this.grid = new Grid(this);
-        this.spawner = new Spawner(this); //Spawner comes after grid, or else uh-oh.
+        this.spawner = new Spawner(this); //Spawner comes after grid, or else uh-oh.    
 
     }
 
