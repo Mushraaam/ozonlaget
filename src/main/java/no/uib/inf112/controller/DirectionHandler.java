@@ -70,11 +70,4 @@ public class DirectionHandler {
     public boolean isMoving(){
         return !this.currentDirections.isEmpty();
     }
-
-
-
-
-
-
-
 }

@@ -5,11 +5,9 @@ import java.awt.geom.Rectangle2D.Double;
 
 import no.uib.inf112.enums.walls.WallDirection;
 import no.uib.inf112.enums.walls.WallType;
-import no.uib.inf112.interfaces.IStaticDrawableObject;
-import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IWall;
 
-public class WoodWall implements IStaticDrawableObject, IStaticObject, IWall{
+public class WoodWall implements IWall{
 
     private Rectangle2D.Double bounds;
     private WallDirection dir;
