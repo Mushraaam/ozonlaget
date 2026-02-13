@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IMap;
@@ -47,6 +48,8 @@ public class GameScreen implements IDrawer {
 
     private void drawStaticObjects(Graphics2D graphic) {
         for (IStaticObject o : map.getStaticObjects()){
+
+            //Optimize later
             if (!(o instanceof IStaticDrawableObject)){
                 throw new IllegalArgumentException("Object should be instance of IStaticDrawableObject");
             }
@@ -85,8 +88,12 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawBackground(Graphics2D graphic) {
-        Rectangle2D.Double bounds = this.map.getBounds();
-        drawImage(graphic, this.tempBackground, bounds);
+        // Rectangle2D.Double bounds = this.map.getBounds();
+        // drawImage(graphic, this.tempBackground, bounds);
+
+        for (ICell cell : this.map.getGrid()){
+            drawImage(graphic, handler.getFloor(cell.floorType()), cell.getBounds());
+        }
     }
 
     private void drawPlayer(Graphics2D graphic) {

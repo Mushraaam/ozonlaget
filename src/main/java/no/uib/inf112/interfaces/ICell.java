@@ -2,6 +2,8 @@ package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
 
+import no.uib.inf112.enums.FloorType;
+
 public interface ICell {
     
 
@@ -16,4 +18,6 @@ public interface ICell {
     public int row();
 
     public int col();
+
+    public FloorType floorType();
 }

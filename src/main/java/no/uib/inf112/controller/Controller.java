@@ -8,9 +8,6 @@ import no.uib.inf112.view.GameDrawer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Rectangle2D;
-import java.util.Set;
-import java.util.EnumSet;
 
 import javax.swing.Timer;
 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.EnemyType;
+import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.walls.WallDirection;
 import no.uib.inf112.enums.walls.WallType;
 
@@ -23,6 +24,8 @@ public class ImageHandler {
     //Enemy image
     private HashMap<EnemyType, ArrayList<BufferedImage>> enemies;
 
+    private HashMap<FloorType, BufferedImage> floors;
+
 
     public ImageHandler(){
         this.playerSprites = new HashMap<>();
@@ -33,6 +36,9 @@ public class ImageHandler {
 
         this.enemies = new HashMap<>();
         loadEnemies();
+
+        this.floors = new HashMap<>();
+        loadFloors();
     }
 
 
@@ -120,7 +126,18 @@ public class ImageHandler {
         return this.enemies.get(type).get(Index);
     }
 
+    ///////////////////// END ENEMY LOGIC ////////////////////
+    /// 
+    /// ////////////////START FLOOR LOGIC ////////////////////
+    /// 
+    
+    private void loadFloors(){
+        this.floors.put(FloorType.STONE_TILES, ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"));
+    }
 
+    public BufferedImage getFloor(FloorType type){
+        return this.floors.get(type);
+    }
 }
 
 
