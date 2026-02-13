@@ -19,7 +19,7 @@ public class DebugScreen implements IDrawer {
 
     @Override
     public void draw(Graphics2D graphic) {
-        graphic.setColor(Color.BLACK);
+        graphic.setColor(new Color(0, 0, 0, 120));
         
         for (ICell cell : this.map.getGrid()) {
             if (isVisible(graphic, cell.getBounds())) {
@@ -31,15 +31,15 @@ public class DebugScreen implements IDrawer {
             }
         }
 
+
         //Draw player hitbox
-        Rectangle2D.Double hitbox = map.getPlayer().getHitbox();
         graphic.setColor(new Color(255, 0, 0, 120));
+        Rectangle2D.Double hitbox = map.getPlayer().getHitbox();
         graphic.fill(hitbox);
 
         //Draw enemy hitbox
         for (IEnemy enemy : this.map.getEnemies()){
             hitbox = enemy.getHitbox();
-            graphic.setColor(new Color(255, 0, 0, 120));
             graphic.fill(hitbox);
         }
 
