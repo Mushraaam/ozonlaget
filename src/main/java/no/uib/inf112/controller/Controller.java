@@ -53,11 +53,6 @@ public class Controller implements java.awt.event.KeyListener {
                         player.setDirection(dir);
                     }
                 }
-
-                // for (Direction dir : dirHandler.getAllDirections()){
-                // player.movePlayer(dir);
-                // player.setDirection(dirHandler.getDirection());
-
             }
             view.repaint();
 

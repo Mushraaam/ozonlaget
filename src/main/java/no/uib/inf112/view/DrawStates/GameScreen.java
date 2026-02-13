@@ -92,9 +92,6 @@ public class GameScreen implements IDrawer {
     private void drawPlayer(Graphics2D graphic) {
         this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
         Rectangle2D.Double hitbox = this.player.getHitbox();
-        if(map.debugMode()){
-            graphic.setColor(new Color(255, 0, 0, 120));
-            graphic.fill(hitbox);}
         drawImage(graphic, this.playerSprite, hitbox);
     }
 
@@ -102,9 +99,6 @@ public class GameScreen implements IDrawer {
         ArrayList<IEnemy> enemies = this.map.getEnemies();
         for(IEnemy enemy : enemies){
             Rectangle2D.Double hitbox = enemy.getHitbox();
-            if(map.debugMode()){
-                graphic.setColor(new Color(255, 0, 0, 120));
-                graphic.fill(hitbox);}
             drawImage(graphic, enemy.getImg(), hitbox );
         }
     }
