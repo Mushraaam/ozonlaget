@@ -24,6 +24,7 @@ public class ImageHandler {
         loadPlayerSprite();
 
         this.walls = new HashMap<>();
+        loadWalls();
     }
 
 
@@ -79,12 +80,12 @@ public class ImageHandler {
     private void loadWalls(){
 
         HashMap<WallDirection, BufferedImage> shortWoodenWalls = new HashMap<>();
-        shortWoodenWalls.put(WallDirection.HORIZONTAL, ImageReader.fetcImage("src\\main\\java\\no\\resources\\walls\\ShortWall1_1.png"));
-        shortWoodenWalls.put(WallDirection.VERTICAL, ImageReader.fetcImage("src\\main\\java\\no\\resources\\walls\\ShortWall1_2.png"));
+        shortWoodenWalls.put(WallDirection.HORIZONTAL, ImageReader.fetchImage("/no/uib/inf112/walls/ShortWall1_1.png"));
+        shortWoodenWalls.put(WallDirection.VERTICAL, ImageReader.fetchImage("/no/uib/inf112/walls/ShortWall1_2.png"));
 
         HashMap<WallDirection, BufferedImage> longWoodenWalls = new HashMap<>();
-        longWoodenWalls.put(WallDirection.VERTICAL, ImageReader.fetcImage("src\\main\\java\\no\\resources\\walls\\LongWall1_1.png"));
-        longWoodenWalls.put(WallDirection.HORIZONTAL, ImageReader.fetcImage("src\\main\\java\\no\\resources\\walls\\LongWall1_2.png"));
+        longWoodenWalls.put(WallDirection.VERTICAL, ImageReader.fetchImage("/no/uib/inf112/walls/LongWall1_1.png"));
+        longWoodenWalls.put(WallDirection.HORIZONTAL, ImageReader.fetchImage("/no/uib/inf112/walls/LongWall1_2.png"));
 
         this.walls.put(WallType.WOODEN_WALL, shortWoodenWalls);
         this.walls.put(WallType.LONG_WOODEN_WALL, longWoodenWalls);

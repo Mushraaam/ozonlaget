@@ -9,12 +9,12 @@ import no.uib.inf112.interfaces.IStaticDrawableObject;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IWall;
 
-public class TestWall implements IStaticDrawableObject, IStaticObject, IWall{
+public class WoodWall implements IStaticDrawableObject, IStaticObject, IWall{
 
     private Rectangle2D.Double bounds;
     private WallDirection dir;
     private WallType type;
-    public TestWall(Rectangle2D.Double bounds, WallType type){
+    public WoodWall(Rectangle2D.Double bounds, WallType type){
         this.bounds = bounds;
         this.dir = calculateDirection(this.bounds);
         this.type = type;

@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.interfaces.IStaticDrawableObject;
+import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IViewablePlayer;
+import no.uib.inf112.interfaces.IWall;
 import no.uib.inf112.utility.ImageHandler;
 import no.uib.inf112.utility.ImageReader;
 
@@ -37,8 +40,25 @@ public class GameScreen implements IDrawer {
         /* Order matters(tror jeg) */
         centerCamera(graphic);
         drawBackground(graphic);
+        drawStaticObjects(graphic);
         drawPlayer(graphic);
         drawEnemies(graphic);
+    }
+
+    private void drawStaticObjects(Graphics2D graphic) {
+        for (IStaticObject o : map.getStaticObjects()){
+            if (!(o instanceof IStaticDrawableObject)){
+                throw new IllegalArgumentException("Object should be instance of IStaticDrawableObject");
+            }
+
+            IStaticDrawableObject obj = (IStaticDrawableObject) o;
+
+            if (obj instanceof IWall){
+                IWall wall = (IWall) obj;
+                BufferedImage image = handler.getWallImage(wall.wallType(), wall.getWallDirection());
+                drawImage(graphic, image, wall.getBounds());
+            }
+        }
     }
 
     /* Sentrerer kamera på player, holder seg innenfor bounds */

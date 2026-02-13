@@ -23,7 +23,6 @@ public class Controller implements java.awt.event.KeyListener {
     private GameDrawer view;
     private Timer playerAnimationTimer;
     private Timer movementTimer;
-    
 
     public Controller(IMap map, GameDrawer view) {
 
@@ -42,27 +41,29 @@ public class Controller implements java.awt.event.KeyListener {
                 this.view.repaint();
             }
         });
-        this.playerAnimationTimer.start(); //senere endre til if (moving) elns
+        this.playerAnimationTimer.start(); // senere endre til if (moving) elns
 
-        this.movementTimer = new Timer(16, e ->{
-            if(map.getGameState() == GameState.ACTIVE_GAME){
+        this.movementTimer = new Timer(16, e -> {
+            if (map.getGameState() == GameState.ACTIVE_GAME) {
 
-                if (dirHandler.isMoving()){
-                player.movePlayer(dirHandler.getDirection());
-                player.setDirection(dirHandler.getDirection());}
-
-                
-                // for (Direction dir : dirHandler.getAllDirections()){
-                //     player.movePlayer(dir);
-                // player.setDirection(dirHandler.getDirection());
-                    
+                if (dirHandler.isMoving()) {
+                    Direction dir = dirHandler.getDirection();
+                    if (dir != Direction.NONE) {
+                        player.movePlayer(dir);
+                        player.setDirection(dir);
+                    }
                 }
-                view.repaint();
-            
+
+                // for (Direction dir : dirHandler.getAllDirections()){
+                // player.movePlayer(dir);
+                // player.setDirection(dirHandler.getDirection());
+
+            }
+            view.repaint();
+
         });
         this.movementTimer.start();
     }
-
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -78,7 +79,7 @@ public class Controller implements java.awt.event.KeyListener {
         this.view.repaint();
     }
 
-    //GAMESTATE BOUND KEY EVENTS FOR KEY PRESSED
+    // GAMESTATE BOUND KEY EVENTS FOR KEY PRESSED
     private void activeGamePressEvent(KeyEvent e) {
         switch (e.getKeyCode()) {
             // movement
@@ -108,7 +109,6 @@ public class Controller implements java.awt.event.KeyListener {
         }
     }
 
-    
     @Override
     public void keyReleased(KeyEvent e) {
         switch (this.map.getGameState()) {
@@ -122,29 +122,30 @@ public class Controller implements java.awt.event.KeyListener {
         }
     }
 
-    //GAMESTATE BOUND KEY EVENTS FOR KEY RELEASED
-    private void activeGameReleaseEvent(KeyEvent e){
-        switch (e.getKeyCode()){
+    // GAMESTATE BOUND KEY EVENTS FOR KEY RELEASED
+    private void activeGameReleaseEvent(KeyEvent e) {
+        switch (e.getKeyCode()) {
             case KeyEvent.VK_W -> {
                 dirHandler.remove(Direction.NORTH);
-            } 
+            }
             case KeyEvent.VK_S -> {
                 dirHandler.remove(Direction.SOUTH);
-            } 
+            }
             case KeyEvent.VK_A -> {
                 dirHandler.remove(Direction.WEST);
-            } 
+            }
             case KeyEvent.VK_D -> {
                 dirHandler.remove(Direction.EAST);
-            } 
+            }
         }
     }
-    
+
     @Override
     public void keyTyped(KeyEvent e) {
 
         // not implemented
     }
+
     //////////////// HELPER METHODS - THESE SHOULD BE SHORT AND SELF EXPLANATORY
     /// /////////////// Maybe move the helpers to their classes, at a later occasion.
     /// e.g map.flipDebug()

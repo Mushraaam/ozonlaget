@@ -9,7 +9,7 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.player.Player;
-import no.uib.inf112.static_objects.TestWall;
+import no.uib.inf112.static_objects.WoodWall;
 
 public class Level1 implements ILevel{
 
@@ -47,11 +47,11 @@ public class Level1 implements ILevel{
     private void generateStaticObjects() {
 
         //start box testing
-        staticObjects.add(new TestWall(new Rectangle2D.Double(900, 900, 15, 300), WallType.WOODEN_WALL));         //left wall
-        staticObjects.add(new TestWall(new Rectangle2D.Double(900, 900+300, 300, 15), WallType.WOODEN_WALL));         //bottom wallp
-        staticObjects.add(new TestWall(new Rectangle2D.Double(900, 900, 300, 15), WallType.WOODEN_WALL));         //top wall
-        staticObjects.add(new TestWall(new Rectangle2D.Double(900+300, 900, 15, 70), WallType.WOODEN_WALL));         //right top
-        staticObjects.add(new TestWall(new Rectangle2D.Double(900+300, 900+300-70, 15, 85), WallType.WOODEN_WALL));     //right bot
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900, 15, 300), WallType.LONG_WOODEN_WALL));         //left wall
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900+300, 300, 15), WallType.LONG_WOODEN_WALL));         //bottom wallp
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900, 300, 15), WallType.LONG_WOODEN_WALL));         //top wall
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(900+300, 900, 15, 70), WallType.WOODEN_WALL));         //right top
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(900+300, 900+300-70, 15, 85), WallType.WOODEN_WALL));     //right bot
 
 
 

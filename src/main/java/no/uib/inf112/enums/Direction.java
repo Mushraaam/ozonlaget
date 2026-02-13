@@ -1,6 +1,7 @@
 package no.uib.inf112.enums;
 
 public enum Direction {
+    NONE,
     NORTH,
     SOUTH,
     WEST,
