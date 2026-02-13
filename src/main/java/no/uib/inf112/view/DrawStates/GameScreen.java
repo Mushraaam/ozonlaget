@@ -28,7 +28,7 @@ public class GameScreen implements IDrawer {
 
         // Bør skaleres kun en gang, dette flyttes senere til ny klasse
         this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
-        this.tempBackground = ImageReader.fetcImage("src\\main\\java\\no\\resources\\parkbackground.png");
+        this.tempBackground = ImageReader.fetchImage("/no/uib/inf112/map/parkbackground.png");
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import no.uib.inf112.config.Config;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IMap;
@@ -17,8 +18,8 @@ public class Grid implements IGrid {
     private IMap map;
 
     // Represent pixel width
-    private final static int CELLWIDTH = 40;
-    private final static int CELLHEIGHT = 40;
+    private final static int CELLWIDTH = Config.getInt("cellWidth");
+    private final static int CELLHEIGHT = Config.getInt("cellHeight");
 
     private int colCount;
     private int rowCount;
