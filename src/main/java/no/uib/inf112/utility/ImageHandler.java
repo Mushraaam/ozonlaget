@@ -133,6 +133,7 @@ public class ImageHandler {
     
     private void loadFloors(){
         this.floors.put(FloorType.STONE_TILES, ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"));
+        this.floors.put(FloorType.GRASS_TILES, ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"));
     }
 
     public BufferedImage getFloor(FloorType type){

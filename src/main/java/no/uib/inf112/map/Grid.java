@@ -60,7 +60,7 @@ public class Grid implements IGrid {
                         CELLHEIGHT);
 
                 //TODO: fix floortype logic
-                cellRow.add(new Cell(cellBounds, row, col, FloorType.STONE_TILES));
+                cellRow.add(new Cell(cellBounds, row, col, FloorType.GRASS_TILES));
             }
 
             grid.add(cellRow);
