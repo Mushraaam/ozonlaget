@@ -5,11 +5,9 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.utility.ImageHandler;
 import no.uib.inf112.utility.ImageReader;
@@ -30,7 +28,7 @@ public class GameScreen implements IDrawer {
 
         // Bør skaleres kun en gang, dette flyttes senere til ny klasse
         this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
-        this.tempBackground = ImageReader.fetcImage("src\\main\\java\\no\\resources\\parkbackground.png");
+        this.tempBackground = ImageReader.fetchImage("/no/uib/inf112/map/parkbackground.png");
     }
 
     @Override

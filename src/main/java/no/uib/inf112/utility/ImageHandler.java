@@ -33,16 +33,17 @@ public class ImageHandler {
 
         this.playerSprites.put(Direction.NORTH, playerNorth);
 
-        for (int i = 1; i<=PLAYER_SPRITE_COUNT;i++){
-            playerNorth.add(ImageReader.fetcImage(String.format("src/main/java/no/resources/player/player%s_north.png", i)));
-            playerSouth.add(ImageReader.fetcImage(String.format("src\\main\\java\\no\\resources\\player\\player%s_south.png", i)));
-            playerWest.add(ImageReader.fetcImage(String.format("src\\main\\java\\no\\resources\\player\\player%s_west.png", i)));
-            playerEast.add(ImageReader.fetcImage(String.format("src\\main\\java\\no\\resources\\player\\player%s_east.png", i)));
-            playerNorthWest.add(ImageReader.fetcImage(String.format("src\\main\\java\\no\\resources\\player\\player%s_north_west.png", i)));
-            playerNorthEast.add(ImageReader.fetcImage(String.format("src\\main\\java\\no\\resources\\player\\player%s_north_east.png", i)));
-            playerSouthWest.add(ImageReader.fetcImage(String.format("src\\main\\java\\no\\resources\\player\\player%s_south_west.png", i)));
-            playerSouthEast.add(ImageReader.fetcImage(String.format("src\\main\\java\\no\\resources\\player\\player%s_south_east.png", i)));
+        for (int i = 1; i <= PLAYER_SPRITE_COUNT; i++) {
+            playerNorth.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_north.png", i)));
+            playerSouth.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south.png", i)));
+            playerWest.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_west.png", i)));
+            playerEast.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_east.png", i)));
+            playerNorthWest.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_north_west.png", i)));
+            playerNorthEast.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_north_east.png", i)));
+            playerSouthWest.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south_west.png", i)));
+            playerSouthEast.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south_east.png", i)));
         }
+
 
         this.playerSprites.put(Direction.NORTH, playerNorth);
         this.playerSprites.put(Direction.SOUTH, playerSouth);
