@@ -12,6 +12,7 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IMovingDrawableObject;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
 public class TestMap implements IMap {
 
@@ -31,6 +32,10 @@ public class TestMap implements IMap {
         return new ArrayList<IStaticObject>();
     }
 
+    @Override
+    public Pathfinder getPathfinder() {
+        return new Pathfinder(getGrid());
+    }
 
 
 

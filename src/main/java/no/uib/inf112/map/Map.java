@@ -7,6 +7,7 @@ import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.map.levels.Level1;
+import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
 public class Map implements IMap {
 
@@ -17,6 +18,7 @@ public class Map implements IMap {
     private ArrayList<IStaticObject> staticObjects;
     private IGrid grid;
     private boolean debug;
+    private Pathfinder pathfinder;
 
     ArrayList<IEnemy> enemies;
     private final Spawner spawner;
@@ -37,8 +39,8 @@ public class Map implements IMap {
         this.gameState = GameState.ACTIVE_GAME;
 
         this.grid = new Grid(this);
-        this.spawner = new Spawner(this); //Spawner comes after grid, or else uh-oh.    
-
+        this.spawner = new Spawner(this); //Spawner comes after grid, or else uh-oh.
+        this.pathfinder = new Pathfinder(grid);
     }
 
     @Override
@@ -59,6 +61,12 @@ public class Map implements IMap {
     public ArrayList<IEnemy> getEnemies(){
         return enemies;
     }
+
+    @Override
+    public Pathfinder getPathfinder() {
+        return pathfinder;
+    }
+
     @Override
     public IPlayer getPlayer() {
         return this.player;

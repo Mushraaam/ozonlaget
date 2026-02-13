@@ -20,8 +20,8 @@ public class Spawner {
     public boolean spawnThug() {
         var p = map.getPlayer().getHitbox();
 
-        double xOffset = ThreadLocalRandom.current().nextDouble(20, 1000);
-        double yOffset = ThreadLocalRandom.current().nextDouble(20, 1000);
+        double xOffset = ThreadLocalRandom.current().nextDouble(200, 500);
+        double yOffset = ThreadLocalRandom.current().nextDouble(200, 500);
 
         Rectangle2D.Double hitbox = new Rectangle2D.Double(
                 p.getX() + xOffset,
