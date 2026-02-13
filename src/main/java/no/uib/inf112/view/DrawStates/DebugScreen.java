@@ -2,7 +2,9 @@ package no.uib.inf112.view.DrawStates;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IDrawer;
@@ -43,8 +45,32 @@ public class DebugScreen implements IDrawer {
             graphic.fill(hitbox);
         }
 
+        // Draw enemy paths
+        graphic.setColor(new Color(255, 0, 0, 160));
 
-        
+        for (IEnemy enemy : this.map.getEnemies()) {
+            List<ICell> path = enemy.getCurrentPath();
+            if (path == null || path.isEmpty()) continue;
+
+            for (ICell step : path) {
+                Rectangle2D r = step.getBounds();
+                double cx = r.getCenterX();
+                double cy = r.getCenterY();
+
+                double radius = Math.min(r.getWidth(), r.getHeight()) * 0.25;
+                double d = radius * 2;
+
+                graphic.fill(new Ellipse2D.Double(
+                        cx - radius,
+                        cy - radius,
+                        d,
+                        d
+                ));
+            }
+        }
+
+
+
     }
 
 }

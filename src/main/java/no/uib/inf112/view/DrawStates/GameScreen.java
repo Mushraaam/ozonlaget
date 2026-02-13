@@ -1,9 +1,12 @@
 package no.uib.inf112.view.DrawStates;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.util.List;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
 
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IDrawer;
