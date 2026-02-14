@@ -20,6 +20,7 @@ public class GameScreen implements IDrawer {
 
     private IMap map;
     private IGrid grid;
+    private IGrid tiles;
     private IViewablePlayer player;
     private ImageHandler handler;
 
@@ -30,6 +31,7 @@ public class GameScreen implements IDrawer {
         this.player = (IViewablePlayer) map.getPlayer();
         this.handler = handler;
         this.grid = map.getGrid();
+        this.tiles = map.getTiles();
 
         // Bør skaleres kun en gang, dette flyttes senere til ny klasse
         this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
@@ -88,7 +90,7 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawBackground(Graphics2D graphic) {
-        drawCellsInView(graphic, this.grid, this.handler);
+        drawCellsInView(graphic, this.tiles, this.handler);
     }
 
     private void drawPlayer(Graphics2D graphic) {

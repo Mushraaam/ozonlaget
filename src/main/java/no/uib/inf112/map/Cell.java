@@ -52,6 +52,11 @@ public class Cell implements ICell {
         return this.floorType;
     }
 
+    @Override
+    public void setFloorType(FloorType type){
+        this.floorType = type;
+    }
+
 
 
     // FOR TESTING BELOW //

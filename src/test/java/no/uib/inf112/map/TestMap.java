@@ -118,5 +118,11 @@ public class TestMap implements IMap {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getEnemies'");
     }
+
+    @Override
+    public IGrid getTiles() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTiles'");
+    }
     
 }

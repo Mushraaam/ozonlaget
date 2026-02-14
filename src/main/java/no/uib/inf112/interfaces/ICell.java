@@ -20,4 +20,6 @@ public interface ICell {
     public int col();
 
     public FloorType floorType();
+
+    public void setFloorType(FloorType type);
 }

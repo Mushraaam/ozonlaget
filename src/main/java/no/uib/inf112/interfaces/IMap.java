@@ -46,6 +46,11 @@ public interface IMap {
     public IGrid getGrid();
 
     /**
+     * @return IGrid of tiles
+     */
+    public IGrid getTiles();
+
+    /**
      * @return true if debug mode active
      */
     public boolean debugMode();

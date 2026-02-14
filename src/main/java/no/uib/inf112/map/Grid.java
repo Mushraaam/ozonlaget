@@ -41,34 +41,10 @@ public class Grid implements IGrid {
         this.colCount = (int) Math.floor(width / CELLWIDTH);
         this.rowCount = (int) Math.floor(height / CELLHEIGHT);
 
-        this.cellGrid = makeGrid();
+        this.cellGrid = makeGrid(this.rowCount, this.colCount, CELLWIDTH, CELLHEIGHT, FloorType.NONE);
+        fillGrid(this.cellGrid, map.getStaticObjects());
 
-    }
 
-    public ArrayList<ArrayList<ICell>> makeGrid() {
-
-        ArrayList<ArrayList<ICell>> grid = new ArrayList<>(this.rowCount);
-
-        for (int row = 0; row < this.rowCount; row++) {
-            ArrayList<ICell> cellRow = new ArrayList<>(this.colCount);
-
-            for (int col = 0; col < this.colCount; col++) {
-
-                Rectangle2D.Double cellBounds = new Rectangle2D.Double(
-                        col * CELLWIDTH,
-                        row * CELLHEIGHT,
-                        CELLWIDTH,
-                        CELLHEIGHT);
-
-                //TODO: fix floortype logic
-                cellRow.add(new Cell(cellBounds, row, col, FloorType.GRASS_TILES));
-            }
-
-            grid.add(cellRow);
-        }
-
-        fillGrid(grid, map.getStaticObjects());
-        return grid;
     }
 
     private void fillGrid(ArrayList<ArrayList<ICell>> grid, ArrayList<IStaticObject> blockers) {

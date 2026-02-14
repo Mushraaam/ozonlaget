@@ -17,6 +17,7 @@ public class Map implements IMap {
     private Rectangle2D.Double bounds;
     private ArrayList<IStaticObject> staticObjects;
     private IGrid grid;
+    private IGrid tiles;
     private boolean debug;
     private Pathfinder pathfinder;
 
@@ -39,6 +40,7 @@ public class Map implements IMap {
         this.gameState = GameState.ACTIVE_GAME;
 
         this.grid = new Grid(this);
+        this.tiles = new TileGrid(this);
         this.spawner = new Spawner(this); //Spawner comes after grid, or else uh-oh.
         this.pathfinder = new Pathfinder(grid);
     }
@@ -110,5 +112,10 @@ public class Map implements IMap {
     @Override
     public void addEnemy(IEnemy thug) {
         enemies.add(thug);
+    }
+
+    @Override
+    public IGrid getTiles() {
+        return this.tiles;
     }
 }
