@@ -1,5 +1,6 @@
 package no.uib.inf112.interfaces;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -46,5 +47,21 @@ public interface IGrid extends Iterable<ICell>{
      * Used for testing
      */
     public int getCellHeight();
+
+    /**
+     * @return number of rows
+     */
+    public int getRowCount();
+
+    /**
+     * @return number of cols
+     */
+    public int getColCount();
+
+    /**
+     * @param graphics
+     * @return list of the cells in view
+     */
+    public ArrayList<ICell> getCellsInView(Graphics2D graphics);
 
 }

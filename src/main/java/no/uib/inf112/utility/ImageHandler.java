@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.enums.FloorType;
@@ -132,8 +133,10 @@ public class ImageHandler {
     /// 
     
     private void loadFloors(){
-        this.floors.put(FloorType.STONE_TILES, ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"));
-        this.floors.put(FloorType.GRASS_TILES, ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"));
+        int width = Config.getInt("cellWidth");
+        int height = Config.getInt("cellHeight");
+        this.floors.put(FloorType.STONE_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"), width, height));
+        this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"), width, height));
     }
 
     public BufferedImage getFloor(FloorType type){

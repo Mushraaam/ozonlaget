@@ -1,5 +1,6 @@
 package no.uib.inf112.map;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -162,24 +163,57 @@ public class Grid implements IGrid {
 
     @Override
     public ICell getCellFromPos(Rectangle2D.Double pos) {
-        int col = (int) Math.floor(pos.getCenterX() / CELLWIDTH);
-        int row = (int) Math.floor(pos.getCenterY() / CELLHEIGHT);
+        double centerX = pos.getCenterX();
+        double centerY = pos.getCenterY();
+        return getCellFromXY(centerX, centerY);
+    }
+
+    private ICell getCellFromXY(double x, double y){
+        int col = (int) Math.floor(x / CELLWIDTH);
+        int row = (int) Math.floor(y / CELLHEIGHT);
         return getCell(row, col);
+    }
+
+    public ArrayList<ICell> getCellsInView(Graphics2D graphics){
+        // double x1 = Math.min(this.bounds.getWidth(), Math.max(0, graphics.getClipBounds().getMinX()));
+        // double y1 = Math.min(this.bounds.getHeight(), Math.max(0, graphics.getClipBounds().getMinY()));
+        // double x2 = Math.min(this.bounds.getWidth(), Math.max(0, graphics.getClipBounds().getMaxX()));
+        // double y2 = Math.min(this.bounds.getHeight(), Math.max(0, graphics.getClipBounds().getMaxY()));
+
+        
+
+        // ICell topLeft = getCellFromXY(x1, y1);
+        // ICell botRight = getCellFromXY(x2, y2);
+
+        // int startRow = topLeft.row();
+        // int endRow = botRight.row();
+        // int startCol = topLeft.col();
+        // int endCol = botRight.col();
+
+        //optimalisert versjon av kommenter kode over
+        Rectangle2D clip = graphics.getClipBounds();
+        int startCol = (int) Math.floor(clip.getMinX() / CELLWIDTH);
+        int endCol   = (int) Math.floor((clip.getMaxX() - 1) / CELLWIDTH);
+        int startRow = (int) Math.floor(clip.getMinY() / CELLHEIGHT);
+        int endRow   = (int) Math.floor((clip.getMaxY() - 1) / CELLHEIGHT);
+
+        startCol = Math.max(0, Math.min(startCol, colCount - 1));
+        endCol   = Math.max(0, Math.min(endCol, colCount - 1));
+        startRow = Math.max(0, Math.min(startRow, rowCount - 1));
+        endRow   = Math.max(0, Math.min(endRow, rowCount - 1));
+
+        ArrayList<ICell> inView = new ArrayList<>();
+        for (int row = startRow; row <= endRow; row++){
+            for (int col = startCol; col <= endCol; col++){
+                inView.add(getCell(row, col));
+            }
+        }
+
+        return inView;
     }
 
 
 
-
-
-
-
-
-
-
-
-
-    ///////////////// METHODS FOR TESTING //////////////////
-    /// 
 
     @Override
     public int getCellWidth() {
@@ -189,6 +223,16 @@ public class Grid implements IGrid {
     @Override
     public int getCellHeight() {
         return CELLHEIGHT;
+    }
+
+    @Override
+    public int getRowCount() {
+        return this.rowCount;
+    }
+
+    @Override
+    public int getColCount() {
+        return this.colCount;
     }
 
 }

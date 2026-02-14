@@ -1,5 +1,6 @@
 package no.uib.inf112.map;
 
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -49,6 +50,24 @@ public class TileGrid implements IGrid{
     public int getCellHeight() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getCellHeight'");
+    }
+
+    @Override
+    public ArrayList<ICell> getCellsInView(Graphics2D graphics) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCellsInView'");
+    }
+
+    @Override
+    public int getRowCount() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRowCount'");
+    }
+
+    @Override
+    public int getColCount() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getColCount'");
     }
     
 }

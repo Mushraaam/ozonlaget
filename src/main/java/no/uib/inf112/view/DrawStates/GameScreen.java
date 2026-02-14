@@ -1,41 +1,38 @@
 package no.uib.inf112.view.DrawStates;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.util.List;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
+import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IStaticDrawableObject;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.interfaces.IWall;
 import no.uib.inf112.utility.ImageHandler;
-import no.uib.inf112.utility.ImageReader;
 
 public class GameScreen implements IDrawer {
 
     private IMap map;
+    private IGrid grid;
     private IViewablePlayer player;
     private ImageHandler handler;
 
     private BufferedImage playerSprite;
-    private BufferedImage tempBackground;
 
     public GameScreen(IMap map, ImageHandler handler) {
         this.map = map;
         this.player = (IViewablePlayer) map.getPlayer();
         this.handler = handler;
+        this.grid = map.getGrid();
 
         // Bør skaleres kun en gang, dette flyttes senere til ny klasse
         this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
-        this.tempBackground = ImageReader.fetchImage("/no/uib/inf112/map/parkbackground.png");
     }
 
     @Override
@@ -50,16 +47,16 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawStaticObjects(Graphics2D graphic) {
-        for (IStaticObject o : map.getStaticObjects()){
+        for (IStaticObject o : map.getStaticObjects()) {
 
-            //Optimize later
-            if (!(o instanceof IStaticDrawableObject)){
+            // Optimize later
+            if (!(o instanceof IStaticDrawableObject)) {
                 throw new IllegalArgumentException("Object should be instance of IStaticDrawableObject");
             }
 
             IStaticDrawableObject obj = (IStaticDrawableObject) o;
 
-            if (obj instanceof IWall){
+            if (obj instanceof IWall) {
                 IWall wall = (IWall) obj;
                 BufferedImage image = handler.getWallImage(wall.wallType(), wall.getWallDirection());
                 drawImage(graphic, image, wall.getBounds());
@@ -91,12 +88,7 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawBackground(Graphics2D graphic) {
-        // Rectangle2D.Double bounds = this.map.getBounds();
-        // drawImage(graphic, this.tempBackground, bounds);
-
-        for (ICell cell : this.map.getGrid()){
-            drawImage(graphic, handler.getFloor(cell.floorType()), cell.getBounds());
-        }
+        drawCellsInView(graphic, this.grid, this.handler);
     }
 
     private void drawPlayer(Graphics2D graphic) {
@@ -105,13 +97,15 @@ public class GameScreen implements IDrawer {
         drawImage(graphic, this.playerSprite, hitbox);
     }
 
-    private void drawEnemies(Graphics2D graphic){
+    private void drawEnemies(Graphics2D graphic) {
         ArrayList<IEnemy> enemies = this.map.getEnemies();
-        for(IEnemy enemy : enemies){
-            drawImage(graphic, handler.getEnemyImage(
-                enemy.getEnemyType(), 
-                enemy.getAnimationIndex()), 
-                enemy.getHitbox());
+        for (IEnemy enemy : enemies) {
+            if (isVisible(graphic, enemy.getHitbox())) {
+                drawImage(graphic, handler.getEnemyImage(
+                        enemy.getEnemyType(),
+                        enemy.getAnimationIndex()),
+                        enemy.getHitbox());
+            }
         }
     }
 
