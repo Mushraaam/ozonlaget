@@ -121,19 +121,9 @@ public class GameScreen implements IDrawer {
 
     private void drawRotated(Graphics2D g2, BufferedImage img, Rectangle2D.Double hb, double angle) {
         var old = g2.getTransform();
-
-        double cx = hb.getCenterX();
-        double cy = hb.getCenterY();
-
-        g2.rotate(angle, cx, cy);
-        g2.drawImage(
-                img,
-                (int)(cx - hb.width / 2),
-                (int)(cy - hb.height / 2),
-                (int)hb.width,
-                (int)hb.height,
-                null
-        );
+        g2.translate(hb.getCenterX(), hb.getCenterY());
+        g2.rotate(angle);
+        g2.drawImage(img, (int)-hb.width/2, (int)-hb.height/2, (int)hb.width, (int)hb.height, null);
 
         g2.setTransform(old);
     }
