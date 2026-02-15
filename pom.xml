@@ -325,6 +325,16 @@
 					<artifactId>maven-site-plugin</artifactId>
 					<version>3.21.0</version>
 				</plugin>
+    			<plugin>
+	    			<groupId>com.github.spotbugs</groupId>
+	    			<artifactId>spotbugs-maven-plugin</artifactId>
+	    			<version>4.9.8.2</version>
+    			</plugin>
+    			<plugin>
+    				<groupId>org.apache.maven.plugins</groupId>
+    				<artifactId>maven-checkstyle-plugin</artifactId>
+    				<version>3.6.0</version>
+                </plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -333,12 +343,10 @@
 			<plugin>
 				<groupId>com.github.spotbugs</groupId>
 				<artifactId>spotbugs-maven-plugin</artifactId>
-				<version>4.9.8.2</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.6.0</version>
 				<reportSets>
 					<reportSet>
 						<reports>
