@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.map.npcs.Thug;
+import no.uib.inf112.map.npcs.Zombie;
 
 public class Spawner {
     private static final double THUG_WIDTH = Config.getInt("thugWidth");
@@ -33,7 +33,7 @@ public class Spawner {
         if (!map.getBounds().contains(hitbox)) return false;
         if (map.getGrid().getCellFromPos(hitbox).isBlocked()) return false;
 
-        map.addEnemy(new Thug(hitbox));
+        map.addEnemy(new Zombie(hitbox));
         return true;
     }
 }
