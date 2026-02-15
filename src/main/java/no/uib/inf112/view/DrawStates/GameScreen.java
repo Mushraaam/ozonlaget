@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
@@ -14,6 +13,7 @@ import no.uib.inf112.interfaces.IStaticDrawableObject;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.interfaces.IWall;
+import no.uib.inf112.map.npcs.Zombie;
 import no.uib.inf112.utility.ImageHandler;
 
 public class GameScreen implements IDrawer {
@@ -101,14 +101,42 @@ public class GameScreen implements IDrawer {
 
     private void drawEnemies(Graphics2D graphic) {
         ArrayList<IEnemy> enemies = this.map.getEnemies();
-        for (IEnemy enemy : enemies) {
+        /*for (IEnemy enemy : enemies) {
             if (isVisible(graphic, enemy.getHitbox())) {
-                drawImage(graphic, handler.getEnemyImage(
-                        enemy.getEnemyType(),
-                        enemy.getAnimationIndex()),
-                        enemy.getHitbox());
+                drawImage(graphic, handler.getEnemySprites(enemy.getEnemyType(), enemy.getAnimationIndex()),enemy.getHitbox());
             }
+        }*/
+        for (IEnemy e : map.getEnemies()) {
+            Zombie z = (Zombie)e;
+
+            drawRotated(
+                    graphic,
+                    handler.getEnemySprites(z.getEnemyType(), z.getAnimationIndex()),
+                    z.getHitbox(),
+                    z.getFacingAngle()
+            );
         }
+
     }
+
+    private void drawRotated(Graphics2D g2, BufferedImage img, Rectangle2D.Double hb, double angle) {
+        var old = g2.getTransform();
+
+        double cx = hb.getCenterX();
+        double cy = hb.getCenterY();
+
+        g2.rotate(angle, cx, cy);
+        g2.drawImage(
+                img,
+                (int)(cx - hb.width / 2),
+                (int)(cy - hb.height / 2),
+                (int)hb.width,
+                (int)hb.height,
+                null
+        );
+
+        g2.setTransform(old);
+    }
+
 
 }

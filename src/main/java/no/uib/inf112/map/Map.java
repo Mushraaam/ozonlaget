@@ -29,7 +29,7 @@ public class Map implements IMap {
         this.bounds = this.level.getBounds();
         this.player = this.level.getPlayer();
         
-        this.enemies = new ArrayList<IEnemy>();
+        this.enemies = new ArrayList<>();
         // Start with debug during development
         this.debug = true;
 
