@@ -2,28 +2,32 @@ package no.uib.inf112.map.levels;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Random;
+
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.walls.WallType;
+import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.ILevel;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.map.npcs.Zombie;
 import no.uib.inf112.player.Player;
 import no.uib.inf112.static_objects.WoodWall;
 
-public class Level1 implements ILevel{
+public class Level1 implements ILevel {
 
     private IPlayer player;
     private Rectangle2D.Double bounds;
     private ArrayList<IStaticObject> staticObjects;
 
-    //Player
-    private static final int STARTROW = 1030;//2 * Config.getInt("cellWidth"); //Starts in row 2 now
-    private static final int STARTCOL = 1030;//2 * Config.getInt("cellHeight");; //Same for 2nd col.
+    // Player
+    private static final int STARTROW = 1030;// 2 * Config.getInt("cellWidth"); //Starts in row 2 now
+    private static final int STARTCOL = 1030;// 2 * Config.getInt("cellHeight");; //Same for 2nd col.
     private static final int PLAYERWIDTH = Config.getInt("playerWidth");
     private static final int PLAYERHEIGHT = Config.getInt("playerHeight");
 
-    //Map
+    // Map
     private static final int MAPX = 0;
     private static final int MAPY = 0;
     private static final int MAPWIDTH = Config.getInt("mapWidth");
@@ -31,48 +35,49 @@ public class Level1 implements ILevel{
 
     private IMap map;
 
-    public Level1(){
+    public Level1(IMap map) {
 
         this.staticObjects = new ArrayList<>();
 
         this.bounds = new Rectangle2D.Double(MAPX, MAPY, MAPWIDTH, MAPHEIGHT);
         this.player = new Player(new Rectangle2D.Double(STARTROW, STARTCOL, PLAYERWIDTH, PLAYERHEIGHT), this.bounds);
 
-
         generateStaticObjects();
     }
+
+    // midlertidig løsning -> spawner implementeres senere
 
 
     private void generateStaticObjects() {
 
-        //start box testing
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900, 15, 300), WallType.LONG_WOODEN_WALL));         //left wall
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900+300, 300, 15), WallType.LONG_WOODEN_WALL));         //bottom wallp
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900, 300, 15), WallType.LONG_WOODEN_WALL));         //top wall
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(900+300, 900, 15, 70), WallType.WOODEN_WALL));         //right top
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(900+300, 900+300-70, 15, 85), WallType.WOODEN_WALL));     //right bot
-
-
+        // start box testing
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900, 15, 300), WallType.LONG_WOODEN_WALL)); // left
+                                                                                                               // wall
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900 + 300, 300, 15), WallType.LONG_WOODEN_WALL)); // bottom
+                                                                                                                     // wallp
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900, 300, 15), WallType.LONG_WOODEN_WALL)); // top
+                                                                                                               // wall
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(900 + 300, 900, 15, 70), WallType.WOODEN_WALL)); // right
+                                                                                                               // top
+        staticObjects
+                .add(new WoodWall(new Rectangle2D.Double(900 + 300, 900 + 300 - 70, 15, 85), WallType.WOODEN_WALL)); // right
+                                                                                                                     // bot
 
     }
-
 
     @Override
     public ArrayList<IStaticObject> getStaticObjects() {
         return this.staticObjects;
     }
 
-
     @Override
     public IPlayer getPlayer() {
         return this.player;
     }
 
-
     @Override
     public Rectangle2D.Double getBounds() {
         return this.bounds;
     }
-    
-    
+
 }

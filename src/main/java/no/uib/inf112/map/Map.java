@@ -2,11 +2,14 @@ package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Random;
 
+import no.uib.inf112.config.Config;
 import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.map.levels.Level1;
+import no.uib.inf112.map.npcs.Zombie;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
 public class Map implements IMap {
@@ -21,14 +24,15 @@ public class Map implements IMap {
     private boolean debug;
     private Pathfinder pathfinder;
     private ArrayList<IEnemy> enemies;
-    
+
     private final Spawner spawner;
+
     public Map() {
-        
-        this.level = new Level1();
+
+        this.level = new Level1(this);
         this.bounds = this.level.getBounds();
         this.player = this.level.getPlayer();
-        
+
         this.enemies = new ArrayList<>();
         // Start with debug during development
         this.debug = true;
@@ -41,8 +45,33 @@ public class Map implements IMap {
 
         this.grid = new Grid(this);
         this.tiles = new TileGrid(this);
-        this.spawner = new Spawner(this); //Spawner comes after grid, or else uh-oh.
+        this.spawner = new Spawner(this); // Spawner comes after grid, or else uh-oh.
         this.pathfinder = new Pathfinder(grid);
+
+        // TODO: fjern denne, lage logikk i spawner
+        spawnEnemies();
+    }
+
+    private void spawnEnemies() {
+        Random random = new Random();
+        for (int i = 0; i < 3;) {
+            ICell cell = this.grid.getCell(0, random.nextInt(this.grid.getColCount()));
+            Rectangle2D.Double b = cell.getBounds();
+
+            Zombie zombie = new Zombie(new Rectangle2D.Double(b.x, b.y, Config.getInt("thugWidth"), Config.getInt("thugHeight")));
+            boolean collides = false;
+            for (IEnemy enemy : getEnemies()) {
+                if (enemy.getHitbox().intersects(zombie.getHitbox())) {
+                    collides = true;
+                }
+
+            }
+            if (!collides) {
+                addEnemy(zombie);
+                i++;
+            }
+
+        }
     }
 
     @Override
@@ -51,16 +80,13 @@ public class Map implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
     }
 
-    
-    public Spawner getSpawner(){
+    public Spawner getSpawner() {
         return this.spawner;
     }
 
+    ////////////////// GETTERS AND SETTERS
 
-
-    ////////////////// GETTERS AND SETTERS ////////////////////
-
-    public ArrayList<IEnemy> getEnemies(){
+    public ArrayList<IEnemy> getEnemies() {
         return new ArrayList<>(enemies);
     }
 
