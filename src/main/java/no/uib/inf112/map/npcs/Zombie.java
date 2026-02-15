@@ -1,6 +1,7 @@
 package no.uib.inf112.map.npcs;
 
 import no.uib.inf112.config.Config;
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
@@ -20,6 +21,7 @@ public class Zombie implements IEnemy {
     private int ANIMATION_COUNT = 8;
     private double facingAngle = 0.0;
     private static final double ROTATION_SPEED = 0.2;
+    private static final EnemySize SIZE = EnemySize.MEDIUM;
 
     public Zombie(Rectangle2D.Double pos) {
         this.pos = pos;
@@ -30,7 +32,7 @@ public class Zombie implements IEnemy {
     ) {
         ICell start = grid.getCellFromPos(getHitbox());
         ICell goal = grid.getCellFromPos(targetBounds);
-        currentPath = pathfinder.findPath(start, goal);
+        currentPath = pathfinder.findPath(start, goal, SIZE);
         pathIndex = (currentPath.size() > 1) ? 1 : 0; // gå etter første steg i stien for å følge den.
 
     }
@@ -91,5 +93,11 @@ public class Zombie implements IEnemy {
     @Override
     public int getAnimationIndex() {
         return animationIndex;
+    }
+
+    @Override
+    public EnemySize size() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'size'");
     }
 }

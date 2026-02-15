@@ -3,6 +3,7 @@ package no.uib.inf112.interfaces;
 import java.awt.geom.Rectangle2D;
 
 import no.uib.inf112.enums.FloorType;
+import no.uib.inf112.enums.PathType;
 
 public interface ICell {
     
@@ -22,4 +23,8 @@ public interface ICell {
     public FloorType floorType();
 
     public void setFloorType(FloorType type);
+
+    public PathType pathType();
+
+    public void setPathType(PathType type);
 }

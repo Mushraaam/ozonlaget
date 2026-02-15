@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 
 import no.uib.inf112.enums.FloorType;
+import no.uib.inf112.enums.PathType;
 import no.uib.inf112.map.Cell;
 
 public interface IGrid extends Iterable<ICell> {
@@ -23,7 +24,7 @@ public interface IGrid extends Iterable<ICell> {
                         row * height,
                         width,
                         height);
-                cellRow.add(new Cell(cellBounds, row, col, type));
+                cellRow.add(new Cell(cellBounds, row, col, type, PathType.UNBLOCKED));
             }
             grid.add(cellRow);
         }

@@ -3,6 +3,7 @@ package no.uib.inf112.map;
 import java.awt.geom.Rectangle2D;
 
 import no.uib.inf112.enums.FloorType;
+import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.ICell;
 
 public class Cell implements ICell {
@@ -12,13 +13,15 @@ public class Cell implements ICell {
     private int row;
     private int col;
     private FloorType floorType;
+    private PathType pathType;
 
-    public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType){
+    public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type){
         this.bounds = bounds;
         this.blocked = false;
         this.row = row;
         this.col = col;
         this.floorType = floorType;
+        this.pathType = pathType;
     }
 
     public Rectangle2D.Double getBounds(){
@@ -81,6 +84,16 @@ public class Cell implements ICell {
             this.bounds,
             this.blocked
         );
+    }
+
+    @Override
+    public PathType pathType() {
+        return this.pathType;
+    }
+
+    @Override
+    public void setPathType(PathType type) {
+        this.pathType = type;
     }
 
 

@@ -1,5 +1,6 @@
 package no.uib.inf112.interfaces;
 
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
@@ -22,5 +23,8 @@ public interface IEnemy extends IMovingDrawableObject {
     List<ICell> getCurrentPath();
 
     void incrementAnimationIndex();
+
+    public EnemySize size();
+
 
 }

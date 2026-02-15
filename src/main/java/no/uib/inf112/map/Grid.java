@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.FloorType;
+import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IMap;
@@ -44,16 +45,43 @@ public class Grid implements IGrid {
         this.cellGrid = makeGrid(this.rowCount, this.colCount, CELLWIDTH, CELLHEIGHT, FloorType.NONE);
         fillGrid(this.cellGrid, map.getStaticObjects());
 
-
     }
 
     private void fillGrid(ArrayList<ArrayList<ICell>> grid, ArrayList<IStaticObject> blockers) {
 
+        //Sets illegal cells for all enemies
         for (ArrayList<ICell> row : grid) {
             for (ICell cell : row) {
                 for (IStaticObject blocker : blockers) {
                     if (cell.getBounds().intersects(blocker.getBounds())) {
-                        cell.block();
+                        cell.setPathType(PathType.BLOCKED);
+                    }
+                }
+            }
+        }
+
+        //Sets illegal cells for medium and large enemies
+        for (ArrayList<ICell> row : grid) {
+            for (ICell cell : row) {
+                if (cell.pathType() == PathType.BLOCKED) {
+                    for (ICell neighbour : getNeighbours(cell)) {
+                        if (neighbour.pathType() != PathType.BLOCKED) {
+                            neighbour.setPathType(PathType.BLOCKED_FOR_MEDIUM);
+                        }
+                    }
+                }
+            }
+        }
+
+        //Sets illegal cells for large enemies
+        for (ArrayList<ICell> row : grid) {
+            for (ICell cell : row) {
+                if (cell.pathType() == PathType.BLOCKED_FOR_MEDIUM) {
+                    for (ICell neighbour : getNeighbours(cell)) {
+                        PathType type = neighbour.pathType();
+                        if (type != PathType.BLOCKED && type != PathType.BLOCKED_FOR_MEDIUM) {
+                            neighbour.setPathType(PathType.BLOCKED_FOR_LARGE);
+                        }
                     }
                 }
             }
@@ -75,17 +103,15 @@ public class Grid implements IGrid {
 
         if (row < 0 || col < 0 || row >= this.rowCount || col >= this.colCount) {
             throw new IllegalArgumentException(
-                    String.format("Cell: Row %s, Col %s is out of bounds", row, col)
-            );
+                    String.format("Cell: Row %s, Col %s is out of bounds", row, col));
         }
 
         ArrayList<ICell> neighbours = new ArrayList<>();
 
-        ICell over  = null;
+        ICell over = null;
         ICell under = null;
-        ICell left  = null;
+        ICell left = null;
         ICell right = null;
-
 
         if (row > 0) {
             over = getCell(row - 1, col);
@@ -120,7 +146,6 @@ public class Grid implements IGrid {
         return neighbours;
     }
 
-
     @Override
     public Iterator<ICell> iterator() {
         ArrayList<ICell> flattenedList = new ArrayList<>(rowCount * colCount);
@@ -144,19 +169,21 @@ public class Grid implements IGrid {
         return getCellFromXY(centerX, centerY);
     }
 
-    private ICell getCellFromXY(double x, double y){
+    private ICell getCellFromXY(double x, double y) {
         int col = (int) Math.floor(x / CELLWIDTH);
         int row = (int) Math.floor(y / CELLHEIGHT);
         return getCell(row, col);
     }
 
-    public ArrayList<ICell> getCellsInView(Graphics2D graphics){
-        // double x1 = Math.min(this.bounds.getWidth(), Math.max(0, graphics.getClipBounds().getMinX()));
-        // double y1 = Math.min(this.bounds.getHeight(), Math.max(0, graphics.getClipBounds().getMinY()));
-        // double x2 = Math.min(this.bounds.getWidth(), Math.max(0, graphics.getClipBounds().getMaxX()));
-        // double y2 = Math.min(this.bounds.getHeight(), Math.max(0, graphics.getClipBounds().getMaxY()));
-
-        
+    public ArrayList<ICell> getCellsInView(Graphics2D graphics) {
+        // double x1 = Math.min(this.bounds.getWidth(), Math.max(0,
+        // graphics.getClipBounds().getMinX()));
+        // double y1 = Math.min(this.bounds.getHeight(), Math.max(0,
+        // graphics.getClipBounds().getMinY()));
+        // double x2 = Math.min(this.bounds.getWidth(), Math.max(0,
+        // graphics.getClipBounds().getMaxX()));
+        // double y2 = Math.min(this.bounds.getHeight(), Math.max(0,
+        // graphics.getClipBounds().getMaxY()));
 
         // ICell topLeft = getCellFromXY(x1, y1);
         // ICell botRight = getCellFromXY(x2, y2);
@@ -166,30 +193,27 @@ public class Grid implements IGrid {
         // int startCol = topLeft.col();
         // int endCol = botRight.col();
 
-        //optimalisert versjon av kommenter kode over
+        // optimalisert versjon av kommenter kode over
         Rectangle2D clip = graphics.getClipBounds();
         int startCol = (int) Math.floor(clip.getMinX() / CELLWIDTH);
-        int endCol   = (int) Math.floor((clip.getMaxX() - 1) / CELLWIDTH);
+        int endCol = (int) Math.floor((clip.getMaxX() - 1) / CELLWIDTH);
         int startRow = (int) Math.floor(clip.getMinY() / CELLHEIGHT);
-        int endRow   = (int) Math.floor((clip.getMaxY() - 1) / CELLHEIGHT);
+        int endRow = (int) Math.floor((clip.getMaxY() - 1) / CELLHEIGHT);
 
         startCol = Math.max(0, Math.min(startCol, colCount - 1));
-        endCol   = Math.max(0, Math.min(endCol, colCount - 1));
+        endCol = Math.max(0, Math.min(endCol, colCount - 1));
         startRow = Math.max(0, Math.min(startRow, rowCount - 1));
-        endRow   = Math.max(0, Math.min(endRow, rowCount - 1));
+        endRow = Math.max(0, Math.min(endRow, rowCount - 1));
 
         ArrayList<ICell> inView = new ArrayList<>();
-        for (int row = startRow; row <= endRow; row++){
-            for (int col = startCol; col <= endCol; col++){
+        for (int row = startRow; row <= endRow; row++) {
+            for (int col = startCol; col <= endCol; col++) {
                 inView.add(getCell(row, col));
             }
         }
 
         return inView;
     }
-
-
-
 
     @Override
     public int getCellWidth() {
