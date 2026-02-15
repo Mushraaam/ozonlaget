@@ -15,6 +15,7 @@ public class ImageHandler {
 
     //PlayerSprite (put into hashmap layer?)
     private static final int PLAYER_SPRITE_COUNT = 8;
+    private static final int ENEMY_SPRITE_COUNT = 8;
     private HashMap<Direction, ArrayList<BufferedImage>> playerSprites;
 
 
@@ -117,13 +118,15 @@ public class ImageHandler {
     /// /////////// START ENEMY LOGIC //////////////
     
     private void loadEnemies(){
-        ArrayList<BufferedImage> thugs = new ArrayList<>();
-        thugs.add(ImageReader.fetchImage("/no/uib/inf112/map/npcs/thug.png"));
-        this.enemies.put(EnemyType.THUG, thugs);
+        ArrayList<BufferedImage> zombies = new ArrayList<>();
+            for(int i = 0; i < ENEMY_SPRITE_COUNT; i++ ) {
+                zombies.add(ImageReader.fetchImage(String.format("/no/uib/inf112/map/npcs/zombie/zombie_%d.png", i)));
+            }
+            this.enemies.put(EnemyType.ZOMBIE, zombies);
 
     }
 
-    public BufferedImage getEnemyImage(EnemyType type, int Index){
+    public BufferedImage getEnemySprites(EnemyType type, int Index){
         return this.enemies.get(type).get(Index);
     }
 

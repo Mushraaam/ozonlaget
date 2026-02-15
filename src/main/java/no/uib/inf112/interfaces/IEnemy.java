@@ -18,7 +18,9 @@ public interface IEnemy extends IMovingDrawableObject {
 
     public int getAnimationIndex();
 
-    BufferedImage getImg();
 
     List<ICell> getCurrentPath();
+
+    void incrementAnimationIndex();
+
 }

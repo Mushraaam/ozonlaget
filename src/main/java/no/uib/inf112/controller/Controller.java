@@ -4,11 +4,13 @@ import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.IControllablePlayer;
 import no.uib.inf112.interfaces.IEnemy;
+import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.view.GameDrawer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.Timer;
 
@@ -22,12 +24,14 @@ public class Controller implements java.awt.event.KeyListener {
     private Timer playerAnimationTimer;
     private Timer movementTimer;
     private Timer pathFindingTimer;
+    private IGrid grid;
 
     public Controller(IMap map, GameDrawer view) {
 
         this.map = map;
         this.player = (IControllablePlayer) map.getPlayer();
         this.view = view;
+        this.grid = map.getGrid();
 
         // TODO: Move dirHandler to player
         this.dirHandler = new DirectionHandler();
@@ -40,6 +44,9 @@ public class Controller implements java.awt.event.KeyListener {
             if (map.getGameState() == GameState.ACTIVE_GAME) {
                 if (dirHandler.isMoving()) {
                     this.player.incrementAnimationIndex();
+                }
+                for (IEnemy enemy : map.getEnemies()) {
+                    enemy.incrementAnimationIndex();
                 }
                 this.view.repaint();
             }
@@ -56,8 +63,8 @@ public class Controller implements java.awt.event.KeyListener {
         this.pathFindingTimer.start();
 
 
-        this.movementTimer = new Timer(16, e -> {
-            if (map.getGameState() == GameState.ACTIVE_GAME) {
+        if (map.getGameState() == GameState.ACTIVE_GAME) {
+            this.movementTimer = new Timer(16, e -> {
 
                 if (dirHandler.isMoving()) {
                     Direction dir = dirHandler.getDirection();
@@ -66,10 +73,17 @@ public class Controller implements java.awt.event.KeyListener {
                         player.setDirection(dir);
                     }
                 }
-            }
-            view.repaint();
 
-        });
+
+                ArrayList<IEnemy> enemies = map.getEnemies();
+                for (IEnemy enemy : enemies) {
+                    enemy.move(grid);
+                }
+
+                view.repaint();
+
+            });
+        }
         this.movementTimer.start();
     }
 
@@ -150,7 +164,7 @@ public class Controller implements java.awt.event.KeyListener {
         // not implemented
     }
 
-    //////////////// HELPER METHODS - THESE SHOULD BE SHORT AND SELF EXPLANATORY
+    /// ///////////// HELPER METHODS - THESE SHOULD BE SHORT AND SELF EXPLANATORY
     /// /////////////// Maybe move the helpers to their classes, at a later occasion.
     /// e.g map.flipDebug()
 
