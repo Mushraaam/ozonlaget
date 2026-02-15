@@ -61,7 +61,7 @@ public class Pathfinder {
             }
         }
 
-        return List.of(); // no path
+        return List.of(); // no path // should this throw an exception?
     }
 
     private double heuristic(ICell a, ICell b) {

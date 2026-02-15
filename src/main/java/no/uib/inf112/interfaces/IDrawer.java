@@ -3,12 +3,8 @@ package no.uib.inf112.interfaces;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 import no.uib.inf112.utility.ImageHandler;
-
 import java.awt.Color;
-
 
 public interface IDrawer {
     

@@ -20,12 +20,12 @@ public class Map implements IMap {
     private IGrid tiles;
     private boolean debug;
     private Pathfinder pathfinder;
-
-    ArrayList<IEnemy> enemies;
+    private ArrayList<IEnemy> enemies;
+    
     private final Spawner spawner;
     public Map() {
         
-        this.level = new Level1(this);
+        this.level = new Level1();
         this.bounds = this.level.getBounds();
         this.player = this.level.getPlayer();
         
@@ -61,7 +61,7 @@ public class Map implements IMap {
     ////////////////// GETTERS AND SETTERS ////////////////////
 
     public ArrayList<IEnemy> getEnemies(){
-        return enemies;
+        return new ArrayList<>(enemies);
     }
 
     @Override

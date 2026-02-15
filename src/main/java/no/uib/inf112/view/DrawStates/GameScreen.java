@@ -5,7 +5,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
@@ -19,7 +18,6 @@ import no.uib.inf112.utility.ImageHandler;
 public class GameScreen implements IDrawer {
 
     private IMap map;
-    private IGrid grid;
     private IGrid tiles;
     private IViewablePlayer player;
     private ImageHandler handler;
@@ -30,7 +28,6 @@ public class GameScreen implements IDrawer {
         this.map = map;
         this.player = (IViewablePlayer) map.getPlayer();
         this.handler = handler;
-        this.grid = map.getGrid();
         this.tiles = map.getTiles();
 
         // Bør skaleres kun en gang, dette flyttes senere til ny klasse

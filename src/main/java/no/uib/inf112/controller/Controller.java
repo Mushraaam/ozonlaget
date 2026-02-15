@@ -46,7 +46,7 @@ public class Controller implements java.awt.event.KeyListener {
         });
         this.playerAnimationTimer.start(); // senere endre til if (moving) elns
 
-        this.pathFindingTimer = new Timer(500, (ActionEvent e) -> {
+        this.pathFindingTimer = new Timer(300, (ActionEvent e) -> {
             if (map.getGameState() == GameState.ACTIVE_GAME) {
                 for (IEnemy enemy : map.getEnemies()) {
                     enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());

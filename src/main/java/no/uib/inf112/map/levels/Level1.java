@@ -31,9 +31,8 @@ public class Level1 implements ILevel{
 
     private IMap map;
 
-    public Level1(IMap map){
+    public Level1(){
 
-        this.map = map;
         this.staticObjects = new ArrayList<>();
 
         this.bounds = new Rectangle2D.Double(MAPX, MAPY, MAPWIDTH, MAPHEIGHT);

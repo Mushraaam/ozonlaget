@@ -9,7 +9,6 @@ import no.uib.inf112.utility.ImageReader;
 
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
