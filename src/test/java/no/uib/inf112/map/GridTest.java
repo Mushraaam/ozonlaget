@@ -112,9 +112,8 @@ public class GridTest {
         cell = grid.getCell(2, 2);
 
         assertEquals(8, grid.getNeighbours(cell).size()); //All directions should be open -> 8
-
+        
         // Implement logic for "correct" neighbours also
-
     }
 
     @Test

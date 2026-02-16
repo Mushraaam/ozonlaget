@@ -58,7 +58,7 @@ public class Map implements IMap {
             ICell cell = this.grid.getCell(0, random.nextInt(this.grid.getColCount()));
             Rectangle2D.Double b = cell.getBounds();
 
-            Zombie zombie = new Zombie(new Rectangle2D.Double(b.x, b.y, Config.getInt("thugWidth"), Config.getInt("thugHeight")));
+            Zombie zombie = new Zombie(new Rectangle2D.Double(b.x, b.y, Config.getInt("thugWidth"), Config.getInt("thugHeight")), this);
             boolean collides = false;
             for (IEnemy enemy : getEnemies()) {
                 if (enemy.getHitbox().intersects(zombie.getHitbox())) {
