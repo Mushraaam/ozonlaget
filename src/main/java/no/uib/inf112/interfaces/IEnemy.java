@@ -26,5 +26,6 @@ public interface IEnemy extends IMovingDrawableObject {
 
     public EnemySize size();
 
+    public double getFacingAngle();
 
 }

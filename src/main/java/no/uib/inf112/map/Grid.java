@@ -47,6 +47,11 @@ public class Grid implements IGrid {
 
     }
 
+    /**
+     * Should only be run once in constructor else your pc will break
+     * @param grid
+     * @param blockers
+     */
     private void fillGrid(ArrayList<ArrayList<ICell>> grid, ArrayList<IStaticObject> blockers) {
 
         //Sets illegal cells for all enemies

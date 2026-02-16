@@ -98,20 +98,18 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawEnemies(Graphics2D graphic) {
-        ArrayList<IEnemy> enemies = this.map.getEnemies();
+        // ArrayList<IEnemy> enemies = this.map.getEnemies();
         /*for (IEnemy enemy : enemies) {
             if (isVisible(graphic, enemy.getHitbox())) {
                 drawImage(graphic, handler.getEnemySprites(enemy.getEnemyType(), enemy.getAnimationIndex()),enemy.getHitbox());
             }
         }*/
         for (IEnemy e : map.getEnemies()) {
-            Zombie z = (Zombie)e;
-
             drawRotated(
                     graphic,
-                    handler.getEnemySprites(z.getEnemyType(), z.getAnimationIndex()),
-                    z.getHitbox(),
-                    z.getFacingAngle()
+                    handler.getEnemySprites(e.getEnemyType(), e.getAnimationIndex()),
+                    e.getHitbox(),
+                    e.getFacingAngle()
             );
         }
 
