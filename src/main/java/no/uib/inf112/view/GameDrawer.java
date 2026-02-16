@@ -56,7 +56,7 @@ public class GameDrawer extends JPanel {
             }
         }
 
-        if (map.debugMode()){
+        if (map.debugMode() && gameState == GameState.ACTIVE_GAME){
             this.debugScreen.draw(g2);
         }
 

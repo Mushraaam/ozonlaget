@@ -41,7 +41,7 @@ public class Map implements IMap {
         this.staticObjects = this.level.getStaticObjects();
 
         // Bør senere starte i main menu
-        this.gameState = GameState.ACTIVE_GAME;
+        this.gameState = GameState.MAIN_MENU;
 
         this.grid = new Grid(this);
         this.tiles = new TileGrid(this);
@@ -103,6 +103,11 @@ public class Map implements IMap {
     @Override
     public GameState getGameState() {
         return this.gameState;
+    }
+
+    @Override
+    public void setGameState(GameState state) {
+        this.gameState = state;
     }
 
     @Override

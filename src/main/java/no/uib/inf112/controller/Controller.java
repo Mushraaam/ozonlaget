@@ -62,34 +62,36 @@ public class Controller implements java.awt.event.KeyListener {
         });
         this.pathFindingTimer.start();
 
+        this.movementTimer = new Timer(16, e -> {
+            if (map.getGameState() != GameState.ACTIVE_GAME) return;
 
-        if (map.getGameState() == GameState.ACTIVE_GAME) {
-            this.movementTimer = new Timer(16, e -> {
-
-                if (dirHandler.isMoving()) {
-                    Direction dir = dirHandler.getDirection();
-                    if (dir != Direction.NONE) {
-                        player.movePlayer(dir);
-                        player.setDirection(dir);
-                    }
+            if (dirHandler.isMoving()) {
+                Direction dir = dirHandler.getDirection();
+                if (dir != Direction.NONE) {
+                    player.movePlayer(dir);
+                    player.setDirection(dir);
                 }
+            }
 
+            ArrayList<IEnemy> enemies = map.getEnemies();
+            for (IEnemy enemy : enemies) {
+                enemy.move(grid);
+            }
 
-                ArrayList<IEnemy> enemies = map.getEnemies();
-                for (IEnemy enemy : enemies) {
-                    enemy.move(grid);
-                }
-
-                view.repaint();
-
-            });
-        }
-        this.movementTimer.start();
+            view.repaint();
+        });
+        this.movementTimer.start(); 
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         switch (this.map.getGameState()) {
+
+            case MAIN_MENU -> {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    map.setGameState(GameState.ACTIVE_GAME);
+                }
+            }
 
             case ACTIVE_GAME -> {
                 activeGamePressEvent(e);

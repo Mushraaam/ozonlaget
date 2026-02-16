@@ -76,6 +76,11 @@ public class TestMap implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'getGameState'");
     }
 
+    @Override
+    public void setGameState(GameState state) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setGameState'");
+    }
 
     @Override
     public IGrid getGrid() {
@@ -124,5 +129,5 @@ public class TestMap implements IMap {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTiles'");
     }
-    
+
 }

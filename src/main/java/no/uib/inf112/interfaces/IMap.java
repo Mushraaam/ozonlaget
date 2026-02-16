@@ -36,6 +36,12 @@ public interface IMap {
     public GameState getGameState();
 
     /**
+     * Sets what state the game is in
+     * @param state GameState
+     */
+    public void setGameState(GameState state);
+
+    /**
      * @return Dimensions of the map
      */
     public Rectangle2D.Double getBounds();
