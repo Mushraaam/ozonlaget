@@ -33,7 +33,7 @@ public class Spawner {
         if (!map.getBounds().contains(hitbox)) return false;
         if (map.getGrid().getCellFromPos(hitbox).isBlocked()) return false;
 
-        map.addEnemy(new Zombie(hitbox));
+        map.addEnemy(new Zombie(hitbox, this.map));
         return true;
     }
 }
