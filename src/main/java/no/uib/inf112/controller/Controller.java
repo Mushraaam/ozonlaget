@@ -53,7 +53,9 @@ public class Controller implements java.awt.event.KeyListener {
         });
 
         this.pathFindingTimer = new Timer(300, (ActionEvent e) -> {
+            grid.resetWeightedCells();
             for (IEnemy enemy : map.getEnemies()) {
+                grid.addWeightedCells(enemy.getCurrentPath());
                 enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
             }
         });

@@ -44,28 +44,37 @@ public class DebugScreen implements IDrawer {
 
         // Draw enemy paths
         graphic.setColor(Color.RED);
+        graphic.setStroke(new java.awt.BasicStroke(2f));
+
 
         for (IEnemy enemy : this.map.getEnemies()) {
             List<ICell> path = enemy.getCurrentPath();
-            if (path == null || path.isEmpty())
-                continue;
+            if (path == null || path.size() < 2) continue;
+
+            for (int i = 0; i < path.size() - 1; i++) {
+                Rectangle2D.Double a = path.get(i).getBounds();
+                Rectangle2D.Double b = path.get(i + 1).getBounds();
+
+                double ax = a.getCenterX();
+                double ay = a.getCenterY();
+                double bx = b.getCenterX();
+                double by = b.getCenterY();
+
+                if (!isVisible(graphic, a) && !isVisible(graphic, b)) continue;
+
+                graphic.draw(new java.awt.geom.Line2D.Double(ax, ay, bx, by));
+            }
 
             for (ICell step : path) {
                 Rectangle2D.Double r = step.getBounds();
-                if (isVisible(graphic, r)) {
+                if (!isVisible(graphic, r)) continue;
 
-                    double cx = r.getCenterX();
-                    double cy = r.getCenterY();
+                double cx = r.getCenterX();
+                double cy = r.getCenterY();
+                double radius = Math.min(r.getWidth(), r.getHeight()) * 0.12;
+                double d = radius * 2;
 
-                    double radius = Math.min(r.getWidth(), r.getHeight()) * 0.25;
-                    double d = radius * 2;
-
-                    graphic.fill(new Ellipse2D.Double(
-                            cx - radius,
-                            cy - radius,
-                            d,
-                            d));
-                }
+                graphic.fill(new Ellipse2D.Double(cx - radius, cy - radius, d, d));
             }
         }
 
