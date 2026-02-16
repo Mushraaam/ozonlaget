@@ -6,7 +6,13 @@ import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 
 public interface ICell {
-    
+
+
+    void incWeight();
+
+    int getWeight();
+
+    void resetWeight();
 
     public Rectangle2D.Double getBounds();
 
