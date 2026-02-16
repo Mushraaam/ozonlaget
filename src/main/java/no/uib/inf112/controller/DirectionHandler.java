@@ -50,7 +50,7 @@ public class DirectionHandler {
         if (west){
             return Direction.WEST;
         }
-        return Direction.NONE; //This should never happen
+        return null; //This should never happen
         
 
     }

@@ -83,7 +83,7 @@ public class ImageHandler {
     }
 
     public BufferedImage getPlayerSprite(Direction dir, int index) {
-            return this.playerSprites.get(dir).get(index);
+            return this.playerSprites.get(Direction.EAST).get(index);
         }
     
 

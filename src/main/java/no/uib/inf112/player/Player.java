@@ -139,6 +139,11 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     }
 
     @Override
+    public double getFacingAngle() {
+        return currentDirection.radians;
+    }
+
+    @Override
     public void incrementAnimationIndex() {
         this.animationIndex = (this.animationIndex + 1) % ANIMATION_COUNT;
     }
