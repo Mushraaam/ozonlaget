@@ -14,6 +14,7 @@ public class Cell implements ICell {
     private int col;
     private FloorType floorType;
     private PathType pathType;
+    private int weight = 1;
 
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type){
         this.bounds = bounds;
@@ -22,6 +23,18 @@ public class Cell implements ICell {
         this.col = col;
         this.floorType = floorType;
         this.pathType = type;
+    }
+
+    @Override public void incWeight(){
+        this.weight +=3;
+    }
+
+    @Override public int getWeight(){
+        return this.weight;
+    }
+
+    @Override public void resetWeight(){
+        this.weight = 1;
     }
 
     public Rectangle2D.Double getBounds(){

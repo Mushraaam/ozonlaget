@@ -2,6 +2,8 @@ package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 import no.uib.inf112.enums.FloorType;
@@ -30,6 +32,12 @@ public interface IGrid extends Iterable<ICell> {
         }
         return grid;
     }
+
+    HashMap<ICell, Integer> getWeightedCells();
+
+    void addWeightedCells(List<ICell> cells);
+
+    void resetWeightedCells();
 
     /**
      * @param row
