@@ -92,9 +92,13 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawPlayer(Graphics2D graphic) {
-        this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
+        /*this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
         Rectangle2D.Double hitbox = this.player.getHitbox();
-        drawImage(graphic, this.playerSprite, hitbox);
+        drawImage(graphic, this.playerSprite, hitbox);*/
+        drawRotated(
+                graphic,
+                handler.getPlayerSprite(player.getDirection(), player.getAnimationIndex()), player.getHitbox(), player.getFacingAngle()
+        );
     }
 
     private void drawEnemies(Graphics2D graphic) {

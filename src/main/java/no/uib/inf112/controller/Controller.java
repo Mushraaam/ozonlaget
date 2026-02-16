@@ -61,7 +61,7 @@ public class Controller implements java.awt.event.KeyListener {
         this.movementTimer = new Timer(16, e -> {
             if (dirHandler.isMoving()) {
                 Direction dir = dirHandler.getDirection();
-                if (dir != Direction.NONE) {
+                if (dir != null) {
                     player.movePlayer(dir);
                     player.setDirection(dir);
                 }

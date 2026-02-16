@@ -13,4 +13,6 @@ public interface IViewablePlayer extends IPlayer {
      * @return current index for sprite array
      */
     public int getAnimationIndex();
+
+    double getFacingAngle();
 }
