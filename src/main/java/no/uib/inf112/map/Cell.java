@@ -21,7 +21,7 @@ public class Cell implements ICell {
         this.row = row;
         this.col = col;
         this.floorType = floorType;
-        this.pathType = pathType;
+        this.pathType = type;
     }
 
     public Rectangle2D.Double getBounds(){
