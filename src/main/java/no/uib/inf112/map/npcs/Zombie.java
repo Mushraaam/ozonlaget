@@ -7,6 +7,7 @@ import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
 import java.awt.Rectangle;
@@ -138,6 +139,11 @@ public class Zombie implements IEnemy {
                 return false;
             }
         }
+        // for (IStaticObject o : this.map.getStaticObjects()){
+        //     if (candidate.intersects(o.getBounds())){
+        //         return false;
+        //     }
+        // }
         return true;
     }
 
