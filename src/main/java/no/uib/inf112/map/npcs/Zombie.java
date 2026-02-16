@@ -7,6 +7,7 @@ import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
@@ -27,10 +28,12 @@ public class Zombie implements IEnemy {
     private static final double ROTATION_SPEED = 0.2;
     private static final EnemySize SIZE = EnemySize.MEDIUM;
     private IMap map;
+    private IPlayer player;
 
     public Zombie(Rectangle2D.Double pos, IMap map) {
         this.pos = pos;
         this.map = map;
+        this.player = map.getPlayer();
     }
 
     @Override
@@ -139,11 +142,9 @@ public class Zombie implements IEnemy {
                 return false;
             }
         }
-        // for (IStaticObject o : this.map.getStaticObjects()){
-        //     if (candidate.intersects(o.getBounds())){
-        //         return false;
-        //     }
-        // }
+        if (candidate.intersects(this.player.getHitbox())){
+            return false;
+        }
         return true;
     }
 

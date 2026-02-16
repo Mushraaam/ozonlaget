@@ -20,7 +20,7 @@ public class Pathfinder {
 
         if (start == null || goal == null)
             return List.of();
-        if (!canEnter(start, size) || !canEnter(goal, size))
+        if (!canEnter(goal, size))
             return List.of();
         if (start.equals(goal))
             return List.of(start);

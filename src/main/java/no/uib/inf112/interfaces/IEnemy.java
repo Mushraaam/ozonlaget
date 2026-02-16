@@ -6,23 +6,20 @@ import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
 import java.util.*;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 public interface IEnemy extends IMovingDrawableObject {
 
-    void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds
-    );
+    public void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds);
 
-    Rectangle2D.Double getHitbox();
+    public Rectangle2D.Double getHitbox();
 
     public EnemyType getEnemyType();
 
     public int getAnimationIndex();
 
+    public List<ICell> getCurrentPath();
 
-    List<ICell> getCurrentPath();
-
-    void incrementAnimationIndex();
+    public void incrementAnimationIndex();
 
     public EnemySize size();
 

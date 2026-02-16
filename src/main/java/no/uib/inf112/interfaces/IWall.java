@@ -13,7 +13,7 @@ public interface IWall extends IStaticDrawableObject{
         }
         return WallDirection.HORIZONTAL;
     } 
-
+    
     public WallType wallType();
 
     public WallDirection getWallDirection();

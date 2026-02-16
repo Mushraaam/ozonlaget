@@ -1,6 +1,7 @@
 package no.uib.inf112.player;
 
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.Direction;
@@ -40,6 +41,63 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         Rectangle2D.Double proposedMove = possibleMove(dir);
         if (legalMove(proposedMove)) {
             this.hitbox = proposedMove;
+        } else {
+            trySlide(dir);
+        }
+
+    }
+
+    private void trySlide(Direction dir) {
+        switch (dir) {
+            case SOUTH_EAST -> {
+                Rectangle2D.Double east = possibleMove(Direction.EAST);
+
+                if (legalMove(east)) {
+                    this.hitbox = east;
+                }
+                Rectangle2D.Double south = possibleMove(Direction.SOUTH);
+                if (legalMove(south)) {
+                    this.hitbox = south;
+                }
+                break;
+            }
+            case SOUTH_WEST -> {
+                Rectangle2D.Double west = possibleMove(Direction.WEST);
+
+                if (legalMove(west)) {
+                    this.hitbox = west;
+                }
+                Rectangle2D.Double south = possibleMove(Direction.SOUTH);
+                if (legalMove(south)) {
+                    this.hitbox = south;
+                }
+                break;
+            }
+            case NORTH_WEST -> {
+                Rectangle2D.Double north = possibleMove(Direction.NORTH);
+
+                if (legalMove(north)) {
+                    this.hitbox = north;
+                }
+                Rectangle2D.Double west = possibleMove(Direction.WEST);
+                if (legalMove(west)) {
+                    this.hitbox = west;
+                }
+                break;
+            }
+            case NORTH_EAST -> {
+                Rectangle2D.Double north = possibleMove(Direction.NORTH);
+
+                if (legalMove(north)) {
+                    this.hitbox = north;
+                }
+                Rectangle2D.Double east = possibleMove(Direction.EAST);
+                if (legalMove(east)) {
+                    this.hitbox = east;
+                }
+                break;
+            }
+            default -> {/* No legal move - do nothing */}
         }
     }
 
