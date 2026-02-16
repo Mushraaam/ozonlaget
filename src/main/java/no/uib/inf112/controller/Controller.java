@@ -26,6 +26,8 @@ public class Controller implements java.awt.event.KeyListener {
     private Timer pathFindingTimer;
     private IGrid grid;
 
+    private ArrayList<Timer> timers;
+
     public Controller(IMap map, GameDrawer view) {
 
         this.map = map;
@@ -41,30 +43,22 @@ public class Controller implements java.awt.event.KeyListener {
 
         // TIMERS
         this.playerAnimationTimer = new Timer(100, (ActionEvent e) -> {
-            if (map.getGameState() == GameState.ACTIVE_GAME) {
-                if (dirHandler.isMoving()) {
-                    this.player.incrementAnimationIndex();
-                }
-                for (IEnemy enemy : map.getEnemies()) {
-                    enemy.incrementAnimationIndex();
-                }
-                this.view.repaint();
+            if (dirHandler.isMoving()) {
+                this.player.incrementAnimationIndex();
             }
+            for (IEnemy enemy : map.getEnemies()) {
+                enemy.incrementAnimationIndex();
+            }
+            this.view.repaint();
         });
-        this.playerAnimationTimer.start(); // senere endre til if (moving) elns
 
         this.pathFindingTimer = new Timer(300, (ActionEvent e) -> {
-            if (map.getGameState() == GameState.ACTIVE_GAME) {
-                for (IEnemy enemy : map.getEnemies()) {
-                    enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
-                }
+            for (IEnemy enemy : map.getEnemies()) {
+                enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
             }
         });
-        this.pathFindingTimer.start();
 
         this.movementTimer = new Timer(16, e -> {
-            if (map.getGameState() != GameState.ACTIVE_GAME) return;
-
             if (dirHandler.isMoving()) {
                 Direction dir = dirHandler.getDirection();
                 if (dir != Direction.NONE) {
@@ -80,7 +74,33 @@ public class Controller implements java.awt.event.KeyListener {
 
             view.repaint();
         });
-        this.movementTimer.start(); 
+        
+        this.timers = new ArrayList<>();
+        this.timers.add(playerAnimationTimer);
+        this.timers.add(pathFindingTimer);
+        this.timers.add(movementTimer);
+
+        applyTimers(map.getGameState());
+    }
+
+    //STOP AND START TIMERS
+    private void applyTimers(GameState state) {
+        for (Timer t : timers) {
+            if (t != null && t.isRunning()) t.stop();
+        }
+        switch (state) {
+            case MAIN_MENU -> {
+
+            }
+            case ACTIVE_GAME -> {
+                playerAnimationTimer.start();
+                pathFindingTimer.start();
+                movementTimer.start();
+            }
+            default -> {
+
+            }
+        }
     }
 
     @Override
@@ -90,6 +110,7 @@ public class Controller implements java.awt.event.KeyListener {
             case MAIN_MENU -> {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     map.setGameState(GameState.ACTIVE_GAME);
+                    applyTimers(GameState.ACTIVE_GAME);
                 }
             }
 
