@@ -71,9 +71,19 @@ public interface IMap {
      */
     public void debugOff();
 
+    /**
+     * @param enemy Adds this enemy to the collection of enemies for map to keep control of.
+     * Only enemies in this collection are relevant for the game (They are in the "loop")
+     */
     void addEnemy(IEnemy enemy);
 
+    /**
+     * @return the an entity spawner.
+     */
     Spawner getSpawner();
 
+    /**
+     * @return a list of all enemies on the level.
+     */
     ArrayList<IEnemy> getEnemies();
 }

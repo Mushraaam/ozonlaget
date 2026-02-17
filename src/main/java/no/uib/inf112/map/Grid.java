@@ -49,10 +49,7 @@ public class Grid implements IGrid {
         fillGrid(this.cellGrid, map.getStaticObjects());
 
     }
-    @Override
-    public HashMap<ICell, Integer> getWeightedCells(){
-        return this.weightedCells;
-    }
+
     @Override
     public void addWeightedCells(List<ICell> cells){
         for(ICell cell : cells){

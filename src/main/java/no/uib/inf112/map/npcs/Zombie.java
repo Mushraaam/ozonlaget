@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Zombie implements IEnemy {
-    private static final double SPEED = 0.5 * (Config.getInt("playerMoveSpeed"));
+    private static final double SPEED = 0.2 * (Config.getInt("playerMoveSpeed"));
     private Rectangle2D.Double pos;
     private List<ICell> currentPath = new ArrayList<>();
     private int pathIndex = 0;

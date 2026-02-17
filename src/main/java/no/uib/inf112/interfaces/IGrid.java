@@ -33,10 +33,15 @@ public interface IGrid extends Iterable<ICell> {
         return grid;
     }
 
-    HashMap<ICell, Integer> getWeightedCells();
-
+    /**
+     * Adds a list of cells with modified weight to a hashmap for grid's convenience and overview
+     */
     void addWeightedCells(List<ICell> cells);
 
+    /**
+     * Empties out the hashmap containing an overview of weighted cells.
+     * Restoring the cell's default weight.
+     */
     void resetWeightedCells();
 
     /**

@@ -35,11 +35,6 @@ public class TileGrid implements IGrid {
     }
 
     @Override
-    public HashMap<ICell, Integer> getWeightedCells() {
-        return null;
-    }
-
-    @Override
     public void addWeightedCells(List<ICell> cells) {
 
     }

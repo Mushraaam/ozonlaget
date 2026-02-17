@@ -28,6 +28,11 @@ public class Controller implements java.awt.event.KeyListener {
 
     private ArrayList<Timer> timers;
 
+    /**
+     * The main controller for the game. It handles user input via the keyboard
+     * and manages game loops using Swing Timers for movement, animation,
+     * and pathfinding.
+     */
     public Controller(IMap map, GameDrawer view) {
 
         this.map = map;
