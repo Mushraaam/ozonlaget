@@ -141,6 +141,10 @@ public class Map implements IMap {
     }
 
     @Override
+    public int getEnemyCount(){
+        return this.enemies.size();
+    }
+    @Override
     public void addEnemy(IEnemy thug) {
         enemies.add(thug);
     }

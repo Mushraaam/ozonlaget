@@ -2,7 +2,9 @@ package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IGrid;
@@ -30,6 +32,16 @@ public class TileGrid implements IGrid {
         this.colCount = (int) Math.floor(width / TILEWIDTH);
         this.rowCount = (int) Math.floor(height / TILEHEIGHT);
         this.tiles = makeGrid(rowCount, colCount, TILEWIDTH, TILEHEIGHT, FloorType.GRASS_TILES);
+    }
+
+    @Override
+    public void addWeightedCells(List<ICell> cells) {
+
+    }
+
+    @Override
+    public void resetWeightedCells() {
+
     }
 
     @Override

@@ -7,7 +7,7 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.view.GameDrawer;
-
+import no.uib.inf112.utility.PerfTracker;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -28,6 +28,11 @@ public class Controller implements java.awt.event.KeyListener {
 
     private ArrayList<Timer> timers;
 
+    /**
+     * The main controller for the game. It handles user input via the keyboard
+     * and manages game loops using Swing Timers for movement, animation,
+     * and pathfinding.
+     */
     public Controller(IMap map, GameDrawer view) {
 
         this.map = map;
@@ -53,12 +58,18 @@ public class Controller implements java.awt.event.KeyListener {
         });
 
         this.pathFindingTimer = new Timer(300, (ActionEvent e) -> {
+            PerfTracker.start("Pathfinding");
+            grid.resetWeightedCells();
             for (IEnemy enemy : map.getEnemies()) {
+                grid.addWeightedCells(enemy.getCurrentPath());
                 enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
             }
+            PerfTracker.stop("Pathfinding");
         });
 
         this.movementTimer = new Timer(16, e -> {
+            PerfTracker.tick(false);
+            PerfTracker.start("Movement Logic");
             if (dirHandler.isMoving()) {
                 Direction dir = dirHandler.getDirection();
                 if (dir != null) {
@@ -67,11 +78,12 @@ public class Controller implements java.awt.event.KeyListener {
                 }
             }
 
+
             ArrayList<IEnemy> enemies = map.getEnemies();
             for (IEnemy enemy : enemies) {
                 enemy.move(grid);
             }
-
+            PerfTracker.stop("Movement Logic");
             view.repaint();
         });
         

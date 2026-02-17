@@ -1,11 +1,15 @@
 package no.uib.inf112.view.DrawStates;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
+import java.util.Map;
 
+import no.uib.inf112.utility.PerfTracker;
+
+import no.uib.inf112.config.Config;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
@@ -16,6 +20,10 @@ public class DebugScreen implements IDrawer {
 
     private IMap map;
     private IGrid grid;
+    private long lastFrameNs = System.nanoTime();
+    private double frameMs = 0.0;
+    private double fps = 0.0;
+    double smoothedMs = 0;
 
     public DebugScreen(IMap map) {
         this.map = map;
@@ -24,7 +32,6 @@ public class DebugScreen implements IDrawer {
 
     @Override
     public void draw(Graphics2D graphic) {
-
         // Draw grid cells
         debugCellsInView(graphic, this.grid);
 
@@ -44,31 +51,59 @@ public class DebugScreen implements IDrawer {
 
         // Draw enemy paths
         graphic.setColor(Color.RED);
+        graphic.setStroke(new java.awt.BasicStroke(2f));
+
 
         for (IEnemy enemy : this.map.getEnemies()) {
             List<ICell> path = enemy.getCurrentPath();
-            if (path == null || path.isEmpty())
-                continue;
+            if (path == null || path.size() < 2) continue;
+
+            for (int i = 0; i < path.size() - 1; i++) {
+                Rectangle2D.Double a = path.get(i).getBounds();
+                Rectangle2D.Double b = path.get(i + 1).getBounds();
+
+                double ax = a.getCenterX();
+                double ay = a.getCenterY();
+                double bx = b.getCenterX();
+                double by = b.getCenterY();
+
+                if (!isVisible(graphic, a) && !isVisible(graphic, b)) continue;
+
+                graphic.draw(new java.awt.geom.Line2D.Double(ax, ay, bx, by));
+            }
 
             for (ICell step : path) {
                 Rectangle2D.Double r = step.getBounds();
-                if (isVisible(graphic, r)) {
+                if (!isVisible(graphic, r)) continue;
 
-                    double cx = r.getCenterX();
-                    double cy = r.getCenterY();
+                double cx = r.getCenterX();
+                double cy = r.getCenterY();
+                double radius = Math.min(r.getWidth(), r.getHeight()) * 0.12;
+                double d = radius * 2;
 
-                    double radius = Math.min(r.getWidth(), r.getHeight()) * 0.25;
-                    double d = radius * 2;
-
-                    graphic.fill(new Ellipse2D.Double(
-                            cx - radius,
-                            cy - radius,
-                            d,
-                            d));
-                }
+                graphic.fill(new Ellipse2D.Double(cx - radius, cy - radius, d, d));
             }
         }
 
-    }
+        //DRAW STATS
+        PerfTracker.tick(true); // Increment FPS
+        AffineTransform old = graphic.getTransform();
+        graphic.setTransform(new AffineTransform());
+        graphic.setFont(new Font("Monospaced", Font.BOLD, 14));
+        int x = 20;
+        int y = 30;
+        graphic.setColor(Color.WHITE);
+        graphic.drawString(String.format("FPS: %3.0f | UPS: %3.0f", PerfTracker.fps, PerfTracker.ups), x, y);
+        y += 20;
+        graphic.drawString(String.format("npc count: %d", map.getEnemyCount()), x, y);
+        y += 20;
+        graphic.drawString("--- TASK BREAKDOWN ---", x, y);
+        for (Map.Entry<String, Double> entry : PerfTracker.taskMs.entrySet()) {
+            y += 20;
+            double time = entry.getValue();
+            graphic.drawString(String.format("%-15s: %6.2f ms", entry.getKey(), time), x, y);
+        }
+        graphic.setTransform(old);
 
+    }
 }

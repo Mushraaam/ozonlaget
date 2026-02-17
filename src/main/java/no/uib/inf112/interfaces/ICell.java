@@ -6,7 +6,22 @@ import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 
 public interface ICell {
-    
+
+
+    /**
+     * Increments the cell's cost for an algorithm to see
+     */
+    void incWeight();
+
+    /**
+     * @return the cell's current weight
+     */
+    int getWeight();
+
+    /**
+     * resets the weight back to default
+     */
+    void resetWeight();
 
     public Rectangle2D.Double getBounds();
 

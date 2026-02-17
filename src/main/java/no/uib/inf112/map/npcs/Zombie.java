@@ -8,39 +8,55 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
+import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Zombie implements IEnemy {
-    private static final double SPEED = 0.5 * (Config.getInt("playerMoveSpeed"));
+    private static final double SPEED = 0.2 * (Config.getInt("playerMoveSpeed"));
     private Rectangle2D.Double pos;
     private List<ICell> currentPath = new ArrayList<>();
     private int pathIndex = 0;
     private int animationIndex = 0;
     private int ANIMATION_COUNT = 8;
     private double facingAngle = 0.0;
-    private static final double ROTATION_SPEED = 0.2;
+    private static final double ROTATION_SPEED = 0.12;
     private static final EnemySize SIZE = EnemySize.MEDIUM;
     private IMap map;
+    double goalOffsetX;
+    double goalOffsetY;
+
     private IPlayer player;
 
     public Zombie(Rectangle2D.Double pos, IMap map) {
         this.pos = pos;
         this.map = map;
+
+        double r = pos.getHeight(); //Eller width
+        this.goalOffsetX = (Math.random() * 2 - 1) * r;
+        this.goalOffsetY = (Math.random() * 2 - 1) * r;
         this.player = map.getPlayer();
     }
 
     @Override
     public void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds) {
-        ICell start = grid.getCellFromPos(getHitbox());
-        ICell goal = grid.getCellFromPos(targetBounds);
-        currentPath = pathfinder.findPath(start, goal, SIZE);
-        pathIndex = (currentPath.size() > 1) ? 1 : 0; // gå etter første steg i stien for å følge den.
+        Rectangle2D.Double shiftedTarget = new Rectangle2D.Double(
+                targetBounds.x + goalOffsetX,
+                targetBounds.y + goalOffsetY,
+                targetBounds.width,
+                targetBounds.height
+        );
 
+        ICell start = grid.getCellFromPos(getHitbox());
+        ICell goal  = grid.getCellFromPos(shiftedTarget);
+
+        currentPath = pathfinder.findPath(start, goal, SIZE);
+        pathIndex = (currentPath.size() > 1) ? 1 : 0;
     }
 
     private void updateFacing(double dx, double dy, double dist) { // noe assistanse med matten trengtes.....
@@ -53,8 +69,12 @@ public class Zombie implements IEnemy {
             while (angleDiff > Math.PI)
                 angleDiff -= 2 * Math.PI;
             this.facingAngle += angleDiff * ROTATION_SPEED;
+
+
         }
     }
+
+
 
     @Override
     public void incrementAnimationIndex() {
@@ -135,15 +155,20 @@ public class Zombie implements IEnemy {
     }
 
     private boolean isLegal(Double candidate) {
+        IGrid grid = map.getGrid();
+        ICell centerCell = grid.getCellFromPos(candidate);
+        List<ICell> relevantCells = grid.getNeighbours(centerCell);
+        relevantCells.add(centerCell);
         for (IEnemy enemy : this.map.getEnemies()) {
-            if (candidate.intersects((enemy.getHitbox())) && enemy != this) {
-                return false;
+            if (enemy == this) continue;
+            ICell enemyCell = grid.getCellFromPos(enemy.getHitbox());
+            if (relevantCells.contains(enemyCell)) {
+                if (candidate.intersects(enemy.getHitbox())) {
+                    return false;
+                }
             }
         }
-        if (candidate.intersects(this.player.getHitbox())){
-            return false;
-        }
-        return true;
+        return !candidate.intersects(this.player.getHitbox());
     }
 
     /// //////////////////GETTERS////////////////////////

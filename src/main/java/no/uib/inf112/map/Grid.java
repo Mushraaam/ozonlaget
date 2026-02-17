@@ -3,7 +3,9 @@ package no.uib.inf112.map;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.FloorType;
@@ -26,6 +28,7 @@ public class Grid implements IGrid {
 
     private int colCount;
     private int rowCount;
+    private HashMap<ICell, Integer> weightedCells = new HashMap<>();
 
     public Grid(IMap map) {
         this.map = map;
@@ -45,6 +48,22 @@ public class Grid implements IGrid {
         this.cellGrid = makeGrid(this.rowCount, this.colCount, CELLWIDTH, CELLHEIGHT, FloorType.NONE);
         fillGrid(this.cellGrid, map.getStaticObjects());
 
+    }
+
+    @Override
+    public void addWeightedCells(List<ICell> cells){
+        for(ICell cell : cells){
+            weightedCells.put(cell, weightedCells.getOrDefault(cell, 1)+1);
+            cell.incWeight();
+        }
+
+    }
+    @Override
+    public void resetWeightedCells(){
+        for(ICell cell : weightedCells.keySet()){
+            cell.resetWeight();
+        }
+        weightedCells.clear();
     }
 
     /**
