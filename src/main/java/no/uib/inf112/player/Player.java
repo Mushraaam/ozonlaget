@@ -1,13 +1,11 @@
 package no.uib.inf112.player;
 
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.interfaces.IControllablePlayer;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IStaticDrawableObject;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IViewablePlayer;
 
@@ -21,7 +19,6 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private int animationIndex;
     private IMap map;
 
-    // TODO: movePlayer og legalMove har unødvendig duplikatkode
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IMap map) {
         this.hitbox = hitbox;
         this.bounds = bounds;
@@ -46,7 +43,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
 
     }
-
+    
     private void trySlide(Direction dir) {
         switch (dir) {
             case SOUTH_EAST -> {

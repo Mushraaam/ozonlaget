@@ -29,7 +29,7 @@ public class Grid implements IGrid {
 
     public Grid(IMap map) {
         this.map = map;
-        this.bounds = map.getBounds();
+        this.bounds =this.map.getBounds();
 
         if (this.bounds.getX() != 0 || this.bounds.getY() != 0) {
             throw new IllegalArgumentException("Bounds for Map must start with x, y = 0");

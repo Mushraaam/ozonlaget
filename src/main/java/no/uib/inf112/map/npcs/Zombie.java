@@ -8,10 +8,8 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
-import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
