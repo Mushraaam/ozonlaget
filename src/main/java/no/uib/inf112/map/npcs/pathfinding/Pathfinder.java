@@ -42,7 +42,7 @@ public class Pathfinder {
             openSet.remove(current);
 
             if (current.equals(goal)) {
-                return reconstructPath(cameFrom, current);
+                return smoothPath(reconstructPath(cameFrom, current), size);
             }
 
             closed.add(current);
@@ -54,7 +54,7 @@ public class Pathfinder {
                 if (closed.contains(neighbor)) {
                     continue;
                 }
-                double tentativeG = score.get(current) + stepCost(current, neighbor);
+                double tentativeG = score.get(current) + stepCost(current, neighbor) + neighbor.getWeight();
 
                 if (tentativeG < score.getOrDefault(neighbor, Double.POSITIVE_INFINITY)) {
                     cameFrom.put(neighbor, current);
@@ -94,6 +94,8 @@ public class Pathfinder {
         return path;
     }
 
+
+
     private boolean canEnter(ICell cell, EnemySize size) {
 
         PathType type = cell.pathType();
@@ -108,6 +110,60 @@ public class Pathfinder {
                 return type == PathType.UNBLOCKED;
             }
             default -> throw new IllegalStateException("No known case for size");
+        }
+    }
+
+
+
+
+    private List<ICell> smoothPath(List<ICell> path, EnemySize size) {
+        if (path == null || path.size() <= 2) return path;
+
+        ArrayList<ICell> out = new ArrayList<>();
+        int i = 0;
+        out.add(path.get(0));
+
+        while (i < path.size() - 1) {
+            int best = i + 1;
+
+            for (int j = i + 1; j < path.size(); j++) {
+                if (hasLineOfSight(path.get(i), path.get(j), size)) {
+                    best = j;
+                } else {
+                    break;
+                }
+            }
+
+            out.add(path.get(best));
+            i = best;
+        }
+
+        return out;
+    }
+
+    private boolean hasLineOfSight(ICell a, ICell b, EnemySize size) {
+        int x = a.col(), y = a.row();
+        int x1 = b.col(), y1 = b.row();
+
+        int dx = Math.abs(x1 - x), dy = -Math.abs(y1 - y);
+        int sx = x < x1 ? 1 : -1,  sy = y < y1 ? 1 : -1;
+        int err = dx + dy;
+
+        while (true) {
+            ICell cell = grid.getCell(y, x);
+            if (cell == null || !canEnter(cell, size) || cell.getWeight() > 3) return false;
+            if (x == x1 && y == y1) return true;
+            int e2 = 2 * err;
+            int nextX = x, nextY = y;
+            if (e2 >= dy) { err += dy; nextX += sx; }
+            if (e2 <= dx) { err += dx; nextY += sy; }
+            if (nextX != x && nextY != y) {
+                if (!canEnter(grid.getCell(y, nextX), size) ||
+                        !canEnter(grid.getCell(nextY, x), size)) return false;
+            }
+
+            x = nextX;
+            y = nextY;
         }
     }
 

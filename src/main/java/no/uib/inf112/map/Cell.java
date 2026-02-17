@@ -26,7 +26,7 @@ public class Cell implements ICell {
     }
 
     @Override public void incWeight(){
-        this.weight +=1;
+        this.weight +=3;
     }
 
     @Override public int getWeight(){
