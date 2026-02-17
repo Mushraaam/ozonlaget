@@ -13,6 +13,7 @@ import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,15 +155,20 @@ public class Zombie implements IEnemy {
     }
 
     private boolean isLegal(Double candidate) {
+        IGrid grid = map.getGrid();
+        ICell centerCell = grid.getCellFromPos(candidate);
+        List<ICell> relevantCells = grid.getNeighbours(centerCell);
+        relevantCells.add(centerCell);
         for (IEnemy enemy : this.map.getEnemies()) {
-            if (candidate.intersects((enemy.getHitbox())) && enemy != this) {
-                return false;
+            if (enemy == this) continue;
+            ICell enemyCell = grid.getCellFromPos(enemy.getHitbox());
+            if (relevantCells.contains(enemyCell)) {
+                if (candidate.intersects(enemy.getHitbox())) {
+                    return false;
+                }
             }
         }
-        if (candidate.intersects(this.player.getHitbox())){
-            return false;
-        }
-        return true;
+        return !candidate.intersects(this.player.getHitbox());
     }
 
     /// //////////////////GETTERS////////////////////////
