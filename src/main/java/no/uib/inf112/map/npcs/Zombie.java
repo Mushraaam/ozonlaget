@@ -32,16 +32,25 @@ public class Zombie implements IEnemy {
     double goalOffsetX;
     double goalOffsetY;
 
+    // test
+    private int currentTarget;
+    private boolean sliding = false;
+    private int slideXDir = 1;
+    private int slideYDir = 1;
+    private boolean slidePreferX = true;
+
     private IPlayer player;
 
     public Zombie(Rectangle2D.Double pos, IMap map) {
         this.pos = pos;
         this.map = map;
 
-        double r = pos.getHeight(); //Eller width
+        double r = pos.getHeight(); // Eller width
         this.goalOffsetX = (Math.random() * 2 - 1) * r;
         this.goalOffsetY = (Math.random() * 2 - 1) * r;
         this.player = map.getPlayer();
+
+        this.currentTarget = 0;
     }
 
     @Override
@@ -52,14 +61,13 @@ public class Zombie implements IEnemy {
     @Override
     public void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds) {
         Rectangle2D.Double shiftedTarget = new Rectangle2D.Double(
-                targetBounds.x,// + goalOffsetX,
-                targetBounds.y,// + goalOffsetY,
+                targetBounds.x, // + goalOffsetX,
+                targetBounds.y, // + goalOffsetY,
                 targetBounds.width,
-                targetBounds.height
-        );
+                targetBounds.height);
 
         ICell start = grid.getCellFromPos(getHitbox());
-        ICell goal  = grid.getCellFromPos(shiftedTarget);
+        ICell goal = grid.getCellFromPos(shiftedTarget);
 
         currentPath = pathfinder.findPath(start, goal, SIZE);
         pathIndex = (currentPath.size() > 1) ? 1 : 0;
@@ -76,11 +84,8 @@ public class Zombie implements IEnemy {
                 angleDiff -= 2 * Math.PI;
             this.facingAngle += angleDiff * ROTATION_SPEED;
 
-
         }
     }
-
-
 
     @Override
     public void incrementAnimationIndex() {
@@ -92,7 +97,9 @@ public class Zombie implements IEnemy {
         if (currentPath == null || pathIndex >= currentPath.size())
             return;
         int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 10);
-        for (int i = pathIndex; i < lookAheadLimit; i++) {
+        int start = sliding ? currentTarget : pathIndex;
+        for (int i = start; i < lookAheadLimit; i++) {
+
             Rectangle2D target = currentPath.get(i).getBounds();
             double dx = target.getCenterX() - pos.getCenterX();
             double dy = target.getCenterY() - pos.getCenterY();
@@ -104,62 +111,92 @@ public class Zombie implements IEnemy {
                 if (dist <= SPEED) {
                     pathIndex++;
                 }
+                if (this.sliding) {
+                    this.currentTarget = i;
+                } else {
+                    this.currentTarget = pathIndex;
+                }
                 return;
             }
-    }
-
-
-
+        }
 
     }
-    private boolean tryMove(double dx, double dy, double dist, Rectangle2D target){
+
+    private boolean tryMove(double dx, double dy, double dist, Rectangle2D target) {
         Rectangle2D.Double candidate = generateCandidate(dx, dy, dist, target);
 
         if (isLegal(candidate)) {
+            this.sliding = false;
             this.pos = candidate;
             return true;
 
         } else {
-            return trySlide(dx, dy, dist, target);
+
+            if (!this.sliding) {
+                this.slideXDir = (dx >= 0) ? 1 : -1;
+                this.slideYDir = (dy >= 0) ? 1 : -1;
+
+                Rectangle2D.Double testX = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width,
+                        this.pos.height);
+                Rectangle2D.Double testY = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width,
+                        this.pos.height);
+                testX.x += slideXDir * SPEED;
+                testY.y += slideYDir * SPEED;
+
+                boolean xOk = isLegal(testX);
+                boolean yOk = isLegal(testY);
+
+                if (xOk && !yOk)
+                    this.slidePreferX = true;
+                else if (!xOk && yOk)
+                    this.slidePreferX = false;
+                else
+                    this.slidePreferX = Math.abs(dx) >= Math.abs(dy);
+            }
+
+            if (trySlide(dx, dy, dist, target)) {
+                sliding = true;
+                return true;
+            }
         }
+        this.sliding = false;
+        return false;
     }
 
     private boolean trySlide(double dx, double dy, double dist, Rectangle2D target) {
         Rectangle2D.Double slideX = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
         Rectangle2D.Double slideY = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
-        System.out.println(dx);
-        System.out.println(dy);
 
-        int x = 1; int y = 1;
-        if (dx <= 0){x = x * (-1);}
-        if (dy <= 0){y = y * (-1);}
-        boolean nextReached = false;
-        // Slide X
-        if (dist <= SPEED) {
-            nextReached = true;
+        if (Math.abs(dx) <= SPEED) {
             slideX.x = target.getCenterX() - pos.width / 2.0;
         } else {
-            slideX.x += x * SPEED;
+            slideX.x += slideXDir * SPEED;
         }
-        if (isLegal(slideX)) {
-            this.pos = slideX;
-            return true;
-
-        } else { // Slide Y
-            nextReached = false;
-            if (dist <= SPEED) {
-                nextReached = true;
-                slideY.y = target.getCenterY() - pos.height / 2.0;
-            } else {
-                slideY.y += y * SPEED;
+        if (Math.abs(dy) <= SPEED) {
+            slideY.y = target.getCenterY() - pos.height / 2.0;
+        } else {
+            slideY.y += slideYDir * SPEED;
+        }
+        if (slidePreferX) {
+            if (isLegal(slideX)) {
+                this.pos = slideX;
+                return true;
             }
             if (isLegal(slideY)) {
                 this.pos = slideY;
                 return true;
-            } else {
-                nextReached = false;
+            }
+        } else {
+            if (isLegal(slideY)) {
+                this.pos = slideY;
+                return true;
+            }
+            if (isLegal(slideX)) {
+                this.pos = slideX;
+                return true;
             }
         }
+
         return false;
 
     }
@@ -180,7 +217,8 @@ public class Zombie implements IEnemy {
 
     private boolean isLegal(Double candidate) {
         for (IEnemy enemy : this.map.getEnemies()) {
-            if (enemy == this) continue;
+            if (enemy == this)
+                continue;
             if (candidate.intersects(enemy.getHitbox())) {
                 return false;
             }
