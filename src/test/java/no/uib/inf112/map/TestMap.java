@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
+import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
@@ -134,6 +135,18 @@ public class TestMap implements IMap {
     public int getEnemyCount() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getEnemyCount'");
+    }
+
+    @Override
+    public boolean inOccupiedCells(ICell cell) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'inOccupiedCells'");
+    }
+
+    @Override
+    public void gatherOccupiedCells() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'gatherOccupiedCells'");
     }
 
 }
