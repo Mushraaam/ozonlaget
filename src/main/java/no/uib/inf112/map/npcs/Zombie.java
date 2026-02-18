@@ -155,17 +155,10 @@ public class Zombie implements IEnemy {
     }
 
     private boolean isLegal(Double candidate) {
-        IGrid grid = map.getGrid();
-        ICell centerCell = grid.getCellFromPos(candidate);
-        List<ICell> relevantCells = grid.getNeighbours(centerCell);
-        relevantCells.add(centerCell);
         for (IEnemy enemy : this.map.getEnemies()) {
             if (enemy == this) continue;
-            ICell enemyCell = grid.getCellFromPos(enemy.getHitbox());
-            if (relevantCells.contains(enemyCell)) {
                 if (candidate.intersects(enemy.getHitbox())) {
                     return false;
-                }
             }
         }
         return !candidate.intersects(this.player.getHitbox());

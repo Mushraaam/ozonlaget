@@ -2,6 +2,7 @@ package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
 
 import no.uib.inf112.config.Config;
@@ -24,6 +25,7 @@ public class Map implements IMap {
     private boolean debug;
     private Pathfinder pathfinder;
     private ArrayList<IEnemy> enemies;
+    private HashSet<ICell> occupiedCells;
 
     private final Spawner spawner;
 
@@ -48,6 +50,7 @@ public class Map implements IMap {
         this.spawner = new Spawner(this); // Spawner comes after grid, or else uh-oh.
         this.pathfinder = new Pathfinder(grid);
 
+        this.occupiedCells = new HashSet<>();
         // TODO: fjern denne, lage logikk i spawner
         spawnEnemies();
     }
@@ -152,5 +155,18 @@ public class Map implements IMap {
     @Override
     public IGrid getTiles() {
         return this.tiles;
+    }
+
+    @Override
+    public boolean inOccupiedCells(ICell cell) {
+        return this.occupiedCells.contains(cell);
+    }
+
+    @Override
+    public void gatherOccupiedCells() {
+        HashSet<ICell> occupied = new HashSet<>();
+        for (IEnemy enemy : this.enemies){
+            ICell current = this.grid.getCellFromPos(enemy.getHitbox());
+        }
     }
 }

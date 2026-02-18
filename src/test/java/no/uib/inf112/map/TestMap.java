@@ -130,4 +130,10 @@ public class TestMap implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'getTiles'");
     }
 
+    @Override
+    public int getEnemyCount() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEnemyCount'");
+    }
+
 }
