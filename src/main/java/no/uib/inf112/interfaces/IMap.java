@@ -100,4 +100,6 @@ public interface IMap {
      * Refreshes occupied cells
      */
     public void gatherOccupiedCells();
+
+    void registerToCurrentCell(IEnemy enemy);
 }

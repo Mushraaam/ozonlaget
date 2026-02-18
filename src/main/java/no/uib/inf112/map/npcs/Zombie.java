@@ -96,10 +96,8 @@ public class Zombie implements IEnemy {
     public void move(IGrid grid) {
         if (currentPath == null || pathIndex >= currentPath.size())
             return;
-        int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 10);
-        int start = sliding ? currentTarget : pathIndex;
-        for (int i = start; i < lookAheadLimit; i++) {
-
+        int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
+        for (int i = pathIndex; i < lookAheadLimit; i++) {
             Rectangle2D target = currentPath.get(i).getBounds();
             double dx = target.getCenterX() - pos.getCenterX();
             double dy = target.getCenterY() - pos.getCenterY();
@@ -166,34 +164,29 @@ public class Zombie implements IEnemy {
     private boolean trySlide(double dx, double dy, double dist, Rectangle2D target) {
         Rectangle2D.Double slideX = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
         Rectangle2D.Double slideY = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
-
-        if (Math.abs(dx) <= SPEED) {
+        int x = 1; int y = 1;
+        if (dx <= 0){x = x * (-1);}
+        if (dy <= 0){y = y * (-1);}
+        // Slide X
+        if (dist <= SPEED) {
             slideX.x = target.getCenterX() - pos.width / 2.0;
         } else {
-            slideX.x += slideXDir * SPEED;
+            slideX.x += (dx / dist) * SPEED;
         }
-        if (Math.abs(dy) <= SPEED) {
-            slideY.y = target.getCenterY() - pos.height / 2.0;
-        } else {
-            slideY.y += slideYDir * SPEED;
-        }
-        if (slidePreferX) {
-            if (isLegal(slideX)) {
-                this.pos = slideX;
-                return true;
+        if (isLegal(slideX)) {
+            this.pos = slideX;
+            return true;
+
+        } else { // Slide Y
+            if (dist <= SPEED) {
+                slideY.y = target.getCenterY() - pos.height / 2.0;
+            } else {
+                slideY.y += (dy / dist) * SPEED;
             }
             if (isLegal(slideY)) {
                 this.pos = slideY;
                 return true;
-            }
-        } else {
-            if (isLegal(slideY)) {
-                this.pos = slideY;
-                return true;
-            }
-            if (isLegal(slideX)) {
-                this.pos = slideX;
-                return true;
+            } else {
             }
         }
 
@@ -216,14 +209,18 @@ public class Zombie implements IEnemy {
     }
 
     private boolean isLegal(Double candidate) {
+        double padding = 6.0;
+        Rectangle2D collisionBox = new Rectangle2D.Double(
+                candidate.x + padding, candidate.y + padding,
+                candidate.width - (padding * 2), candidate.height - (padding * 2)
+        );
         for (IEnemy enemy : this.map.getEnemies()) {
-            if (enemy == this)
-                continue;
-            if (candidate.intersects(enemy.getHitbox())) {
+            if (enemy == this) continue;
+            if (collisionBox.intersects(enemy.getHitbox())) {
                 return false;
             }
         }
-        return !candidate.intersects(this.player.getHitbox());
+        return !collisionBox.intersects(this.player.getHitbox());
     }
 
     /// //////////////////GETTERS////////////////////////
