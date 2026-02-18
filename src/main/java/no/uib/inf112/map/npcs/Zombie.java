@@ -46,8 +46,8 @@ public class Zombie implements IEnemy {
     @Override
     public void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds) {
         Rectangle2D.Double shiftedTarget = new Rectangle2D.Double(
-                targetBounds.x + goalOffsetX,
-                targetBounds.y + goalOffsetY,
+                targetBounds.x,// + goalOffsetX,
+                targetBounds.y,// + goalOffsetY,
                 targetBounds.width,
                 targetBounds.height
         );
