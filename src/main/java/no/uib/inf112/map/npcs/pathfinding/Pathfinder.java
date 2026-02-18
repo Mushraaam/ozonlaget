@@ -101,10 +101,11 @@ public class Pathfinder {
      * Account for diagonal movement (sqrt(2)) vs orthogonal movement (1.0).
      */
     private double stepCost(ICell from, ICell to) {
-        int baseCost = (map.inOccupiedCells(to)) ? 2 : 1;
+        int baseCost = (map.inOccupiedCells(to)) ? 100 : 1;
         int dx = Math.abs(from.col() - to.col());
         int dy = Math.abs(from.row() - to.row());
-        return (dx == 1 && dy == 1) ? Math.sqrt(2)+baseCost : 1.0+baseCost; // forsøk på diagonal
+        double move = (dx == 1 && dy == 1) ? Math.sqrt(2) : 1.0;
+        return move+baseCost;// forsøk på diagonal
     }
 
     /**
@@ -160,13 +161,13 @@ public class Pathfinder {
         while (i < path.size() - 1) {
             int best = i + 1;
 
-            for (int j = i + 1; j < path.size(); j++) {
+            /*for (int j = i + 1; j < path.size(); j++) {
                 if (hasLineOfSight(path.get(i), path.get(j), size)) {
                     best = j;
                 } else {
                     break;
                 }
-            }
+            }*/
 
             out.add(path.get(best));
             i = best;
