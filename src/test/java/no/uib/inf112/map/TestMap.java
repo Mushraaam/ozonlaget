@@ -35,7 +35,7 @@ public class TestMap implements IMap {
 
     @Override
     public Pathfinder getPathfinder() {
-        return new Pathfinder(getGrid());
+        return new Pathfinder(this);
     }
 
 
