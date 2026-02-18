@@ -2,6 +2,7 @@ package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -26,7 +27,7 @@ public class Map implements IMap {
     private Pathfinder pathfinder;
     private ArrayList<IEnemy> enemies;
     private HashSet<ICell> occupiedCells;
-
+    private HashMap<ICell, HashSet<IEnemy>> enemyAroundCell = new HashMap<>();
     private final Spawner spawner;
 
     public Map() {
@@ -51,10 +52,17 @@ public class Map implements IMap {
         this.pathfinder = new Pathfinder(this);
 
         this.occupiedCells = new HashSet<>();
+
+        //prøve å følge med hvor fiendene hører til
+        for(ICell cell : grid){
+            enemyAroundCell.put(cell, new HashSet<>());
+        }
         gatherOccupiedCells();
         // TODO: fjern denne, lage logikk i spawner
         spawnEnemies();
     }
+
+
 
     private void spawnEnemies() {
         Random random = new Random();
@@ -190,5 +198,11 @@ public class Map implements IMap {
         }
         this.occupiedCells = occupied;
         // }
+    }
+
+    @Override
+    public void registerToCurrentCell(IEnemy enemy){
+        ICell currCell = enemy.getCurrentPath().getFirst();
+        enemyAroundCell.get(currCell).add(enemy);
     }
 }
