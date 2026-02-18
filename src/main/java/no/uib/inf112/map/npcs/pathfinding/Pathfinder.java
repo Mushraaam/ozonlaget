@@ -6,18 +6,20 @@ import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.enums.PathType;
+import no.uib.inf112.interfaces.IMap;
 
 public class Pathfinder {
 
+    private final IMap map;
     private final IGrid grid;
 
     /**
      * Responsible for calculating the shortest valid path between two cells
      * on the game grid using the A* search algorithm.
      */
-    public Pathfinder(IGrid grid) { // Uses A* algorithm.
-        this.grid = grid;
-
+    public Pathfinder(IMap map) { // Uses A* algorithm.
+        this.map = map;
+        this.grid = map.getGrid();
     }
 
     /**
@@ -67,7 +69,7 @@ public class Pathfinder {
                 if (closed.contains(neighbor)) {
                     continue;
                 }
-                double tentativeG = score.get(current) + stepCost(current, neighbor) + neighbor.getWeight();
+                double tentativeG = score.get(current) + stepCost(current, neighbor);
 
                 if (tentativeG < score.getOrDefault(neighbor, Double.POSITIVE_INFINITY)) {
                     cameFrom.put(neighbor, current);
@@ -99,9 +101,10 @@ public class Pathfinder {
      * Account for diagonal movement (sqrt(2)) vs orthogonal movement (1.0).
      */
     private double stepCost(ICell from, ICell to) {
+        int baseCost = (map.inOccupiedCells(to)) ? 2 : 1;
         int dx = Math.abs(from.col() - to.col());
         int dy = Math.abs(from.row() - to.row());
-        return (dx == 1 && dy == 1) ? Math.sqrt(2) : 1.0; // forsøk på diagonal
+        return (dx == 1 && dy == 1) ? Math.sqrt(2)+baseCost : 1.0+baseCost; // forsøk på diagonal
     }
 
     /**
@@ -187,7 +190,7 @@ public class Pathfinder {
 
         while (true) {
             ICell cell = grid.getCell(y, x);
-            if (cell == null || !canEnter(cell, size) || cell.getWeight() > 3) return false;
+            if (cell == null || !canEnter(cell, size) ) return false;
             if (x == x1 && y == y1) return true;
             int e2 = 2 * err;
             int nextX = x, nextY = y;

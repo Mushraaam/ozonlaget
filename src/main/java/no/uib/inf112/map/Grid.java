@@ -50,22 +50,6 @@ public class Grid implements IGrid {
 
     }
 
-    @Override
-    public void addWeightedCells(List<ICell> cells){
-        for(ICell cell : cells){
-            weightedCells.put(cell, weightedCells.getOrDefault(cell, 1)+1);
-            cell.incWeight();
-        }
-
-    }
-    @Override
-    public void resetWeightedCells(){
-        for(ICell cell : weightedCells.keySet()){
-            cell.resetWeight();
-        }
-        weightedCells.clear();
-    }
-
     /**
      * Should only be run once in constructor else your pc will break
      * @param grid
