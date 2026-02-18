@@ -66,6 +66,13 @@ public interface IGrid extends Iterable<ICell> {
     public ICell getCellFromPos(Rectangle2D.Double pos);
 
     /**
+     * @param x
+     * @param y
+     * @return ICell that corresponds to x, y
+     */
+    public ICell getCellFromXY(double x, double y);
+
+    /**
      * @return width of each cell
      *         Used for testing
      */

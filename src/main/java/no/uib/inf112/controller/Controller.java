@@ -62,7 +62,6 @@ public class Controller implements java.awt.event.KeyListener {
             this.map.gatherOccupiedCells();
             for (IEnemy enemy : map.getEnemies()) {
                 enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
-                map.
             }
             PerfTracker.stop("Pathfinding");
         });

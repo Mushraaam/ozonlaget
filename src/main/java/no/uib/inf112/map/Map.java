@@ -53,16 +53,14 @@ public class Map implements IMap {
 
         this.occupiedCells = new HashSet<>();
 
-        //prøve å følge med hvor fiendene hører til
-        for(ICell cell : grid){
+        // prøve å følge med hvor fiendene hører til
+        for (ICell cell : grid) {
             enemyAroundCell.put(cell, new HashSet<>());
         }
         gatherOccupiedCells();
         // TODO: fjern denne, lage logikk i spawner
         spawnEnemies();
     }
-
-
 
     private void spawnEnemies() {
         Random random = new Random();
@@ -85,6 +83,44 @@ public class Map implements IMap {
             }
 
         }
+    }
+
+    @Override
+    public boolean inOccupiedCells(ICell cell) {
+        return this.occupiedCells.contains(cell);
+    }
+
+    @Override
+    public void gatherOccupiedCells() {
+        HashSet<ICell> occupied = new HashSet<>();
+        for (IEnemy enemy : this.enemies) {
+            Rectangle2D.Double pos = enemy.getHitbox();
+            double x1 = pos.getMinX();
+            double y1 = pos.getMinY();
+            double x2 = pos.getMinX();
+            double y2 = pos.getMaxY();
+
+            ICell topLeft = this.grid.getCellFromXY(x1, y1);
+            ICell botRight = this.grid.getCellFromXY(x2, y2);
+
+            int startRow = topLeft.row();
+            int startCol = topLeft.col();
+            int endRow = botRight.row();
+            int endCol = botRight.col();
+
+            for (int i = startRow; i <= endRow; i++) {
+                for (int j = startCol; j <= endCol; j++) {
+                    occupied.add(this.grid.getCell(i, j));
+                }
+            }
+        }
+        this.occupiedCells = occupied;
+    }
+
+    @Override
+    public void registerToCurrentCell(IEnemy enemy) {
+        ICell currCell = enemy.getCurrentPath().getFirst();
+        enemyAroundCell.get(currCell).add(enemy);
     }
 
     @Override
@@ -168,41 +204,4 @@ public class Map implements IMap {
         return this.tiles;
     }
 
-    @Override
-    public boolean inOccupiedCells(ICell cell) {
-        return this.occupiedCells.contains(cell);
-    }
-
-    @Override
-    public void gatherOccupiedCells() {
-        HashSet<ICell> occupied = new HashSet<>();
-        // for (IEnemy enemy : this.enemies) {
-        // ICell current = this.grid.getCellFromPos(enemy.getHitbox());
-        // occupied.add(current);
-        // for (ICell neighbour : this.grid.getNeighbours(current)) {
-        // occupied.add(neighbour);
-        // for (ICell neighbour2 : this.grid.getNeighbours(neighbour)) {
-        // occupied.add(neighbour2);
-        // }
-        // }
-
-        for (ICell cell : this.grid) {
-            for (IEnemy enemy : this.enemies) {
-                if (cell.getBounds().intersects(enemy.getHitbox())) {
-                    occupied.add(cell);
-                    for (ICell cell2 : this.grid.getNeighbours(cell)){
-                        occupied.add(cell2);
-                    }
-                }
-            }
-        }
-        this.occupiedCells = occupied;
-        // }
-    }
-
-    @Override
-    public void registerToCurrentCell(IEnemy enemy){
-        ICell currCell = enemy.getCurrentPath().getFirst();
-        enemyAroundCell.get(currCell).add(enemy);
-    }
 }

@@ -149,4 +149,10 @@ public class TestMap implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'gatherOccupiedCells'");
     }
 
+    @Override
+    public void registerToCurrentCell(IEnemy enemy) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'registerToCurrentCell'");
+    }
+
 }

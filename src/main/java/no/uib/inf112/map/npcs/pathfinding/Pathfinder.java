@@ -101,7 +101,7 @@ public class Pathfinder {
      * Account for diagonal movement (sqrt(2)) vs orthogonal movement (1.0).
      */
     private double stepCost(ICell from, ICell to) {
-        int baseCost = (map.inOccupiedCells(to)) ? 8 : 1;
+        int baseCost = (map.inOccupiedCells(to)) ? 12 : 1;
         int dx = Math.abs(from.col() - to.col());
         int dy = Math.abs(from.row() - to.row());
         double move = (dx == 1 && dy == 1) ? Math.sqrt(2) : 1.0;
