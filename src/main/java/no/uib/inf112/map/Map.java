@@ -91,9 +91,6 @@ public class Map implements IMap {
 
     ////////////////// GETTERS AND SETTERS
 
-
-
-
     public ArrayList<IEnemy> getEnemies() {
         return new ArrayList<>(enemies);
     }
@@ -174,7 +171,13 @@ public class Map implements IMap {
         for (IEnemy enemy : this.enemies) {
             ICell current = this.grid.getCellFromPos(enemy.getHitbox());
             occupied.add(current);
+            for (ICell neighbour : this.grid.getNeighbours(current)) {
+                occupied.add(neighbour);
+                for (ICell neighbour2 : this.grid.getNeighbours(neighbour)) {
+                    occupied.add(neighbour2);
+                }
+            }
+            this.occupiedCells = occupied;
         }
-        this.occupiedCells = occupied;
     }
 }
