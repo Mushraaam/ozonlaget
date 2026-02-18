@@ -51,6 +51,7 @@ public class Map implements IMap {
         this.pathfinder = new Pathfinder(grid);
 
         this.occupiedCells = new HashSet<>();
+        gatherOccupiedCells();
         // TODO: fjern denne, lage logikk i spawner
         spawnEnemies();
     }
@@ -167,6 +168,8 @@ public class Map implements IMap {
         HashSet<ICell> occupied = new HashSet<>();
         for (IEnemy enemy : this.enemies){
             ICell current = this.grid.getCellFromPos(enemy.getHitbox());
+            occupied.add(current);
         }
+        this.occupiedCells = occupied;
     }
 }
