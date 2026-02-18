@@ -48,7 +48,7 @@ public class Map implements IMap {
         this.grid = new Grid(this);
         this.tiles = new TileGrid(this);
         this.spawner = new Spawner(this); // Spawner comes after grid, or else uh-oh.
-        this.pathfinder = new Pathfinder(grid);
+        this.pathfinder = new Pathfinder(this);
 
         this.occupiedCells = new HashSet<>();
         gatherOccupiedCells();
@@ -90,6 +90,9 @@ public class Map implements IMap {
     }
 
     ////////////////// GETTERS AND SETTERS
+
+
+
 
     public ArrayList<IEnemy> getEnemies() {
         return new ArrayList<>(enemies);

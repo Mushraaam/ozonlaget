@@ -35,16 +35,6 @@ public class TileGrid implements IGrid {
     }
 
     @Override
-    public void addWeightedCells(List<ICell> cells) {
-
-    }
-
-    @Override
-    public void resetWeightedCells() {
-
-    }
-
-    @Override
     public ICell getCell(int row, int col) {
         return this.tiles.get(row).get(col);
     }

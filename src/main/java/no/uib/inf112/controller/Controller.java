@@ -59,10 +59,9 @@ public class Controller implements java.awt.event.KeyListener {
 
         this.pathFindingTimer = new Timer(300, (ActionEvent e) -> {
             PerfTracker.start("Pathfinding");
-            this.grid.resetWeightedCells();
+            grid.resetWeightedCells();
             this.map.gatherOccupiedCells();
             for (IEnemy enemy : map.getEnemies()) {
-                grid.addWeightedCells(enemy.getCurrentPath());
                 enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
             }
             PerfTracker.stop("Pathfinding");
