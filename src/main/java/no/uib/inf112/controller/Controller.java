@@ -59,7 +59,7 @@ public class Controller implements java.awt.event.KeyListener {
 
         this.pathFindingTimer = new Timer(300, (ActionEvent e) -> {
             PerfTracker.start("Pathfinding");
-            grid.resetWeightedCells();
+            this.grid.resetWeightedCells();
             this.map.gatherOccupiedCells();
             for (IEnemy enemy : map.getEnemies()) {
                 grid.addWeightedCells(enemy.getCurrentPath());
@@ -74,8 +74,8 @@ public class Controller implements java.awt.event.KeyListener {
             if (dirHandler.isMoving()) {
                 Direction dir = dirHandler.getDirection();
                 if (dir != null) {
-                    player.movePlayer(dir);
-                    player.setDirection(dir);
+                    this.player.movePlayer(dir);
+                    this.player.setDirection(dir);
                 }
             }
 
@@ -85,7 +85,7 @@ public class Controller implements java.awt.event.KeyListener {
                 enemy.move(grid);
             }
             PerfTracker.stop("Movement Logic");
-            view.repaint();
+            this.view.repaint();
         });
         
         this.timers = new ArrayList<>();
