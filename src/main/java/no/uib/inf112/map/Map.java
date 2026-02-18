@@ -168,16 +168,27 @@ public class Map implements IMap {
     @Override
     public void gatherOccupiedCells() {
         HashSet<ICell> occupied = new HashSet<>();
-        for (IEnemy enemy : this.enemies) {
-            ICell current = this.grid.getCellFromPos(enemy.getHitbox());
-            occupied.add(current);
-            for (ICell neighbour : this.grid.getNeighbours(current)) {
-                occupied.add(neighbour);
-                for (ICell neighbour2 : this.grid.getNeighbours(neighbour)) {
-                    occupied.add(neighbour2);
+        // for (IEnemy enemy : this.enemies) {
+        // ICell current = this.grid.getCellFromPos(enemy.getHitbox());
+        // occupied.add(current);
+        // for (ICell neighbour : this.grid.getNeighbours(current)) {
+        // occupied.add(neighbour);
+        // for (ICell neighbour2 : this.grid.getNeighbours(neighbour)) {
+        // occupied.add(neighbour2);
+        // }
+        // }
+
+        for (ICell cell : this.grid) {
+            for (IEnemy enemy : this.enemies) {
+                if (cell.getBounds().intersects(enemy.getHitbox())) {
+                    occupied.add(cell);
+                    for (ICell cell2 : this.grid.getNeighbours(cell)){
+                        occupied.add(cell2);
+                    }
                 }
             }
-            this.occupiedCells = occupied;
         }
+        this.occupiedCells = occupied;
+        // }
     }
 }

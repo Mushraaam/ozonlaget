@@ -11,6 +11,7 @@ import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.lang.reflect.Array;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Zombie implements IEnemy {
-    private static final double SPEED = 0.2 * (Config.getInt("playerMoveSpeed"));
+    private static final double SPEED = 0.5 * (Config.getInt("playerMoveSpeed"));
     private Rectangle2D.Double pos;
     private List<ICell> currentPath = new ArrayList<>();
     private int pathIndex = 0;
@@ -41,6 +42,11 @@ public class Zombie implements IEnemy {
         this.goalOffsetX = (Math.random() * 2 - 1) * r;
         this.goalOffsetY = (Math.random() * 2 - 1) * r;
         this.player = map.getPlayer();
+    }
+
+    @Override
+    public Ellipse2D.Double getTrueHitbox() {
+        return null;
     }
 
     @Override
@@ -85,42 +91,59 @@ public class Zombie implements IEnemy {
     public void move(IGrid grid) {
         if (currentPath == null || pathIndex >= currentPath.size())
             return;
-        Rectangle2D target = currentPath.get(pathIndex).getBounds();
-        double dx = target.getCenterX() - pos.getCenterX();
-        double dy = target.getCenterY() - pos.getCenterY();
-        double dist = Math.hypot(dx, dy);
+        int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 10);
+        for (int i = pathIndex; i < lookAheadLimit; i++) {
+            Rectangle2D target = currentPath.get(i).getBounds();
+            double dx = target.getCenterX() - pos.getCenterX();
+            double dy = target.getCenterY() - pos.getCenterY();
+            double dist = Math.hypot(dx, dy);
 
-        if (dist <= SPEED) {
-            pathIndex++;
-            return;
-        }
+            if (tryMove(dx, dy, dist, target)) {
+                updateFacing(dx, dy, dist);
+                this.pathIndex = i;
+                if (dist <= SPEED) {
+                    pathIndex++;
+                }
+                return;
+            }
+    }
 
-        updateFacing(dx, dy, dist);
 
+
+
+    }
+    private boolean tryMove(double dx, double dy, double dist, Rectangle2D target){
         Rectangle2D.Double candidate = generateCandidate(dx, dy, dist, target);
 
         if (isLegal(candidate)) {
             this.pos = candidate;
+            return true;
 
         } else {
-            trySlide(dx, dy, dist, target);
+            return trySlide(dx, dy, dist, target);
         }
     }
 
     private boolean trySlide(double dx, double dy, double dist, Rectangle2D target) {
         Rectangle2D.Double slideX = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
         Rectangle2D.Double slideY = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
+        System.out.println(dx);
+        System.out.println(dy);
 
+        int x = 1; int y = 1;
+        if (dx <= 0){x = x * (-1);}
+        if (dy <= 0){y = y * (-1);}
         boolean nextReached = false;
         // Slide X
         if (dist <= SPEED) {
             nextReached = true;
             slideX.x = target.getCenterX() - pos.width / 2.0;
         } else {
-            slideX.x += (dx / dist) * SPEED;
+            slideX.x += x * SPEED;
         }
         if (isLegal(slideX)) {
             this.pos = slideX;
+            return true;
 
         } else { // Slide Y
             nextReached = false;
@@ -128,15 +151,16 @@ public class Zombie implements IEnemy {
                 nextReached = true;
                 slideY.y = target.getCenterY() - pos.height / 2.0;
             } else {
-                slideY.y += (dy / dist) * SPEED;
+                slideY.y += y * SPEED;
             }
             if (isLegal(slideY)) {
                 this.pos = slideY;
+                return true;
             } else {
                 nextReached = false;
             }
         }
-        return nextReached;
+        return false;
 
     }
 
@@ -157,8 +181,8 @@ public class Zombie implements IEnemy {
     private boolean isLegal(Double candidate) {
         for (IEnemy enemy : this.map.getEnemies()) {
             if (enemy == this) continue;
-                if (candidate.intersects(enemy.getHitbox())) {
-                    return false;
+            if (candidate.intersects(enemy.getHitbox())) {
+                return false;
             }
         }
         return !candidate.intersects(this.player.getHitbox());
