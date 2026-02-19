@@ -101,6 +101,7 @@ public class Zombie implements IEnemy {
 
     @Override
     public void move(IGrid grid) {
+        boolean moved = false;
         if (currentPath == null || pathIndex >= currentPath.size())
             return;
         int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
@@ -116,16 +117,33 @@ public class Zombie implements IEnemy {
                 if (dist <= SPEED) {
                     pathIndex++;
                 }
+
                 if (this.sliding) {
                     this.currentTarget = i;
                 } else {
                     this.currentTarget = pathIndex;
                 }
-                return;
+                moved = true;
+                break;
+            }
+
+        }
+        for (IEnemy other : map.getEnemies()) {
+            if (other == this || !adjacentEnemy(other)) continue;
+
+            if (this.getHitbox().intersects(other.getHitbox())) {
+
+                double pushX = this.pos.x - other.getHitbox().getX();
+                double pushY = this.pos.y - other.getHitbox().getY();
+
+                // Move a tiny bit away so we aren't stuck anymore
+                this.pos.x += Math.signum(pushX) * 0.5;
+                this.pos.y += Math.signum(pushY) * 0.5;
             }
         }
-
     }
+
+
 
     private boolean tryMove(double dx, double dy, double dist, Rectangle2D target) {
         Rectangle2D.Double candidate = generateCandidate(dx, dy, dist, target);
@@ -215,23 +233,39 @@ public class Zombie implements IEnemy {
 
     }
 
-    private boolean isLegal(Double candidate) {
-
+    private boolean isLegal(Rectangle2D.Double candidate) {
         double padding = 6.0;
-        Rectangle2D collisionBox = new Rectangle2D.Double(
+        Rectangle2D movementHitbox = new Rectangle2D.Double(
                 candidate.x + padding, candidate.y + padding,
                 candidate.width - (padding * 2), candidate.height - (padding * 2)
         );
-        for (IEnemy enemy : this.map.getEnemies()) {
-            if(!adjacentEnemy(enemy)){
-                continue;
-            }
-            if (enemy == this) continue;
-            if (collisionBox.intersects(enemy.getHitbox())) {
+        if (movementHitbox.intersects(this.player.getHitbox())) {
+            return false;
+        }
+
+        List<IEnemy> nearbyEnemies = new ArrayList<>(map.getEnemiesAroundCell(getStandingCell()));
+        for (ICell neighbor : map.getGrid().getNeighbours(getStandingCell())) {
+            nearbyEnemies.addAll(map.getEnemiesAroundCell(neighbor));
+        }
+        for (IEnemy enemy : nearbyEnemies) {
+            if (enemy == this || !adjacentEnemy(enemy)) continue;
+            Rectangle2D enemyHitbox = enemy.getHitbox();
+            double shrinkFactor = 0.6; // Only 60% of the center is "solid" to other NPCs
+
+            double coreW = enemyHitbox.getWidth() * shrinkFactor;
+            double coreH = enemyHitbox.getHeight() * shrinkFactor;
+            double coreX = enemyHitbox.getCenterX() - (coreW / 2);
+            double coreY = enemyHitbox.getCenterY() - (coreH / 2);
+
+            Rectangle2D enemyCore = new Rectangle2D.Double(coreX, coreY, coreW, coreH);
+
+            if (movementHitbox.intersects(enemyCore)) {
+                // They are bumping dead-center, so they must stop.
                 return false;
             }
         }
-        return !collisionBox.intersects(this.player.getHitbox());
+
+        return true; // The path is clear enough to squeeze through!
     }
 
     private boolean adjacentEnemy(IEnemy otherEnemy){
@@ -242,6 +276,8 @@ public class Zombie implements IEnemy {
         }
         return map.getEnemiesAroundCell(getStandingCell()).contains(otherEnemy);
     }
+
+
 
     /// //////////////////GETTERS////////////////////////
 

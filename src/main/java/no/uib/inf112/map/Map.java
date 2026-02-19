@@ -1,10 +1,7 @@
 package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Random;
+import java.util.*;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.core.Spawner;
@@ -119,10 +116,14 @@ public class Map implements IMap {
 
     @Override
     public void registerToCurrentCell(IEnemy enemy) {
-        ICell currCell = enemy.getCurrentPath().getFirst();
-        enemyAroundCell.get(currCell).add(enemy);
+        List<ICell> cells = enemy.getCurrentPath();
+        if (cells != null && !cells.isEmpty()) {
+            ICell currCell = cells.getFirst();
+            if (enemyAroundCell.containsKey(currCell)) {
+                enemyAroundCell.get(currCell).add(enemy);
+            }
+        }
     }
-
     @Override
     public ArrayList<IMovingDrawableObject> getMovingObjects() {
         // TODO Auto-generated method stub
