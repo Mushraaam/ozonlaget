@@ -66,7 +66,7 @@ public class TileGrid implements IGrid {
         return getCellFromXY(centerX, centerY);
     }
 
-    private ICell getCellFromXY(double x, double y) {
+    public ICell getCellFromXY(double x, double y) {
         int col = (int) Math.floor(x / TILEWIDTH);
         int row = (int) Math.floor(y / TILEHEIGHT);
         return getCell(row, col);

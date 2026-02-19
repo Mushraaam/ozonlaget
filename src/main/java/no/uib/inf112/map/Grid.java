@@ -177,7 +177,7 @@ public class Grid implements IGrid {
         return getCellFromXY(centerX, centerY);
     }
 
-    private ICell getCellFromXY(double x, double y) {
+    public ICell getCellFromXY(double x, double y) {
         if (x >= bounds.getWidth())  x = bounds.getWidth()  - 1;
         if (y >= bounds.getHeight()) y = bounds.getHeight() - 1;
         if (x < 0) x = 0;
