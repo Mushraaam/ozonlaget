@@ -178,8 +178,16 @@ public class Grid implements IGrid {
     }
 
     private ICell getCellFromXY(double x, double y) {
+        if (x >= bounds.getWidth())  x = bounds.getWidth()  - 1;
+        if (y >= bounds.getHeight()) y = bounds.getHeight() - 1;
+        if (x < 0) x = 0;
+        if (y < 0) y = 0;
+
         int col = (int) Math.floor(x / CELLWIDTH);
         int row = (int) Math.floor(y / CELLHEIGHT);
+        col = Math.max(0, Math.min(col, colCount - 1));
+        row = Math.max(0, Math.min(row, rowCount - 1));
+
         return getCell(row, col);
     }
 

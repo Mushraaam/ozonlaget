@@ -10,6 +10,7 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
+import org.w3c.dom.css.Rect;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
@@ -31,6 +32,8 @@ public class Zombie implements IEnemy {
     private IMap map;
     double goalOffsetX;
     double goalOffsetY;
+    ICell lastStart;
+    ICell lastGoal;
 
     private IPlayer player;
 
@@ -51,18 +54,21 @@ public class Zombie implements IEnemy {
 
     @Override
     public void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds) {
-        Rectangle2D.Double shiftedTarget = new Rectangle2D.Double(
-                targetBounds.x,// + goalOffsetX,
-                targetBounds.y,// + goalOffsetY,
-                targetBounds.width,
-                targetBounds.height
-        );
-
         ICell start = grid.getCellFromPos(getHitbox());
-        ICell goal  = grid.getCellFromPos(shiftedTarget);
+        ICell goal  = grid.getCellFromPos(targetBounds);
+
+        if (start == null || goal == null) return;
+
+        if (start.equals(lastStart) && goal.equals(lastGoal) && currentPath != null && !currentPath.isEmpty()) {
+            return; // no need to repath
+        }
+
+        lastStart = start;
+        lastGoal = goal;
 
         currentPath = pathfinder.findPath(start, goal, SIZE);
         pathIndex = (currentPath.size() > 1) ? 1 : 0;
+
     }
 
     private void updateFacing(double dx, double dy, double dist) { // noe assistanse med matten trengtes.....
@@ -171,12 +177,16 @@ public class Zombie implements IEnemy {
     }
 
     private boolean isLegal(Double candidate) {
+
         double padding = 6.0;
         Rectangle2D collisionBox = new Rectangle2D.Double(
                 candidate.x + padding, candidate.y + padding,
                 candidate.width - (padding * 2), candidate.height - (padding * 2)
         );
         for (IEnemy enemy : this.map.getEnemies()) {
+            if(!adjacentEnemy(enemy)){
+                continue;
+            }
             if (enemy == this) continue;
             if (collisionBox.intersects(enemy.getHitbox())) {
                 return false;
@@ -185,7 +195,21 @@ public class Zombie implements IEnemy {
         return !collisionBox.intersects(this.player.getHitbox());
     }
 
+    private boolean adjacentEnemy(IEnemy otherEnemy){
+        for(ICell cell : map.getGrid().getNeighbours(getStandingCell())){
+            if(map.getEnemiesAroundCell(cell).contains(otherEnemy)){
+                return true;
+            }
+        }
+        return map.getEnemiesAroundCell(getStandingCell()).contains(otherEnemy);
+    }
+
     /// //////////////////GETTERS////////////////////////
+
+    @Override
+    public ICell getStandingCell(){
+        return map.getGrid().getCellFromPos(getHitbox());
+    }
 
     public List<ICell> getCurrentPath() {
         return currentPath;

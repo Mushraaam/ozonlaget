@@ -202,7 +202,20 @@ public class Map implements IMap {
 
     @Override
     public void registerToCurrentCell(IEnemy enemy){
-        ICell currCell = enemy.getCurrentPath().getFirst();
-        enemyAroundCell.get(currCell).add(enemy);
+        enemyAroundCell.get(enemy.getCurrentPath().getFirst()).add(enemy);
     }
+
+    @Override
+    public void removeEnemyFromCurrentCell(IEnemy enemy){
+        if(enemy != null){
+        enemyAroundCell.get(enemy.getCurrentPath().getFirst()).remove(enemy);}
+
+    }
+
+    @Override
+    public HashSet<IEnemy> getEnemiesAroundCell(ICell cell){
+        return enemyAroundCell.get(cell);
+    }
+
+
 }

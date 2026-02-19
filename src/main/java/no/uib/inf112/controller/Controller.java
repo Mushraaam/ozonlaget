@@ -61,8 +61,12 @@ public class Controller implements java.awt.event.KeyListener {
             PerfTracker.start("Pathfinding");
             this.map.gatherOccupiedCells();
             for (IEnemy enemy : map.getEnemies()) {
+                boolean emptyPath = enemy.getCurrentPath().isEmpty();
+                if(!emptyPath){
+                map.removeEnemyFromCurrentCell(enemy);}
                 enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
-                map.
+                if(!emptyPath){
+                map.registerToCurrentCell(enemy);}
             }
             PerfTracker.stop("Pathfinding");
         });
