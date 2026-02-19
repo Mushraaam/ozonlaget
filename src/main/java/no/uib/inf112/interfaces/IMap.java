@@ -102,4 +102,8 @@ public interface IMap {
     public void gatherOccupiedCells();
 
     void registerToCurrentCell(IEnemy enemy);
+
+    void removeEnemyFromCurrentCell(IEnemy enemy);
+
+    HashSet<IEnemy> getEnemiesAroundCell(ICell cell);
 }

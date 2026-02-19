@@ -204,4 +204,16 @@ public class Map implements IMap {
         return this.tiles;
     }
 
+    @Override
+    public void removeEnemyFromCurrentCell(IEnemy enemy){
+        if(enemy != null){
+        enemyAroundCell.get(enemy.getCurrentPath().getFirst()).remove(enemy);}
+
+    }
+
+    @Override
+    public HashSet<IEnemy> getEnemiesAroundCell(ICell cell){
+        return enemyAroundCell.get(cell);
+    }
+
 }
