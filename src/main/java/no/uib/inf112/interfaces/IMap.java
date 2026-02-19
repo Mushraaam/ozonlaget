@@ -2,6 +2,7 @@ package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
@@ -88,4 +89,21 @@ public interface IMap {
      * @return a list of all enemies on the level.
      */
     ArrayList<IEnemy> getEnemies();
+
+
+    /**
+     * @return set of all cells that are currently occupied
+     */
+    public boolean inOccupiedCells(ICell cell);
+
+    /**
+     * Refreshes occupied cells
+     */
+    public void gatherOccupiedCells();
+
+    void registerToCurrentCell(IEnemy enemy);
+
+    void removeEnemyFromCurrentCell(IEnemy enemy);
+
+    HashSet<IEnemy> getEnemiesAroundCell(ICell cell);
 }

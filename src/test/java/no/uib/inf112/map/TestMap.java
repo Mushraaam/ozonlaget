@@ -3,9 +3,11 @@ package no.uib.inf112.map;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
+import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
@@ -34,7 +36,7 @@ public class TestMap implements IMap {
 
     @Override
     public Pathfinder getPathfinder() {
-        return new Pathfinder(getGrid());
+        return new Pathfinder(this);
     }
 
 
@@ -128,6 +130,40 @@ public class TestMap implements IMap {
     public IGrid getTiles() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTiles'");
+    }
+
+    @Override
+    public int getEnemyCount() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEnemyCount'");
+    }
+
+    @Override
+    public boolean inOccupiedCells(ICell cell) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'inOccupiedCells'");
+    }
+
+    @Override
+    public void gatherOccupiedCells() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'gatherOccupiedCells'");
+    }
+
+    @Override
+    public void registerToCurrentCell(IEnemy enemy) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'registerToCurrentCell'");
+    }
+
+    @Override
+    public void removeEnemyFromCurrentCell(IEnemy enemy) {
+
+    }
+
+    @Override
+    public HashSet<IEnemy> getEnemiesAroundCell(ICell cell) {
+        return null;
     }
 
 }

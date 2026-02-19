@@ -3,7 +3,6 @@ package no.uib.inf112.view.DrawStates;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
@@ -13,7 +12,6 @@ import no.uib.inf112.interfaces.IStaticDrawableObject;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.interfaces.IWall;
-import no.uib.inf112.map.npcs.Zombie;
 import no.uib.inf112.utility.ImageHandler;
 
 public class GameScreen implements IDrawer {
@@ -23,7 +21,7 @@ public class GameScreen implements IDrawer {
     private IViewablePlayer player;
     private ImageHandler handler;
 
-    private BufferedImage playerSprite;
+    // private BufferedImage playerSprite;
 
     public GameScreen(IMap map, ImageHandler handler) {
         this.map = map;
@@ -32,7 +30,7 @@ public class GameScreen implements IDrawer {
         this.tiles = map.getTiles();
 
         // Bør skaleres kun en gang, dette flyttes senere til ny klasse
-        this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
+        // this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
     }
 
     @Override
@@ -92,9 +90,6 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawPlayer(Graphics2D graphic) {
-        /*this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
-        Rectangle2D.Double hitbox = this.player.getHitbox();
-        drawImage(graphic, this.playerSprite, hitbox);*/
         drawRotated(
                 graphic,
                 handler.getPlayerSprite(player.getDirection(), player.getAnimationIndex()), player.getHitbox(), player.getFacingAngle()
@@ -102,12 +97,6 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawEnemies(Graphics2D graphic) {
-        // ArrayList<IEnemy> enemies = this.map.getEnemies();
-        /*for (IEnemy enemy : enemies) {
-            if (isVisible(graphic, enemy.getHitbox())) {
-                drawImage(graphic, handler.getEnemySprites(enemy.getEnemyType(), enemy.getAnimationIndex()),enemy.getHitbox());
-            }
-        }*/
         for (IEnemy e : map.getEnemies()) {
             drawRotated(
                     graphic,

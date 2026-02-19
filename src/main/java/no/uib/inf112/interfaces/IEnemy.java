@@ -4,6 +4,7 @@ import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
+import java.awt.geom.Ellipse2D;
 import java.util.*;
 import java.awt.geom.Rectangle2D;
 
@@ -14,6 +15,8 @@ import java.awt.geom.Rectangle2D;
  */
 public interface IEnemy extends IMovingDrawableObject {
 
+
+    Ellipse2D.Double getTrueHitbox();
 
     /**
      * Requests a new path for the enemy to follow towards a specific target.
@@ -60,4 +63,5 @@ public interface IEnemy extends IMovingDrawableObject {
      */
     public double getFacingAngle();
 
+    ICell getStandingCell();
 }

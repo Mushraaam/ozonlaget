@@ -32,7 +32,7 @@ public class Grid implements IGrid {
 
     public Grid(IMap map) {
         this.map = map;
-        this.bounds = map.getBounds();
+        this.bounds =this.map.getBounds();
 
         if (this.bounds.getX() != 0 || this.bounds.getY() != 0) {
             throw new IllegalArgumentException("Bounds for Map must start with x, y = 0");
@@ -48,22 +48,6 @@ public class Grid implements IGrid {
         this.cellGrid = makeGrid(this.rowCount, this.colCount, CELLWIDTH, CELLHEIGHT, FloorType.NONE);
         fillGrid(this.cellGrid, map.getStaticObjects());
 
-    }
-
-    @Override
-    public void addWeightedCells(List<ICell> cells){
-        for(ICell cell : cells){
-            weightedCells.put(cell, weightedCells.getOrDefault(cell, 1)+1);
-            cell.incWeight();
-        }
-
-    }
-    @Override
-    public void resetWeightedCells(){
-        for(ICell cell : weightedCells.keySet()){
-            cell.resetWeight();
-        }
-        weightedCells.clear();
     }
 
     /**
@@ -193,9 +177,17 @@ public class Grid implements IGrid {
         return getCellFromXY(centerX, centerY);
     }
 
-    private ICell getCellFromXY(double x, double y) {
+    public ICell getCellFromXY(double x, double y) {
+        if (x >= bounds.getWidth())  x = bounds.getWidth()  - 1;
+        if (y >= bounds.getHeight()) y = bounds.getHeight() - 1;
+        if (x < 0) x = 0;
+        if (y < 0) y = 0;
+
         int col = (int) Math.floor(x / CELLWIDTH);
         int row = (int) Math.floor(y / CELLHEIGHT);
+        col = Math.max(0, Math.min(col, colCount - 1));
+        row = Math.max(0, Math.min(row, rowCount - 1));
+
         return getCell(row, col);
     }
 

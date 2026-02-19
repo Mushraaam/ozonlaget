@@ -2,6 +2,8 @@ package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 import no.uib.inf112.config.Config;
@@ -24,7 +26,8 @@ public class Map implements IMap {
     private boolean debug;
     private Pathfinder pathfinder;
     private ArrayList<IEnemy> enemies;
-
+    private HashSet<ICell> occupiedCells;
+    private HashMap<ICell, HashSet<IEnemy>> enemyAroundCell = new HashMap<>();
     private final Spawner spawner;
 
     public Map() {
@@ -46,8 +49,15 @@ public class Map implements IMap {
         this.grid = new Grid(this);
         this.tiles = new TileGrid(this);
         this.spawner = new Spawner(this); // Spawner comes after grid, or else uh-oh.
-        this.pathfinder = new Pathfinder(grid);
+        this.pathfinder = new Pathfinder(this);
 
+        this.occupiedCells = new HashSet<>();
+
+        // prøve å følge med hvor fiendene hører til
+        for (ICell cell : grid) {
+            enemyAroundCell.put(cell, new HashSet<>());
+        }
+        gatherOccupiedCells();
         // TODO: fjern denne, lage logikk i spawner
         spawnEnemies();
     }
@@ -58,7 +68,8 @@ public class Map implements IMap {
             ICell cell = this.grid.getCell(0, random.nextInt(this.grid.getColCount()));
             Rectangle2D.Double b = cell.getBounds();
 
-            Zombie zombie = new Zombie(new Rectangle2D.Double(b.x, b.y, Config.getInt("thugWidth"), Config.getInt("thugHeight")), this);
+            Zombie zombie = new Zombie(
+                    new Rectangle2D.Double(b.x, b.y, Config.getInt("thugWidth"), Config.getInt("thugHeight")), this);
             boolean collides = false;
             for (IEnemy enemy : getEnemies()) {
                 if (enemy.getHitbox().intersects(zombie.getHitbox())) {
@@ -72,6 +83,44 @@ public class Map implements IMap {
             }
 
         }
+    }
+
+    @Override
+    public boolean inOccupiedCells(ICell cell) {
+        return this.occupiedCells.contains(cell);
+    }
+
+    @Override
+    public void gatherOccupiedCells() {
+        HashSet<ICell> occupied = new HashSet<>();
+        for (IEnemy enemy : this.enemies) {
+            Rectangle2D.Double pos = enemy.getHitbox();
+            double x1 = pos.getMinX();
+            double y1 = pos.getMinY();
+            double x2 = pos.getMinX();
+            double y2 = pos.getMaxY();
+
+            ICell topLeft = this.grid.getCellFromXY(x1, y1);
+            ICell botRight = this.grid.getCellFromXY(x2, y2);
+
+            int startRow = topLeft.row();
+            int startCol = topLeft.col();
+            int endRow = botRight.row();
+            int endCol = botRight.col();
+
+            for (int i = startRow; i <= endRow; i++) {
+                for (int j = startCol; j <= endCol; j++) {
+                    occupied.add(this.grid.getCell(i, j));
+                }
+            }
+        }
+        this.occupiedCells = occupied;
+    }
+
+    @Override
+    public void registerToCurrentCell(IEnemy enemy) {
+        ICell currCell = enemy.getCurrentPath().getFirst();
+        enemyAroundCell.get(currCell).add(enemy);
     }
 
     @Override
@@ -141,9 +190,10 @@ public class Map implements IMap {
     }
 
     @Override
-    public int getEnemyCount(){
+    public int getEnemyCount() {
         return this.enemies.size();
     }
+
     @Override
     public void addEnemy(IEnemy thug) {
         enemies.add(thug);
@@ -153,4 +203,17 @@ public class Map implements IMap {
     public IGrid getTiles() {
         return this.tiles;
     }
+
+    @Override
+    public void removeEnemyFromCurrentCell(IEnemy enemy){
+        if(enemy != null){
+        enemyAroundCell.get(enemy.getCurrentPath().getFirst()).remove(enemy);}
+
+    }
+
+    @Override
+    public HashSet<IEnemy> getEnemiesAroundCell(ICell cell){
+        return enemyAroundCell.get(cell);
+    }
+
 }

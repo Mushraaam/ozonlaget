@@ -6,18 +6,20 @@ import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.enums.PathType;
+import no.uib.inf112.interfaces.IMap;
 
 public class Pathfinder {
 
+    private final IMap map;
     private final IGrid grid;
 
     /**
      * Responsible for calculating the shortest valid path between two cells
      * on the game grid using the A* search algorithm.
      */
-    public Pathfinder(IGrid grid) { // Uses A* algorithm.
-        this.grid = grid;
-
+    public Pathfinder(IMap map) { // Uses A* algorithm.
+        this.map = map;
+        this.grid = map.getGrid();
     }
 
     /**
@@ -55,7 +57,7 @@ public class Pathfinder {
             openSet.remove(current);
 
             if (current.equals(goal)) {
-                return smoothPath(reconstructPath(cameFrom, current), size);
+                return (reconstructPath(cameFrom, current));
             }
 
             closed.add(current);
@@ -67,7 +69,7 @@ public class Pathfinder {
                 if (closed.contains(neighbor)) {
                     continue;
                 }
-                double tentativeG = score.get(current) + stepCost(current, neighbor) + neighbor.getWeight();
+                double tentativeG = score.get(current) + stepCost(current, neighbor);
 
                 if (tentativeG < score.getOrDefault(neighbor, Double.POSITIVE_INFINITY)) {
                     cameFrom.put(neighbor, current);
@@ -99,9 +101,11 @@ public class Pathfinder {
      * Account for diagonal movement (sqrt(2)) vs orthogonal movement (1.0).
      */
     private double stepCost(ICell from, ICell to) {
+        int baseCost = (map.inOccupiedCells(to)) ? 12 : 1;
         int dx = Math.abs(from.col() - to.col());
         int dy = Math.abs(from.row() - to.row());
-        return (dx == 1 && dy == 1) ? Math.sqrt(2) : 1.0; // forsøk på diagonal
+        double move = (dx == 1 && dy == 1) ? Math.sqrt(2) : 1.0;
+        return move+baseCost;// forsøk på diagonal
     }
 
     /**
@@ -142,65 +146,6 @@ public class Pathfinder {
 
 
 
-    /**
-     * Reduces the number of waypoints in a path by connecting distant nodes
-     * if there is a clear line of sight between them.
-     * This is used to optimize and reduce the amount of work each NPC has to do.
-     */
-    private List<ICell> smoothPath(List<ICell> path, EnemySize size) {
-        if (path == null || path.size() <= 2) return path;
 
-        ArrayList<ICell> out = new ArrayList<>();
-        int i = 0;
-        out.add(path.get(0));
-
-        while (i < path.size() - 1) {
-            int best = i + 1;
-
-            for (int j = i + 1; j < path.size(); j++) {
-                if (hasLineOfSight(path.get(i), path.get(j), size)) {
-                    best = j;
-                } else {
-                    break;
-                }
-            }
-
-            out.add(path.get(best));
-            i = best;
-        }
-
-        return out;
-    }
-
-    /**
-     * Uses a line-drawing algorithm (Bresenham-like) to check if an enemy
-     * can move directly from cell 'a' to cell 'b' without hitting obstacles.
-     * @return true if the path is clear, false otherwise.
-     */
-    private boolean hasLineOfSight(ICell a, ICell b, EnemySize size) {
-        int x = a.col(), y = a.row();
-        int x1 = b.col(), y1 = b.row();
-
-        int dx = Math.abs(x1 - x), dy = -Math.abs(y1 - y);
-        int sx = x < x1 ? 1 : -1,  sy = y < y1 ? 1 : -1;
-        int err = dx + dy;
-
-        while (true) {
-            ICell cell = grid.getCell(y, x);
-            if (cell == null || !canEnter(cell, size) || cell.getWeight() > 3) return false;
-            if (x == x1 && y == y1) return true;
-            int e2 = 2 * err;
-            int nextX = x, nextY = y;
-            if (e2 >= dy) { err += dy; nextX += sx; }
-            if (e2 <= dx) { err += dx; nextY += sy; }
-            if (nextX != x && nextY != y) {
-                if (!canEnter(grid.getCell(y, nextX), size) ||
-                        !canEnter(grid.getCell(nextY, x), size)) return false;
-            }
-
-            x = nextX;
-            y = nextY;
-        }
-    }
 
 }

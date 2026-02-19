@@ -14,9 +14,8 @@ public class Cell implements ICell {
     private int col;
     private FloorType floorType;
     private PathType pathType;
-    private int weight = 1;
 
-    public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type){
+    public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
         this.bounds = bounds;
         this.blocked = false;
         this.row = row;
@@ -25,31 +24,19 @@ public class Cell implements ICell {
         this.pathType = type;
     }
 
-    @Override public void incWeight(){
-        this.weight +=3;
-    }
-
-    @Override public int getWeight(){
-        return this.weight;
-    }
-
-    @Override public void resetWeight(){
-        this.weight = 1;
-    }
-
-    public Rectangle2D.Double getBounds(){
+    public Rectangle2D.Double getBounds() {
         return this.bounds;
     }
 
-    public boolean isBlocked(){
+    public boolean isBlocked() {
         return this.blocked;
     }
 
-    public void block(){
+    public void block() {
         this.blocked = true;
     }
 
-    public void unblock(){
+    public void unblock() {
         this.blocked = false;
     }
 
@@ -69,34 +56,37 @@ public class Cell implements ICell {
     }
 
     @Override
-    public void setFloorType(FloorType type){
+    public void setFloorType(FloorType type) {
         this.floorType = type;
     }
 
-
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(row, col, bounds, blocked);
+    }
 
     // FOR TESTING BELOW //
     @Override
     public boolean equals(Object obj) {
-        if (obj == null){
+        if (obj == null) {
             return false;
         }
-        if (!(obj instanceof Cell)){
+        if (!(obj instanceof Cell)) {
             return false;
         }
         Cell o = (Cell) obj;
 
-        return this.col==o.col()&&this.row==o.row()&&this.bounds.equals(o.getBounds())&&this.blocked==o.isBlocked();
+        return this.col == o.col() && this.row == o.row() && this.bounds.equals(o.getBounds())
+                && this.blocked == o.isBlocked();
     }
 
     @Override
     public String toString() {
-        return String.format("Row: %s, Col: %s, Bounds: %s, Blocked: %s", 
-            this.row,
-            this.col,
-            this.bounds,
-            this.blocked
-        );
+        return String.format("Row: %s, Col: %s, Bounds: %s, Blocked: %s",
+                this.row,
+                this.col,
+                this.bounds,
+                this.blocked);
     }
 
     @Override
@@ -109,6 +99,4 @@ public class Cell implements ICell {
         this.pathType = type;
     }
 
-
-    
 }
