@@ -137,8 +137,13 @@ public class Zombie implements IEnemy {
                 double pushY = this.pos.y - other.getHitbox().getY();
 
                 // Move a tiny bit away so we aren't stuck anymore
-                this.pos.x += Math.signum(pushX) * 0.5;
-                this.pos.y += Math.signum(pushY) * 0.5;
+                Rectangle2D.Double pushed = new Rectangle2D.Double(pos.x, pos.y, pos.width, pos.height);
+                pushed.x += Math.signum(pushX) * 0.5;
+                pushed.y += Math.signum(pushY) * 0.5;
+                if (isLegal(pushed)){
+                    this.pos = pushed;
+                }
+
             }
         }
     }
