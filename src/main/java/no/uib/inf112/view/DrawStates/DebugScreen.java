@@ -36,8 +36,6 @@ public class DebugScreen implements IDrawer {
         debugCellsInView(graphic, this.grid);
 
         // Draw player hitbox
-        graphic.setComposite(AlphaComposite.getInstance(
-                AlphaComposite.SRC_OVER, 0.5f));
         graphic.setColor(Color.BLUE);
         Rectangle2D.Double hitbox = map.getPlayer().getHitbox();
         graphic.fill(hitbox);
@@ -59,34 +57,35 @@ public class DebugScreen implements IDrawer {
 
         for (IEnemy enemy : this.map.getEnemies()) {
             List<ICell> path = enemy.getCurrentPath();
-            if (path == null || path.size() < 2) continue;
+            if (path == null || path.size() < 2) return;
 
-            for (int i = 0; i < path.size() - 1; i++) {
-                Rectangle2D.Double a = path.get(i).getBounds();
-                Rectangle2D.Double b = path.get(i + 1).getBounds();
+            Rectangle viewBounds = graphic.getClipBounds();
 
-                double ax = a.getCenterX();
-                double ay = a.getCenterY();
-                double bx = b.getCenterX();
-                double by = b.getCenterY();
+            graphic.setColor(new Color(255, 0, 0, 150));
+            graphic.setStroke(new BasicStroke(1.5f));
 
-                if (!isVisible(graphic, a) && !isVisible(graphic, b)) continue;
+            for (int i = 0; i < path.size(); i++) {
+                ICell current = path.get(i);
+                Rectangle2D.Double currentBounds = current.getBounds();
 
-                graphic.draw(new java.awt.geom.Line2D.Double(ax, ay, bx, by));
+                if (viewBounds.intersects(currentBounds)) {
+                    double cx = currentBounds.getCenterX();
+                    double cy = currentBounds.getCenterY();
+                    int dotRadius = 3;
+
+                    graphic.fillOval((int)(cx - dotRadius), (int)(cy - dotRadius), dotRadius * 2, dotRadius * 2);
+
+                    if (i < path.size() - 1) {
+                        ICell next = path.get(i + 1);
+                        Rectangle2D.Double nextBounds = next.getBounds();
+
+                        graphic.drawLine(
+                                (int)cx, (int)cy,
+                                (int)nextBounds.getCenterX(), (int)nextBounds.getCenterY()
+                        );
+                    }
+                }
             }
-
-            for (ICell step : path) {
-                Rectangle2D.Double r = step.getBounds();
-                if (!isVisible(graphic, r)) continue;
-
-                double cx = r.getCenterX();
-                double cy = r.getCenterY();
-                double radius = Math.min(r.getWidth(), r.getHeight()) * 0.12;
-                double d = radius * 2;
-
-                graphic.fill(new Ellipse2D.Double(cx - radius, cy - radius, d, d));
-            }
-        }
 
         //DRAW STATS
         PerfTracker.tick(true); // Increment FPS
@@ -109,4 +108,4 @@ public class DebugScreen implements IDrawer {
         graphic.setTransform(old);
 
     }
-}
+}}

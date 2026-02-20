@@ -63,5 +63,9 @@ public interface IEnemy extends IMovingDrawableObject {
      */
     public double getFacingAngle();
 
+    IEnemy getNextInCell();
+
+    void setNextInCell(IEnemy next);
+
     ICell getStandingCell();
 }

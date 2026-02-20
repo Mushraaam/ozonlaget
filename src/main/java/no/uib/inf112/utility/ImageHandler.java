@@ -119,9 +119,13 @@ public class ImageHandler {
     
     private void loadEnemies(){
         ArrayList<BufferedImage> zombies = new ArrayList<>();
-            for(int i = 0; i < ENEMY_SPRITE_COUNT; i++ ) {
-                zombies.add(ImageReader.fetchImage(String.format("/no/uib/inf112/map/npcs/zombie/zombie_%d.png", i)));
-            }
+        int width = Config.getInt("thugWidth");
+        int height = Config.getInt("thugHeight");
+        for (int i = 0; i < ENEMY_SPRITE_COUNT; i++) {
+            String path = String.format("/no/uib/inf112/map/npcs/zombie/zombie_%d.png", i);
+            BufferedImage rawImage = ImageReader.fetchImage(path);
+            zombies.add(ImageReader.resizeExact(rawImage, width, height));
+        }
             this.enemies.put(EnemyType.ZOMBIE, zombies);
 
     }
@@ -140,7 +144,7 @@ public class ImageHandler {
         int height = Config.getInt("cellHeight");
         this.floors.put(FloorType.STONE_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"), width, height));
         // this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"), width, height));
-        this.floors.put(FloorType.GRASS_TILES, ImageReader.fetchImage("/no/uib/inf112/floors/grass_hd.png"));
+        this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_hd.png"), width, height));
     }
 
     public BufferedImage getFloor(FloorType type){

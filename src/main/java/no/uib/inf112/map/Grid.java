@@ -28,7 +28,6 @@ public class Grid implements IGrid {
 
     private int colCount;
     private int rowCount;
-    private HashMap<ICell, Integer> weightedCells = new HashMap<>();
 
     public Grid(IMap map) {
         this.map = map;

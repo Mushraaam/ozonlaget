@@ -27,7 +27,15 @@ public interface ICell {
 
     public void setFloorType(FloorType type);
 
+    IEnemy getFirstEnemy();
+
+    void setFirstEnemy(IEnemy enemy);
+
     public PathType pathType();
 
     public void setPathType(PathType type);
+
+    void setOccupied(boolean b);
+
+    boolean isOccupied();
 }

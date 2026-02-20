@@ -8,14 +8,11 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
-import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.map.Cell;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
-import org.w3c.dom.css.Rect;
 
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +31,8 @@ public class Zombie implements IEnemy {
     double goalOffsetY;
     ICell lastStart;
     ICell lastGoal;
+    private IEnemy nextInCell = null;
+
 
     // test
     private int currentTarget;
@@ -101,6 +100,7 @@ public class Zombie implements IEnemy {
 
     @Override
     public void move(IGrid grid) {
+        ICell from = getStandingCell();
         if (currentPath == null || pathIndex >= currentPath.size())
             return;
         int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
@@ -126,41 +126,58 @@ public class Zombie implements IEnemy {
             }
 
         }
-        unStuck(true,true);
+        if(from == lastStart){
+        unStuck(true,true);}
     }
 
     private void unStuck(boolean moveX, boolean moveY) {
-        for (IEnemy other : map.getEnemies()) {
-            if (other == this || !adjacentEnemy(other)) continue;
+        ICell myCell = this.getStandingCell();
+
+        checkCellAndPush(myCell, moveX, moveY);
+        for (ICell neighbor : myCell.getNeighbours()) {
+            checkCellAndPush(neighbor, moveX, moveY);
+        }
+    }
+
+    private void checkCellAndPush(ICell cell, boolean moveX, boolean moveY) {
+        IEnemy other = (cell).getFirstEnemy();
+
+        while (other != null) {
+            if (other == this) {
+                other = other.getNextInCell();
+                continue;
+            }
 
             Rectangle2D otherBox = other.getHitbox();
             if (this.pos.intersects(otherBox)) {
                 double dx = this.pos.getCenterX() - otherBox.getCenterX();
                 double dy = this.pos.getCenterY() - otherBox.getCenterY();
 
-                if (dx == 0 && dy == 0) { //if directly on top of eachother somehow...
+                if (dx == 0 && dy == 0) {
                     dx = Math.random() - 0.5;
                     dy = Math.random() - 0.5;
                 }
 
                 Rectangle2D.Double pushed = new Rectangle2D.Double(pos.x, pos.y, pos.width, pos.height);
 
-                //apply push based on flags
                 if (moveX) pushed.x += Math.signum(dx) * 0.5;
                 if (moveY) pushed.y += Math.signum(dy) * 0.5;
 
                 if (!pushed.intersects(player.getHitbox()) &&
                         map.getPathfinder().canEnter(map.getGrid().getCellFromPos(pushed), SIZE)) {
                     this.pos = pushed;
-                } else if (moveX && moveY) {
-                    // Try X only, then Y only if both X and Y fail
+                }
+                else if (moveX && moveY) {
                     unStuck(true, false);
                     unStuck(false, true);
-                    break;
+                    return;
                 }
             }
+            other = other.getNextInCell();
         }
     }
+
+
 
 
 
@@ -254,51 +271,59 @@ public class Zombie implements IEnemy {
 
     private boolean isLegal(Rectangle2D.Double candidate) {
         double padding = 6.0;
-        Rectangle2D movementHitbox = new Rectangle2D.Double(
+        Rectangle2D.Double movementHitbox = new Rectangle2D.Double(
                 candidate.x + padding, candidate.y + padding,
                 candidate.width - (padding * 2), candidate.height - (padding * 2)
         );
         if (movementHitbox.intersects(this.player.getHitbox())) {
             return false;
+        }git
+        if (!checkCell(getStandingCell(), movementHitbox)) {
+            return false;
         }
 
-        List<IEnemy> nearbyEnemies = new ArrayList<>(map.getEnemiesAroundCell(getStandingCell()));
-        for (ICell neighbor : getStandingCell().getNeighbours()) {
-            nearbyEnemies.addAll(map.getEnemiesAroundCell(neighbor));
-        }
-        for (IEnemy enemy : nearbyEnemies) {
-            if (enemy == this || !adjacentEnemy(enemy)) continue;
-            Rectangle2D enemyHitbox = enemy.getHitbox();
-            double shrinkFactor = 0.6; // Only 60% of the center is "solid" to other NPCs
-
-            double coreW = enemyHitbox.getWidth() * shrinkFactor;
-            double coreH = enemyHitbox.getHeight() * shrinkFactor;
-            double coreX = enemyHitbox.getCenterX() - (coreW / 2);
-            double coreY = enemyHitbox.getCenterY() - (coreH / 2);
-
-            Rectangle2D enemyCore = new Rectangle2D.Double(coreX, coreY, coreW, coreH);
-
-            if (movementHitbox.intersects(enemyCore)) {
-                // They are bumping dead-center, so they must stop.
-                return false;
-            }
+        for (ICell cell : getStandingCell().getNeighbours()) {
+            if(!checkCell(cell, movementHitbox))
+                {return false;}
         }
 
         return true; // The path is clear enough to squeeze through!
     }
 
-    private boolean adjacentEnemy(IEnemy otherEnemy){
-        for(ICell cell :getStandingCell().getNeighbours()){
-            if(map.getEnemiesAroundCell(cell).contains(otherEnemy)){
-                return true;
+    private boolean checkCell(ICell cell, Rectangle2D.Double movementHitbox){
+        IEnemy enemy = cell.getFirstEnemy();
+
+        while(enemy != null) {
+            if (enemy != this) {
+                Rectangle2D enemyHitbox = enemy.getHitbox();
+                double shrinkFactor = 0.6; // Only 60% of the center is "solid" to other NPCs
+
+                double coreW = enemyHitbox.getWidth() * shrinkFactor;
+                double coreH = enemyHitbox.getHeight() * shrinkFactor;
+                double coreX = enemyHitbox.getCenterX() - (coreW / 2);
+                double coreY = enemyHitbox.getCenterY() - (coreH / 2);
+                Rectangle2D enemyCore = new Rectangle2D.Double(coreX, coreY, coreW, coreH);
+                if (movementHitbox.intersects(enemyCore)) {
+                    return false;
+                }
             }
+            enemy = enemy.getNextInCell();
         }
-        return map.getEnemiesAroundCell(getStandingCell()).contains(otherEnemy);
+        return true;
     }
 
 
 
+
+
     /// //////////////////GETTERS////////////////////////
+
+
+    @Override
+    public IEnemy getNextInCell() { return nextInCell; }
+
+    @Override
+    public void setNextInCell(IEnemy next) { this.nextInCell = next; }
 
     @Override
     public ICell getStandingCell(){

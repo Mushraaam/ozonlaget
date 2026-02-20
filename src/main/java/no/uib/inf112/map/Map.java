@@ -23,8 +23,6 @@ public class Map implements IMap {
     private boolean debug;
     private Pathfinder pathfinder;
     private ArrayList<IEnemy> enemies;
-    private HashSet<ICell> occupiedCells;
-    private HashMap<ICell, HashSet<IEnemy>> enemyAroundCell = new HashMap<>();
     private final Spawner spawner;
 
     public Map() {
@@ -48,12 +46,8 @@ public class Map implements IMap {
         this.spawner = new Spawner(this); // Spawner comes after grid, or else uh-oh.
         this.pathfinder = new Pathfinder(this);
 
-        this.occupiedCells = new HashSet<>();
 
-        // prøve å følge med hvor fiendene hører til
-        for (ICell cell : grid) {
-            enemyAroundCell.put(cell, new HashSet<>());
-        }
+
         gatherOccupiedCells();
         // TODO: fjern denne, lage logikk i spawner
         spawnEnemies();
@@ -84,12 +78,12 @@ public class Map implements IMap {
 
     @Override
     public boolean inOccupiedCells(ICell cell) {
-        return this.occupiedCells.contains(cell);
+        return (cell).getFirstEnemy() != null; //null is empty, anything else is occupied
     }
 
     @Override
     public void gatherOccupiedCells() {
-        HashSet<ICell> occupied = new HashSet<>();
+        /*HashSet<ICell> occupied = new HashSet<>();
         for (IEnemy enemy : this.enemies) {
             Rectangle2D.Double pos = enemy.getHitbox();
             double x1 = pos.getMinX();
@@ -111,24 +105,40 @@ public class Map implements IMap {
                 }
             }
         }
-        this.occupiedCells = occupied;
+        this.occupiedCells = occupied;*/
     }
 
-    @Override
-    public void registerToCurrentCell(IEnemy enemy) {
-        List<ICell> cells = enemy.getCurrentPath();
-        if (cells != null && !cells.isEmpty()) {
-            ICell currCell = cells.getFirst();
-            if (enemyAroundCell.containsKey(currCell)) {
-                enemyAroundCell.get(currCell).add(enemy);
-            }
-        }
-    }
+
     @Override
     public ArrayList<IMovingDrawableObject> getMovingObjects() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
     }
+
+    @Override
+    public void updateEnemyLocations(List<IEnemy> allEnemies) {
+
+        for (ICell cell : this.grid) {//clear any flags and such
+            cell.setFirstEnemy(null);
+            cell.setOccupied(false);
+
+        }
+
+        for (IEnemy enemy : allEnemies) {
+            ICell currentCell = enemy.getStandingCell();
+            if (currentCell != null) {
+                currentCell.setOccupied(true);
+                Cell cell = (Cell) currentCell;
+
+                enemy.setNextInCell(cell.getFirstEnemy());
+                cell.setFirstEnemy(enemy);
+            }
+        }
+    }
+
+
+
+
 
     public Spawner getSpawner() {
         return this.spawner;
@@ -205,16 +215,6 @@ public class Map implements IMap {
         return this.tiles;
     }
 
-    @Override
-    public void removeEnemyFromCurrentCell(IEnemy enemy){
-        if(enemy != null){
-        enemyAroundCell.get(enemy.getCurrentPath().getFirst()).remove(enemy);}
 
-    }
-
-    @Override
-    public HashSet<IEnemy> getEnemiesAroundCell(ICell cell){
-        return enemyAroundCell.get(cell);
-    }
 
 }

@@ -61,12 +61,7 @@ public class Controller implements java.awt.event.KeyListener {
             PerfTracker.start("Pathfinding");
             this.map.gatherOccupiedCells();
             for (IEnemy enemy : map.getEnemies()) {
-                boolean emptyPath = enemy.getCurrentPath().isEmpty();
-                if(!emptyPath){
-                map.removeEnemyFromCurrentCell(enemy);}
                 enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
-                if(!emptyPath){
-                map.registerToCurrentCell(enemy);}
             }
             PerfTracker.stop("Pathfinding");
         });
@@ -74,6 +69,7 @@ public class Controller implements java.awt.event.KeyListener {
         this.movementTimer = new Timer(16, e -> {
             PerfTracker.tick(false);
             PerfTracker.start("Movement Logic");
+            map.updateEnemyLocations(map.getEnemies());
             if (dirHandler.isMoving()) {
                 Direction dir = dirHandler.getDirection();
                 if (dir != null) {
