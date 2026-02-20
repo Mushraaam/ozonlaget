@@ -277,7 +277,7 @@ public class Zombie implements IEnemy {
         );
         if (movementHitbox.intersects(this.player.getHitbox())) {
             return false;
-        }git
+        }
         if (!checkCell(getStandingCell(), movementHitbox)) {
             return false;
         }
