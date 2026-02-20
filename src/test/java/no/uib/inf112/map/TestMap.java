@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
@@ -115,6 +116,11 @@ public class TestMap implements IMap {
     }
 
     @Override
+    public void updateEnemyLocations(List<IEnemy> allEnemies) {
+
+    }
+
+    @Override
     public Spawner getSpawner() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getSpawner'");
@@ -150,20 +156,5 @@ public class TestMap implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'gatherOccupiedCells'");
     }
 
-    @Override
-    public void registerToCurrentCell(IEnemy enemy) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'registerToCurrentCell'");
-    }
-
-    @Override
-    public void removeEnemyFromCurrentCell(IEnemy enemy) {
-
-    }
-
-    @Override
-    public HashSet<IEnemy> getEnemiesAroundCell(ICell cell) {
-        return null;
-    }
 
 }
