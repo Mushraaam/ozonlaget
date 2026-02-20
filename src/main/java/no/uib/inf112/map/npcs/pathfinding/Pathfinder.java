@@ -9,85 +9,94 @@ import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.IMap;
 
 public class Pathfinder {
-
     private final IMap map;
     private final IGrid grid;
+    private final int width;
+    private final int height;
+
+    // Permanent workspaces to avoid GC pressure
+    private final double[] gScore;
+    private final int[] cameFromIdx;
+    private final int[] lastVisitedId;
+    private int currentSearchId = 0;
+
     private static final int OCCUPIED_WEIGHT = 10;
 
-    /**
-     * Responsible for calculating the shortest valid path between two cells
-     * on the game grid using the A* search algorithm.
-     */
-    public Pathfinder(IMap map) { // Uses A* algorithm.
+    public Pathfinder(IMap map) {
         this.map = map;
         this.grid = map.getGrid();
+        this.width = grid.getColCount();
+        this.height = grid.getRowCount();
+
+        int totalCells = width * height;
+        this.gScore = new double[totalCells];
+        this.cameFromIdx = new int[totalCells];
+        this.lastVisitedId = new int[totalCells];
     }
 
-    /**
-     * Finds a path from a start cell to a goal cell, taking into account
-     * the size of the enemy and cell weights.
-     *
-     * @param start The starting cell.
-     * @param goal  The destination cell.
-     * @param size  The size of the enemy (determines which cells are available to use).
-     * @return A list of cells representing the smoothed path, or an empty list if no path exists.
-     */
     public List<ICell> findPath(ICell start, ICell goal, EnemySize size) {
+        if (start == null || goal == null || !canEnter(goal, size)) return List.of();
+        if (start.equals(goal)) return List.of(start);
 
-        if (start == null || goal == null)
-            return List.of();
-        if (!canEnter(goal, size))
-            return List.of();
-        if (start.equals(goal))
-            return List.of(start);
-        Map<ICell, Double> score = new HashMap<>();
-        score.put(start, 0.0);
-        Map<ICell, ICell> cameFrom = new HashMap<>();
+        currentSearchId++;
+
+        int startIdx = getIdx(start);
+        int goalIdx = getIdx(goal);
+
+        // Reset start point
+        gScore[startIdx] = 0.0;
+        lastVisitedId[startIdx] = currentSearchId;
+        cameFromIdx[startIdx] = -1;
 
         PriorityQueue<ICell> open = new PriorityQueue<>(Comparator.comparingDouble(
-                c -> score.getOrDefault(c, Double.POSITIVE_INFINITY) + heuristic(c, goal)));
-
-        Set<ICell> openSet = new HashSet<>();
-        Set<ICell> closed = new HashSet<>();
+                c -> getGScore(c) + heuristic(c, goal)));
 
         open.add(start);
-        openSet.add(start);
 
         while (!open.isEmpty()) {
             ICell current = open.poll();
-            openSet.remove(current);
+            int currentIdx = getIdx(current);
 
-            if (current.equals(goal)) {
-                return (reconstructPath(cameFrom, current));
+            if (currentIdx == goalIdx) {
+                return reconstructPath(current, startIdx);
             }
 
-            closed.add(current);
-
             for (ICell neighbor : grid.getNeighbours(current)) {
-                if (neighbor == null || !canEnter(neighbor, size)) {
-                    continue;
-                }
-                if (closed.contains(neighbor)) {
-                    continue;
-                }
-                double tentativeG = score.get(current) + stepCost(current, neighbor);
+                if (neighbor == null || !canEnter(neighbor, size)) continue;
 
-                if (tentativeG < score.getOrDefault(neighbor, Double.POSITIVE_INFINITY)) {
-                    cameFrom.put(neighbor, current);
-                    score.put(neighbor, tentativeG);
+                int nIdx = getIdx(neighbor);
+                double tentativeG = gScore[currentIdx] + stepCost(current, neighbor);
 
-                    if (!openSet.contains(neighbor)) {
-                        open.add(neighbor);
-                        openSet.add(neighbor);
-                    } else {
-                        open.remove(neighbor);
-                        open.add(neighbor);
-                    }
+                // If neighbor hasn't been seen this search, or we found a better way
+                if (lastVisitedId[nIdx] != currentSearchId || tentativeG < gScore[nIdx]) {
+                    lastVisitedId[nIdx] = currentSearchId;
+                    gScore[nIdx] = tentativeG;
+                    cameFromIdx[nIdx] = currentIdx;
+                    open.add(neighbor);
                 }
             }
         }
+        return List.of();
+    }
 
-        return List.of(); // no path // should this throw an exception?
+    private int getIdx(ICell cell) {
+        return cell.row() * width + cell.col();
+    }
+
+    private double getGScore(ICell cell) {
+        int idx = getIdx(cell);
+        return (lastVisitedId[idx] == currentSearchId) ? gScore[idx] : Double.POSITIVE_INFINITY;
+    }
+
+    private List<ICell> reconstructPath(ICell goalCell, int startIdx) {
+        LinkedList<ICell> path = new LinkedList<>();
+        int curr = getIdx(goalCell);
+        while (curr != -1) {
+            path.addFirst(grid.getCell(curr / width, curr % width));
+            if (curr == startIdx) break;
+            curr = cameFromIdx[curr];
+        }
+        return path;
     }
 
     /**
@@ -108,21 +117,6 @@ public class Pathfinder {
         double move = (dx == 1 && dy == 1) ? Math.sqrt(2) : 1.0;
         return move+baseCost;// forsøk på diagonal
     }
-
-    /**
-     * Traces back from the goal to the start using the 'cameFrom' map to build the final path.
-     */
-    private List<ICell> reconstructPath(Map<ICell, ICell> cameFrom, ICell current) {
-        LinkedList<ICell> path = new LinkedList<>();
-        path.addFirst(current);
-        while (cameFrom.containsKey(current)) {
-            current = cameFrom.get(current);
-            path.addFirst(current);
-        }
-        return path;
-    }
-
-
 
     /**
      * Checks if a specific enemy size is allowed to enter a cell based on its PathType.

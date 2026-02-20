@@ -263,7 +263,7 @@ public class Zombie implements IEnemy {
         }
 
         List<IEnemy> nearbyEnemies = new ArrayList<>(map.getEnemiesAroundCell(getStandingCell()));
-        for (ICell neighbor : map.getGrid().getNeighbours(getStandingCell())) {
+        for (ICell neighbor : getStandingCell().getNeighbours()) {
             nearbyEnemies.addAll(map.getEnemiesAroundCell(neighbor));
         }
         for (IEnemy enemy : nearbyEnemies) {
@@ -288,7 +288,7 @@ public class Zombie implements IEnemy {
     }
 
     private boolean adjacentEnemy(IEnemy otherEnemy){
-        for(ICell cell : map.getGrid().getNeighbours(getStandingCell())){
+        for(ICell cell :getStandingCell().getNeighbours()){
             if(map.getEnemiesAroundCell(cell).contains(otherEnemy)){
                 return true;
             }

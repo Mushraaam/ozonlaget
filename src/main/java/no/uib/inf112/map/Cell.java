@@ -1,6 +1,7 @@
 package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
@@ -14,6 +15,7 @@ public class Cell implements ICell {
     private int col;
     private FloorType floorType;
     private PathType pathType;
+    private List<ICell> neighbours;
 
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
         this.bounds = bounds;
@@ -22,6 +24,16 @@ public class Cell implements ICell {
         this.col = col;
         this.floorType = floorType;
         this.pathType = type;
+    }
+
+
+    public void setNeighbours(List<ICell> neighbours) {
+        this.neighbours = List.copyOf(neighbours);
+    }
+
+    @Override
+    public List<ICell> getNeighbours() {
+        return this.neighbours;
     }
 
     public Rectangle2D.Double getBounds() {
