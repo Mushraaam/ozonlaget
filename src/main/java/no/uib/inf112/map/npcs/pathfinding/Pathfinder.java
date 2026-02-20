@@ -127,7 +127,7 @@ public class Pathfinder {
     /**
      * Checks if a specific enemy size is allowed to enter a cell based on its PathType.
      */
-    private boolean canEnter(ICell cell, EnemySize size) {
+    public boolean canEnter(ICell cell, EnemySize size) {
 
         PathType type = cell.pathType();
         switch (size) {

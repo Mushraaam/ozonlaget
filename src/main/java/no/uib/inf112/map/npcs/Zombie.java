@@ -101,7 +101,6 @@ public class Zombie implements IEnemy {
 
     @Override
     public void move(IGrid grid) {
-        boolean moved = false;
         if (currentPath == null || pathIndex >= currentPath.size())
             return;
         int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
@@ -123,27 +122,42 @@ public class Zombie implements IEnemy {
                 } else {
                     this.currentTarget = pathIndex;
                 }
-                moved = true;
                 break;
             }
 
         }
+        unStuck(true,true);
+    }
+
+    private void unStuck(boolean moveX, boolean moveY) {
         for (IEnemy other : map.getEnemies()) {
             if (other == this || !adjacentEnemy(other)) continue;
 
-            if (this.getHitbox().intersects(other.getHitbox())) {
+            Rectangle2D otherBox = other.getHitbox();
+            if (this.pos.intersects(otherBox)) {
+                double dx = this.pos.getCenterX() - otherBox.getCenterX();
+                double dy = this.pos.getCenterY() - otherBox.getCenterY();
 
-                double pushX = this.pos.x - other.getHitbox().getX();
-                double pushY = this.pos.y - other.getHitbox().getY();
-
-                // Move a tiny bit away so we aren't stuck anymore
-                Rectangle2D.Double pushed = new Rectangle2D.Double(pos.x, pos.y, pos.width, pos.height);
-                pushed.x += Math.signum(pushX) * 0.5;
-                pushed.y += Math.signum(pushY) * 0.5;
-                if (isLegal(pushed)){
-                    this.pos = pushed;
+                if (dx == 0 && dy == 0) { //if directly on top of eachother somehow...
+                    dx = Math.random() - 0.5;
+                    dy = Math.random() - 0.5;
                 }
 
+                Rectangle2D.Double pushed = new Rectangle2D.Double(pos.x, pos.y, pos.width, pos.height);
+
+                //apply push based on flags
+                if (moveX) pushed.x += Math.signum(dx) * 0.5;
+                if (moveY) pushed.y += Math.signum(dy) * 0.5;
+
+                if (!pushed.intersects(player.getHitbox()) &&
+                        map.getPathfinder().canEnter(map.getGrid().getCellFromPos(pushed), SIZE)) {
+                    this.pos = pushed;
+                } else if (moveX && moveY) {
+                    // Try X only, then Y only if both X and Y fail
+                    unStuck(true, false);
+                    unStuck(false, true);
+                    break;
+                }
             }
         }
     }

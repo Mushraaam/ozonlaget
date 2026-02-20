@@ -36,11 +36,14 @@ public class DebugScreen implements IDrawer {
         debugCellsInView(graphic, this.grid);
 
         // Draw player hitbox
+        graphic.setComposite(AlphaComposite.getInstance(
+                AlphaComposite.SRC_OVER, 0.5f));
         graphic.setColor(Color.BLUE);
         Rectangle2D.Double hitbox = map.getPlayer().getHitbox();
         graphic.fill(hitbox);
 
         // Draw enemy hitbox
+
         for (IEnemy enemy : this.map.getEnemies()) {
             hitbox = enemy.getHitbox();
             if (isVisible(graphic, hitbox)) {
