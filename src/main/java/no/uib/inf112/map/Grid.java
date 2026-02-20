@@ -28,7 +28,6 @@ public class Grid implements IGrid {
 
     private int colCount;
     private int rowCount;
-    private HashMap<ICell, Integer> weightedCells = new HashMap<>();
 
     public Grid(IMap map) {
         this.map = map;
@@ -47,6 +46,14 @@ public class Grid implements IGrid {
 
         this.cellGrid = makeGrid(this.rowCount, this.colCount, CELLWIDTH, CELLHEIGHT, FloorType.NONE);
         fillGrid(this.cellGrid, map.getStaticObjects());
+
+        for (int r = 0; r < rowCount; r++) {
+            for (int c = 0; c < colCount; c++) {
+                ICell cell = getCell(r, c);
+                ArrayList<ICell> n = getNeighbours(cell);
+                ((Cell)cell).setNeighbours(n);
+            }
+        }
 
     }
 
@@ -154,6 +161,7 @@ public class Grid implements IGrid {
         return neighbours;
     }
 
+
     @Override
     public Iterator<ICell> iterator() {
         ArrayList<ICell> flattenedList = new ArrayList<>(rowCount * colCount);
@@ -178,16 +186,8 @@ public class Grid implements IGrid {
     }
 
     public ICell getCellFromXY(double x, double y) {
-        if (x >= bounds.getWidth())  x = bounds.getWidth()  - 1;
-        if (y >= bounds.getHeight()) y = bounds.getHeight() - 1;
-        if (x < 0) x = 0;
-        if (y < 0) y = 0;
-
         int col = (int) Math.floor(x / CELLWIDTH);
         int row = (int) Math.floor(y / CELLHEIGHT);
-        col = Math.max(0, Math.min(col, colCount - 1));
-        row = Math.max(0, Math.min(row, rowCount - 1));
-
         return getCell(row, col);
     }
 

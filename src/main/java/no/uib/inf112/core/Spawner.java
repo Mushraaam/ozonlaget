@@ -35,13 +35,14 @@ public class Spawner {
             if (spawnCell == null || spawnCell.isBlocked()) return false;
             if (!map.getBounds().contains(hitbox)) return false;
 
-            // OPTIMIZED CHECK: Only check enemies in the target cell
-            // This is O(1) or O(small constant) instead of O(N)
-            for (IEnemy neighborEnemy : map.getEnemiesAroundCell(spawnCell)) {
-                if (hitbox.intersects(neighborEnemy.getHitbox())) {
-                    return false; // Space is occupied!
-                }
-            }
+            for(ICell cell : spawnCell.getNeighbours()){
+                IEnemy neighborEnemy = cell.getFirstEnemy();
+                while(neighborEnemy != null){
+                    if (hitbox.intersects(neighborEnemy.getHitbox())) {
+                        return false;
+                    }
+                    neighborEnemy = neighborEnemy.getNextInCell();
+            }}
 
             map.addEnemy(new Zombie(hitbox, this.map));
             return true;

@@ -1,7 +1,6 @@
 package no.uib.inf112.utility;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,24 +29,21 @@ public class ImageReader {
         }
     }
 
-    public static BufferedImage resizeExact(BufferedImage original, int width, int height) {
+        public static BufferedImage resizeExact(BufferedImage original, int width, int height) {
+            GraphicsConfiguration config = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                    .getDefaultScreenDevice().getDefaultConfiguration();
+            BufferedImage resized = config.createCompatibleImage(width, height, original.getTransparency());
 
-        int imageType = original.getType();
-        BufferedImage resized = new BufferedImage(width, height, imageType);
-        Graphics2D g2d = resized.createGraphics();
+            Graphics2D g2d = resized.createGraphics();
 
-        // This is gippity magic, improves image quality /////////
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_QUALITY);
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        ///////////////////////////////////////////////////////////
+            // This is gippity magic, improves image quality /////////
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g2d.drawImage(original, 0, 0, width, height, null);
-        g2d.dispose();
+            g2d.drawImage(original, 0, 0, width, height, null);
+            g2d.dispose();
 
-        return resized;
-    }
+            return resized;
+        }
 }

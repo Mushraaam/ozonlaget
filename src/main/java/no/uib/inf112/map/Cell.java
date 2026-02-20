@@ -1,10 +1,12 @@
 package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.ICell;
+import no.uib.inf112.interfaces.IEnemy;
 
 public class Cell implements ICell {
 
@@ -14,6 +16,10 @@ public class Cell implements ICell {
     private int col;
     private FloorType floorType;
     private PathType pathType;
+    private List<ICell> neighbours;
+    private IEnemy firstEnemy = null;
+    private boolean occupied = false;
+
 
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
         this.bounds = bounds;
@@ -22,6 +28,16 @@ public class Cell implements ICell {
         this.col = col;
         this.floorType = floorType;
         this.pathType = type;
+    }
+
+
+    public void setNeighbours(List<ICell> neighbours) {
+        this.neighbours = List.copyOf(neighbours);
+    }
+
+    @Override
+    public List<ICell> getNeighbours() {
+        return this.neighbours;
     }
 
     public Rectangle2D.Double getBounds() {
@@ -90,6 +106,12 @@ public class Cell implements ICell {
     }
 
     @Override
+    public IEnemy getFirstEnemy() { return firstEnemy; }
+
+    @Override
+    public void setFirstEnemy(IEnemy enemy) { this.firstEnemy = enemy; }
+
+    @Override
     public PathType pathType() {
         return this.pathType;
     }
@@ -99,4 +121,9 @@ public class Cell implements ICell {
         this.pathType = type;
     }
 
+    @Override
+    public void setOccupied(boolean b) { this.occupied = b; }
+
+    @Override
+    public boolean isOccupied() { return this.occupied; }
 }

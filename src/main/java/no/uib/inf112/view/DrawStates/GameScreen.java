@@ -98,12 +98,13 @@ public class GameScreen implements IDrawer {
 
     private void drawEnemies(Graphics2D graphic) {
         for (IEnemy e : map.getEnemies()) {
+            if(isVisible(graphic, e.getHitbox())){
             drawRotated(
                     graphic,
                     handler.getEnemySprites(e.getEnemyType(), e.getAnimationIndex()),
                     e.getHitbox(),
                     e.getFacingAngle()
-            );
+            );}
         }
 
     }
