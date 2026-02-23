@@ -140,8 +140,8 @@ public class ImageHandler {
     /// 
     
     private void loadFloors(){
-        int width = Config.getInt("cellWidth");
-        int height = Config.getInt("cellHeight");
+        int width = Config.getInt("tileWidth");
+        int height = Config.getInt("tileHeight");
         this.floors.put(FloorType.STONE_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"), width, height));
         // this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"), width, height));
         this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_hd.png"), width, height));
