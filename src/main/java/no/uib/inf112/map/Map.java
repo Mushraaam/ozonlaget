@@ -88,7 +88,7 @@ public class Map implements IMap {
             Rectangle2D.Double pos = enemy.getHitbox();
             double x1 = pos.getMinX();
             double y1 = pos.getMinY();
-            double x2 = pos.getMinX();
+            double x2 = pos.getMaxX();
             double y2 = pos.getMaxY();
 
             ICell topLeft = this.grid.getCellFromXY(x1, y1);

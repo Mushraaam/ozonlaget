@@ -13,7 +13,7 @@ import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.Zombie;
 import no.uib.inf112.player.Player;
-import no.uib.inf112.static_objects.WoodWall;
+import no.uib.inf112.terrain.static_objects.WoodWall;
 
 public class Level1 implements ILevel {
 
@@ -67,6 +67,8 @@ public class Level1 implements ILevel {
                 .add(new WoodWall(new Rectangle2D.Double(900 + 300, 900 + 300 - 70, 15, 85),
                         WallType.WOODEN_WALL)); // right
                                                 // bot
+
+        
 
         // House2
         staticObjects.add(new WoodWall(new Rectangle2D.Double(700, 900, 15, 375), WallType.LONG_WOODEN_WALL)); // right

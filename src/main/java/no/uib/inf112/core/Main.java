@@ -25,7 +25,7 @@ public class Main {
         frame.setContentPane(view);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 }

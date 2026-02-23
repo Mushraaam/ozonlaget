@@ -25,7 +25,7 @@ public class Zombie implements IEnemy {
     private int ANIMATION_COUNT = 8;
     private double facingAngle = 0.0;
     private static final double ROTATION_SPEED = 0.12;
-    private static final EnemySize SIZE = EnemySize.MEDIUM;
+    private static final EnemySize SIZE = EnemySize.SMALL;
     private IMap map;
     double goalOffsetX;
     double goalOffsetY;

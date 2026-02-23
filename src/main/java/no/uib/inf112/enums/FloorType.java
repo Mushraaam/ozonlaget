@@ -4,4 +4,5 @@ public enum FloorType {
     NONE,
     STONE_TILES,
     GRASS_TILES,
+    WOODFLOOR,
 }

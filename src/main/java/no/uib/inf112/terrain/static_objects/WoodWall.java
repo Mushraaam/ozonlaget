@@ -1,4 +1,4 @@
-package no.uib.inf112.static_objects;
+package no.uib.inf112.terrain.static_objects;
 
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
