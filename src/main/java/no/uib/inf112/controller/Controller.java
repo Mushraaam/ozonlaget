@@ -57,7 +57,7 @@ public class Controller implements java.awt.event.KeyListener {
             this.view.repaint();
         });
 
-        this.pathFindingTimer = new Timer(300, (ActionEvent e) -> {
+        this.pathFindingTimer = new Timer(600, (ActionEvent e) -> {
             PerfTracker.start("Pathfinding");
             this.map.gatherOccupiedCells();
             for (IEnemy enemy : map.getEnemies()) {
