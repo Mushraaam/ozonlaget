@@ -5,14 +5,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import no.uib.inf112.config.Config;
-import no.uib.inf112.enums.walls.WallType;
+import no.uib.inf112.enums.walls.StaticObjectType;
 import no.uib.inf112.interfaces.ICell;
+import no.uib.inf112.interfaces.IFloor;
 import no.uib.inf112.interfaces.ILevel;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.Zombie;
 import no.uib.inf112.player.Player;
+import no.uib.inf112.terrain.floor.WoodFloor;
+import no.uib.inf112.terrain.furniture.DarkWoodenTable;
 import no.uib.inf112.terrain.static_objects.WoodWall;
 
 public class Level1 implements ILevel {
@@ -20,6 +23,7 @@ public class Level1 implements ILevel {
     private IPlayer player;
     private Rectangle2D.Double bounds;
     private ArrayList<IStaticObject> staticObjects;
+    private ArrayList<IFloor> floors;
 
     // Player
     private static final int STARTROW = 1030;// 2 * Config.getInt("cellWidth"); //Starts in row 2 now
@@ -37,7 +41,11 @@ public class Level1 implements ILevel {
 
     public Level1(IMap map) {
 
+        // README: For now it looks like it is easier to make floors before making walls
+        // (floors are grid-locked, walls are not)
+
         this.staticObjects = new ArrayList<>();
+        this.floors = new ArrayList<>();
 
         this.bounds = new Rectangle2D.Double(MAPX, MAPY, MAPWIDTH, MAPHEIGHT);
         this.player = new Player(new Rectangle2D.Double(STARTROW, STARTCOL, PLAYERWIDTH, PLAYERHEIGHT), this.bounds,
@@ -53,28 +61,27 @@ public class Level1 implements ILevel {
         // start box testing
 
         // House 1
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900, 15, 300),
-                WallType.LONG_WOODEN_WALL)); // left // wall
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900 + 300, 300, 15),
-                WallType.LONG_WOODEN_WALL)); // bottom // wallp
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(900, 900, 300, 15),
-                WallType.LONG_WOODEN_WALL)); // top
-                                             // wall
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(900 + 300, 900, 15, 70),
-                WallType.WOODEN_WALL)); // right
-                                        // top
-        staticObjects
-                .add(new WoodWall(new Rectangle2D.Double(900 + 300, 900 + 300 - 70, 15, 85),
-                        WallType.WOODEN_WALL)); // right
-                                                // bot
+        this.floors.add(new WoodFloor(new Rectangle2D.Double(900 + 10, 900 + 10, 300, 300)));
 
+        staticObjects.add(new WoodWall( // Left wall
+                new Rectangle2D.Double(900 - 30, 900 - 30, 15, 300+60), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom wall
+                new Rectangle2D.Double(900 - 30, 900 + 330, 360, 15), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top wall
+                new Rectangle2D.Double(900 - 30, 900 - 30, 300+60, 15), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Right top
+                new Rectangle2D.Double(900 + 330, 900 - 30, 15, 100), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Right bot
+                new Rectangle2D.Double(900 + 330, 900 + 300 - 100, 15, 145), StaticObjectType.WOODEN_WALL));
+
+        staticObjects.add(new DarkWoodenTable(new Rectangle2D.Double(950, 910, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
         
-
         // House2
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(700, 900, 15, 375), WallType.LONG_WOODEN_WALL)); // right
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(600, 900, 15, 315), WallType.LONG_WOODEN_WALL)); // left
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(300, 900 + 375, 415, 15), WallType.LONG_WOODEN_WALL)); //bot
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(300, 900 + 300, 315, 15), WallType.LONG_WOODEN_WALL)); //bot left
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(700, 900, 15, 375), StaticObjectType.LONG_WOODEN_WALL)); // right
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(600, 900, 15, 315), StaticObjectType.LONG_WOODEN_WALL)); // left
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(300, 900 + 375, 415, 15), StaticObjectType.LONG_WOODEN_WALL)); // bot
+        staticObjects.add(new WoodWall(new Rectangle2D.Double(300, 900 + 300, 315, 15), StaticObjectType.LONG_WOODEN_WALL)); // bot
+                                                                                                                     // left
     }
 
     @Override
@@ -92,4 +99,8 @@ public class Level1 implements ILevel {
         return this.bounds;
     }
 
+    @Override
+    public ArrayList<IFloor> getFloor() {
+        return this.floors;
+    }
 }

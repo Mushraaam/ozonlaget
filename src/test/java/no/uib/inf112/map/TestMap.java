@@ -10,6 +10,7 @@ import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
+import no.uib.inf112.interfaces.IFloor;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IMovingDrawableObject;
@@ -154,6 +155,18 @@ public class TestMap implements IMap {
     public void gatherOccupiedCells() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'gatherOccupiedCells'");
+    }
+
+    @Override
+    public ArrayList<IFloor> getFloors() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFloors'");
+    }
+
+    @Override
+    public void addFloor(IFloor floor) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addFloor'");
     }
 
 

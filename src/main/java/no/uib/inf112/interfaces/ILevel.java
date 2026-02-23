@@ -10,4 +10,6 @@ public interface ILevel {
     public IPlayer getPlayer();
 
     public Double getBounds();
+
+    public ArrayList<IFloor> getFloor();
 }

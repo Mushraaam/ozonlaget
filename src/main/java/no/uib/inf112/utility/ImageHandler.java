@@ -9,7 +9,7 @@ import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.walls.WallDirection;
-import no.uib.inf112.enums.walls.WallType;
+import no.uib.inf112.enums.walls.StaticObjectType;
 
 public class ImageHandler {
 
@@ -20,8 +20,10 @@ public class ImageHandler {
 
 
     //Wall images
-    private HashMap<WallType, HashMap<WallDirection, BufferedImage>> walls;
+    private HashMap<StaticObjectType, HashMap<WallDirection, BufferedImage>> walls;
 
+    //Static Objects (not walls)
+    private HashMap<StaticObjectType, BufferedImage> staticObjects;
 
     //Enemy image
     private HashMap<EnemyType, ArrayList<BufferedImage>> enemies;
@@ -36,12 +38,16 @@ public class ImageHandler {
         this.walls = new HashMap<>();
         loadWalls();
 
+        this.staticObjects = new HashMap<>();
+        loadStaticObjects();
+
         this.enemies = new HashMap<>();
         loadEnemies();
 
         this.floors = new HashMap<>();
         loadFloors();
     }
+
 
 
     //////////////////////// PLAYER METHODS //////////////////////////////////
@@ -79,7 +85,6 @@ public class ImageHandler {
         this.playerSprites.put(Direction.NORTH_EAST, playerNorthEast);
         this.playerSprites.put(Direction.SOUTH_WEST, playerSouthWest);
         this.playerSprites.put(Direction.SOUTH_EAST, playerSouthEast);
-
     }
 
     public BufferedImage getPlayerSprite(Direction dir, int index) {
@@ -103,18 +108,30 @@ public class ImageHandler {
         longWoodenWalls.put(WallDirection.VERTICAL, ImageReader.fetchImage("/no/uib/inf112/walls/LongWall1_1.png"));
         longWoodenWalls.put(WallDirection.HORIZONTAL, ImageReader.fetchImage("/no/uib/inf112/walls/LongWall1_2.png"));
 
-        this.walls.put(WallType.WOODEN_WALL, shortWoodenWalls);
-        this.walls.put(WallType.LONG_WOODEN_WALL, longWoodenWalls);
+        this.walls.put(StaticObjectType.WOODEN_WALL, shortWoodenWalls);
+        this.walls.put(StaticObjectType.LONG_WOODEN_WALL, longWoodenWalls);
 
     }
 
-    public BufferedImage getWallImage(WallType type, WallDirection dir){
+    public BufferedImage getWallImage(StaticObjectType type, WallDirection dir){
         return this.walls.get(type).get(dir);
     }
 
 
     //////////////// END WALL LOGIC//////////////
     /// 
+    /////////////// START STATIC OBJECT LOGIC //////////////
+    /// 
+    
+    
+    private void loadStaticObjects() {
+        this.staticObjects.put(StaticObjectType.DARK_TABLE_ROUNDED, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentable.png"), Config.getInt("tableWidth"), Config.getInt("tableHeight")));
+    }
+
+
+
+
+
     /// /////////// START ENEMY LOGIC //////////////
     
     private void loadEnemies(){
@@ -145,10 +162,17 @@ public class ImageHandler {
         this.floors.put(FloorType.STONE_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"), width, height));
         // this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"), width, height));
         this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_hd.png"), width, height));
+        this.floors.put(FloorType.WOODFLOOR, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/woodfloor.png"), width, height));
+
     }
 
     public BufferedImage getFloor(FloorType type){
         return this.floors.get(type);
+    }
+
+
+    public BufferedImage getStaticObjectImage(StaticObjectType type) {
+        return this.staticObjects.get(type);
     }
 }
 

@@ -104,4 +104,13 @@ public interface IMap {
      */
     public void gatherOccupiedCells();
 
+    /**
+     * @return gets a list of all floors
+     */
+    public ArrayList<IFloor> getFloors();
+
+    /**
+     * Adds a floor
+     */
+    public void addFloor(IFloor floor);
 }

@@ -8,7 +8,6 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
-import no.uib.inf112.map.Cell;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
 import java.awt.geom.Ellipse2D;

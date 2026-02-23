@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import no.uib.inf112.interfaces.ICell;
+import no.uib.inf112.interfaces.IFloor;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.config.Config;
@@ -21,9 +22,11 @@ public class TileGrid implements IGrid {
     private int rowCount;
     private ArrayList<ArrayList<ICell>> tiles;
     private Rectangle2D.Double bounds;
+    private IMap map;
 
     public TileGrid(IMap map) {
 
+        this.map = map;
         this.bounds = map.getBounds();
         double height = this.bounds.getHeight();
         double width = this.bounds.getWidth();
@@ -32,6 +35,17 @@ public class TileGrid implements IGrid {
         this.colCount = (int) Math.floor(width / TILEWIDTH);
         this.rowCount = (int) Math.floor(height / TILEHEIGHT);
         this.tiles = makeGrid(rowCount, colCount, TILEWIDTH, TILEHEIGHT, FloorType.GRASS_TILES);
+        fillGrid();
+    }
+
+    private void fillGrid() {
+        for (IFloor floor : this.map.getFloors()){
+            for (ICell cell : this){
+                if (floor.getArea().intersects(cell.getBounds())){
+                    cell.setFloorType(floor.floorType());
+                }
+            }
+        }
     }
 
     @Override
@@ -80,8 +94,11 @@ public class TileGrid implements IGrid {
 
     @Override
     public Iterator<ICell> iterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+        ArrayList<ICell> flattenedList = new ArrayList<>(rowCount * colCount);
+        for (ArrayList<ICell> row : this.tiles) {
+            flattenedList.addAll(row);
+        }
+        return flattenedList.iterator();
     }
 
     @Override

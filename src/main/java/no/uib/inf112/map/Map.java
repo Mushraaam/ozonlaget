@@ -23,6 +23,7 @@ public class Map implements IMap {
     private boolean debug;
     private Pathfinder pathfinder;
     private ArrayList<IEnemy> enemies;
+    private ArrayList<IFloor> floors;
     private final Spawner spawner;
 
     public Map() {
@@ -30,6 +31,7 @@ public class Map implements IMap {
         this.level = new Level1(this);
         this.bounds = this.level.getBounds();
         this.player = this.level.getPlayer();
+        this.floors = this.level.getFloor();
 
         this.enemies = new ArrayList<>();
         // Start with debug during development
@@ -213,6 +215,16 @@ public class Map implements IMap {
     @Override
     public IGrid getTiles() {
         return this.tiles;
+    }
+
+    @Override
+    public ArrayList<IFloor> getFloors() {
+        return this.floors;
+    }
+
+    @Override
+    public void addFloor(IFloor floor) {
+        this.floors.add(floor);
     }
 
 

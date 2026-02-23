@@ -56,8 +56,12 @@ public class GameScreen implements IDrawer {
 
             if (obj instanceof IWall) {
                 IWall wall = (IWall) obj;
-                BufferedImage image = handler.getWallImage(wall.wallType(), wall.getWallDirection());
+                BufferedImage image = handler.getWallImage(wall.getType(), wall.getWallDirection());
                 drawImage(graphic, image, wall.getBounds());
+            }
+            else {
+                BufferedImage image = handler.getStaticObjectImage(obj.getType());
+                drawImage(graphic, image, obj.getBounds());
             }
         }
     }
