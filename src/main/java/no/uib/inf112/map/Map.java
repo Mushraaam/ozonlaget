@@ -58,7 +58,7 @@ public class Map implements IMap {
     private void spawnEnemies() {
         Random random = new Random();
         for (int i = 0; i < 3;) {
-            ICell cell = this.grid.getCell(0, random.nextInt(this.grid.getColCount()));
+            ICell cell = this.grid.getCell(1, random.nextInt(1, this.grid.getColCount() - 1));
             Rectangle2D.Double b = cell.getBounds();
 
             Zombie zombie = new Zombie(

@@ -5,4 +5,5 @@ public enum FloorType {
     STONE_TILES,
     GRASS_TILES,
     WOODFLOOR,
+    GRAY_TILE,
 }
