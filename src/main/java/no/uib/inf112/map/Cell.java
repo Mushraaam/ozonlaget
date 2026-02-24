@@ -1,8 +1,10 @@
 package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 import java.util.List;
 
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.ICell;
@@ -19,7 +21,7 @@ public class Cell implements ICell {
     private List<ICell> neighbours;
     private IEnemy firstEnemy = null;
     private boolean occupied = false;
-
+    private final HashMap<EnemySize, SuperCell> superCellMap = new HashMap<>();
 
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
         this.bounds = bounds;
@@ -28,6 +30,15 @@ public class Cell implements ICell {
         this.col = col;
         this.floorType = floorType;
         this.pathType = type;
+    }
+
+
+    public void setSuperCell(EnemySize size, SuperCell sc) {
+        superCellMap.put(size, sc);
+    }
+
+    public SuperCell getSuperCell(EnemySize size) {
+        return superCellMap.get(size);
     }
 
 

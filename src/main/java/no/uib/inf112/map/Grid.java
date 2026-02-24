@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import no.uib.inf112.config.Config;
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.IGrid;
@@ -191,6 +192,26 @@ public class Grid implements IGrid {
         return getCell(row, col);
     }
 
+    @Override
+    public int getCellWidth() {
+        return 0;
+    }
+
+    @Override
+    public int getCellHeight() {
+        return 0;
+    }
+
+    @Override
+    public int getRowCount() {
+        return 0;
+    }
+
+    @Override
+    public int getColCount() {
+        return 0;
+    }
+
     public ArrayList<ICell> getCellsInView(Graphics2D graphics) {
         // double x1 = Math.min(this.bounds.getWidth(), Math.max(0,
         // graphics.getClipBounds().getMinX()));
@@ -231,24 +252,55 @@ public class Grid implements IGrid {
         return inView;
     }
 
-    @Override
-    public int getCellWidth() {
-        return CELLWIDTH;
+
+
+    private void buildNavigationLayers() {
+        for (EnemySize size : EnemySize.values()) {
+            int step = size.footprint();
+            int laneRows = this.rowCount / step;
+            int laneCols = this.colCount / step;
+
+            NavigationLane[][] layer = new NavigationLane[laneRows][laneCols];
+
+            for (int r = 0; r < laneRows; r++) {
+                for (int c = 0; c < laneCols; c++) {
+                    int worldX = (c * step * CELLWIDTH) + (step * CELLWIDTH / 2);
+                    int worldY = (r * step * CELLHEIGHT) + (step * CELLHEIGHT / 2);
+
+                    NavigationLane lane = new NavigationLane(worldX, worldY, r, c, size);
+
+                    lane.setWalkable(checkBlockSafety(r, c, step, size));
+                    layer[r][c] = lane;
+
+                    // Tell every BaseCell in this chunk which Lane it belongs to
+                    mapBaseCellsToLane(r, c, step, size, lane);
+                }
+            }
+
+            linkLaneNeighbors(layer, laneRows, laneCols);
+            navigationLayers.put(size, layer);
+        }
     }
 
-    @Override
-    public int getCellHeight() {
-        return CELLHEIGHT;
+    private void mapBaseCellsToLane(int laneR, int laneC, int step, EnemySize size, NavigationLane lane) {
+        for (int r = laneR * step; r < (laneR + 1) * step; r++) {
+            for (int c = laneC * step; c < (laneC + 1) * step; c++) {
+                if (r < rowCount && c < colCount) {
+                    ((Cell) getCell(r, c)).setNavigationLane(size, lane);
+                }
+            }
+        }
     }
 
-    @Override
-    public int getRowCount() {
-        return this.rowCount;
+    private boolean checkBlockSafety(int laneR, int laneC, int step, EnemySize size) {
+        for (int r = laneR * step; r < (laneR + 1) * step; r++) {
+            for (int c = laneC * step; c < (laneC + 1) * step; c++) {
+                if (r >= rowCount || c >= colCount) return false;
+                if (pathfinder.isBaseCellBlocked(getCell(r, c), size)) return false; //Should probably look into this cell better soon instead of giving up...
+            }
+        }
+        return true;
     }
-
-    @Override
-    public int getColCount() {
-        return this.colCount;
-    }
-
 }
+
+
