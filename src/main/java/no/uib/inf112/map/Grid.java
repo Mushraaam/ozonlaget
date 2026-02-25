@@ -19,7 +19,7 @@ import no.uib.inf112.interfaces.IStaticObject;
 public class Grid implements IGrid {
 
     private ArrayList<ArrayList<ICell>> cellGrid;
-
+    private final HashMap<EnemySize, NavigationLane[][]> navigationLayers = new HashMap<>();
     private Rectangle2D.Double bounds;
     private IMap map;
 
@@ -55,7 +55,6 @@ public class Grid implements IGrid {
                 ((Cell)cell).setNeighbours(n);
             }
         }
-
     }
 
     /**
@@ -194,23 +193,24 @@ public class Grid implements IGrid {
 
     @Override
     public int getCellWidth() {
-        return 0;
+        return CELLWIDTH;
     }
 
     @Override
     public int getCellHeight() {
-        return 0;
+        return CELLHEIGHT;
     }
 
     @Override
     public int getRowCount() {
-        return 0;
+        return this.rowCount;
     }
 
     @Override
     public int getColCount() {
-        return 0;
+        return this.colCount;
     }
+
 
     public ArrayList<ICell> getCellsInView(Graphics2D graphics) {
         // double x1 = Math.min(this.bounds.getWidth(), Math.max(0,
@@ -252,9 +252,9 @@ public class Grid implements IGrid {
         return inView;
     }
 
+    ////////////////////////////////////NAV LANE (grouped cells)//////////////////////////////////////////////
 
-
-    private void buildNavigationLayers() {
+    public void buildNavigationLayers() {
         for (EnemySize size : EnemySize.values()) {
             int step = size.footprint();
             int laneRows = this.rowCount / step;
@@ -264,42 +264,82 @@ public class Grid implements IGrid {
 
             for (int r = 0; r < laneRows; r++) {
                 for (int c = 0; c < laneCols; c++) {
+                    List<ICell> laneCells = gatherCellsForChunk(r, c, step);
+
                     int worldX = (c * step * CELLWIDTH) + (step * CELLWIDTH / 2);
                     int worldY = (r * step * CELLHEIGHT) + (step * CELLHEIGHT / 2);
 
-                    NavigationLane lane = new NavigationLane(worldX, worldY, r, c, size);
+                    NavigationLane lane = new NavigationLane(worldX, worldY, laneCells);
 
                     lane.setWalkable(checkBlockSafety(r, c, step, size));
                     layer[r][c] = lane;
 
-                    // Tell every BaseCell in this chunk which Lane it belongs to
-                    mapBaseCellsToLane(r, c, step, size, lane);
+                    for (ICell cell : laneCells) {
+                        ((Cell)cell).setNavigationLane(size, lane);
+                    }
                 }
             }
-
             linkLaneNeighbors(layer, laneRows, laneCols);
             navigationLayers.put(size, layer);
         }
     }
 
-    private void mapBaseCellsToLane(int laneR, int laneC, int step, EnemySize size, NavigationLane lane) {
-        for (int r = laneR * step; r < (laneR + 1) * step; r++) {
-            for (int c = laneC * step; c < (laneC + 1) * step; c++) {
+    private List<ICell> gatherCellsForChunk(int laneRow, int laneCol, int step) {
+        List<ICell> cells = new ArrayList<>();
+        int startRow = laneRow * step;
+        int startCol = laneCol * step;
+
+        for (int r = startRow; r < startRow + step; r++) {
+            for (int c = startCol; c < startCol + step; c++) {
                 if (r < rowCount && c < colCount) {
-                    ((Cell) getCell(r, c)).setNavigationLane(size, lane);
+                    cells.add(getCell(r, c));
+                }
+            }
+        }
+        return cells;
+    }
+
+    private void linkLaneNeighbors(NavigationLane[][] layer, int rows, int cols) {
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                NavigationLane current = layer[r][c];
+                if (!current.isWalkable()) continue;
+
+                for (int dr = -1; dr <= 1; dr++) {
+                    for (int dc = -1; dc <= 1; dc++) {
+                        if (dr == 0 && dc == 0) continue;
+
+                        int nr = r + dr;
+                        int nc = c + dc;
+
+                        if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
+                            NavigationLane neighbor = layer[nr][nc];
+                            if (neighbor.isWalkable()) {
+                                current.addNeighbor(neighbor);
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
+
     private boolean checkBlockSafety(int laneR, int laneC, int step, EnemySize size) {
+        int blockedCount = 0;
+        int totalCells = step * step;
+
         for (int r = laneR * step; r < (laneR + 1) * step; r++) {
             for (int c = laneC * step; c < (laneC + 1) * step; c++) {
                 if (r >= rowCount || c >= colCount) return false;
-                if (pathfinder.isBaseCellBlocked(getCell(r, c), size)) return false; //Should probably look into this cell better soon instead of giving up...
+                if (!map.getPathfinder().canEnter(getCell(r, c), size)) {
+                    blockedCount++;
+                }
             }
         }
-        return true;
+
+        double blockedRatio = (double) blockedCount / totalCells;
+        return blockedRatio < 0.10; //prolly gonna be a problem, temp for sanity.
     }
 }
 

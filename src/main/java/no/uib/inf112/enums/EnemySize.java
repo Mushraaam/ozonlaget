@@ -1,14 +1,19 @@
 package no.uib.inf112.enums;
 
+import java.awt.*;
+
 public enum EnemySize {
-    SMALL(4),
-    MEDIUM(6),
-    LARGE(8);
+    SMALL(4, Color.lightGray),
+    MEDIUM(6, Color.yellow),
+    LARGE(8, Color.blue);
 
     private final int footprintValue;
+    private final Color debugColor;
 
-    EnemySize(int footprintValue) {
+    EnemySize(int footprintValue, Color color) {
+
         this.footprintValue = footprintValue;
+        this.debugColor = color;
     }
 
     /**
@@ -18,4 +23,7 @@ public enum EnemySize {
         return this.footprintValue;
     }
 
+    public Color getDebugColor() {
+        return debugColor;
+    }
 }

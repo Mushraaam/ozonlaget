@@ -7,6 +7,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.Map;
 
+import no.uib.inf112.enums.EnemySize;
+import no.uib.inf112.map.NavigationLane;
 import no.uib.inf112.utility.PerfTracker;
 
 import no.uib.inf112.config.Config;
@@ -16,14 +18,12 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 
+import static no.uib.inf112.enums.EnemySize.SMALL;
+
 public class DebugScreen implements IDrawer {
 
     private IMap map;
     private IGrid grid;
-    private long lastFrameNs = System.nanoTime();
-    private double frameMs = 0.0;
-    private double fps = 0.0;
-    double smoothedMs = 0;
 
     public DebugScreen(IMap map) {
         this.map = map;
@@ -32,8 +32,9 @@ public class DebugScreen implements IDrawer {
 
     @Override
     public void draw(Graphics2D graphic) {
+        EnemySize laneSize = map.debugLaneSize();
         // Draw grid cells
-        debugCellsInView(graphic, this.grid);
+        debugCellsInView(graphic, this.grid, laneSize);
 
         // Draw player hitbox
         graphic.setColor(Color.BLUE);
@@ -56,8 +57,8 @@ public class DebugScreen implements IDrawer {
 
 
         for (IEnemy enemy : this.map.getEnemies()) {
-            List<ICell> path = enemy.getCurrentPath();
-            if (path == null || path.size() < 2) return;
+            List<NavigationLane> path = enemy.getCurrentPath();
+            if (path == null || path.size() < 2) continue;
 
             Rectangle viewBounds = graphic.getClipBounds();
 
@@ -65,7 +66,7 @@ public class DebugScreen implements IDrawer {
             graphic.setStroke(new BasicStroke(1.5f));
 
             for (int i = 0; i < path.size(); i++) {
-                ICell current = path.get(i);
+                NavigationLane current = path.get(i);
                 Rectangle2D.Double currentBounds = current.getBounds();
 
                 if (viewBounds.intersects(currentBounds)) {
@@ -76,7 +77,7 @@ public class DebugScreen implements IDrawer {
                     graphic.fillOval((int)(cx - dotRadius), (int)(cy - dotRadius), dotRadius * 2, dotRadius * 2);
 
                     if (i < path.size() - 1) {
-                        ICell next = path.get(i + 1);
+                        NavigationLane next = path.get(i + 1);
                         Rectangle2D.Double nextBounds = next.getBounds();
 
                         graphic.drawLine(

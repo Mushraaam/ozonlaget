@@ -21,8 +21,7 @@ public class Cell implements ICell {
     private List<ICell> neighbours;
     private IEnemy firstEnemy = null;
     private boolean occupied = false;
-    private final HashMap<EnemySize, SuperCell> superCellMap = new HashMap<>();
-
+    private final HashMap<EnemySize, NavigationLane> navigationLanes = new HashMap<>();
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
         this.bounds = bounds;
         this.blocked = false;
@@ -32,14 +31,22 @@ public class Cell implements ICell {
         this.pathType = type;
     }
 
-
-    public void setSuperCell(EnemySize size, SuperCell sc) {
-        superCellMap.put(size, sc);
+    /**
+     * Links this tiny base cell to a larger navigation lane.
+     */
+    public void setNavigationLane(EnemySize size, NavigationLane lane) {
+        navigationLanes.put(size, lane);
     }
 
-    public SuperCell getSuperCell(EnemySize size) {
-        return superCellMap.get(size);
+    /**
+     * Used by NPCs to find their current "A* Node" based on their size.
+     */
+    @Override
+    public NavigationLane getNavigationLane(EnemySize size) {
+        return navigationLanes.get(size);
     }
+
+
 
 
     public void setNeighbours(List<ICell> neighbours) {

@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 
 import no.uib.inf112.core.Spawner;
+import no.uib.inf112.enums.EnemySize;
+import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
@@ -95,11 +97,6 @@ public interface IMap {
 
 
     /**
-     * @return set of all cells that are currently occupied
-     */
-    public boolean inOccupiedCells(ICell cell);
-
-    /**
      * Refreshes occupied cells
      */
     public void gatherOccupiedCells();
@@ -113,4 +110,8 @@ public interface IMap {
      * Adds a floor
      */
     public void addFloor(IFloor floor);
+
+    EnemySize debugLaneSize();
+
+    void setDebugLaneSize(EnemySize size);
 }
