@@ -15,6 +15,7 @@ import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 public class Map implements IMap {
 
     private ILevel level;
+    private int levelNumber;
     private IPlayer player;
     private GameState gameState;
     private Rectangle2D.Double bounds;
@@ -30,6 +31,7 @@ public class Map implements IMap {
     public Map() {
         // 1. Basic properties
         this.level = new Level1(this);
+        this.levelNumber = this.level.levelNumber();
         this.bounds = this.level.getBounds();
         this.player = this.level.getPlayer();
         this.floors = this.level.getFloor();
@@ -53,7 +55,7 @@ public class Map implements IMap {
     private void spawnEnemies() {
         Random random = new Random();
         for (int i = 0; i < 3;) {
-            ICell cell = this.grid.getCell(0, random.nextInt(this.grid.getColCount()));
+            ICell cell = this.grid.getCell(1, random.nextInt(1, this.grid.getColCount() - 1));
             Rectangle2D.Double b = cell.getBounds();
 
             Zombie zombie = new Zombie(
@@ -216,6 +218,12 @@ public class Map implements IMap {
     public void setDebugLaneSize(EnemySize size){
         this.debugLaneSize = size;
     }
+
+    public int level() {
+        return this.levelNumber;
+    }
+
+
 
 
 }

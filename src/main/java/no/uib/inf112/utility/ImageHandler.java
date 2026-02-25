@@ -31,6 +31,9 @@ public class ImageHandler {
     private HashMap<FloorType, BufferedImage> floors;
 
 
+    private HashMap<Integer, BufferedImage> levelBackground;
+
+
     public ImageHandler(){
         this.playerSprites = new HashMap<>();
         loadPlayerSprite();
@@ -46,6 +49,21 @@ public class ImageHandler {
 
         this.floors = new HashMap<>();
         loadFloors();
+
+        this.levelBackground = new HashMap<>();
+        loadBackgrounds();
+    }
+
+
+
+    private void loadBackgrounds() {
+        // this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/generic_grass.png"), Config.getInt("mapWidth"), Config.getInt("mapHeight")));
+        // this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/ground_2500x2500.png"), Config.getInt("mapWidth"), Config.getInt("mapHeight")));
+        this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/ground_2.png"), Config.getInt("mapWidth"), Config.getInt("mapHeight")));
+    }
+
+    public BufferedImage getBackground(int level){
+        return this.levelBackground.get(level);
     }
 
 
@@ -160,9 +178,10 @@ public class ImageHandler {
         int width = Config.getInt("tileWidth");
         int height = Config.getInt("tileHeight");
         this.floors.put(FloorType.STONE_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"), width, height));
-        // this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"), width, height));
-        this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_hd.png"), width, height));
+        this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"), width, height));
+        // this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_hd.png"), width, height));
         this.floors.put(FloorType.WOODFLOOR, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/woodfloor.png"), width, height));
+        this.floors.put(FloorType.GRAY_TILE, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/graytile.png"), width, height));
 
     }
 

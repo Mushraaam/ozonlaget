@@ -169,5 +169,11 @@ public class TestMap implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'addFloor'");
     }
 
+    @Override
+    public int level() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'level'");
+    }
+
 
 }

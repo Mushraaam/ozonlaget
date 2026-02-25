@@ -12,4 +12,6 @@ public interface ILevel {
     public Double getBounds();
 
     public ArrayList<IFloor> getFloor();
+
+    public int levelNumber();
 }

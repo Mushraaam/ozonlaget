@@ -20,14 +20,16 @@ import no.uib.inf112.terrain.static_objects.WoodWall;
 
 public class Level1 implements ILevel {
 
+    private static final int LEVELNUMBER = 1;
+
     private IPlayer player;
     private Rectangle2D.Double bounds;
     private ArrayList<IStaticObject> staticObjects;
     private ArrayList<IFloor> floors;
 
     // Player
-    private static final int STARTROW = 1030;// 2 * Config.getInt("cellWidth"); //Starts in row 2 now
-    private static final int STARTCOL = 1030;// 2 * Config.getInt("cellHeight");; //Same for 2nd col.
+    private static final int START_X = 1200;// 2 * Config.getInt("cellWidth"); //Starts in row 2 now
+    private static final int START_Y = 1010;// 2 * Config.getInt("cellHeight");; //Same for 2nd col.
     private static final int PLAYERWIDTH = Config.getInt("playerWidth");
     private static final int PLAYERHEIGHT = Config.getInt("playerHeight");
 
@@ -48,7 +50,7 @@ public class Level1 implements ILevel {
         this.floors = new ArrayList<>();
 
         this.bounds = new Rectangle2D.Double(MAPX, MAPY, MAPWIDTH, MAPHEIGHT);
-        this.player = new Player(new Rectangle2D.Double(STARTROW, STARTCOL, PLAYERWIDTH, PLAYERHEIGHT), this.bounds,
+        this.player = new Player(new Rectangle2D.Double(START_X, START_Y, PLAYERWIDTH, PLAYERHEIGHT), this.bounds,
                 map);
 
         generateStaticObjects();
@@ -73,8 +75,9 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(900 + 330, 900 - 30, 15, 100), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Right bot
                 new Rectangle2D.Double(900 + 330, 900 + 300 - 100, 15, 145), StaticObjectType.WOODEN_WALL));
-
-        staticObjects.add(new DarkWoodenTable(new Rectangle2D.Double(950, 910, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
+        
+        // Furniture
+        staticObjects.add(new DarkWoodenTable(new Rectangle2D.Double(950, 930, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
         
         // House2
         staticObjects.add(new WoodWall(new Rectangle2D.Double(700, 900, 15, 375), StaticObjectType.LONG_WOODEN_WALL)); // right
@@ -102,5 +105,10 @@ public class Level1 implements ILevel {
     @Override
     public ArrayList<IFloor> getFloor() {
         return this.floors;
+    }
+
+    @Override
+    public int levelNumber() {
+        return LEVELNUMBER;
     }
 }

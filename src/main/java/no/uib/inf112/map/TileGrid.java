@@ -34,7 +34,7 @@ public class TileGrid implements IGrid {
         // Not sure if i shuld bother with ceil/floor
         this.colCount = (int) Math.floor(width / TILEWIDTH);
         this.rowCount = (int) Math.floor(height / TILEHEIGHT);
-        this.tiles = makeGrid(rowCount, colCount, TILEWIDTH, TILEHEIGHT, FloorType.GRASS_TILES);
+        this.tiles = makeGrid(rowCount, colCount, TILEWIDTH, TILEHEIGHT, FloorType.NONE);
         fillGrid();
     }
 

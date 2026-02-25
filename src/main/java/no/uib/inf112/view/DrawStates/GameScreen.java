@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+import no.uib.inf112.config.Config;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
@@ -20,10 +21,14 @@ public class GameScreen implements IDrawer {
     private IGrid tiles;
     private IViewablePlayer player;
     private ImageHandler handler;
+    private static final Rectangle2D.Double MAPDIMENSION = new Rectangle2D.Double(0, 0, Config.getInt("mapHeight"),Config.getInt("mapWidth"));
+     
 
     // private BufferedImage playerSprite;
 
     public GameScreen(IMap map, ImageHandler handler) {
+
+
         this.map = map;
         this.player = (IViewablePlayer) map.getPlayer();
         this.handler = handler;
@@ -90,6 +95,7 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawBackground(Graphics2D graphic) {
+        drawImage(graphic, this.handler.getBackground(this.map.level()), MAPDIMENSION);
         drawCellsInView(graphic, this.tiles, this.handler);
     }
 

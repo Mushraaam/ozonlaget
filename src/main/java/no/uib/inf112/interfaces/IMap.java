@@ -111,7 +111,14 @@ public interface IMap {
      */
     public void addFloor(IFloor floor);
 
+<<<<<<< HEAD
     EnemySize debugLaneSize();
 
     void setDebugLaneSize(EnemySize size);
+=======
+    /**
+     * @return number of the current level
+     */
+    public int level();
+>>>>>>> origin/main
 }
