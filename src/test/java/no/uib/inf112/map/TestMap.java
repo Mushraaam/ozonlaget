@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import no.uib.inf112.core.Spawner;
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
@@ -145,11 +146,6 @@ public class TestMap implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'getEnemyCount'");
     }
 
-    @Override
-    public boolean inOccupiedCells(ICell cell) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'inOccupiedCells'");
-    }
 
     @Override
     public void gatherOccupiedCells() {
@@ -167,6 +163,16 @@ public class TestMap implements IMap {
     public void addFloor(IFloor floor) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addFloor'");
+    }
+
+    @Override
+    public EnemySize debugLaneSize() {
+        return null;
+    }
+
+    @Override
+    public void setDebugLaneSize(EnemySize size) {
+
     }
 
     @Override
