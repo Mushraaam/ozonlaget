@@ -113,4 +113,9 @@ public interface IMap {
      * Adds a floor
      */
     public void addFloor(IFloor floor);
+
+    /**
+     * @return number of the current level
+     */
+    public int level();
 }

@@ -20,6 +20,8 @@ import no.uib.inf112.terrain.static_objects.WoodWall;
 
 public class Level1 implements ILevel {
 
+    private static final int LEVELNUMBER = 1;
+
     private IPlayer player;
     private Rectangle2D.Double bounds;
     private ArrayList<IStaticObject> staticObjects;
@@ -103,5 +105,10 @@ public class Level1 implements ILevel {
     @Override
     public ArrayList<IFloor> getFloor() {
         return this.floors;
+    }
+
+    @Override
+    public int levelNumber() {
+        return LEVELNUMBER;
     }
 }

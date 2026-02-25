@@ -14,6 +14,7 @@ import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 public class Map implements IMap {
 
     private ILevel level;
+    private int levelNumber;
     private IPlayer player;
     private GameState gameState;
     private Rectangle2D.Double bounds;
@@ -29,6 +30,7 @@ public class Map implements IMap {
     public Map() {
 
         this.level = new Level1(this);
+        this.levelNumber = this.level.levelNumber();
         this.bounds = this.level.getBounds();
         this.player = this.level.getPlayer();
         this.floors = this.level.getFloor();
@@ -225,6 +227,11 @@ public class Map implements IMap {
     @Override
     public void addFloor(IFloor floor) {
         this.floors.add(floor);
+    }
+
+    @Override
+    public int level() {
+        return this.levelNumber;
     }
 
 

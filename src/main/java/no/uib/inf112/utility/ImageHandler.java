@@ -31,6 +31,9 @@ public class ImageHandler {
     private HashMap<FloorType, BufferedImage> floors;
 
 
+    private HashMap<Integer, BufferedImage> levelBackground;
+
+
     public ImageHandler(){
         this.playerSprites = new HashMap<>();
         loadPlayerSprite();
@@ -46,6 +49,20 @@ public class ImageHandler {
 
         this.floors = new HashMap<>();
         loadFloors();
+
+        this.levelBackground = new HashMap<>();
+        loadBackgrounds();
+    }
+
+
+
+    private void loadBackgrounds() {
+        // this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/generic_grass.png"), Config.getInt("mapWidth"), Config.getInt("mapHeight")));
+        this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/grass_dirt.png"), Config.getInt("mapWidth"), Config.getInt("mapHeight")));
+    }
+
+    public BufferedImage getBackground(int level){
+        return this.levelBackground.get(level);
     }
 
 
