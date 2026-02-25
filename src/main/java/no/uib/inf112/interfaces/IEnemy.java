@@ -2,6 +2,7 @@ package no.uib.inf112.interfaces;
 
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
+import no.uib.inf112.map.NavigationLane;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
 import java.awt.geom.Ellipse2D;
@@ -46,7 +47,7 @@ public interface IEnemy extends IMovingDrawableObject {
     /**
      * @return A list of cells representing the current path the enemy is following.
      */
-    public List<ICell> getCurrentPath();
+    public List<NavigationLane> getCurrentPath();
 
     /**
      * Advances the animation frame index to the next step.
@@ -68,4 +69,6 @@ public interface IEnemy extends IMovingDrawableObject {
     void setNextInCell(IEnemy next);
 
     ICell getStandingCell();
+
+    int getCurrentPathIndex();
 }

@@ -8,6 +8,8 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
+import no.uib.inf112.map.Cell;
+import no.uib.inf112.map.NavigationLane;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
 import java.awt.geom.Ellipse2D;
@@ -17,28 +19,24 @@ import java.util.List;
 
 public class Zombie implements IEnemy {
     private static final double SPEED = 0.5 * (Config.getInt("playerMoveSpeed"));
+    private static final double ROTATION_SPEED = 0.12;
+    private static final EnemySize SIZE = EnemySize.SMALL;
+    double goalOffsetX;
+    double goalOffsetY;
     private Rectangle2D.Double pos;
-    private List<ICell> currentPath = new ArrayList<>();
+    private List<NavigationLane> currentPath = new ArrayList<>();
     private int pathIndex = 0;
     private int animationIndex = 0;
     private int ANIMATION_COUNT = 8;
     private double facingAngle = 0.0;
-    private static final double ROTATION_SPEED = 0.12;
-    private static final EnemySize SIZE = EnemySize.SMALL;
     private IMap map;
-    double goalOffsetX;
-    double goalOffsetY;
-    ICell lastStart;
-    ICell lastGoal;
     private IEnemy nextInCell = null;
 
-
-    // test
-    private int currentTarget;
     private boolean sliding = false;
     private int slideXDir = 1;
     private int slideYDir = 1;
     private boolean slidePreferX = true;
+    private NavigationLane currentLane = null;
 
     private IPlayer player;
 
@@ -50,8 +48,6 @@ public class Zombie implements IEnemy {
         this.goalOffsetX = (Math.random() * 2 - 1) * r;
         this.goalOffsetY = (Math.random() * 2 - 1) * r;
         this.player = map.getPlayer();
-
-        this.currentTarget = 0;
     }
 
     @Override
@@ -61,21 +57,19 @@ public class Zombie implements IEnemy {
 
     @Override
     public void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds) {
-        ICell start = grid.getCellFromPos(getHitbox());
-        ICell goal  = grid.getCellFromPos(targetBounds);
+        // Look up the Macro-Lane from the Micro-Cell
+        Cell startCell = (Cell) grid.getCellFromPos(getHitbox());
+        Cell goalCell = (Cell) grid.getCellFromPos(targetBounds);
 
-        if (start == null || goal == null) return;
+        if (startCell == null || goalCell == null) return;
 
-        if (start.equals(lastStart) && goal.equals(lastGoal) && currentPath != null && !currentPath.isEmpty()) {
-            return; // no need to repath
-        }
+        NavigationLane startLane = startCell.getNavigationLane(SIZE);
+        NavigationLane goalLane = goalCell.getNavigationLane(SIZE);
 
-        lastStart = start;
-        lastGoal = goal;
+        if (startLane == null || goalLane == null) return;
 
-        currentPath = pathfinder.findPath(start, goal, SIZE);
-        pathIndex = (currentPath.size() > 1) ? 1 : 0;
-
+        this.currentPath = pathfinder.findPath(startLane, goalLane, SIZE);
+        this.pathIndex = 1;
     }
 
     private void updateFacing(double dx, double dy, double dist) { // noe assistanse med matten trengtes.....
@@ -99,53 +93,54 @@ public class Zombie implements IEnemy {
 
     @Override
     public void move(IGrid grid) {
-        ICell from = getStandingCell();
-        if (currentPath == null || pathIndex >= currentPath.size())
-            return;
-        int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
-        for (int i = pathIndex; i < lookAheadLimit; i++) {
-            Rectangle2D target = currentPath.get(i).getBounds();
-            double dx = target.getCenterX() - pos.getCenterX();
-            double dy = target.getCenterY() - pos.getCenterY();
-            double dist = Math.hypot(dx, dy);
+        ICell standingCell = getStandingCell();
+        if (standingCell instanceof Cell) {
+            NavigationLane newLane = ((Cell) standingCell).getNavigationLane(SIZE);
 
-            if (tryMove(dx, dy, dist, target)) {
-                updateFacing(dx, dy, dist);
-                this.pathIndex = i;
-                if (dist <= SPEED) {
-                    pathIndex++;
+            if (newLane != currentLane) {
+                if (currentLane != null) {
+                    currentLane.removeOccupant(this);
                 }
-
-                if (this.sliding) {
-                    this.currentTarget = i;
-                } else {
-                    this.currentTarget = pathIndex;
+                if (newLane != null) {
+                    newLane.addOccupant(this);
                 }
-                break;
+                this.currentLane = newLane;
             }
-
         }
-        if(from == lastStart){
-        unStuck(true,true);}
+
+        if (currentPath == null || pathIndex >= currentPath.size()) return;
+
+        NavigationLane targetLane = currentPath.get(pathIndex);
+
+        double dx = targetLane.getCenterX() - pos.getCenterX();
+        double dy = targetLane.getCenterY() - pos.getCenterY();
+        double dist = Math.hypot(dx, dy);
+
+        if (tryMove(dx, dy, dist, targetLane.getCenterX(), targetLane.getCenterY())) {
+            updateFacing(dx, dy, dist);
+            if (dist <= SPEED * 2) {
+                pathIndex++;
+            }
+        }
+
+        // Push away from other zombies to prevent stacking
+        unStuck(true, true);
     }
 
     private void unStuck(boolean moveX, boolean moveY) {
-        ICell myCell = this.getStandingCell();
+        NavigationLane myLane = currentLane;
+        if (myLane == null) return;
 
-        checkCellAndPush(myCell, moveX, moveY);
-        for (ICell neighbor : myCell.getNeighbours()) {
-            checkCellAndPush(neighbor, moveX, moveY);
+        checkLaneAndPush(myLane, moveX, moveY);
+
+        for (NavigationLane neighbor : myLane.getNeighbors()) {
+            checkLaneAndPush(neighbor, moveX, moveY);
         }
     }
 
-    private void checkCellAndPush(ICell cell, boolean moveX, boolean moveY) {
-        IEnemy other = (cell).getFirstEnemy();
-
-        while (other != null) {
-            if (other == this) {
-                other = other.getNextInCell();
-                continue;
-            }
+    private void checkLaneAndPush(NavigationLane lane, boolean moveX, boolean moveY) {
+        for (IEnemy other : map.getEnemies()) {
+            if (other == this) continue;
 
             Rectangle2D otherBox = other.getHitbox();
             if (this.pos.intersects(otherBox)) {
@@ -162,32 +157,24 @@ public class Zombie implements IEnemy {
                 if (moveX) pushed.x += Math.signum(dx) * 0.5;
                 if (moveY) pushed.y += Math.signum(dy) * 0.5;
 
-                if (!pushed.intersects(player.getHitbox()) &&
-                        map.getPathfinder().canEnter(map.getGrid().getCellFromPos(pushed), SIZE)) {
-                    this.pos = pushed;
-                }
-                else if (moveX && moveY) {
-                    unStuck(true, false);
-                    unStuck(false, true);
-                    return;
+                ICell targetCell = map.getGrid().getCellFromPos(pushed);
+                if (targetCell != null && map.getPathfinder().canEnter(targetCell, SIZE)) {
+                    if (!pushed.intersects(player.getHitbox())) {
+                        this.pos = pushed;
+                    }
                 }
             }
-            other = other.getNextInCell();
         }
     }
 
 
-
-
-
-    private boolean tryMove(double dx, double dy, double dist, Rectangle2D target) {
-        Rectangle2D.Double candidate = generateCandidate(dx, dy, dist, target);
+    private boolean tryMove(double dx, double dy, double dist, double targetX, double targetY) {
+        Rectangle2D.Double candidate = generateCandidate(dx, dy, dist, targetX, targetY);
 
         if (isLegal(candidate)) {
             this.sliding = false;
             this.pos = candidate;
             return true;
-
         } else {
 
             if (!this.sliding) {
@@ -212,60 +199,52 @@ public class Zombie implements IEnemy {
                     this.slidePreferX = Math.abs(dx) >= Math.abs(dy);
             }
 
-            if (trySlide(dx, dy, dist, target)) {
+            if (trySlide(dx, dy, dist, targetX, targetY)) {
                 sliding = true;
                 return true;
             }
         }
-        this.sliding = false;
         return false;
     }
 
-    private boolean trySlide(double dx, double dy, double dist, Rectangle2D target) {
+    private boolean trySlide(double dx, double dy, double dist, double targetX, double targetY) {
         Rectangle2D.Double slideX = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
         Rectangle2D.Double slideY = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
-        int x = 1; int y = 1;
-        if (dx <= 0){x = x * (-1);}
-        if (dy <= 0){y = y * (-1);}
-        // Slide X
+
         if (dist <= SPEED) {
-            slideX.x = target.getCenterX() - pos.width / 2.0;
+            slideX.x = targetX - pos.width / 2.0;
         } else {
             slideX.x += (dx / dist) * SPEED;
         }
+
         if (isLegal(slideX)) {
             this.pos = slideX;
-            return true;
+        }
 
-        } else { // Slide Y
-            if (dist <= SPEED) {
-                slideY.y = target.getCenterY() - pos.height / 2.0;
-            } else {
-                slideY.y += (dy / dist) * SPEED;
-            }
-            if (isLegal(slideY)) {
-                this.pos = slideY;
-                return true;
-            } else {
-            }
+        if (dist <= SPEED) {
+            slideY.y = targetY - pos.height / 2.0;
+        } else {
+            slideY.y += (dy / dist) * SPEED;
+        }
+
+        if (isLegal(slideY)) {
+            this.pos = slideY;
         }
 
         return false;
-
     }
 
-    private Rectangle2D.Double generateCandidate(double dx, double dy, double dist, Rectangle2D target) {
-
+    private Rectangle2D.Double generateCandidate(double dx, double dy, double dist, double targetX, double targetY) {
         Rectangle2D.Double candidate = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
+
         if (dist <= SPEED) {
-            candidate.x = target.getCenterX() - pos.width / 2.0;
-            candidate.y = target.getCenterY() - pos.height / 2.0;
+            candidate.x = targetX - pos.width / 2.0;
+            candidate.y = targetY - pos.height / 2.0;
         } else {
             candidate.x += (dx / dist) * SPEED;
             candidate.y += (dy / dist) * SPEED;
         }
         return candidate;
-
     }
 
     private boolean isLegal(Rectangle2D.Double candidate) {
@@ -274,62 +253,81 @@ public class Zombie implements IEnemy {
                 candidate.x + padding, candidate.y + padding,
                 candidate.width - (padding * 2), candidate.height - (padding * 2)
         );
+
         if (movementHitbox.intersects(this.player.getHitbox())) {
             return false;
         }
-        if (!checkCell(getStandingCell(), movementHitbox)) {
+
+        if (!isWalkableAt(movementHitbox.x, movementHitbox.y) ||
+                !isWalkableAt(movementHitbox.x + movementHitbox.width, movementHitbox.y) ||
+                !isWalkableAt(movementHitbox.x, movementHitbox.y + movementHitbox.height) ||
+                !isWalkableAt(movementHitbox.x + movementHitbox.width, movementHitbox.y + movementHitbox.height)) {
             return false;
         }
 
-        for (ICell cell : getStandingCell().getNeighbours()) {
-            if(!checkCell(cell, movementHitbox))
-                {return false;}
+        NavigationLane myLane = (getStandingCell()).getNavigationLane(SIZE);
+        if (myLane != null) {
+            if (!checkLane(myLane, movementHitbox)) return false;
+            for (NavigationLane neighborLane : myLane.getNeighbors()) {
+                if (!checkLane(neighborLane, movementHitbox)) return false;
+            }
         }
 
-        return true; // The path is clear enough to squeeze through!
+        return true;
     }
 
-    private boolean checkCell(ICell cell, Rectangle2D.Double movementHitbox){
-        IEnemy enemy = cell.getFirstEnemy();
+    // Helper method for clean wall checking
+    private boolean isWalkableAt(double x, double y) {
+        ICell cell = map.getGrid().getCellFromXY(x, y);
+        if (cell == null) return false;
+        return map.getPathfinder().canEnter(cell, SIZE);
+    }
 
-        while(enemy != null) {
+    private boolean checkLane(NavigationLane lane, Rectangle2D.Double movementHitbox) {
+        for (IEnemy enemy : lane.getEnemies()) {
             if (enemy != this) {
                 Rectangle2D enemyHitbox = enemy.getHitbox();
-                double shrinkFactor = 0.6; // Only 60% of the center is "solid" to other NPCs
+                double shrinkFactor = 0.75;
 
                 double coreW = enemyHitbox.getWidth() * shrinkFactor;
                 double coreH = enemyHitbox.getHeight() * shrinkFactor;
                 double coreX = enemyHitbox.getCenterX() - (coreW / 2);
                 double coreY = enemyHitbox.getCenterY() - (coreH / 2);
                 Rectangle2D enemyCore = new Rectangle2D.Double(coreX, coreY, coreW, coreH);
+
                 if (movementHitbox.intersects(enemyCore)) {
                     return false;
                 }
             }
-            enemy = enemy.getNextInCell();
         }
         return true;
     }
-
-
-
 
 
     /// //////////////////GETTERS////////////////////////
 
 
     @Override
-    public IEnemy getNextInCell() { return nextInCell; }
+    public IEnemy getNextInCell() {
+        return nextInCell;
+    }
 
     @Override
-    public void setNextInCell(IEnemy next) { this.nextInCell = next; }
+    public void setNextInCell(IEnemy next) {
+        this.nextInCell = next;
+    }
 
     @Override
-    public ICell getStandingCell(){
+    public ICell getStandingCell() {
         return map.getGrid().getCellFromPos(getHitbox());
     }
 
-    public List<ICell> getCurrentPath() {
+    @Override
+    public int getCurrentPathIndex() {
+        return pathIndex;
+    }
+
+    public List<NavigationLane> getCurrentPath() {
         return currentPath;
     }
 

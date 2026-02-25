@@ -1,8 +1,10 @@
 package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 import java.util.List;
 
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.ICell;
@@ -19,8 +21,7 @@ public class Cell implements ICell {
     private List<ICell> neighbours;
     private IEnemy firstEnemy = null;
     private boolean occupied = false;
-
-
+    private final HashMap<EnemySize, NavigationLane> navigationLanes = new HashMap<>();
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
         this.bounds = bounds;
         this.blocked = false;
@@ -29,6 +30,23 @@ public class Cell implements ICell {
         this.floorType = floorType;
         this.pathType = type;
     }
+
+    /**
+     * Links this tiny base cell to a larger navigation lane.
+     */
+    public void setNavigationLane(EnemySize size, NavigationLane lane) {
+        navigationLanes.put(size, lane);
+    }
+
+    /**
+     * Used by NPCs to find their current "A* Node" based on their size.
+     */
+    @Override
+    public NavigationLane getNavigationLane(EnemySize size) {
+        return navigationLanes.get(size);
+    }
+
+
 
 
     public void setNeighbours(List<ICell> neighbours) {

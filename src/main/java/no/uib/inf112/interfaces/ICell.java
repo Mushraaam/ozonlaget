@@ -3,11 +3,15 @@ package no.uib.inf112.interfaces;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
+import no.uib.inf112.map.NavigationLane;
 
 public interface ICell {
 
+
+    NavigationLane getNavigationLane(EnemySize size);
 
     List<ICell> getNeighbours();
 

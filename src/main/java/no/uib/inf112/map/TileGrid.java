@@ -74,6 +74,11 @@ public class TileGrid implements IGrid {
     }
 
     @Override
+    public void buildNavigationLayers() {
+
+    }
+
+    @Override
     public ICell getCellFromPos(Rectangle2D.Double pos) {
         double centerX = pos.getCenterX();
         double centerY = pos.getCenterY();

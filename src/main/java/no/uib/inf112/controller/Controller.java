@@ -1,6 +1,7 @@
 package no.uib.inf112.controller;
 
 import no.uib.inf112.enums.Direction;
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.IControllablePlayer;
 import no.uib.inf112.interfaces.IEnemy;
@@ -156,6 +157,9 @@ public class Controller implements java.awt.event.KeyListener {
             case KeyEvent.VK_P -> {
                 flipDebug();
             }
+            case KeyEvent.VK_L -> {
+                viewLaneSize();
+            }
             case KeyEvent.VK_O -> {
                 map.getSpawner().spawnThug();
             }
@@ -208,6 +212,15 @@ public class Controller implements java.awt.event.KeyListener {
             map.debugOff();
         } else {
             map.debugOn();
+        }
+    }
+    private void viewLaneSize() {
+        switch(map.debugLaneSize()){
+            case EnemySize.SMALL -> map.setDebugLaneSize(EnemySize.MEDIUM);
+            case EnemySize.MEDIUM -> map.setDebugLaneSize(EnemySize.LARGE);
+            case EnemySize.LARGE -> map.setDebugLaneSize(EnemySize.SMALL);
+            default -> throw new NullPointerException();
+
         }
     }
 }
