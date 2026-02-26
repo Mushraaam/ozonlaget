@@ -262,11 +262,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
         double worldMouseX = mouseX - translatedX;
         double worldMouseY = mouseY - translatedY;
 
-        double deltaX = worldMouseX - playerCenterX;
-        double deltaY = worldMouseY - playerCenterY;
-
-        double angle = Math.atan2(deltaY, deltaX);
-        player.setFacingAngle(angle);
+        player.aimAtWorldPosition(worldMouseX, worldMouseY);
 
         view.repaint();
 
