@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+// class for handling camera translation, centering on player, and converting screen to world coordinates
 public class Camera {
     private double translateX;
     private double translateY;

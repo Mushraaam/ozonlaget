@@ -234,7 +234,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
     }
 
 
-    // This method translates mouse coordinates to world coordinates, calculates the angle from the player to the mouse, and updates the player's facing angle.
+    // This method converts the mouse position to world coordinates and updates the player's aim accordingly. It also recenters the camera on the player.
     private void updateAimFromMouse(java.awt.event.MouseEvent e) {
         camera.update(player.getHitbox(), view.getWidth(), view.getHeight(), map.getBounds());
 
