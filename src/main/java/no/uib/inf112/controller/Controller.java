@@ -11,11 +11,14 @@ import no.uib.inf112.view.GameDrawer;
 import no.uib.inf112.utility.PerfTracker;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
 
-public class Controller implements java.awt.event.KeyListener {
+import org.w3c.dom.css.Rect;
+
+public class Controller implements java.awt.event.KeyListener, java.awt.event.MouseMotionListener {
 
     private final DirectionHandler dirHandler;
 
@@ -45,6 +48,7 @@ public class Controller implements java.awt.event.KeyListener {
         this.dirHandler = new DirectionHandler();
 
         this.view.addKeyListener(this);
+        this.view.addMouseMotionListener(this);
         this.view.setFocusable(true);
 
         // TIMERS
@@ -222,5 +226,55 @@ public class Controller implements java.awt.event.KeyListener {
             default -> throw new NullPointerException();
 
         }
+    }
+
+    @Override
+    public void mouseMoved(java.awt.event.MouseEvent e) {
+        updateAimFromMouse(e);
+    }
+
+    @Override
+    public void mouseDragged(java.awt.event.MouseEvent e) {
+        updateAimFromMouse(e);
+    }
+
+
+    // This method translates mouse coordinates to world coordinates, calculates the angle from the player to the mouse, and updates the player's facing angle.
+    private void updateAimFromMouse(java.awt.event.MouseEvent e) {
+        // mouse in screen coordinates
+        double mouseX = e.getX();
+        double mouseY = e.getY();
+
+        // player in world coordinates
+        double playerCenterX = player.getHitbox().getCenterX();
+        double playerCenterY = player.getHitbox().getCenterY();
+
+        // camera logic from GameScreen
+        double screenWidth = view.getWidth();
+        double screenHeight = view.getHeight();
+
+        Rectangle2D.Double mapBounds = map.getBounds();
+
+        double translatedX = screenWidth / 2 - playerCenterX;
+        double translatedY = screenHeight / 2 - playerCenterY;
+        double minTranslateX = screenWidth - mapBounds.getWidth();
+        double minTranslateY = screenHeight - mapBounds.getHeight();
+
+        translatedX = Math.min(0, Math.max(translatedX, minTranslateX));
+        translatedY = Math.min(0, Math.max(translatedY, minTranslateY));
+
+        // convert mouse coordinates to world coordinates
+        double worldMouseX = mouseX - translatedX;
+        double worldMouseY = mouseY - translatedY;
+
+        double deltaX = worldMouseX - playerCenterX;
+        double deltaY = worldMouseY - playerCenterY;
+
+        double angle = Math.atan2(deltaY, deltaX);
+        player.setFacingAngle(angle);
+
+        view.repaint();
+
+
     }
 }

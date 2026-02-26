@@ -16,6 +16,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private Rectangle2D.Double hitbox;
     private Rectangle2D.Double bounds;
     private Direction currentDirection;
+    private double aimAngle;
     private int animationIndex;
     private IMap map;
 
@@ -24,6 +25,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         this.bounds = bounds;
         this.animationIndex = 0;
         this.map = map;
+        this.aimAngle = 0;
         setDirection(Direction.WEST);
     }
 
@@ -195,7 +197,12 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public double getFacingAngle() {
-        return currentDirection.radians;
+        return this.aimAngle;
+    }
+
+    @Override
+    public void setFacingAngle(double angle) {
+        this.aimAngle = angle;
     }
 
     @Override

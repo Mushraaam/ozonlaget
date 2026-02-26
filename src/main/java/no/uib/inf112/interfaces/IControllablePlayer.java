@@ -19,6 +19,10 @@ public interface IControllablePlayer extends IPlayer{
      * Sets the current direction.
      */
     public void setDirection(Direction dir);
+    /**
+     * Sets the angle the player is facing in radians.
+     */
+    public void setFacingAngle(double angle);
 
     /**
      * Used by controller, increments animation.
