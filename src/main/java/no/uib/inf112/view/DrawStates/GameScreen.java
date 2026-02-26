@@ -14,6 +14,7 @@ import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.interfaces.IWall;
 import no.uib.inf112.utility.ImageHandler;
+import no.uib.inf112.utility.Camera;
 
 public class GameScreen implements IDrawer {
 
@@ -21,6 +22,7 @@ public class GameScreen implements IDrawer {
     private IGrid tiles;
     private IViewablePlayer player;
     private ImageHandler handler;
+    private Camera camera;
     private static final Rectangle2D.Double MAPDIMENSION = new Rectangle2D.Double(0, 0, Config.getInt("mapHeight"),Config.getInt("mapWidth"));
      
 
@@ -33,6 +35,7 @@ public class GameScreen implements IDrawer {
         this.player = (IViewablePlayer) map.getPlayer();
         this.handler = handler;
         this.tiles = map.getTiles();
+        this.camera = new Camera(0, 0);
 
         // Bør skaleres kun en gang, dette flyttes senere til ny klasse
         // this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
@@ -74,24 +77,14 @@ public class GameScreen implements IDrawer {
     /* Sentrerer kamera på player, holder seg innenfor bounds */
     private void centerCamera(Graphics2D graphic) {
 
-        Rectangle2D.Double playerHitbox = this.player.getHitbox();
-        Rectangle2D.Double mapBounds = this.map.getBounds();
+        Rectangle2D.Double playerHitbox = player.getHitbox();
+        Rectangle2D.Double mapBounds = map.getBounds();
 
         double screenWidth = graphic.getClipBounds().getWidth();
         double screenHeight = graphic.getClipBounds().getHeight();
-        double playerCenterX = playerHitbox.getCenterX();
-        double playerCenterY = playerHitbox.getCenterY();
 
-        double translatedX = screenWidth / 2 - playerCenterX;
-        double translatedY = screenHeight / 2 - playerCenterY;
-
-        double minTranslateX = screenWidth - mapBounds.getWidth();
-        double minTranslateY = screenHeight - mapBounds.getHeight();
-
-        translatedX = Math.min(0, Math.max(translatedX, minTranslateX));
-        translatedY = Math.min(0, Math.max(translatedY, minTranslateY));
-
-        graphic.translate(translatedX, translatedY);
+        camera.update(playerHitbox, screenWidth, screenHeight, mapBounds);
+        camera.apply(graphic);
     }
 
     private void drawBackground(Graphics2D graphic) {
