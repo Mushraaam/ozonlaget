@@ -3,6 +3,7 @@ package no.uib.inf112.player;
 import java.awt.geom.Rectangle2D;
 
 import no.uib.inf112.config.Config;
+import no.uib.inf112.controller.DirectionHandler;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.interfaces.IControllablePlayer;
 import no.uib.inf112.interfaces.IMap;
@@ -12,6 +13,8 @@ import no.uib.inf112.interfaces.IViewablePlayer;
 public class Player implements IControllablePlayer, IViewablePlayer {
     public static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
     public static final int ANIMATION_COUNT = 8;
+
+    private final DirectionHandler dirHandler;
 
     private Rectangle2D.Double hitbox;
     private Rectangle2D.Double bounds;
@@ -23,10 +26,41 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IMap map) {
         this.hitbox = hitbox;
         this.bounds = bounds;
+        this.dirHandler = new DirectionHandler();
         this.animationIndex = 0;
         this.map = map;
         this.aimAngle = 0;
         setDirection(Direction.WEST);
+    }
+
+    public void pressMove(Direction dir) {
+        this.dirHandler.add(dir);
+    }
+
+    public void releaseMove(Direction dir) {
+        this.dirHandler.remove(dir);
+    }
+
+    public boolean isMoving() {
+        return dirHandler.isMoving();
+    }
+    
+    public void updateMovement() {
+        Direction dir = dirHandler.getDirection();
+        if (dir != null) {
+            movePlayer(dir);
+            setDirection(dir);
+        }
+    }
+
+    public void aimAtWorldPosition(double worldX, double worldY) {
+        double playerCenterX = this.hitbox.getCenterX();
+        double playerCenterY = this.hitbox.getCenterY();
+
+        double deltaX = worldX - playerCenterX;
+        double deltaY = worldY - playerCenterY;
+
+        this.aimAngle = Math.atan2(deltaY, deltaX);
     }
 
     @Override

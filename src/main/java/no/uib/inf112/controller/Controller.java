@@ -20,7 +20,7 @@ import org.w3c.dom.css.Rect;
 
 public class Controller implements java.awt.event.KeyListener, java.awt.event.MouseMotionListener {
 
-    private final DirectionHandler dirHandler;
+    //private final DirectionHandler dirHandler;
 
     private IMap map;
     private IControllablePlayer player;
@@ -45,7 +45,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
         this.grid = map.getGrid();
 
         // TODO: Move dirHandler to player
-        this.dirHandler = new DirectionHandler();
+        //this.dirHandler = new DirectionHandler();
 
         this.view.addKeyListener(this);
         this.view.addMouseMotionListener(this);
@@ -53,7 +53,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
 
         // TIMERS
         this.playerAnimationTimer = new Timer(100, (ActionEvent e) -> {
-            if (dirHandler.isMoving()) {
+            if (player.isMoving()) {
                 this.player.incrementAnimationIndex();
             }
             for (IEnemy enemy : map.getEnemies()) {
@@ -75,13 +75,8 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             PerfTracker.tick(false);
             PerfTracker.start("Movement Logic");
             map.updateEnemyLocations(map.getEnemies());
-            if (dirHandler.isMoving()) {
-                Direction dir = dirHandler.getDirection();
-                if (dir != null) {
-                    this.player.movePlayer(dir);
-                    this.player.setDirection(dir);
-                }
-            }
+            
+            this.player.updateMovement();
 
 
             ArrayList<IEnemy> enemies = map.getEnemies();
@@ -146,16 +141,16 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
         switch (e.getKeyCode()) {
             // movement
             case KeyEvent.VK_W -> {
-                dirHandler.add(Direction.NORTH);
+                player.pressMove(Direction.NORTH);
             }
             case KeyEvent.VK_S -> {
-                dirHandler.add(Direction.SOUTH);
+                player.pressMove(Direction.SOUTH);
             }
             case KeyEvent.VK_A -> {
-                dirHandler.add(Direction.WEST);
+                player.pressMove(Direction.WEST);
             }
             case KeyEvent.VK_D -> {
-                dirHandler.add(Direction.EAST);
+                player.pressMove(Direction.EAST);
             }
 
             case KeyEvent.VK_P -> {
@@ -187,16 +182,16 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
     private void activeGameReleaseEvent(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_W -> {
-                dirHandler.remove(Direction.NORTH);
+                player.releaseMove(Direction.NORTH);
             }
             case KeyEvent.VK_S -> {
-                dirHandler.remove(Direction.SOUTH);
+                player.releaseMove(Direction.SOUTH);
             }
             case KeyEvent.VK_A -> {
-                dirHandler.remove(Direction.WEST);
+                player.releaseMove(Direction.WEST);
             }
             case KeyEvent.VK_D -> {
-                dirHandler.remove(Direction.EAST);
+                player.releaseMove(Direction.EAST);
             }
         }
     }

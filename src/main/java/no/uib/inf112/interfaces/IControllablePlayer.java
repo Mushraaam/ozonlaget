@@ -28,6 +28,17 @@ public interface IControllablePlayer extends IPlayer{
      * Used by controller, increments animation.
      */
     public void incrementAnimationIndex();
+
+  
+    public void pressMove(Direction north);
+
+    public void releaseMove(Direction north);
+
+    public boolean isMoving();
+
+    public void aimAtWorldPosition(double worldX, double worldY);
+
+    public void updateMovement();
 }
 
 
