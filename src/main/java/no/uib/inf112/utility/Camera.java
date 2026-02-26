@@ -1,6 +1,7 @@
 package no.uib.inf112.utility;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class Camera {
@@ -31,6 +32,10 @@ public class Camera {
 
     public void apply(Graphics2D g) {
         g.translate(translateX, translateY);
+    }
+
+    public Point2D.Double screenToWorld(double screenX, double screenY) {
+        return new Point2D.Double(screenX - translateX, screenY - translateY);
     }
 
     public double getTranslateX() {
