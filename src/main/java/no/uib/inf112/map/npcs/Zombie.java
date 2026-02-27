@@ -20,7 +20,7 @@ import java.util.List;
 public class Zombie implements IEnemy {
     private static final double SPEED = 0.5 * (Config.getInt("playerMoveSpeed"));
     private static final double ROTATION_SPEED = 0.12;
-    private static final EnemySize SIZE = EnemySize.SMALL;
+    private static final EnemySize SIZE = EnemySize.MEDIUM;
     double goalOffsetX;
     double goalOffsetY;
     private Rectangle2D.Double pos;

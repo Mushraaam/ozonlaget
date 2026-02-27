@@ -1,4 +1,4 @@
-package no.uib.inf112.enums.walls;
+package no.uib.inf112.enums;
 
 public enum StaticObjectType {
 

@@ -4,7 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
 import no.uib.inf112.config.Config;
-import no.uib.inf112.enums.walls.StaticObjectType;
+import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.interfaces.IStaticDrawableObject;
 
 public class DarkWoodenTable implements IStaticDrawableObject{

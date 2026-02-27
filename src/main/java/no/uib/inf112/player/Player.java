@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.controller.DirectionHandler;
 import no.uib.inf112.enums.Direction;
+import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.IControllablePlayer;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IStaticObject;
@@ -23,6 +24,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private int animationIndex;
     private IMap map;
 
+    private GunType gun;
+
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IMap map) {
         this.hitbox = hitbox;
         this.bounds = bounds;
@@ -31,6 +34,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         this.map = map;
         this.aimAngle = 0;
         setDirection(Direction.WEST);
+
+        this.gun = GunType.DEAGLE;
     }
 
     public void pressMove(Direction dir) {
@@ -242,6 +247,16 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public void incrementAnimationIndex() {
         this.animationIndex = (this.animationIndex + 1) % ANIMATION_COUNT;
+    }
+
+    @Override
+    public GunType gun() {
+        return this.gun;
+    }
+
+    @Override
+    public void setGun(GunType gun) {
+        this.gun = gun;
     }
 
 }

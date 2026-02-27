@@ -29,21 +29,69 @@ public class ImageReader {
         }
     }
 
-        public static BufferedImage resizeExact(BufferedImage original, int width, int height) {
-            GraphicsConfiguration config = GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .getDefaultScreenDevice().getDefaultConfiguration();
-            BufferedImage resized = config.createCompatibleImage(width, height, original.getTransparency());
+    // public static BufferedImage resizeExact(BufferedImage original, int width,
+    // int height) {
+    // GraphicsConfiguration config =
+    // GraphicsEnvironment.getLocalGraphicsEnvironment()
+    // .getDefaultScreenDevice().getDefaultConfiguration();
+    // BufferedImage resized = config.createCompatibleImage(width, height,
+    // original.getTransparency());
 
-            Graphics2D g2d = resized.createGraphics();
+    // Graphics2D g2d = resized.createGraphics();
 
-            // This is gippity magic, improves image quality /////////
-            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    // // This is gippity magic, improves image quality /////////
+    // g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+    // RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+    // g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+    // RenderingHints.VALUE_RENDER_QUALITY);
+    // g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+    // RenderingHints.VALUE_ANTIALIAS_ON);
 
-            g2d.drawImage(original, 0, 0, width, height, null);
-            g2d.dispose();
+    // g2d.drawImage(original, 0, 0, width, height, null);
+    // g2d.dispose();
 
-            return resized;
+    // return resized;
+    // }
+
+    //Originally hand made, but improved with chatgpt
+    public static BufferedImage resizeExact(BufferedImage original, int width, int height) {
+        GraphicsConfiguration config = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getDefaultScreenDevice().getDefaultConfiguration();
+
+        int w = original.getWidth();
+        int h = original.getHeight();
+
+        BufferedImage img = original;
+
+        while (w / 2 >= width && h / 2 >= height) {
+            w /= 2;
+            h /= 2;
+
+            BufferedImage tmp = config.createCompatibleImage(w, h, original.getTransparency());
+            Graphics2D g = tmp.createGraphics();
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
+                    RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+            g.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+            g.drawImage(img, 0, 0, w, h, null);
+            g.dispose();
+
+            img = tmp;
         }
+
+        // Final precise resize to requested size (highest quality)
+        BufferedImage resized = config.createCompatibleImage(width, height, original.getTransparency());
+        Graphics2D g2d = resized.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        g2d.drawImage(img, 0, 0, width, height, null);
+        g2d.dispose();
+
+        return resized;
+    }
 }

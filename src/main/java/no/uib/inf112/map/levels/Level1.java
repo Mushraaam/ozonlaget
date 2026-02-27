@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import no.uib.inf112.config.Config;
-import no.uib.inf112.enums.walls.StaticObjectType;
+import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IFloor;
 import no.uib.inf112.interfaces.ILevel;

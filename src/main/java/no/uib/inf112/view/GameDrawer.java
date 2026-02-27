@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.IDrawer;
@@ -22,10 +23,12 @@ public class GameDrawer extends JPanel {
     private IDrawer mainMenu;
     private IDrawer debugScreen;
     private ImageHandler handler;
-
+    private BufferedImage uiBar;
     public GameDrawer(IMap map) {
         this.map = map;
         this.handler = new ImageHandler();
+        this.uiBar = handler.uiBar();
+
 
         // Screens
         this.gameScreen = new GameScreen(this.map, this.handler);

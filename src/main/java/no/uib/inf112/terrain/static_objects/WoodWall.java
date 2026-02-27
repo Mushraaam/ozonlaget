@@ -3,8 +3,8 @@ package no.uib.inf112.terrain.static_objects;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
-import no.uib.inf112.enums.walls.WallDirection;
-import no.uib.inf112.enums.walls.StaticObjectType;
+import no.uib.inf112.enums.StaticObjectType;
+import no.uib.inf112.enums.WallDirection;
 import no.uib.inf112.interfaces.IWall;
 
 public class WoodWall implements IWall{

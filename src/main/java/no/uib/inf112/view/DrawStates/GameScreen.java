@@ -24,7 +24,7 @@ public class GameScreen implements IDrawer {
     private ImageHandler handler;
     private Camera camera;
     private static final Rectangle2D.Double MAPDIMENSION = new Rectangle2D.Double(0, 0, Config.getInt("mapHeight"),Config.getInt("mapWidth"));
-     
+    private GameUI ui;
 
     // private BufferedImage playerSprite;
 
@@ -32,6 +32,7 @@ public class GameScreen implements IDrawer {
 
 
         this.map = map;
+        this.ui = new GameUI(this.map, handler);
         this.player = (IViewablePlayer) map.getPlayer();
         this.handler = handler;
         this.tiles = map.getTiles();
@@ -50,6 +51,8 @@ public class GameScreen implements IDrawer {
         drawStaticObjects(graphic);
         drawPlayer(graphic);
         drawEnemies(graphic);
+        
+        this.ui.draw(graphic);
     }
 
     private void drawStaticObjects(Graphics2D graphic) {

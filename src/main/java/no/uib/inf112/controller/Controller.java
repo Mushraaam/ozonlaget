@@ -12,7 +12,6 @@ import no.uib.inf112.utility.PerfTracker;
 import no.uib.inf112.utility.Camera;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
@@ -30,6 +29,9 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
     private Timer movementTimer;
     private Timer pathFindingTimer;
     private IGrid grid;
+
+    //test 60fps
+    private Timer repaintTimer;
 
     private ArrayList<Timer> timers;
 
@@ -59,7 +61,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             for (IEnemy enemy : map.getEnemies()) {
                 enemy.incrementAnimationIndex();
             }
-            this.view.repaint();
+            
         });
 
         this.pathFindingTimer = new Timer(600, (ActionEvent e) -> {
@@ -84,8 +86,13 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
                 enemy.move(grid);
             }
             PerfTracker.stop("Movement Logic");
+            
+        });
+
+        this.repaintTimer = new Timer(8, e -> {
             this.view.repaint();
         });
+        this.repaintTimer.start();
         
         this.timers = new ArrayList<>();
         this.timers.add(playerAnimationTimer);
@@ -133,7 +140,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             default -> {
             }
         }
-        this.view.repaint();
+        
     }
 
     // GAMESTATE BOUND KEY EVENTS FOR KEY PRESSED

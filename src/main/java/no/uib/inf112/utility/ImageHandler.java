@@ -8,8 +8,9 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.enums.FloorType;
-import no.uib.inf112.enums.walls.WallDirection;
-import no.uib.inf112.enums.walls.StaticObjectType;
+import no.uib.inf112.enums.GunType;
+import no.uib.inf112.enums.StaticObjectType;
+import no.uib.inf112.enums.WallDirection;
 
 public class ImageHandler {
 
@@ -33,6 +34,10 @@ public class ImageHandler {
 
     private HashMap<Integer, BufferedImage> levelBackground;
 
+    // UI
+    private HashMap<GunType, BufferedImage> gunUI;
+    private BufferedImage uiBar;
+
 
     public ImageHandler(){
         this.playerSprites = new HashMap<>();
@@ -52,8 +57,21 @@ public class ImageHandler {
 
         this.levelBackground = new HashMap<>();
         loadBackgrounds();
+
+        this.gunUI = new HashMap<>();
+        loadGunUI();
+        this.uiBar = ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/metallic-ui.png"), 1200, Config.getInt("uiSize"));
     }
 
+
+    private void loadGunUI() {
+        int size = Config.getInt("uiGunSize");
+        this.gunUI.put(GunType.DEAGLE, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/DEagle.png"), size, size));
+    }
+
+    public BufferedImage getGunImage(GunType type){
+        return this.gunUI.get(type);
+    }
 
 
     private void loadBackgrounds() {
@@ -192,6 +210,12 @@ public class ImageHandler {
 
     public BufferedImage getStaticObjectImage(StaticObjectType type) {
         return this.staticObjects.get(type);
+    }
+
+
+
+    public BufferedImage uiBar() {
+        return this.uiBar;
     }
 }
 
