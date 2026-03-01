@@ -138,5 +138,4 @@ public class Cell implements ICell {
     public void addEnemy(IEnemy enemy) {
         this.enemies.add(enemy);
     }
-    Ø
 }
