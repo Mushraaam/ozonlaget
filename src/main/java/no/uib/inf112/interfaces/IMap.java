@@ -96,6 +96,8 @@ public interface IMap {
     ArrayList<IEnemy> getEnemies();
 
 
+    boolean inOccupiedCells(ICell cell);
+
     /**
      * Refreshes occupied cells
      */
@@ -110,10 +112,6 @@ public interface IMap {
      * Adds a floor
      */
     public void addFloor(IFloor floor);
-
-    EnemySize debugLaneSize();
-
-    void setDebugLaneSize(EnemySize size);
 
     /**
      * @return number of the current level

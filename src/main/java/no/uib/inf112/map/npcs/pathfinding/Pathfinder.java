@@ -1,91 +1,146 @@
 package no.uib.inf112.map.npcs.pathfinding;
 
+import java.util.*;
+
 import no.uib.inf112.enums.EnemySize;
-import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IGrid;
+import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.map.NavigationLane;
-
-import java.util.*;
 
 public class Pathfinder {
     private final IMap map;
     private final IGrid grid;
+    private final int width;
+    private final int height;
 
-    private Map<NavigationLane, Double> gScore = new HashMap<>();
-    private Map<NavigationLane, NavigationLane> cameFrom = new HashMap<>();
+    // Permanent workspaces to avoid GC pressure
+    private final double[] gScore;
+    private final int[] cameFromIdx;
+    private final int[] lastVisitedId;
+    private int currentSearchId = 0;
 
-
-    private static final int OCCUPY_WEIGHT = 15;
+    private static final int OCCUPIED_WEIGHT = 10;
 
     public Pathfinder(IMap map) {
         this.map = map;
         this.grid = map.getGrid();
+        this.width = grid.getColCount();
+        this.height = grid.getRowCount();
+
+        int totalCells = width * height;
+        this.gScore = new double[totalCells];
+        this.cameFromIdx = new int[totalCells];
+        this.lastVisitedId = new int[totalCells];
     }
 
-    public List<NavigationLane> findPath(NavigationLane start, NavigationLane goal, EnemySize size) {
-        if (start == null || goal == null || !goal.isWalkable()) return List.of();
+    public List<ICell> findPath(ICell start, ICell goal, EnemySize size) {
+        if (start == null || goal == null || !canEnter(goal, size)) return List.of();
         if (start.equals(goal)) return List.of(start);
 
-        PriorityQueue<NavigationLane> open = new PriorityQueue<>(Comparator.comparingDouble(
-                lane -> gScore.getOrDefault(lane, Double.POSITIVE_INFINITY) + heuristic(lane, goal)));
+        currentSearchId++;
 
-        gScore.clear();
-        cameFrom.clear();
+        int startIdx = getIdx(start);
+        int goalIdx = getIdx(goal);
 
-        gScore.put(start, 0.0);
+        // Reset start point
+        gScore[startIdx] = 0.0;
+        lastVisitedId[startIdx] = currentSearchId;
+        cameFromIdx[startIdx] = -1;
+
+        PriorityQueue<ICell> open = new PriorityQueue<>(Comparator.comparingDouble(
+                c -> getGScore(c) + heuristic(c, goal)));
+
         open.add(start);
 
         while (!open.isEmpty()) {
-            NavigationLane current = open.poll();
+            ICell current = open.poll();
+            int currentIdx = getIdx(current);
 
-            if (current.equals(goal)) {
-                return reconstructPath(current);
+            if (currentIdx == goalIdx) {
+                return reconstructPath(current, startIdx);
             }
 
-            for (NavigationLane neighbor : current.getNeighbors()) {
-                double tentativeG = gScore.get(current) + stepCost(current, neighbor);
+            for (ICell neighbor : grid.getNeighbours(current)) {
+                if (neighbor == null || !canEnter(neighbor, size)) continue;
 
-                if (tentativeG < gScore.getOrDefault(neighbor, Double.POSITIVE_INFINITY)) {
-                    cameFrom.put(neighbor, current);
-                    gScore.put(neighbor, tentativeG);
-                    if (!open.contains(neighbor)) open.add(neighbor);
+                int nIdx = getIdx(neighbor);
+                double tentativeG = gScore[currentIdx] + stepCost(current, neighbor);
+
+                // If neighbor hasn't been seen this search, or we found a better way
+                if (lastVisitedId[nIdx] != currentSearchId || tentativeG < gScore[nIdx]) {
+                    lastVisitedId[nIdx] = currentSearchId;
+                    gScore[nIdx] = tentativeG;
+                    cameFromIdx[nIdx] = currentIdx;
+                    open.add(neighbor);
                 }
             }
         }
         return List.of();
     }
 
-    private double stepCost(NavigationLane from, NavigationLane neighbor) {
-        double dist = Math.hypot(from.getCenterX() - neighbor.getCenterX(),
-                from.getCenterY() - neighbor.getCenterY());
-
-        return dist + (neighbor.getOccupyCount() * OCCUPY_WEIGHT);
+    private int getIdx(ICell cell) {
+        return cell.row() * width + cell.col();
     }
 
-    private double heuristic(NavigationLane a, NavigationLane b) {
-        return Math.hypot(a.getCenterX() - b.getCenterX(), a.getCenterY() - b.getCenterY());
+    private double getGScore(ICell cell) {
+        int idx = getIdx(cell);
+        return (lastVisitedId[idx] == currentSearchId) ? gScore[idx] : Double.POSITIVE_INFINITY;
     }
 
-    private List<NavigationLane> reconstructPath(NavigationLane goal) {
-        LinkedList<NavigationLane> path = new LinkedList<>();
-        NavigationLane curr = goal;
-        while (curr != null) {
-            path.addFirst(curr);
-            curr = cameFrom.get(curr);
+    private List<ICell> reconstructPath(ICell goalCell, int startIdx) {
+        LinkedList<ICell> path = new LinkedList<>();
+        int curr = getIdx(goalCell);
+        while (curr != -1) {
+            path.addFirst(grid.getCell(curr / width, curr % width));
+            if (curr == startIdx) break;
+            curr = cameFromIdx[curr];
         }
         return path;
     }
 
+    /**
+     * Calculates the estimated cost from cell a to cell b.
+     */
+    private double heuristic(ICell a, ICell b) {
+        return grid.distance(a, b);
+    }
+
+    /**
+     * Calculates the movement cost between two adjacent cells.
+     * Account for diagonal movement (sqrt(2)) vs orthogonal movement (1.0).
+     */
+    private double stepCost(ICell from, ICell to) {
+        int baseCost = (map.inOccupiedCells(to)) ? OCCUPIED_WEIGHT : 1;
+        int dx = Math.abs(from.col() - to.col());
+        int dy = Math.abs(from.row() - to.row());
+        double move = (dx == 1 && dy == 1) ? Math.sqrt(2) : 1.0;
+        return move+baseCost;// forsøk på diagonal
+    }
+
+    /**
+     * Checks if a specific enemy size is allowed to enter a cell based on its PathType.
+     */
     public boolean canEnter(ICell cell, EnemySize size) {
-        if (cell == null) return false;
 
         PathType type = cell.pathType();
-        return switch (size) {
-            case SMALL -> type != PathType.BLOCKED;
-            case MEDIUM -> type != PathType.BLOCKED && type != PathType.BLOCKED_FOR_MEDIUM;
-            case LARGE -> type == PathType.UNBLOCKED;
-        };
+        switch (size) {
+            case SMALL -> {
+                return type != PathType.BLOCKED;
+            }
+            case MEDIUM -> {
+                return type != PathType.BLOCKED && type != PathType.BLOCKED_FOR_MEDIUM;
+            }
+            case LARGE -> {
+                return type == PathType.UNBLOCKED;
+            }
+            default -> throw new IllegalStateException("No known case for size");
+        }
     }
+
+
+
+
+
+
 }

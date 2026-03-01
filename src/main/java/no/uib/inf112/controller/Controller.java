@@ -163,9 +163,6 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             case KeyEvent.VK_P -> {
                 flipDebug();
             }
-            case KeyEvent.VK_L -> {
-                viewLaneSize();
-            }
             case KeyEvent.VK_O -> {
                 map.getSpawner().spawnThug();
             }
@@ -218,15 +215,6 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             map.debugOff();
         } else {
             map.debugOn();
-        }
-    }
-    private void viewLaneSize() {
-        switch(map.debugLaneSize()){
-            case EnemySize.SMALL -> map.setDebugLaneSize(EnemySize.MEDIUM);
-            case EnemySize.MEDIUM -> map.setDebugLaneSize(EnemySize.LARGE);
-            case EnemySize.LARGE -> map.setDebugLaneSize(EnemySize.SMALL);
-            default -> throw new NullPointerException();
-
         }
     }
 

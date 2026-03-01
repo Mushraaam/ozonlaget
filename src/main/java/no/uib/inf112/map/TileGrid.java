@@ -73,10 +73,7 @@ public class TileGrid implements IGrid {
         return this.colCount;
     }
 
-    @Override
-    public void buildNavigationLayers() {
 
-    }
 
     @Override
     public ICell getCellFromPos(Rectangle2D.Double pos) {

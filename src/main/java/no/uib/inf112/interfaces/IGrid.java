@@ -94,5 +94,4 @@ public interface IGrid extends Iterable<ICell> {
      */
     public int getColCount();
 
-    void buildNavigationLayers();
 }

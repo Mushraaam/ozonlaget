@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import no.uib.inf112.config.Config;
-import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.IGrid;
@@ -19,7 +18,7 @@ import no.uib.inf112.interfaces.IStaticObject;
 public class Grid implements IGrid {
 
     private ArrayList<ArrayList<ICell>> cellGrid;
-    private final HashMap<EnemySize, NavigationLane[][]> navigationLayers = new HashMap<>();
+
     private Rectangle2D.Double bounds;
     private IMap map;
 
@@ -55,6 +54,7 @@ public class Grid implements IGrid {
                 ((Cell)cell).setNeighbours(n);
             }
         }
+
     }
 
     /**
@@ -191,27 +191,6 @@ public class Grid implements IGrid {
         return getCell(row, col);
     }
 
-    @Override
-    public int getCellWidth() {
-        return CELLWIDTH;
-    }
-
-    @Override
-    public int getCellHeight() {
-        return CELLHEIGHT;
-    }
-
-    @Override
-    public int getRowCount() {
-        return this.rowCount;
-    }
-
-    @Override
-    public int getColCount() {
-        return this.colCount;
-    }
-
-
     public ArrayList<ICell> getCellsInView(Graphics2D graphics) {
         // double x1 = Math.min(this.bounds.getWidth(), Math.max(0,
         // graphics.getClipBounds().getMinX()));
@@ -252,95 +231,24 @@ public class Grid implements IGrid {
         return inView;
     }
 
-    ////////////////////////////////////NAV LANE (grouped cells)//////////////////////////////////////////////
-
-    public void buildNavigationLayers() {
-        for (EnemySize size : EnemySize.values()) {
-            int step = size.footprint();
-            int laneRows = this.rowCount / step;
-            int laneCols = this.colCount / step;
-
-            NavigationLane[][] layer = new NavigationLane[laneRows][laneCols];
-
-            for (int r = 0; r < laneRows; r++) {
-                for (int c = 0; c < laneCols; c++) {
-                    List<ICell> laneCells = gatherCellsForChunk(r, c, step);
-
-                    int worldX = (c * step * CELLWIDTH) + (step * CELLWIDTH / 2);
-                    int worldY = (r * step * CELLHEIGHT) + (step * CELLHEIGHT / 2);
-
-                    NavigationLane lane = new NavigationLane(worldX, worldY, laneCells);
-
-                    lane.setWalkable(checkBlockSafety(r, c, step, size));
-                    layer[r][c] = lane;
-
-                    for (ICell cell : laneCells) {
-                        ((Cell)cell).setNavigationLane(size, lane);
-                    }
-                }
-            }
-            linkLaneNeighbors(layer, laneRows, laneCols);
-            navigationLayers.put(size, layer);
-        }
+    @Override
+    public int getCellWidth() {
+        return CELLWIDTH;
     }
 
-    private List<ICell> gatherCellsForChunk(int laneRow, int laneCol, int step) {
-        List<ICell> cells = new ArrayList<>();
-        int startRow = laneRow * step;
-        int startCol = laneCol * step;
-
-        for (int r = startRow; r < startRow + step; r++) {
-            for (int c = startCol; c < startCol + step; c++) {
-                if (r < rowCount && c < colCount) {
-                    cells.add(getCell(r, c));
-                }
-            }
-        }
-        return cells;
+    @Override
+    public int getCellHeight() {
+        return CELLHEIGHT;
     }
 
-    private void linkLaneNeighbors(NavigationLane[][] layer, int rows, int cols) {
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                NavigationLane current = layer[r][c];
-                if (!current.isWalkable()) continue;
-
-                for (int dr = -1; dr <= 1; dr++) {
-                    for (int dc = -1; dc <= 1; dc++) {
-                        if (dr == 0 && dc == 0) continue;
-
-                        int nr = r + dr;
-                        int nc = c + dc;
-
-                        if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
-                            NavigationLane neighbor = layer[nr][nc];
-                            if (neighbor.isWalkable()) {
-                                current.addNeighbor(neighbor);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    @Override
+    public int getRowCount() {
+        return this.rowCount;
     }
 
-
-    private boolean checkBlockSafety(int laneR, int laneC, int step, EnemySize size) {
-        int blockedCount = 0;
-        int totalCells = step * step;
-
-        for (int r = laneR * step; r < (laneR + 1) * step; r++) {
-            for (int c = laneC * step; c < (laneC + 1) * step; c++) {
-                if (r >= rowCount || c >= colCount) return false;
-                if (!map.getPathfinder().canEnter(getCell(r, c), size)) {
-                    blockedCount++;
-                }
-            }
-        }
-
-        double blockedRatio = (double) blockedCount / totalCells;
-        return blockedRatio < 0.10; //prolly gonna be a problem, temp for sanity.
+    @Override
+    public int getColCount() {
+        return this.colCount;
     }
+
 }
-
-
