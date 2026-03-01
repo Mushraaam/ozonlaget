@@ -1,6 +1,7 @@
 package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import no.uib.inf112.enums.EnemySize;
@@ -10,8 +11,6 @@ import no.uib.inf112.map.NavigationLane;
 
 public interface ICell {
 
-
-    NavigationLane getNavigationLane(EnemySize size);
 
     List<ICell> getNeighbours();
 
@@ -31,10 +30,6 @@ public interface ICell {
 
     public void setFloorType(FloorType type);
 
-    IEnemy getFirstEnemy();
-
-    void setFirstEnemy(IEnemy enemy);
-
     public PathType pathType();
 
     public void setPathType(PathType type);
@@ -42,4 +37,10 @@ public interface ICell {
     void setOccupied(boolean b);
 
     boolean isOccupied();
+
+    LinkedHashSet<IEnemy> getEnemies();
+
+    void removeEnemy(IEnemy enemy);
+
+    void addEnemy(IEnemy enemy);
 }

@@ -35,14 +35,11 @@ public class Spawner {
             if (spawnCell == null || spawnCell.isBlocked()) return false;
             if (!map.getBounds().contains(hitbox)) return false;
 
-            for(ICell cell : spawnCell.getNeighbours()){
-                IEnemy neighborEnemy = cell.getFirstEnemy();
-                while(neighborEnemy != null){
-                    if (hitbox.intersects(neighborEnemy.getHitbox())) {
-                        return false;
-                    }
-                    neighborEnemy = neighborEnemy.getNextInCell();
-            }}
+        for(ICell cell : spawnCell.getNeighbours()){
+            for(IEnemy neighbor : cell.getEnemies()){
+                if (hitbox.intersects(neighbor.getHitbox())) return false;
+            }
+        }
 
             map.addEnemy(new Zombie(hitbox, this.map));
             return true;

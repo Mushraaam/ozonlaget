@@ -76,8 +76,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
         this.movementTimer = new Timer(16, e -> {
             PerfTracker.tick(false);
             PerfTracker.start("Movement Logic");
-            map.updateEnemyLocations(map.getEnemies());
-            
+
             this.player.updateMovement();
 
 
@@ -85,6 +84,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             for (IEnemy enemy : enemies) {
                 enemy.move(grid);
             }
+            map.updateEnemyLocations(map.getEnemies());
             PerfTracker.stop("Movement Logic");
             
         });
@@ -237,7 +237,6 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
 
         player.aimAtWorldPosition(worldMouse.x, worldMouse.y);
 
-        view.repaint();
 
 
     }

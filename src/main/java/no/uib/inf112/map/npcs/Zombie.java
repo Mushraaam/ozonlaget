@@ -31,6 +31,7 @@ public class Zombie implements IEnemy {
     ICell lastStart;
     ICell lastGoal;
     private IEnemy nextInCell = null;
+    ICell from;
 
 
     // test
@@ -98,8 +99,13 @@ public class Zombie implements IEnemy {
     }
 
     @Override
+    public ICell getOldCell(){
+        return this.from;
+    }
+
+    @Override
     public void move(IGrid grid) {
-        ICell from = getStandingCell();
+        this.from = getStandingCell();
         if (currentPath == null || pathIndex >= currentPath.size())
             return;
         int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
@@ -139,11 +145,9 @@ public class Zombie implements IEnemy {
     }
 
     private void checkCellAndPush(ICell cell, boolean moveX, boolean moveY) {
-        IEnemy other = (cell).getFirstEnemy();
 
-        while (other != null) {
+        for(IEnemy other : cell.getEnemies()){
             if (other == this) {
-                other = other.getNextInCell();
                 continue;
             }
 
@@ -172,7 +176,6 @@ public class Zombie implements IEnemy {
                     return;
                 }
             }
-            other = other.getNextInCell();
         }
     }
 
@@ -290,9 +293,7 @@ public class Zombie implements IEnemy {
     }
 
     private boolean checkCell(ICell cell, Rectangle2D.Double movementHitbox){
-        IEnemy enemy = cell.getFirstEnemy();
-
-        while(enemy != null) {
+        for(IEnemy enemy : cell.getEnemies()){
             if (enemy != this) {
                 Rectangle2D enemyHitbox = enemy.getHitbox();
                 double shrinkFactor = 0.6; // Only 60% of the center is "solid" to other NPCs
@@ -306,7 +307,6 @@ public class Zombie implements IEnemy {
                     return false;
                 }
             }
-            enemy = enemy.getNextInCell();
         }
         return true;
     }

@@ -1,10 +1,10 @@
 package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 
-import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.ICell;
@@ -21,7 +21,9 @@ public class Cell implements ICell {
     private List<ICell> neighbours;
     private IEnemy firstEnemy = null;
     private boolean occupied = false;
-    private final HashMap<EnemySize, NavigationLane> navigationLanes = new HashMap<>();
+    private LinkedHashSet<IEnemy> enemies = new LinkedHashSet<>();
+
+
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
         this.bounds = bounds;
         this.blocked = false;
@@ -30,23 +32,6 @@ public class Cell implements ICell {
         this.floorType = floorType;
         this.pathType = type;
     }
-
-    /**
-     * Links this tiny base cell to a larger navigation lane.
-     */
-    public void setNavigationLane(EnemySize size, NavigationLane lane) {
-        navigationLanes.put(size, lane);
-    }
-
-    /**
-     * Used by NPCs to find their current "A* Node" based on their size.
-     */
-    @Override
-    public NavigationLane getNavigationLane(EnemySize size) {
-        return navigationLanes.get(size);
-    }
-
-
 
 
     public void setNeighbours(List<ICell> neighbours) {
@@ -124,12 +109,6 @@ public class Cell implements ICell {
     }
 
     @Override
-    public IEnemy getFirstEnemy() { return firstEnemy; }
-
-    @Override
-    public void setFirstEnemy(IEnemy enemy) { this.firstEnemy = enemy; }
-
-    @Override
     public PathType pathType() {
         return this.pathType;
     }
@@ -144,4 +123,20 @@ public class Cell implements ICell {
 
     @Override
     public boolean isOccupied() { return this.occupied; }
+
+    @Override
+    public LinkedHashSet<IEnemy> getEnemies() {
+        return this.enemies ;
+    }
+
+    @Override
+    public void removeEnemy(IEnemy enemy) {
+        this.enemies.remove(enemy);
+    }
+
+    @Override
+    public void addEnemy(IEnemy enemy) {
+        this.enemies.add(enemy);
+    }
+    Ø
 }

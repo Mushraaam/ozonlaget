@@ -82,7 +82,7 @@ public class Map implements IMap {
 
     @Override
     public boolean inOccupiedCells(ICell cell) {
-        return (cell).getFirstEnemy() != null; //null is empty, anything else is occupied
+        return false; //null is empty, anything else is occupied
     }
 
     @Override
@@ -121,25 +121,21 @@ public class Map implements IMap {
 
     @Override
     public void updateEnemyLocations(List<IEnemy> allEnemies) {
-
-        for (ICell cell : this.grid) {//clear any flags and such
-            cell.setFirstEnemy(null);
-            cell.setOccupied(false);
-
-        }
-
         for (IEnemy enemy : allEnemies) {
-            ICell currentCell = enemy.getStandingCell();
-            if (currentCell != null) {
-                currentCell.setOccupied(true);
-                Cell cell = (Cell) currentCell;
+            ICell oldCell = enemy.getOldCell();
+            ICell newCell = enemy.getStandingCell();
 
-                enemy.setNextInCell(cell.getFirstEnemy());
-                cell.setFirstEnemy(enemy);
+            if (oldCell != newCell) {
+                if (oldCell != null) {
+                    oldCell.removeEnemy(enemy);
+                }
+
+                if (newCell != null) {
+                    newCell.addEnemy(enemy);
+                }
             }
         }
     }
-
 
 
 
