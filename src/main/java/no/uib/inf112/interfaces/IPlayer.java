@@ -8,8 +8,20 @@ public interface IPlayer {
 
     public Rectangle2D.Double getHitbox();
 
-    public GunType gun();
+    public GunType gunType();
 
-    public void setGun(GunType gun);
+    /**
+     * @param gun type of currently equipped gun
+     */
+    public void setGunType(GunType gun);
 
+    /**
+     * @return current ammunition of equipped weapon
+     */
+    public int currentAmmunition();
+
+    /**
+     * @return max ammunition of equipped weapon
+     */
+    public int maxAmmunition();
 }

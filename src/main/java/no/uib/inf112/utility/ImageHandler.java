@@ -60,7 +60,7 @@ public class ImageHandler {
 
         this.gunUI = new HashMap<>();
         loadGunUI();
-        this.uiBar = ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/metallic-ui.png"), 1200, Config.getInt("uiSize"));
+        this.uiBar = ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/ui-bar.png"), 1200, Config.getInt("uiSize"));
     }
 
 

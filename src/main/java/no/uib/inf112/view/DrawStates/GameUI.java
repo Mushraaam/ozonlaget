@@ -1,6 +1,7 @@
 package no.uib.inf112.view.DrawStates;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -20,9 +21,13 @@ public class GameUI implements IDrawer {
     private IPlayer player;
     private ImageHandler handler;
     private BufferedImage uiBar;
+    
 
     private static final double UI_HEIGHT = Config.getInt("uiSize");
     private static final int GUN_SIZE = Config.getInt("uiGunSize");
+
+    private static final Font AMMO_FONT = new Font("Arial", Font.BOLD, 46);
+    private static final Color AMMO_COLOR = new Color(57, 255, 20);  //neon green
     
     public GameUI(IMap map, ImageHandler handler){
         this.map = map;
@@ -45,8 +50,15 @@ public class GameUI implements IDrawer {
         drawImage(graphic, uiBar, new Rectangle2D.Double(x1, y1, width, UI_HEIGHT));
 
         //Gun
-        drawImage(graphic, this.handler.getGunImage(this.player.gun()), new Rectangle2D.Double(x1 + 300, y1 + 10, GUN_SIZE, UI_HEIGHT - 30));
+        drawImage(graphic, this.handler.getGunImage(this.player.gunType()), new Rectangle2D.Double(x1 + 330, y1 + 20, GUN_SIZE, UI_HEIGHT - 30));
 
+        //Ammunition
+        graphic.setColor(AMMO_COLOR);
+        int currentAmmo = this.player.currentAmmunition();
+        int maxAmmo = this.player.maxAmmunition();
+
+        graphic.setFont(AMMO_FONT);
+        graphic.drawString(String.format("%s/%s", currentAmmo, maxAmmo), (int)x1 + 100, (int)y1 + 98);
     }
     
 }
