@@ -24,4 +24,14 @@ public interface IPlayer {
      * @return max ammunition of equipped weapon
      */
     public int maxAmmunition();
+
+    /**
+     * @return player max HP
+     */
+    public int getMaxHP();
+
+    /**
+     * @return player current HP
+     */
+    public int getCurrentHP();
 }

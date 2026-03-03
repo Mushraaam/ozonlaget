@@ -15,8 +15,10 @@ import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.player.guns.DEagle;
 
 public class Player implements IControllablePlayer, IViewablePlayer {
-    public static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
-    public static final int ANIMATION_COUNT = 8;
+    private static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
+    private static final int ANIMATION_COUNT = 8;
+    private static final int MAX_HP = 100;
+    private int currentHP;
 
     private final DirectionHandler dirHandler;
 
@@ -42,6 +44,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         this.currentGun = new DEagle();
         this.guns = new HashMap<>();
         this.guns.put(this.currentGun.type(), this.currentGun);
+
+        this.currentHP = MAX_HP;
     }
 
     public void pressMove(Direction dir) {
@@ -273,6 +277,16 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public int maxAmmunition() {
         return this.currentGun.maxAmmunition();
+    }
+
+    @Override
+    public int getMaxHP() {
+        return MAX_HP;
+    }
+
+    @Override
+    public int getCurrentHP() {
+        return this.currentHP;
     }
 
 }
