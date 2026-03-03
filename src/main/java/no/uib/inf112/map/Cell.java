@@ -1,9 +1,7 @@
 package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.*;
 
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
@@ -19,9 +17,9 @@ public class Cell implements ICell {
     private FloorType floorType;
     private PathType pathType;
     private List<ICell> neighbours;
-    private IEnemy firstEnemy = null;
     private boolean occupied = false;
     private LinkedHashSet<IEnemy> enemies = new LinkedHashSet<>();
+
 
 
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
@@ -34,9 +32,6 @@ public class Cell implements ICell {
     }
 
 
-    public void setNeighbours(List<ICell> neighbours) {
-        this.neighbours = List.copyOf(neighbours);
-    }
 
     @Override
     public List<ICell> getNeighbours() {

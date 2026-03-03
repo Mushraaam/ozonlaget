@@ -2,10 +2,7 @@ package no.uib.inf112.map;
 
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.FloorType;
@@ -29,6 +26,8 @@ public class Grid implements IGrid {
     private int colCount;
     private int rowCount;
 
+    private final HashMap<ICell, HashMap<Integer, List<ICell>>> neighbourMap = new HashMap<>();
+
     public Grid(IMap map) {
         this.map = map;
         this.bounds =this.map.getBounds();
@@ -47,14 +46,49 @@ public class Grid implements IGrid {
         this.cellGrid = makeGrid(this.rowCount, this.colCount, CELLWIDTH, CELLHEIGHT, FloorType.NONE);
         fillGrid(this.cellGrid, map.getStaticObjects());
 
+        int[] levelsToCompute = {1, 2, 3, 4, 5, 6};
         for (int r = 0; r < rowCount; r++) {
             for (int c = 0; c < colCount; c++) {
                 ICell cell = getCell(r, c);
-                ArrayList<ICell> n = getNeighbours(cell);
-                ((Cell)cell).setNeighbours(n);
+                HashMap<Integer, List<ICell>> levels = new HashMap<>();
+                for (int level : levelsToCompute) {
+                    levels.put(level, neighbourLevelBFS(cell, level));
+                }
+                neighbourMap.put(cell, levels);
             }
         }
 
+    }
+
+    @Override
+    public List<ICell> getNeighboursAtDepth(ICell cell, int depth) {
+        if (cell == null || !neighbourMap.containsKey(cell)) {
+            return Collections.emptyList();
+        }
+        return neighbourMap.get(cell).getOrDefault(depth, Collections.emptyList());
+    }
+
+    private List<ICell> neighbourLevelBFS(ICell start, int maxDepth) {
+        List<ICell> result = new ArrayList<>();
+        HashSet<ICell> visited = new HashSet<>();
+        List<ICell> currentLevel = new ArrayList<>();
+
+        currentLevel.add(start);
+        visited.add(start);
+
+        for (int i = 0; i < maxDepth; i++) {
+            List<ICell> nextLevel = new ArrayList<>();
+            for (ICell cell : currentLevel) {
+                for (ICell n : getNeighbours(cell)) {
+                    if (visited.add(n)) {
+                        nextLevel.add(n);
+                        result.add(n);
+                    }
+                }
+            }
+            currentLevel = nextLevel;
+        }
+        return result;
     }
 
     /**
@@ -104,7 +138,10 @@ public class Grid implements IGrid {
     }
 
     public ICell getCell(int row, int col) {
-        return this.cellGrid.get(row).get(col);
+        if (row < 0 || row >= rowCount || col < 0 || col >= colCount) {
+            return null;
+        }
+        return cellGrid.get(row).get(col);
     }
 
     public ArrayList<ICell> getNeighbours(ICell cell) {

@@ -49,6 +49,11 @@ public class TileGrid implements IGrid {
     }
 
     @Override
+    public List<ICell> getNeighboursAtDepth(ICell cell, int depth) {
+        return List.of();
+    }
+
+    @Override
     public ICell getCell(int row, int col) {
         return this.tiles.get(row).get(col);
     }

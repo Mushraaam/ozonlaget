@@ -14,13 +14,12 @@ public class Pathfinder {
     private final int width;
     private final int height;
 
-    // Permanent workspaces to avoid GC pressure
     private final double[] gScore;
     private final int[] cameFromIdx;
     private final int[] lastVisitedId;
     private int currentSearchId = 0;
 
-    private static final int OCCUPIED_WEIGHT = 10;
+    private static final int OCCUPIED_WEIGHT = 5;
 
     public Pathfinder(IMap map) {
         this.map = map;
@@ -111,11 +110,14 @@ public class Pathfinder {
      * Account for diagonal movement (sqrt(2)) vs orthogonal movement (1.0).
      */
     private double stepCost(ICell from, ICell to) {
-        int baseCost = (map.inOccupiedCells(to)) ? OCCUPIED_WEIGHT : 1;
-        int dx = Math.abs(from.col() - to.col());
-        int dy = Math.abs(from.row() - to.row());
-        double move = (dx == 1 && dy == 1) ? Math.sqrt(2) : 1.0;
-        return move+baseCost;// forsøk på diagonal
+        int dx = from.col() - to.col();
+        int dy = from.row() - to.row();
+        double cost = (dx != 0 && dy != 0) ? 1.4142 : 1.0;
+        int enemyCount = to.getEnemies().size();
+
+        double trafficPenalty = enemyCount * OCCUPIED_WEIGHT;
+
+        return cost + trafficPenalty;
     }
 
     /**
@@ -123,10 +125,10 @@ public class Pathfinder {
      */
     public boolean canEnter(ICell cell, EnemySize size) {
 
-        PathType type = cell.pathType();
+        PathType type = cell.pathType(); //Need to do somthing about this one, Probably only 2 layers, or bigger layers?
         switch (size) {
             case SMALL -> {
-                return type != PathType.BLOCKED;
+                return type != PathType.BLOCKED && type != PathType.BLOCKED_FOR_MEDIUM;
             }
             case MEDIUM -> {
                 return type != PathType.BLOCKED && type != PathType.BLOCKED_FOR_MEDIUM;

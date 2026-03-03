@@ -13,6 +13,8 @@ import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
 public class Map implements IMap {
 
+    private static final int TILE_HEIGHT = Config.getInt("cellHeight");
+    private static final int TILE_WIDTH = Config.getInt("cellWidth");
     private ILevel level;
     private int levelNumber;
     private IPlayer player;
@@ -118,21 +120,33 @@ public class Map implements IMap {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
     }
-
     @Override
     public void updateEnemyLocations(List<IEnemy> allEnemies) {
+        int maxR = grid.getRowCount() - 1;
+        int maxC = grid.getColCount() - 1;
+
         for (IEnemy enemy : allEnemies) {
-            ICell oldCell = enemy.getOldCell();
-            ICell newCell = enemy.getStandingCell();
+            Rectangle2D.Double hb = enemy.getHitbox();
+            int minR = Math.max(0, Math.min((int) (hb.getMinY() / TILE_HEIGHT), maxR));
+            int maxR_bound = Math.max(0, Math.min((int) (hb.getMaxY() / TILE_HEIGHT), maxR));
+            int minC = Math.max(0, Math.min((int) (hb.getMinX() / TILE_WIDTH), maxC));
+            int maxC_bound = Math.max(0, Math.min((int) (hb.getMaxX() / TILE_WIDTH), maxC));
 
-            if (oldCell != newCell) {
-                if (oldCell != null) {
-                    oldCell.removeEnemy(enemy);
+            if (enemy.boundsChanged(minR, maxR_bound, minC, maxC_bound)) {
+                if (enemy.getLastMinR() != -1) {
+                    for (int r = enemy.getLastMinR(); r <= enemy.getLastMaxR(); r++) {
+                        for (int c = enemy.getLastMinC(); c <= enemy.getLastMaxC(); c++) {
+                            grid.getCell(r, c).removeEnemy(enemy);
+                        }
+                    }
+                }
+                for (int r = minR; r <= maxR_bound; r++) {
+                    for (int c = minC; c <= maxC_bound; c++) {
+                        grid.getCell(r, c).addEnemy(enemy);
+                    }
                 }
 
-                if (newCell != null) {
-                    newCell.addEnemy(enemy);
-                }
+                enemy.updateBounds(minR, maxR_bound, minC, maxC_bound);
             }
         }
     }

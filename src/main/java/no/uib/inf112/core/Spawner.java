@@ -35,7 +35,7 @@ public class Spawner {
             if (spawnCell == null || spawnCell.isBlocked()) return false;
             if (!map.getBounds().contains(hitbox)) return false;
 
-        for(ICell cell : spawnCell.getNeighbours()){
+        for(ICell cell : map.getGrid().getNeighboursAtDepth(spawnCell, 2)){
             for(IEnemy neighbor : cell.getEnemies()){
                 if (hitbox.intersects(neighbor.getHitbox())) return false;
             }

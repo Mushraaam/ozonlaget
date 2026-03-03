@@ -135,6 +135,11 @@ public class TestMap implements IMap {
     }
 
     @Override
+    public boolean inOccupiedCells(ICell cell) {
+        return false;
+    }
+
+    @Override
     public IGrid getTiles() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTiles'");
@@ -163,16 +168,6 @@ public class TestMap implements IMap {
     public void addFloor(IFloor floor) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'addFloor'");
-    }
-
-    @Override
-    public EnemySize debugLaneSize() {
-        return null;
-    }
-
-    @Override
-    public void setDebugLaneSize(EnemySize size) {
-
     }
 
     @Override

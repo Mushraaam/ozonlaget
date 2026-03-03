@@ -32,6 +32,12 @@ public class Zombie implements IEnemy {
     ICell lastGoal;
     private IEnemy nextInCell = null;
     ICell from;
+    private int lastMinR = -1;
+
+
+    private int lastMaxR = -1;
+    private int lastMinC = -1;
+    private int lastMaxC = -1;
 
 
     // test
@@ -132,14 +138,14 @@ public class Zombie implements IEnemy {
 
         }
         if(from == lastStart){
-        unStuck(true,true);}
+            unStuck(true,true);}
     }
 
     private void unStuck(boolean moveX, boolean moveY) {
         ICell myCell = this.getStandingCell();
 
         checkCellAndPush(myCell, moveX, moveY);
-        for (ICell neighbor : myCell.getNeighbours()) {
+        for (ICell neighbor : map.getGrid().getNeighboursAtDepth(myCell, 2)) {
             checkCellAndPush(neighbor, moveX, moveY);
         }
     }
@@ -284,7 +290,7 @@ public class Zombie implements IEnemy {
             return false;
         }
 
-        for (ICell cell : getStandingCell().getNeighbours()) {
+        for (ICell cell : map.getGrid().getNeighboursAtDepth(getStandingCell(), 2)) {
             if(!checkCell(cell, movementHitbox))
                 {return false;}
         }
@@ -296,7 +302,7 @@ public class Zombie implements IEnemy {
         for(IEnemy enemy : cell.getEnemies()){
             if (enemy != this) {
                 Rectangle2D enemyHitbox = enemy.getHitbox();
-                double shrinkFactor = 0.6; // Only 60% of the center is "solid" to other NPCs
+                double shrinkFactor = 0.8; // Only 80% of the center is "solid" to other NPCs
 
                 double coreW = enemyHitbox.getWidth() * shrinkFactor;
                 double coreH = enemyHitbox.getHeight() * shrinkFactor;
@@ -312,12 +318,39 @@ public class Zombie implements IEnemy {
     }
 
 
+    @Override
+    public boolean boundsChanged(int minR, int maxR, int minC, int maxC) {
+        return minR != lastMinR || maxR != lastMaxR || minC != lastMinC || maxC != lastMaxC;
+    }
+
+    @Override
+    public void updateBounds(int minR, int maxR, int minC, int maxC) {
+        this.lastMinR = minR; this.lastMaxR = maxR;
+        this.lastMinC = minC; this.lastMaxC = maxC;
+    }
+
 
 
 
     /// //////////////////GETTERS////////////////////////
 
+    @Override
+    public int getLastMinR() { return lastMinR; }
 
+    @Override
+    public int getLastMaxR() {
+        return lastMaxR;
+    }
+
+    @Override
+    public int getLastMinC() {
+        return lastMinC;
+    }
+
+    @Override
+    public int getLastMaxC() {
+        return lastMaxC;
+    }
     @Override
     public IEnemy getNextInCell() { return nextInCell; }
 

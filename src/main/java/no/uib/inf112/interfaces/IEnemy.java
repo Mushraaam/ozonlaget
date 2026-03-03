@@ -65,6 +65,18 @@ public interface IEnemy extends IMovingDrawableObject {
 
     ICell getOldCell();
 
+    boolean boundsChanged(int minR, int maxR, int minC, int maxC);
+
+    void updateBounds(int minR, int maxR, int minC, int maxC);
+
+    int getLastMinR();
+
+    int getLastMaxR();
+
+    int getLastMinC();
+
+    int getLastMaxC();
+
     IEnemy getNextInCell();
 
     void setNextInCell(IEnemy next);
