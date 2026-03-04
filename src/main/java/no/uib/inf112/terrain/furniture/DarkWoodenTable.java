@@ -32,5 +32,11 @@ public class DarkWoodenTable implements IStaticDrawableObject{
     public StaticObjectType getType() {
         return StaticObjectType.DARK_TABLE_ROUNDED;
     }
+
+
+    @Override
+    public boolean isWall() {
+        return false; //not a wall
+    }
     
 }

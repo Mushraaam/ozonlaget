@@ -32,9 +32,8 @@ public class Zombie implements IEnemy {
     ICell lastGoal;
     private IEnemy nextInCell = null;
     ICell from;
+    
     private int lastMinR = -1;
-
-
     private int lastMaxR = -1;
     private int lastMinC = -1;
     private int lastMaxC = -1;

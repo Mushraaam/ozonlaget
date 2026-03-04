@@ -32,5 +32,10 @@ public class WoodWall implements IWall{
         return this.type;
     }
 
+    @Override
+    public boolean isWall() {
+        return true;
+    }
+
     
 }

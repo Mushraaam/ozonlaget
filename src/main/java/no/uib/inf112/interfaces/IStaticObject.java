@@ -15,13 +15,14 @@ public interface IStaticObject {
     public Rectangle2D.Double getBounds();
 
 
+
+
+
     /**
-     * @return type of this object
+     * Used for determining bullet blocking and wall-drawing
+     * @return true if object is a wall
      */
-    public StaticObjectType getType();
-
-
-
+    public boolean isWall();
 
 
 }

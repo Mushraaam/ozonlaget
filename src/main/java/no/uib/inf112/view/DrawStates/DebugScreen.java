@@ -108,4 +108,6 @@ public class DebugScreen implements IDrawer {
         graphic.setTransform(old);
 
     }
-}}
+}
+
+}

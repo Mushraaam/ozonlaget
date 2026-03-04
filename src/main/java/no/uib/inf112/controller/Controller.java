@@ -3,6 +3,7 @@ package no.uib.inf112.controller;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.GameState;
+import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.IControllablePlayer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
@@ -158,6 +159,13 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             }
             case KeyEvent.VK_D -> {
                 player.pressMove(Direction.EAST);
+            }
+
+            case KeyEvent.VK_1 -> {
+                this.player.setGunType(GunType.DEAGLE);
+            }
+            case KeyEvent.VK_2 -> {
+                this.player.setGunType(GunType.MP5);
             }
 
             case KeyEvent.VK_P -> {

@@ -38,13 +38,12 @@ public class Map implements IMap {
         this.floors = this.level.getFloor();
 
         this.enemies = new ArrayList<>();
-        // Start with debug during development
-        this.debug = true;
+
+        this.debug = false;
 
         // Implementer egen metode/meny for denne
         this.staticObjects = this.level.getStaticObjects();
 
-        // Bør senere starte i main menu
         this.gameState = GameState.MAIN_MENU;
 
         this.grid = new Grid(this);

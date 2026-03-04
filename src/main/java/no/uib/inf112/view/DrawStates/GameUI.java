@@ -24,7 +24,8 @@ public class GameUI implements IDrawer {
     private BufferedImage uiBar;
 
     private static final double UI_HEIGHT = Config.getInt("uiSize");
-    private static final int GUN_SIZE = Config.getInt("uiGunSize");
+    private static final int GUN_WIDTH = Config.getInt("uiGunWidth");
+    private static final int GUN_HEIGHT = Config.getInt("uiGunHeight");
 
     private static final Font AMMO_FONT = new Font("Arial", Font.BOLD, 46);
     private static final Color AMMO_COLOR = new Color(57, 255, 20); // neon green
@@ -61,7 +62,7 @@ public class GameUI implements IDrawer {
 
         // Gun
         drawImage(graphic, this.handler.getGunImage(this.player.gunType()),
-                new Rectangle2D.Double(x1 + 330, y1 + 20, GUN_SIZE, UI_HEIGHT - 30));
+                new Rectangle2D.Double(x1 + 330, y1 + 40, GUN_WIDTH, GUN_HEIGHT));
 
         // Ammunition
         graphic.setColor(AMMO_COLOR);

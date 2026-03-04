@@ -37,9 +37,6 @@ public class GameScreen implements IDrawer {
         this.handler = handler;
         this.tiles = map.getTiles();
         this.camera = new Camera(0, 0);
-
-        // Bør skaleres kun en gang, dette flyttes senere til ny klasse
-        // this.playerSprite = this.handler.getPlayerSprite(this.player.getDirection(), this.player.getAnimationIndex());
     }
 
     @Override
@@ -65,7 +62,7 @@ public class GameScreen implements IDrawer {
 
             IStaticDrawableObject obj = (IStaticDrawableObject) o;
 
-            if (obj instanceof IWall) {
+            if (obj.isWall()) {
                 IWall wall = (IWall) obj;
                 BufferedImage image = handler.getWallImage(wall.getType(), wall.getWallDirection());
                 drawImage(graphic, image, wall.getBounds());
