@@ -295,4 +295,15 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         return this.currentHP;
     }
 
+    @Override
+    public void takeDamage(int damage) {
+        int newHP = this.currentHP - damage;
+        if (newHP < 0){
+            this.currentHP = 0;
+        }
+        else{
+            this.currentHP = newHP;
+        }
+    }
+
 }

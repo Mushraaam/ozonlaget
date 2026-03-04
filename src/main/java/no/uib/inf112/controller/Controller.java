@@ -168,6 +168,12 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
                 this.player.setGunType(GunType.MP5);
             }
 
+            case KeyEvent.VK_I -> { 
+                if (this.map.debugMode()){
+                    this.player.takeDamage(10);
+                }
+            }
+
             case KeyEvent.VK_P -> {
                 flipDebug();
             }

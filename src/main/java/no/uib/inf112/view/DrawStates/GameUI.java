@@ -73,7 +73,7 @@ public class GameUI implements IDrawer {
         graphic.drawString(String.format("%s/%s", currentAmmo, maxAmmo), (int) x1 + 100, (int) y1 + 98);
 
         // HealthBar
-        drawHealthBar(graphic, (int) x1 + 755, (int) y1+45);
+        drawHealthBar(graphic, (int) x1 + 755, (int) y1 + 45);
     }
 
     private void drawHealthBar(Graphics2D g, int x1, int y1) {
@@ -81,25 +81,26 @@ public class GameUI implements IDrawer {
         int maxHp = player.getMaxHP();
         int currentHP = player.getCurrentHP();
 
-        //background
+        // background
         g.setColor(HP_BACK);
         g.fillRoundRect(x1, y1, HP_BAR_WIDTH, HP_BAR_HEIGHT, 10, 10);
 
-        //filling
-        double percentHP = currentHP / maxHp;
+        // filling
+        double percentHP = currentHP / (double) maxHp;
         Color fill;
-        if (percentHP >= 0.6)
+        if (percentHP >= 0.6) {
             fill = GREEN;
-        else if (percentHP >= 0.3)
+        } else if (percentHP >= 0.3) {
             fill = ORANGE;
-        else
+        } else {
             fill = RED;
+        }
 
-        int innerWidth = HP_BAR_WIDTH - 3 * 2;
+        int innerWidth = (int)((HP_BAR_WIDTH - 3 * 2) * percentHP);
         g.setColor(fill);
         g.fillRoundRect(x1 + 3, y1 + 3, innerWidth, HP_BAR_HEIGHT - 3 * 2, 8, 8);
 
-        //border
+        // border
         g.setColor(HP_BORDER);
         g.drawRoundRect(x1, y1, HP_BAR_WIDTH, HP_BAR_HEIGHT, 10, 10);
 
