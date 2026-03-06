@@ -88,9 +88,9 @@ public class GameUI implements IDrawer {
         // filling
         double percentHP = currentHP / (double) maxHp;
         Color fill;
-        if (percentHP >= 0.6) {
+        if (percentHP >= 0.7) {
             fill = GREEN;
-        } else if (percentHP >= 0.3) {
+        } else if (percentHP >= 0.4) {
             fill = ORANGE;
         } else {
             fill = RED;

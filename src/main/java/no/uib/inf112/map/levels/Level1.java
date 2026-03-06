@@ -66,25 +66,28 @@ public class Level1 implements ILevel {
         this.floors.add(new WoodFloor(new Rectangle2D.Double(900 + 10, 900 + 10, 300, 300)));
 
         staticObjects.add(new WoodWall( // Left wall
-                new Rectangle2D.Double(900 - 30, 900 - 30, 15, 300+60), StaticObjectType.LONG_WOODEN_WALL));
+                new Rectangle2D.Double(900 - 30, 900 - 30, 15, 300 + 60), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom wall
                 new Rectangle2D.Double(900 - 30, 900 + 330, 360, 15), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Top wall
-                new Rectangle2D.Double(900 - 30, 900 - 30, 300+60, 15), StaticObjectType.LONG_WOODEN_WALL));
+                new Rectangle2D.Double(900 - 30, 900 - 30, 300 + 60, 15), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Right top
                 new Rectangle2D.Double(900 + 330, 900 - 30, 15, 100), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Right bot
                 new Rectangle2D.Double(900 + 330, 900 + 300 - 100, 15, 145), StaticObjectType.WOODEN_WALL));
-        
+
         // Furniture
-        staticObjects.add(new DarkWoodenTable(new Rectangle2D.Double(950, 930, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
-        
+        staticObjects.add(new DarkWoodenTable(
+                new Rectangle2D.Double(950, 930, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
+
         // House2
         staticObjects.add(new WoodWall(new Rectangle2D.Double(700, 900, 15, 375), StaticObjectType.LONG_WOODEN_WALL)); // right
         staticObjects.add(new WoodWall(new Rectangle2D.Double(600, 900, 15, 315), StaticObjectType.LONG_WOODEN_WALL)); // left
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(300, 900 + 375, 415, 15), StaticObjectType.LONG_WOODEN_WALL)); // bot
-        staticObjects.add(new WoodWall(new Rectangle2D.Double(300, 900 + 300, 315, 15), StaticObjectType.LONG_WOODEN_WALL)); // bot
-                                                                                                                     // left
+        staticObjects
+                .add(new WoodWall(new Rectangle2D.Double(300, 900 + 375, 415, 15), StaticObjectType.LONG_WOODEN_WALL)); // bot
+        staticObjects
+                .add(new WoodWall(new Rectangle2D.Double(300, 900 + 300, 315, 15), StaticObjectType.LONG_WOODEN_WALL)); // bot
+        // left
     }
 
     @Override

@@ -34,8 +34,10 @@ public class Pathfinder {
     }
 
     public List<ICell> findPath(ICell start, ICell goal, EnemySize size) {
-        if (start == null || goal == null || !canEnter(goal, size)) return List.of();
-        if (start.equals(goal)) return List.of(start);
+        if (start == null || goal == null || !canEnter(goal, size))
+            return List.of();
+        if (start.equals(goal))
+            return List.of(start);
 
         currentSearchId++;
 
@@ -61,7 +63,8 @@ public class Pathfinder {
             }
 
             for (ICell neighbor : grid.getNeighbours(current)) {
-                if (neighbor == null || !canEnter(neighbor, size)) continue;
+                if (neighbor == null || !canEnter(neighbor, size))
+                    continue;
 
                 int nIdx = getIdx(neighbor);
                 double tentativeG = gScore[currentIdx] + stepCost(current, neighbor);
@@ -92,7 +95,8 @@ public class Pathfinder {
         int curr = getIdx(goalCell);
         while (curr != -1) {
             path.addFirst(grid.getCell(curr / width, curr % width));
-            if (curr == startIdx) break;
+            if (curr == startIdx)
+                break;
             curr = cameFromIdx[curr];
         }
         return path;
@@ -121,11 +125,13 @@ public class Pathfinder {
     }
 
     /**
-     * Checks if a specific enemy size is allowed to enter a cell based on its PathType.
+     * Checks if a specific enemy size is allowed to enter a cell based on its
+     * PathType.
      */
     public boolean canEnter(ICell cell, EnemySize size) {
 
-        PathType type = cell.pathType(); //Need to do somthing about this one, Probably only 2 layers, or bigger layers?
+        PathType type = cell.pathType(); // Need to do somthing about this one, Probably only 2 layers, or bigger
+                                         // layers?
         switch (size) {
             case SMALL -> {
                 return type != PathType.BLOCKED && type != PathType.BLOCKED_FOR_MEDIUM;
@@ -139,10 +145,5 @@ public class Pathfinder {
             default -> throw new IllegalStateException("No known case for size");
         }
     }
-
-
-
-
-
 
 }
