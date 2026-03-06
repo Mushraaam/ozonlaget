@@ -14,6 +14,9 @@ public class Spawner {
     private static final double GHOUL_WIDTH = Config.getInt("ghoulWidth");
     private static final double GHOUL_HEIGHT = Config.getInt("ghoulHeight");
 
+    private static final double ZOMBIE_WIDTH = Config.getInt("zombieWidth");
+    private static final double ZOMBIE_HEIGHT = Config.getInt("zombieHeight");
+
     private final IMap map;
 
     public Spawner(IMap map) {
@@ -30,19 +33,49 @@ public class Spawner {
                 p.getX() + xOffset,
                 p.getY() + yOffset,
                 GHOUL_WIDTH,
-                GHOUL_HEIGHT
-        );
-            ICell spawnCell = map.getGrid().getCellFromPos(hitbox);
-            if (spawnCell == null || spawnCell.isBlocked()) return false;
-            if (!map.getBounds().contains(hitbox)) return false;
+                GHOUL_HEIGHT);
+        ICell spawnCell = map.getGrid().getCellFromPos(hitbox);
+        if (spawnCell == null || spawnCell.isBlocked())
+            return false;
+        if (!map.getBounds().contains(hitbox))
+            return false;
 
-        for(ICell cell : map.getGrid().getNeighboursAtDepth(spawnCell, 2)){
-            for(IEnemy neighbor : map.getEnemies()){
-                if (hitbox.intersects(neighbor.getHitbox())) return false;
+        for (ICell cell : map.getGrid().getNeighboursAtDepth(spawnCell, 2)) {
+            for (IEnemy neighbor : map.getEnemies()) {
+                if (hitbox.intersects(neighbor.getHitbox()))
+                    return false;
             }
         }
 
-            map.addEnemy(new Ghoul(hitbox, this.map));
-            return true;
+        map.addEnemy(new Ghoul(hitbox, this.map));
+        return true;
+    }
+
+    public boolean spawnZombie() {
+        var p = map.getPlayer().getHitbox();
+
+        double xOffset = ThreadLocalRandom.current().nextDouble(200, 500);
+        double yOffset = ThreadLocalRandom.current().nextDouble(200, 500);
+
+        Rectangle2D.Double hitbox = new Rectangle2D.Double(
+                p.getX() + xOffset,
+                p.getY() + yOffset,
+                ZOMBIE_WIDTH,
+                ZOMBIE_HEIGHT);
+        ICell spawnCell = map.getGrid().getCellFromPos(hitbox);
+        if (spawnCell == null || spawnCell.isBlocked())
+            return false;
+        if (!map.getBounds().contains(hitbox))
+            return false;
+
+        for (ICell cell : map.getGrid().getNeighboursAtDepth(spawnCell, 2)) {
+            for (IEnemy neighbor : map.getEnemies()) {
+                if (hitbox.intersects(neighbor.getHitbox()))
+                    return false;
+            }
         }
+
+        map.addEnemy(new Zombie(hitbox, this.map));
+        return true;
+    }
 }

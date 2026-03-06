@@ -181,6 +181,9 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             case KeyEvent.VK_O -> {
                 map.getSpawner().spawnGhoul();
             }
+            case KeyEvent.VK_L -> {
+                map.getSpawner().spawnZombie();
+            }
         }
     }
 
