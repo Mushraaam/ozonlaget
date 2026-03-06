@@ -7,11 +7,12 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.map.npcs.Ghoul;
 import no.uib.inf112.map.npcs.Zombie;
 
 public class Spawner {
-    private static final double THUG_WIDTH = Config.getInt("thugWidth");
-    private static final double THUG_HEIGHT = Config.getInt("thugHeight");
+    private static final double GHOUL_WIDTH = Config.getInt("ghoulWidth");
+    private static final double GHOUL_HEIGHT = Config.getInt("ghoulHeight");
 
     private final IMap map;
 
@@ -19,7 +20,7 @@ public class Spawner {
         this.map = map;
     }
 
-    public boolean spawnThug() {
+    public boolean spawnGhoul() {
         var p = map.getPlayer().getHitbox();
 
         double xOffset = ThreadLocalRandom.current().nextDouble(200, 500);
@@ -28,8 +29,8 @@ public class Spawner {
         Rectangle2D.Double hitbox = new Rectangle2D.Double(
                 p.getX() + xOffset,
                 p.getY() + yOffset,
-                THUG_WIDTH,
-                THUG_HEIGHT
+                GHOUL_WIDTH,
+                GHOUL_HEIGHT
         );
             ICell spawnCell = map.getGrid().getCellFromPos(hitbox);
             if (spawnCell == null || spawnCell.isBlocked()) return false;
@@ -41,7 +42,7 @@ public class Spawner {
             }
         }
 
-            map.addEnemy(new Zombie(hitbox, this.map));
+            map.addEnemy(new Ghoul(hitbox, this.map));
             return true;
         }
 }

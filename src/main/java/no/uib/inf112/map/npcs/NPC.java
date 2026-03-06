@@ -21,7 +21,8 @@ public abstract class NPC implements IEnemy {
     private List<ICell> currentPath = new ArrayList<>();
     private int pathIndex = 0;
     private int animationIndex = 0;
-    private int ANIMATION_COUNT = 8;
+    private int animationCount;
+    private int attackAnimationCount;
     private double facingAngle = 0.0;
     private double rotationSpeed = 0.12;
     private EnemySize size;
@@ -60,6 +61,13 @@ public abstract class NPC implements IEnemy {
         this.currentTarget = 0;
 
     }
+
+    // methods that need to be implemented per NPC:
+
+    public abstract void attack(Rectangle2D.Double target);
+
+
+    // shared methods
 
     @Override
     public Ellipse2D.Double getTrueHitbox() {
@@ -102,7 +110,7 @@ public abstract class NPC implements IEnemy {
 
     @Override
     public void incrementAnimationIndex() {
-        this.animationIndex = (this.animationIndex + 1) % ANIMATION_COUNT;
+        this.animationIndex = (this.animationIndex + 1) % animationCount;
     }
 
     @Override
@@ -413,4 +421,18 @@ public abstract class NPC implements IEnemy {
     protected void setEnemyType(EnemyType type) {
         this.type = type;
     }
+
+    protected void setAnimationCount(int count){
+        this.animationCount = count;
+    }
+    
+    /**
+     * Sets animationCount and sets animationIndex to 0
+     * @param count
+     */
+    protected void setAttackAnimationCount(int count){
+        this.animationCount = count;
+        this.animationIndex = 0;
+    }
+
 }

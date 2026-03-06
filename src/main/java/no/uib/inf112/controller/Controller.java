@@ -178,7 +178,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
                 flipDebug();
             }
             case KeyEvent.VK_O -> {
-                map.getSpawner().spawnThug();
+                map.getSpawner().spawnGhoul();
             }
         }
     }

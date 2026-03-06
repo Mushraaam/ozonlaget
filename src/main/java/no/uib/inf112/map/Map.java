@@ -55,7 +55,7 @@ public class Map implements IMap {
 
         gatherOccupiedCells();
         // TODO: fjern denne, lage logikk i spawner
-        spawnEnemies();
+        //spawnEnemies();
     }
 
     private void spawnEnemies() {
