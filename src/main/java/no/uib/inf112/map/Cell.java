@@ -17,8 +17,8 @@ public class Cell implements ICell {
     private FloorType floorType;
     private PathType pathType;
     private List<ICell> neighbours;
-    private boolean occupied = false;
     private LinkedHashSet<IEnemy> enemies = new LinkedHashSet<>();
+    private HashSet<IEnemy> occupants;
 
 
 
@@ -29,6 +29,7 @@ public class Cell implements ICell {
         this.col = col;
         this.floorType = floorType;
         this.pathType = type;
+        this.occupants = new HashSet<>();
     }
 
 
@@ -114,23 +115,30 @@ public class Cell implements ICell {
     }
 
     @Override
-    public void setOccupied(boolean b) { this.occupied = b; }
+    public boolean isOccupied() { return !this.occupants.isEmpty(); }
+
 
     @Override
-    public boolean isOccupied() { return this.occupied; }
-
-    @Override
-    public LinkedHashSet<IEnemy> getEnemies() {
-        return this.enemies ;
+    public void setOccupant(IEnemy enemy){
+        this.occupants.add(enemy);
     }
 
     @Override
-    public void removeEnemy(IEnemy enemy) {
-        this.enemies.remove(enemy);
+    public boolean occupiedBy(IEnemy enemy){
+        return this.occupants.contains(enemy);
     }
 
+
+
     @Override
-    public void addEnemy(IEnemy enemy) {
-        this.enemies.add(enemy);
+    public int occupiedCount() {
+        return this.occupants.size();
+    }
+
+
+
+    @Override
+    public void clearOccupants() {
+        this.occupants.clear();
     }
 }

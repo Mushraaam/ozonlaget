@@ -71,6 +71,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             for (IEnemy enemy : map.getEnemies()) {
                 enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
             }
+            this.map.resetOccupied();
             PerfTracker.stop("Pathfinding");
         });
 
@@ -85,7 +86,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             for (IEnemy enemy : enemies) {
                 enemy.move(grid);
             }
-            map.updateEnemyLocations(map.getEnemies());
+            // map.updateEnemyLocations(map.getEnemies());
             PerfTracker.stop("Movement Logic");
             
         });

@@ -82,35 +82,34 @@ public class Map implements IMap {
     }
 
     @Override
-    public boolean inOccupiedCells(ICell cell) {
-        return false; //null is empty, anything else is occupied
-    }
-
-    @Override
     public void gatherOccupiedCells() {
-        /*HashSet<ICell> occupied = new HashSet<>();
-        for (IEnemy enemy : this.enemies) {
-            Rectangle2D.Double pos = enemy.getHitbox();
-            double x1 = pos.getMinX();
-            double y1 = pos.getMinY();
-            double x2 = pos.getMaxX();
-            double y2 = pos.getMaxY();
+        for (IEnemy enemy : this.enemies){
+            Rectangle2D.Double hitbox = enemy.getHitbox();
+            double w = hitbox.width * 0.5;
+            double h = hitbox.height * 0.5;
+
+            double x1 = hitbox.getMinX() - w;
+            double y1 = hitbox.getMinY() - h;
+            double x2 = hitbox.getMaxX() + w;
+            double y2 = hitbox.getMaxY() + h;
 
             ICell topLeft = this.grid.getCellFromXY(x1, y1);
             ICell botRight = this.grid.getCellFromXY(x2, y2);
 
-            int startRow = topLeft.row();
-            int startCol = topLeft.col();
-            int endRow = botRight.row();
-            int endCol = botRight.col();
-
-            for (int i = startRow; i <= endRow; i++) {
-                for (int j = startCol; j <= endCol; j++) {
-                    occupied.add(this.grid.getCell(i, j));
+            for (int i = topLeft.row(); i < botRight.row(); i++){
+                for (int j = topLeft.col(); j < botRight.col(); j++){
+                    ICell cell = this.grid.getCell(i, j);
+                    cell.setOccupant(enemy);
                 }
             }
         }
-        this.occupiedCells = occupied;*/
+    }
+
+    @Override
+    public void resetOccupied(){
+        for (ICell cell : this.grid){
+            cell.clearOccupants();
+        }
     }
 
 
@@ -119,36 +118,36 @@ public class Map implements IMap {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
     }
-    @Override
-    public void updateEnemyLocations(List<IEnemy> allEnemies) {
-        int maxR = grid.getRowCount() - 1;
-        int maxC = grid.getColCount() - 1;
+    // @Override
+    // public void updateEnemyLocations(List<IEnemy> allEnemies) {
+    //     int maxR = grid.getRowCount() - 1;
+    //     int maxC = grid.getColCount() - 1;
 
-        for (IEnemy enemy : allEnemies) {
-            Rectangle2D.Double hb = enemy.getHitbox();
-            int minR = Math.max(0, Math.min((int) (hb.getMinY() / TILE_HEIGHT), maxR));
-            int maxR_bound = Math.max(0, Math.min((int) (hb.getMaxY() / TILE_HEIGHT), maxR));
-            int minC = Math.max(0, Math.min((int) (hb.getMinX() / TILE_WIDTH), maxC));
-            int maxC_bound = Math.max(0, Math.min((int) (hb.getMaxX() / TILE_WIDTH), maxC));
+    //     for (IEnemy enemy : allEnemies) {
+    //         Rectangle2D.Double hb = enemy.getHitbox();
+    //         int minR = Math.max(0, Math.min((int) (hb.getMinY() / TILE_HEIGHT), maxR));
+    //         int maxR_bound = Math.max(0, Math.min((int) (hb.getMaxY() / TILE_HEIGHT), maxR));
+    //         int minC = Math.max(0, Math.min((int) (hb.getMinX() / TILE_WIDTH), maxC));
+    //         int maxC_bound = Math.max(0, Math.min((int) (hb.getMaxX() / TILE_WIDTH), maxC));
 
-            if (enemy.boundsChanged(minR, maxR_bound, minC, maxC_bound)) {
-                if (enemy.getLastMinR() != -1) {
-                    for (int r = enemy.getLastMinR(); r <= enemy.getLastMaxR(); r++) {
-                        for (int c = enemy.getLastMinC(); c <= enemy.getLastMaxC(); c++) {
-                            grid.getCell(r, c).removeEnemy(enemy);
-                        }
-                    }
-                }
-                for (int r = minR; r <= maxR_bound; r++) {
-                    for (int c = minC; c <= maxC_bound; c++) {
-                        grid.getCell(r, c).addEnemy(enemy);
-                    }
-                }
+    //         if (enemy.boundsChanged(minR, maxR_bound, minC, maxC_bound)) {
+    //             if (enemy.getLastMinR() != -1) {
+    //                 for (int r = enemy.getLastMinR(); r <= enemy.getLastMaxR(); r++) {
+    //                     for (int c = enemy.getLastMinC(); c <= enemy.getLastMaxC(); c++) {
+    //                         grid.getCell(r, c).removeEnemy(enemy);
+    //                     }
+    //                 }
+    //             }
+    //             for (int r = minR; r <= maxR_bound; r++) {
+    //                 for (int c = minC; c <= maxC_bound; c++) {
+    //                     grid.getCell(r, c).addEnemy(enemy);
+    //                 }
+    //             }
 
-                enemy.updateBounds(minR, maxR_bound, minC, maxC_bound);
-            }
-        }
-    }
+    //             enemy.updateBounds(minR, maxR_bound, minC, maxC_bound);
+    //         }
+    //     }
+    // }
 
 
 

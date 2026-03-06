@@ -83,7 +83,7 @@ public interface IMap {
      */
     void addEnemy(IEnemy enemy);
 
-    void updateEnemyLocations(List<IEnemy> allEnemies);
+    // void updateEnemyLocations(List<IEnemy> allEnemies);
 
     /**
      * @return the an entity spawner.
@@ -94,9 +94,6 @@ public interface IMap {
      * @return a list of all enemies on the level.
      */
     ArrayList<IEnemy> getEnemies();
-
-
-    boolean inOccupiedCells(ICell cell);
 
     /**
      * Refreshes occupied cells
@@ -117,5 +114,10 @@ public interface IMap {
      * @return number of the current level
      */
     public int level();
+
+    /**
+     * Sets all cells in grid to unoccupied
+     */
+    public void resetOccupied();
 
 }

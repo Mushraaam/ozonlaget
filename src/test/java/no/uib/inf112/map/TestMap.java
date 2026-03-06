@@ -117,10 +117,10 @@ public class TestMap implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'addEnemy'");
     }
 
-    @Override
-    public void updateEnemyLocations(List<IEnemy> allEnemies) {
+    // @Override
+    // public void updateEnemyLocations(List<IEnemy> allEnemies) {
 
-    }
+    // }
 
     @Override
     public Spawner getSpawner() {
@@ -132,11 +132,6 @@ public class TestMap implements IMap {
     public ArrayList<IEnemy> getEnemies() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getEnemies'");
-    }
-
-    @Override
-    public boolean inOccupiedCells(ICell cell) {
-        return false;
     }
 
     @Override
@@ -174,6 +169,12 @@ public class TestMap implements IMap {
     public int level() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'level'");
+    }
+
+    @Override
+    public void resetOccupied() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'resetOccupied'");
     }
 
 

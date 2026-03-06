@@ -32,13 +32,15 @@ public interface ICell {
 
     public void setPathType(PathType type);
 
-    void setOccupied(boolean b);
-
     boolean isOccupied();
 
-    LinkedHashSet<IEnemy> getEnemies();
+    boolean occupiedBy(IEnemy enemy);
 
-    void removeEnemy(IEnemy enemy);
+    void setOccupant(IEnemy enemy);
 
-    void addEnemy(IEnemy enemy);
+    int occupiedCount();
+
+    void clearOccupants();
+
+    
 }

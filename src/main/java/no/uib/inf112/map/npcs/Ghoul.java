@@ -11,7 +11,7 @@ public class Ghoul extends NPC {
 
     private static final double SPEED = Config.getInt("ghoulSpeed");
     private static final double ROTATION_SPEED = 0.12;
-    private static final EnemySize SIZE = EnemySize.SMALL;
+    private static final EnemySize SIZE = EnemySize.MEDIUM;
     private static final EnemyType ENEMY_TYPE = EnemyType.GHOUL;
     private static final int ANIMATION_COUNT = 8;
 
