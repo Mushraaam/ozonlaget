@@ -20,7 +20,7 @@ public class Pathfinder {
     private final int[] lastVisitedId;
     private int currentSearchId = 0;
 
-    private static final int OCCUPIED_WEIGHT = 10;
+    private static final int OCCUPIED_WEIGHT = 3;
 
     public Pathfinder(IMap map) {
         this.map = map;
@@ -123,7 +123,7 @@ public class Pathfinder {
         if (to.isOccupied(enemy.size())){
             int i = 0;
             if (to.occupiedBy(enemy)){i++;}
-            trafficPenalty = OCCUPIED_WEIGHT * (to.occupiedCount()-i) * enemy.size().footprint();
+            trafficPenalty = OCCUPIED_WEIGHT * (to.occupiedCount(enemy.size())-i) * enemy.size().footprint();
         }
         // double trafficPenalty = enemyCount * OCCUPIED_WEIGHT;
 

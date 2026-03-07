@@ -82,9 +82,9 @@ public abstract class NPC implements IEnemy {
         if (start == null || goal == null)
             return;
 
-        if (start.equals(lastStart) && goal.equals(lastGoal) && currentPath != null && !currentPath.isEmpty()) {
-            return; // no need to repath
-        }
+        // if (start.equals(lastStart) && goal.equals(lastGoal) && currentPath != null && !currentPath.isEmpty()) {
+        //     return; // no need to repath
+        // }
 
         lastStart = start;
         lastGoal = goal;

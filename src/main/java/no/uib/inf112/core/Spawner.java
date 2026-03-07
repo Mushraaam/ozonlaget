@@ -4,6 +4,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.concurrent.ThreadLocalRandom;
 
 import no.uib.inf112.config.Config;
+import no.uib.inf112.enums.FloorType;
+import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IMap;
@@ -35,7 +37,7 @@ public class Spawner {
                 GHOUL_WIDTH,
                 GHOUL_HEIGHT);
         ICell spawnCell = map.getGrid().getCellFromPos(hitbox);
-        if (spawnCell == null || spawnCell.isBlocked())
+        if (spawnCell == null || (spawnCell.pathType() == PathType.BLOCKED))
             return false;
         if (!map.getBounds().contains(hitbox))
             return false;
@@ -61,7 +63,7 @@ public class Spawner {
                 ZOMBIE_WIDTH,
                 ZOMBIE_HEIGHT);
         ICell spawnCell = map.getGrid().getCellFromPos(hitbox);
-        if (spawnCell == null || spawnCell.isBlocked())
+        if (spawnCell == null || (spawnCell.pathType() == PathType.BLOCKED))
             return false;
         if (!map.getBounds().contains(hitbox))
             return false;

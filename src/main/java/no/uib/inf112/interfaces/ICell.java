@@ -11,15 +11,7 @@ import no.uib.inf112.enums.PathType;
 public interface ICell {
 
 
-    List<ICell> getNeighbours();
-
     public Rectangle2D.Double getBounds();
-
-    public boolean isBlocked();
-
-    public void block();
-
-    public void unblock();
 
     public int row();
 
@@ -37,9 +29,9 @@ public interface ICell {
 
     boolean occupiedBy(IEnemy enemy);
 
-    void setOccupant(IEnemy enemy);
+    void setOccupant(IEnemy enemy, EnemySize size);
 
-    int occupiedCount();
+    int occupiedCount(EnemySize size);
 
     void clearOccupants();
 
