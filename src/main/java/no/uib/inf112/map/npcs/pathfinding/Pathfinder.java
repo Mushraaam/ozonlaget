@@ -120,7 +120,7 @@ public class Pathfinder {
         double cost = (dx != 0 && dy != 0) ? 1.4142 : 1.0;
 
         double trafficPenalty = 0;
-        if (to.isOccupied()){
+        if (to.isOccupied(enemy.size())){
             int i = 0;
             if (to.occupiedBy(enemy)){i++;}
             trafficPenalty = OCCUPIED_WEIGHT * (to.occupiedCount()-i) * enemy.size().footprint();

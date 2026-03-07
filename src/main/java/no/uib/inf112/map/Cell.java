@@ -3,6 +3,7 @@ package no.uib.inf112.map;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.ICell;
@@ -20,8 +21,6 @@ public class Cell implements ICell {
     private LinkedHashSet<IEnemy> enemies = new LinkedHashSet<>();
     private HashSet<IEnemy> occupants;
 
-
-
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
         this.bounds = bounds;
         this.blocked = false;
@@ -31,8 +30,6 @@ public class Cell implements ICell {
         this.pathType = type;
         this.occupants = new HashSet<>();
     }
-
-
 
     @Override
     public List<ICell> getNeighbours() {
@@ -115,27 +112,24 @@ public class Cell implements ICell {
     }
 
     @Override
-    public boolean isOccupied() { return !this.occupants.isEmpty(); }
-
+    public boolean isOccupied(EnemySize size) {
+        return !this.occupants.isEmpty();
+    }
 
     @Override
-    public void setOccupant(IEnemy enemy){
+    public void setOccupant(IEnemy enemy) {
         this.occupants.add(enemy);
     }
 
     @Override
-    public boolean occupiedBy(IEnemy enemy){
+    public boolean occupiedBy(IEnemy enemy) {
         return this.occupants.contains(enemy);
     }
-
-
 
     @Override
     public int occupiedCount() {
         return this.occupants.size();
     }
-
-
 
     @Override
     public void clearOccupants() {

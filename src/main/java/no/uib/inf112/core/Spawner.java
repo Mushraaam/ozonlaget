@@ -11,11 +11,11 @@ import no.uib.inf112.map.npcs.Ghoul;
 import no.uib.inf112.map.npcs.Zombie;
 
 public class Spawner {
-    private static final double GHOUL_WIDTH = Config.getInt("ghoulWidth");
-    private static final double GHOUL_HEIGHT = Config.getInt("ghoulHeight");
+    private static final double GHOUL_WIDTH = Config.getInt("smallEnemy");
+    private static final double GHOUL_HEIGHT = Config.getInt("smallEnemy");
 
-    private static final double ZOMBIE_WIDTH = Config.getInt("zombieWidth");
-    private static final double ZOMBIE_HEIGHT = Config.getInt("zombieHeight");
+    private static final double ZOMBIE_WIDTH = Config.getInt("largeEnemy");
+    private static final double ZOMBIE_HEIGHT = Config.getInt("largeEnemy");
 
     private final IMap map;
 
@@ -40,12 +40,10 @@ public class Spawner {
         if (!map.getBounds().contains(hitbox))
             return false;
 
-        for (ICell cell : map.getGrid().getNeighboursAtDepth(spawnCell, 2)) {
             for (IEnemy neighbor : map.getEnemies()) {
                 if (hitbox.intersects(neighbor.getHitbox()))
                     return false;
             }
-        }
 
         map.addEnemy(new Ghoul(hitbox, this.map));
         return true;

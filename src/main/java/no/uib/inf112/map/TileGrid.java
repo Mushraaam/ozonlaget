@@ -108,10 +108,25 @@ public class TileGrid implements IGrid {
         return flattenedList.iterator();
     }
 
+
+
+    //Not used, should be abstracted out at a later date
     @Override
     public double distance(ICell from, ICell to) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'distance'");
+    }
+
+    @Override
+    public void gatherOccupiedCells() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'gatherOccupiedCells'");
+    }
+
+    @Override
+    public void resetOccupied() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'resetOccupied'");
     }
 
 }

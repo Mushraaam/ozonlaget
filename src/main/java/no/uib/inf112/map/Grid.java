@@ -9,6 +9,7 @@ import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.ICell;
+import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IStaticObject;
 
@@ -30,7 +31,7 @@ public class Grid implements IGrid {
 
     public Grid(IMap map) {
         this.map = map;
-        this.bounds =this.map.getBounds();
+        this.bounds = this.map.getBounds();
 
         if (this.bounds.getX() != 0 || this.bounds.getY() != 0) {
             throw new IllegalArgumentException("Bounds for Map must start with x, y = 0");
@@ -46,7 +47,7 @@ public class Grid implements IGrid {
         this.cellGrid = makeGrid(this.rowCount, this.colCount, CELLWIDTH, CELLHEIGHT, FloorType.NONE);
         fillGrid(this.cellGrid, map.getStaticObjects());
 
-        int[] levelsToCompute = {1, 2, 3, 4, 5, 6};
+        int[] levelsToCompute = { 1, 2, 3, 4, 5, 6 };
         for (int r = 0; r < rowCount; r++) {
             for (int c = 0; c < colCount; c++) {
                 ICell cell = getCell(r, c);
@@ -93,12 +94,13 @@ public class Grid implements IGrid {
 
     /**
      * Should only be run once in constructor else your pc will break
+     * 
      * @param grid
      * @param blockers
      */
     private void fillGrid(ArrayList<ArrayList<ICell>> grid, ArrayList<IStaticObject> blockers) {
 
-        //Sets illegal cells for all enemies
+        // Sets illegal cells for all enemies
         for (ArrayList<ICell> row : grid) {
             for (ICell cell : row) {
                 for (IStaticObject blocker : blockers) {
@@ -109,7 +111,7 @@ public class Grid implements IGrid {
             }
         }
 
-        //Sets illegal cells for medium and large enemies
+        // Sets illegal cells for medium and large enemies
         for (ArrayList<ICell> row : grid) {
             for (ICell cell : row) {
                 if (cell.pathType() == PathType.BLOCKED) {
@@ -122,7 +124,7 @@ public class Grid implements IGrid {
             }
         }
 
-        //Sets illegal cells for large enemies
+        // Sets illegal cells for large enemies
         for (ArrayList<ICell> row : grid) {
             for (ICell cell : row) {
                 if (cell.pathType() == PathType.BLOCKED_FOR_MEDIUM) {
@@ -197,7 +199,6 @@ public class Grid implements IGrid {
 
         return neighbours;
     }
-
 
     @Override
     public Iterator<ICell> iterator() {
@@ -286,6 +287,38 @@ public class Grid implements IGrid {
     @Override
     public int getColCount() {
         return this.colCount;
+    }
+
+    @Override
+    public void gatherOccupiedCells() {
+        
+        for (IEnemy enemy : this.map.getEnemies()){
+            Rectangle2D.Double hitbox = enemy.getHitbox();
+            double w = hitbox.width * 0.5;
+            double h = hitbox.height * 0.5;
+
+            double x1 = hitbox.getMinX() - w;
+            double y1 = hitbox.getMinY() - h;
+            double x2 = hitbox.getMaxX() + w;
+            double y2 = hitbox.getMaxY() + h;
+
+            ICell topLeft = getCellFromXY(x1, y1);
+            ICell botRight = getCellFromXY(x2, y2);
+
+            for (int i = topLeft.row(); i < botRight.row(); i++){
+                for (int j = topLeft.col(); j < botRight.col(); j++){
+                    ICell cell = getCell(i, j);
+                    cell.setOccupant(enemy);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void resetOccupied() {
+        for (ICell cell : this) {
+            cell.clearOccupants();
+        }
     }
 
 }

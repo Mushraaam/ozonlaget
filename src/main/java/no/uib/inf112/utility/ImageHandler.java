@@ -181,26 +181,20 @@ public class ImageHandler {
     private void loadEnemies(){
 
 
-        //Zombie (not used)
+        //Zombie (generic placeholder)
         ArrayList<BufferedImage> zombieWalk = new ArrayList<>();
-        int width = Config.getInt("zombieWidth");
-        int height = Config.getInt("zombieHeight");
         for (int i = 0; i < ZOMBIE_WALK_COUNT; i++) {
             String path = String.format("/no/uib/inf112/npcs/zombie/zombie_%s.png", i);
             BufferedImage rawImage = ImageReader.fetchImage(path);
-            zombieWalk.add(ImageReader.resizeExact(rawImage, width, height));
+            zombieWalk.add(rawImage);
         }
         this.enemies.put(EnemyType.ZOMBIE, zombieWalk);
 
         //Ghoul
         ArrayList<BufferedImage> ghoulWalk = new ArrayList<>();
-        width = Config.getInt("ghoulWidth");
-        height = Config.getInt("ghoulHeight");
-
         for (int i = 0; i < GHOUL_WALK_COUNT; i++) {
             String path = String.format("/no/uib/inf112/npcs/ghoul/Walk/walk_00%s.png", i);
             BufferedImage rawImage = ImageReader.fetchImage(path);
-            // ghoulWalk.add(ImageReader.resizeExact(rawImage, width, height));
             ghoulWalk.add(rawImage);
         }
 

@@ -14,14 +14,10 @@ public class Main {
     public static void main(String[] args) {
         IMap map = new Map();
 
-        //TODO: Gjøre fullscreen
         GameDrawer view = new GameDrawer(map);
-        JFrame frame = new JFrame("yeahboi");
+        JFrame frame = new JFrame("Ozonlaget");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         new Controller(map, view);
-
-
         frame.setContentPane(view);
         frame.pack();
         frame.setLocationRelativeTo(null);

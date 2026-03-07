@@ -83,33 +83,12 @@ public class Map implements IMap {
 
     @Override
     public void gatherOccupiedCells() {
-        for (IEnemy enemy : this.enemies){
-            Rectangle2D.Double hitbox = enemy.getHitbox();
-            double w = hitbox.width * 0.5;
-            double h = hitbox.height * 0.5;
-
-            double x1 = hitbox.getMinX() - w;
-            double y1 = hitbox.getMinY() - h;
-            double x2 = hitbox.getMaxX() + w;
-            double y2 = hitbox.getMaxY() + h;
-
-            ICell topLeft = this.grid.getCellFromXY(x1, y1);
-            ICell botRight = this.grid.getCellFromXY(x2, y2);
-
-            for (int i = topLeft.row(); i < botRight.row(); i++){
-                for (int j = topLeft.col(); j < botRight.col(); j++){
-                    ICell cell = this.grid.getCell(i, j);
-                    cell.setOccupant(enemy);
-                }
-            }
-        }
+        this.grid.gatherOccupiedCells();
     }
 
     @Override
     public void resetOccupied(){
-        for (ICell cell : this.grid){
-            cell.clearOccupants();
-        }
+        this.grid.resetOccupied();
     }
 
 

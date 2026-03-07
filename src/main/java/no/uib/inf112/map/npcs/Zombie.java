@@ -20,7 +20,7 @@ public class Zombie extends NPC {
 
     private static final double SPEED = Config.getInt("zombieSpeed");
     private static final double ROTATION_SPEED = 0.12;
-    private static final EnemySize SIZE = EnemySize.SMALL;
+    private static final EnemySize SIZE = EnemySize.LARGE;
     private static final EnemyType ENEMY_TYPE = EnemyType.ZOMBIE;
     private static final int ANIMATION_COUNT = 8;
 
