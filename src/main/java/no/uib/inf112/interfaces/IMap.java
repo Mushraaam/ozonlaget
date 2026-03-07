@@ -2,12 +2,7 @@ package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
 import no.uib.inf112.core.Spawner;
-import no.uib.inf112.enums.EnemySize;
-import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 

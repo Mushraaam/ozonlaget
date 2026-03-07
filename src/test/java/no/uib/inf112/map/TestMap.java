@@ -3,13 +3,8 @@ package no.uib.inf112.map;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
 import no.uib.inf112.core.Spawner;
-import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.GameState;
-import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IFloor;
 import no.uib.inf112.interfaces.IGrid;

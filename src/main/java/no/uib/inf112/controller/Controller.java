@@ -1,7 +1,6 @@
 package no.uib.inf112.controller;
 
 import no.uib.inf112.enums.Direction;
-import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.IControllablePlayer;
@@ -86,7 +85,6 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             for (IEnemy enemy : enemies) {
                 enemy.move(grid);
             }
-            // map.updateEnemyLocations(map.getEnemies());
             PerfTracker.stop("Movement Logic");
             
         });

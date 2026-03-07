@@ -3,7 +3,6 @@ package no.uib.inf112.map;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 
-import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;

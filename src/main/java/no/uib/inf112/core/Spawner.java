@@ -4,7 +4,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.concurrent.ThreadLocalRandom;
 
 import no.uib.inf112.config.Config;
-import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
@@ -42,10 +41,10 @@ public class Spawner {
         if (!map.getBounds().contains(hitbox))
             return false;
 
-            for (IEnemy neighbor : map.getEnemies()) {
-                if (hitbox.intersects(neighbor.getHitbox()))
-                    return false;
-            }
+        for (IEnemy neighbor : map.getEnemies()) {
+            if (hitbox.intersects(neighbor.getHitbox()))
+                return false;
+        }
 
         map.addEnemy(new Ghoul(hitbox, this.map));
         return true;
@@ -68,11 +67,9 @@ public class Spawner {
         if (!map.getBounds().contains(hitbox))
             return false;
 
-        for (ICell cell : map.getGrid().getNeighboursAtDepth(spawnCell, 2)) {
-            for (IEnemy neighbor : map.getEnemies()) {
-                if (hitbox.intersects(neighbor.getHitbox()))
-                    return false;
-            }
+        for (IEnemy neighbor : map.getEnemies()) {
+            if (hitbox.intersects(neighbor.getHitbox()))
+                return false;
         }
 
         map.addEnemy(new Zombie(hitbox, this.map));

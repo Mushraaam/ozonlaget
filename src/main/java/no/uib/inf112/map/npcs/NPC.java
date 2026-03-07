@@ -82,14 +82,14 @@ public abstract class NPC implements IEnemy {
         if (start == null || goal == null)
             return;
 
-        // if (start.equals(lastStart) && goal.equals(lastGoal) && currentPath != null && !currentPath.isEmpty()) {
-        //     return; // no need to repath
-        // }
+        if (start.equals(lastStart) && goal.equals(lastGoal) && currentPath != null && !currentPath.isEmpty()) {
+            return; // no need to repath
+        }
 
         lastStart = start;
         lastGoal = goal;
 
-        currentPath = pathfinder.findPath(this, start, goal, size);
+        currentPath = pathfinder.findPath(this, start, goal, size, currentPath);
         pathIndex = (currentPath.size() > 1) ? 1 : 0;
 
     }
@@ -146,55 +146,55 @@ public abstract class NPC implements IEnemy {
             }
 
         }
-        // if (from == lastStart) {
-        //     unStuck(true, true);
-        // }
+        if (from == lastStart) {
+            unStuck(true, true);
+        }
     }
 
-    // private void unStuck(boolean moveX, boolean moveY) {
-    //     ICell myCell = this.getStandingCell();
+    private void unStuck(boolean moveX, boolean moveY) {
+        ICell myCell = this.getStandingCell();
 
-    //     checkCellAndPush(myCell, moveX, moveY);
-    //     for (ICell neighbor : map.getGrid().getNeighboursAtDepth(myCell, 2)) {
-    //         checkCellAndPush(neighbor, moveX, moveY);
-    //     }
-    // }
+        checkCellAndPush(myCell, moveX, moveY);
+        for (ICell neighbor : map.getGrid().getNeighboursAtDepth(myCell, 2)) {
+            checkCellAndPush(neighbor, moveX, moveY);
+        }
+    }
 
-    // private void checkCellAndPush(ICell cell, boolean moveX, boolean moveY) {
+    private void checkCellAndPush(ICell cell, boolean moveX, boolean moveY) {
 
-    //     for (IEnemy other : cell.getEnemies()) {
-    //         if (other == this) {
-    //             continue;
-    //         }
+        for (IEnemy other : map.getEnemies()) {
+            if (other == this) {
+                continue;
+            }
 
-    //         Rectangle2D otherBox = other.getHitbox();
-    //         if (this.pos.intersects(otherBox)) {
-    //             double dx = this.pos.getCenterX() - otherBox.getCenterX();
-    //             double dy = this.pos.getCenterY() - otherBox.getCenterY();
+            Rectangle2D otherBox = other.getHitbox();
+            if (this.pos.intersects(otherBox)) {
+                double dx = this.pos.getCenterX() - otherBox.getCenterX();
+                double dy = this.pos.getCenterY() - otherBox.getCenterY();
 
-    //             if (dx == 0 && dy == 0) {
-    //                 dx = Math.random() - 0.5;
-    //                 dy = Math.random() - 0.5;
-    //             }
+                if (dx == 0 && dy == 0) {
+                    dx = Math.random() - 0.5;
+                    dy = Math.random() - 0.5;
+                }
 
-    //             Rectangle2D.Double pushed = new Rectangle2D.Double(pos.x, pos.y, pos.width, pos.height);
+                Rectangle2D.Double pushed = new Rectangle2D.Double(pos.x, pos.y, pos.width, pos.height);
 
-    //             if (moveX)
-    //                 pushed.x += Math.signum(dx) * 0.5;
-    //             if (moveY)
-    //                 pushed.y += Math.signum(dy) * 0.5;
+                if (moveX)
+                    pushed.x += Math.signum(dx) * 0.5;
+                if (moveY)
+                    pushed.y += Math.signum(dy) * 0.5;
 
-    //             if (!pushed.intersects(player.getHitbox()) &&
-    //                     map.getPathfinder().canEnter(map.getGrid().getCellFromPos(pushed), size)) {
-    //                 this.pos = pushed;
-    //             } else if (moveX && moveY) {
-    //                 unStuck(true, false);
-    //                 unStuck(false, true);
-    //                 return;
-    //             }
-    //         }
-    //     }
-    // }
+                if (!pushed.intersects(player.getHitbox()) &&
+                        map.getPathfinder().canEnter(map.getGrid().getCellFromPos(pushed), size)) {
+                    this.pos = pushed;
+                } else if (moveX && moveY) {
+                    unStuck(true, false);
+                    unStuck(false, true);
+                    return;
+                }
+            }
+        }
+    }
 
     private boolean tryMove(double dx, double dy, double dist, Rectangle2D target) {
         Rectangle2D.Double candidate = generateCandidate(dx, dy, dist, target);

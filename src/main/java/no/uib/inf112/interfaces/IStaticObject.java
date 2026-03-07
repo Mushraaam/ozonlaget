@@ -2,8 +2,6 @@ package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
 
-import no.uib.inf112.enums.StaticObjectType;
-
 /**
  * These objects are blocking objects
  */

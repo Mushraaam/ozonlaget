@@ -2,17 +2,13 @@ package no.uib.inf112.map.levels;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Random;
-
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.StaticObjectType;
-import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IFloor;
 import no.uib.inf112.interfaces.ILevel;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
-import no.uib.inf112.map.npcs.Zombie;
 import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;

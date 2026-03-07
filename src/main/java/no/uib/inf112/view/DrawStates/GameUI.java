@@ -3,11 +3,7 @@ package no.uib.inf112.view.DrawStates;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import java.awt.image.BufferedImage;
 
 import no.uib.inf112.config.Config;
@@ -18,7 +14,6 @@ import no.uib.inf112.utility.ImageHandler;
 
 public class GameUI implements IDrawer {
 
-    private IMap map;
     private IPlayer player;
     private ImageHandler handler;
     private BufferedImage uiBar;
@@ -42,7 +37,6 @@ public class GameUI implements IDrawer {
     private static final Color HP_TEXT_COLOR = Color.BLACK;
 
     public GameUI(IMap map, ImageHandler handler) {
-        this.map = map;
         this.player = map.getPlayer();
         this.handler = handler;
         this.uiBar = handler.uiBar();

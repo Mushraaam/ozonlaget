@@ -34,9 +34,9 @@ public class Pathfinder {
         this.lastVisitedId = new int[totalCells];
     }
 
-    public List<ICell> findPath(IEnemy enemy, ICell start, ICell goal, EnemySize size) {
+    public List<ICell> findPath(IEnemy enemy, ICell start, ICell goal, EnemySize size, List<ICell> currentPath) {
         if (start == null || goal == null || !canEnter(goal, size))
-            return List.of();
+            return findPath(enemy, start, currentPath.getLast(), size, currentPath);
         if (start.equals(goal))
             return List.of(start);
 
@@ -79,7 +79,7 @@ public class Pathfinder {
                 }
             }
         }
-        return List.of();
+        return currentPath;
     }
 
     private int getIdx(ICell cell) {
