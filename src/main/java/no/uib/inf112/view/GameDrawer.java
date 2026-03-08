@@ -64,4 +64,9 @@ public class GameDrawer extends JPanel {
         }
 
     }
+
+    //Getter
+    public MainMenu getMainMenu() {
+        return (MainMenu) this.mainMenu;
+    }
 }

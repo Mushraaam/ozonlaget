@@ -18,7 +18,7 @@ import javax.swing.Timer;
 
 
 
-public class Controller implements java.awt.event.KeyListener, java.awt.event.MouseMotionListener {
+public class Controller implements java.awt.event.KeyListener, java.awt.event.MouseMotionListener, java.awt.event.MouseListener {
 
     private final Camera camera;
 
@@ -51,6 +51,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
 
         this.view.addKeyListener(this);
         this.view.addMouseMotionListener(this);
+        this.view.addMouseListener(null);
         this.view.setFocusable(true);
 
         // TIMERS
