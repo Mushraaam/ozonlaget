@@ -2,12 +2,19 @@ package no.uib.inf112.view.DrawStates;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 import no.uib.inf112.interfaces.IDrawer;
+import no.uib.inf112.utility.ImageHandler;
 
 public class MainMenu implements IDrawer{
 
     private Rectangle2D.Double startButton;
+    private ImageHandler handler;
+
+    public MainMenu(ImageHandler handler) {
+        this.handler = handler;
+    }
 
     @Override
     public void draw(Graphics2D graphic) {
@@ -20,8 +27,9 @@ public class MainMenu implements IDrawer{
     private void drawBackground(Graphics2D graphic) {
         Rectangle bounds = graphic.getClipBounds();
 
-        graphic.setColor(new Color(187, 173, 160));
-        graphic.fillRect(0, 0, bounds.width, bounds.height);
+        BufferedImage background = handler.getMenuBackground();
+
+        graphic.drawImage(background, 0, 0, bounds.width, bounds.height, null);
     }
 
     private void drawTitle(Graphics2D graphic) {
@@ -42,39 +50,35 @@ public class MainMenu implements IDrawer{
     private void drawStartButton(Graphics2D graphic) {
         Rectangle bounds = graphic.getClipBounds();
 
-        int buttonWidth = 300;
-        int buttonHeight = 80;
+        BufferedImage buttonImage = handler.getStartButton();
+
+        int buttonWidth = 350;
+        int buttonHeight = 150;
 
         int x = (bounds.width - buttonWidth) / 2;
         int y = bounds.height / 2;
 
-        startButton = new Rectangle2D.Double(x, y, buttonWidth, buttonHeight);
+        graphic.drawImage(buttonImage, x, y, buttonWidth, buttonHeight ,null);
 
-        //background
-        graphic.setColor(new Color(120, 100, 80));
-        graphic.fill(startButton);
+        int marginLeft = 85;
+        int marginRight = 85;
 
-        //border
-        graphic.setColor(Color.WHITE);
+        int marginTop = 55;
+        int marginBottom = 60;
+
+        startButton = new Rectangle2D.Double(
+            x + marginLeft, 
+            y + marginTop, 
+            buttonWidth - marginLeft - marginRight, 
+            buttonHeight - marginTop - marginBottom
+        );
+
+        // DEBUG – viser hitboxen
+        graphic.setColor(Color.RED);
         graphic.draw(startButton);
-
-        //text
-        graphic.setFont(new Font("Arial", Font.BOLD, 30));
-
-        String text = "START";
-
-        FontMetrics metrics = graphic.getFontMetrics();
-
-        int textX = (int) (startButton.getX() + 
-                (startButton.getWidth() - metrics.stringWidth(text)) / 2);
-        
-        int textY = (int) (startButton.getY() + 
-                (startButton.getHeight() + metrics.getAscent()) / 2 - 8);
-        
-        graphic.drawString(text, textX, textY);
     }
 
-    public Rectangle2D getStartButton() {
+    public Rectangle2D.Double getStartButton() {
         return startButton;
     }
     

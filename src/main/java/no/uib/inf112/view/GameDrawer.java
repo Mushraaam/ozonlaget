@@ -28,7 +28,7 @@ public class GameDrawer extends JPanel {
 
         // Screens
         this.gameScreen = new GameScreen(this.map, this.handler);
-        this.mainMenu = new MainMenu();
+        this.mainMenu = new MainMenu(this.handler);
         this.debugScreen = new DebugScreen(this.map);
 
 
