@@ -43,6 +43,7 @@ public class DebugScreen implements IDrawer {
         for (IEnemy enemy : this.map.getEnemies()) {
             hitbox = enemy.getHitbox();
             if (isVisible(graphic, hitbox)) {
+                graphic.setColor(enemy.size().getDebugColor());
                 graphic.fill(hitbox);
 
             }
