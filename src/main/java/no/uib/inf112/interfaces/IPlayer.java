@@ -34,4 +34,12 @@ public interface IPlayer {
      * @return player current HP
      */
     public int getCurrentHP();
+
+
+    /**
+     * deals damage to player
+     * @param damage
+     */
+    public void takeDamage(int damage);
 }
+

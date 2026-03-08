@@ -2,12 +2,7 @@ package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
 import no.uib.inf112.core.Spawner;
-import no.uib.inf112.enums.EnemySize;
-import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 
@@ -83,7 +78,7 @@ public interface IMap {
      */
     void addEnemy(IEnemy enemy);
 
-    void updateEnemyLocations(List<IEnemy> allEnemies);
+    // void updateEnemyLocations(List<IEnemy> allEnemies);
 
     /**
      * @return the an entity spawner.
@@ -94,9 +89,6 @@ public interface IMap {
      * @return a list of all enemies on the level.
      */
     ArrayList<IEnemy> getEnemies();
-
-
-    boolean inOccupiedCells(ICell cell);
 
     /**
      * Refreshes occupied cells
@@ -117,5 +109,10 @@ public interface IMap {
      * @return number of the current level
      */
     public int level();
+
+    /**
+     * Sets all cells in grid to unoccupied
+     */
+    public void resetOccupied();
 
 }

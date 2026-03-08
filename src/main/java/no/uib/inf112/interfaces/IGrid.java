@@ -96,4 +96,14 @@ public interface IGrid extends Iterable<ICell> {
      */
     public int getColCount();
 
+    /**
+     * Sets cells near enemies to occupied for pathing purposes
+     */
+    public void gatherOccupiedCells();
+
+    /**
+     * Sets all cells to unoccupied
+     */
+    public void resetOccupied();
+
 }

@@ -2,14 +2,12 @@ package no.uib.inf112.view.DrawStates;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.Map;
 
 import no.uib.inf112.utility.PerfTracker;
 
-import no.uib.inf112.config.Config;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
@@ -108,4 +106,6 @@ public class DebugScreen implements IDrawer {
         graphic.setTransform(old);
 
     }
-}}
+}
+
+}

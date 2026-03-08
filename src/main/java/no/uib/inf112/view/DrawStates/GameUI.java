@@ -3,11 +3,7 @@ package no.uib.inf112.view.DrawStates;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import java.awt.image.BufferedImage;
 
 import no.uib.inf112.config.Config;
@@ -18,13 +14,13 @@ import no.uib.inf112.utility.ImageHandler;
 
 public class GameUI implements IDrawer {
 
-    private IMap map;
     private IPlayer player;
     private ImageHandler handler;
     private BufferedImage uiBar;
 
     private static final double UI_HEIGHT = Config.getInt("uiSize");
-    private static final int GUN_SIZE = Config.getInt("uiGunSize");
+    private static final int GUN_WIDTH = Config.getInt("uiGunWidth");
+    private static final int GUN_HEIGHT = Config.getInt("uiGunHeight");
 
     private static final Font AMMO_FONT = new Font("Arial", Font.BOLD, 46);
     private static final Color AMMO_COLOR = new Color(57, 255, 20); // neon green
@@ -41,7 +37,6 @@ public class GameUI implements IDrawer {
     private static final Color HP_TEXT_COLOR = Color.BLACK;
 
     public GameUI(IMap map, ImageHandler handler) {
-        this.map = map;
         this.player = map.getPlayer();
         this.handler = handler;
         this.uiBar = handler.uiBar();
@@ -61,7 +56,7 @@ public class GameUI implements IDrawer {
 
         // Gun
         drawImage(graphic, this.handler.getGunImage(this.player.gunType()),
-                new Rectangle2D.Double(x1 + 330, y1 + 20, GUN_SIZE, UI_HEIGHT - 30));
+                new Rectangle2D.Double(x1 + 330, y1 + 40, GUN_WIDTH, GUN_HEIGHT));
 
         // Ammunition
         graphic.setColor(AMMO_COLOR);
@@ -72,7 +67,7 @@ public class GameUI implements IDrawer {
         graphic.drawString(String.format("%s/%s", currentAmmo, maxAmmo), (int) x1 + 100, (int) y1 + 98);
 
         // HealthBar
-        drawHealthBar(graphic, (int) x1 + 755, (int) y1+45);
+        drawHealthBar(graphic, (int) x1 + 755, (int) y1 + 45);
     }
 
     private void drawHealthBar(Graphics2D g, int x1, int y1) {
@@ -80,25 +75,26 @@ public class GameUI implements IDrawer {
         int maxHp = player.getMaxHP();
         int currentHP = player.getCurrentHP();
 
-        //background
+        // background
         g.setColor(HP_BACK);
         g.fillRoundRect(x1, y1, HP_BAR_WIDTH, HP_BAR_HEIGHT, 10, 10);
 
-        //filling
-        double percentHP = currentHP / maxHp;
+        // filling
+        double percentHP = currentHP / (double) maxHp;
         Color fill;
-        if (percentHP >= 0.6)
+        if (percentHP >= 0.7) {
             fill = GREEN;
-        else if (percentHP >= 0.3)
+        } else if (percentHP >= 0.4) {
             fill = ORANGE;
-        else
+        } else {
             fill = RED;
+        }
 
-        int innerWidth = HP_BAR_WIDTH - 3 * 2;
+        int innerWidth = (int)((HP_BAR_WIDTH - 3 * 2) * percentHP);
         g.setColor(fill);
         g.fillRoundRect(x1 + 3, y1 + 3, innerWidth, HP_BAR_HEIGHT - 3 * 2, 8, 8);
 
-        //border
+        // border
         g.setColor(HP_BORDER);
         g.drawRoundRect(x1, y1, HP_BAR_WIDTH, HP_BAR_HEIGHT, 10, 10);
 

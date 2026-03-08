@@ -3,6 +3,7 @@ package no.uib.inf112.map;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.ICell;
@@ -16,11 +17,10 @@ public class Cell implements ICell {
     private int col;
     private FloorType floorType;
     private PathType pathType;
-    private List<ICell> neighbours;
-    private boolean occupied = false;
-    private LinkedHashSet<IEnemy> enemies = new LinkedHashSet<>();
-
-
+    private HashSet<IEnemy> smallOccupants;
+    private HashSet<IEnemy> mediumOccupants;
+    private HashSet<IEnemy> largeOccupants;
+    private ArrayList<HashSet<IEnemy>> occupants;
 
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
         this.bounds = bounds;
@@ -29,29 +29,21 @@ public class Cell implements ICell {
         this.col = col;
         this.floorType = floorType;
         this.pathType = type;
+
+        // Occupants for pathing
+        this.smallOccupants = new HashSet<>();
+        this.mediumOccupants = new HashSet<>();
+        this.largeOccupants = new HashSet<>();
+        this.occupants = new ArrayList<>();
+        this.occupants.add(this.smallOccupants);
+        this.occupants.add(this.mediumOccupants);
+        this.occupants.add(this.largeOccupants);
+
     }
 
-
-
-    @Override
-    public List<ICell> getNeighbours() {
-        return this.neighbours;
-    }
 
     public Rectangle2D.Double getBounds() {
         return this.bounds;
-    }
-
-    public boolean isBlocked() {
-        return this.blocked;
-    }
-
-    public void block() {
-        this.blocked = true;
-    }
-
-    public void unblock() {
-        this.blocked = false;
     }
 
     @Override
@@ -91,7 +83,7 @@ public class Cell implements ICell {
         Cell o = (Cell) obj;
 
         return this.col == o.col() && this.row == o.row() && this.bounds.equals(o.getBounds())
-                && this.blocked == o.isBlocked();
+                && this.pathType == o.pathType();
     }
 
     @Override
@@ -114,23 +106,81 @@ public class Cell implements ICell {
     }
 
     @Override
-    public void setOccupied(boolean b) { this.occupied = b; }
-
-    @Override
-    public boolean isOccupied() { return this.occupied; }
-
-    @Override
-    public LinkedHashSet<IEnemy> getEnemies() {
-        return this.enemies ;
+    public boolean isOccupied(EnemySize size) {
+        switch (size) {
+            case SMALL -> {
+                return (!this.smallOccupants.isEmpty());
+            }
+            case MEDIUM -> {
+                return (!this.mediumOccupants.isEmpty());
+            }
+            case LARGE -> {
+                return (!this.largeOccupants.isEmpty());
+            }
+            default -> {
+                throw new IllegalArgumentException("Unknown EnemySize");
+            }
+        }
     }
 
     @Override
-    public void removeEnemy(IEnemy enemy) {
-        this.enemies.remove(enemy);
+    public void setOccupant(IEnemy enemy, EnemySize size) {
+
+        if (size == EnemySize.SMALL){
+            this.smallOccupants.add(enemy);
+            // this.mediumOccupants.add(enemy);
+            // this.largeOccupants.add(enemy);
+        }
+        else if (size == EnemySize.MEDIUM){
+            this.mediumOccupants.add(enemy);
+            // this.largeOccupants.add(enemy);
+        }
+        else{
+            this.largeOccupants.add(enemy);
+        }
     }
 
     @Override
-    public void addEnemy(IEnemy enemy) {
-        this.enemies.add(enemy);
+    public boolean occupiedBy(IEnemy enemy) {
+        EnemySize size = enemy.size();
+        switch (size) {
+            case SMALL -> {
+                return (this.smallOccupants.contains(enemy));
+            }
+            case MEDIUM -> {
+                return (this.mediumOccupants.contains(enemy));
+            }
+            case LARGE -> {
+                return (this.largeOccupants.contains(enemy));
+            }
+            default -> {
+                throw new IllegalArgumentException("Unknown enemy");
+            }
+        }
+    }
+
+    @Override
+    public int occupiedCount(EnemySize size) {
+        switch (size) {
+            case SMALL -> {
+                return (this.smallOccupants.size());
+            }
+            case MEDIUM -> {
+                return (this.mediumOccupants.size());
+            }
+            case LARGE -> {
+                return (this.largeOccupants.size());
+            }
+            default -> {
+                throw new IllegalArgumentException("Unknown enemy");
+            }
+        }
+    }
+
+    @Override
+    public void clearOccupants() {
+        for (HashSet<IEnemy> oc : this.occupants) {
+            oc.clear();
+        }
     }
 }

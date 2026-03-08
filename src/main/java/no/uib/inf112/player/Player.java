@@ -13,6 +13,7 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.player.guns.DEagle;
+import no.uib.inf112.player.guns.MP5;
 
 public class Player implements IControllablePlayer, IViewablePlayer {
     private static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
@@ -44,6 +45,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         this.currentGun = new DEagle();
         this.guns = new HashMap<>();
         this.guns.put(this.currentGun.type(), this.currentGun);
+        this.guns.put(GunType.MP5, new MP5());
 
         this.currentHP = MAX_HP;
     }
@@ -59,7 +61,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     public boolean isMoving() {
         return dirHandler.isMoving();
     }
-    
+
     public void updateMovement() {
         Direction dir = dirHandler.getDirection();
         if (dir != null) {
@@ -94,7 +96,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
 
     }
-    
+
     private void trySlide(Direction dir) {
         switch (dir) {
             case SOUTH_EAST -> {
@@ -145,7 +147,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
                 }
                 break;
             }
-            default -> {/* No legal move - do nothing */}
+            default -> {
+                /* No legal move - do nothing */}
         }
     }
 
@@ -266,7 +269,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void setGunType(GunType gun) {
-        this.currentGun = this.guns.get(gun);
+
+        if (this.guns.containsKey(gun)) {
+            this.currentGun = this.guns.get(gun);
+        }
     }
 
     @Override
@@ -287,6 +293,17 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public int getCurrentHP() {
         return this.currentHP;
+    }
+
+    @Override
+    public void takeDamage(int damage) {
+        int newHP = this.currentHP - damage;
+        if (newHP < 0){
+            this.currentHP = 0;
+        }
+        else{
+            this.currentHP = newHP;
+        }
     }
 
 }

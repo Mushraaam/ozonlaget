@@ -1,24 +1,14 @@
 package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
-import java.util.LinkedHashSet;
-import java.util.List;
-
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 
 public interface ICell {
 
 
-    List<ICell> getNeighbours();
-
     public Rectangle2D.Double getBounds();
-
-    public boolean isBlocked();
-
-    public void block();
-
-    public void unblock();
 
     public int row();
 
@@ -32,13 +22,15 @@ public interface ICell {
 
     public void setPathType(PathType type);
 
-    void setOccupied(boolean b);
+    public boolean isOccupied(EnemySize currentEnemy);
 
-    boolean isOccupied();
+    public boolean occupiedBy(IEnemy enemy);
 
-    LinkedHashSet<IEnemy> getEnemies();
+    public void setOccupant(IEnemy enemy, EnemySize size);
 
-    void removeEnemy(IEnemy enemy);
+    public int occupiedCount(EnemySize size);
 
-    void addEnemy(IEnemy enemy);
+    public void clearOccupants();
+
+    
 }

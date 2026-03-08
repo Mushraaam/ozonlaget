@@ -14,10 +14,16 @@ import no.uib.inf112.enums.WallDirection;
 
 public class ImageHandler {
 
+    private HashMap<Direction, ArrayList<BufferedImage>> playerSprites;
+
     //PlayerSprite (put into hashmap layer?)
     private static final int PLAYER_SPRITE_COUNT = 8;
-    private static final int ENEMY_SPRITE_COUNT = 8;
-    private HashMap<Direction, ArrayList<BufferedImage>> playerSprites;
+
+    //Zombie Sprite
+    private static final int ZOMBIE_WALK_COUNT = 8;
+
+    //Ghoul sprite
+    private static final int GHOUL_WALK_COUNT = 8;
 
 
     //Wall images
@@ -65,8 +71,10 @@ public class ImageHandler {
 
 
     private void loadGunUI() {
-        int size = Config.getInt("uiGunSize");
-        this.gunUI.put(GunType.DEAGLE, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/DEagle.png"), size, size));
+        int w = Config.getInt("uiGunWidth");
+        int h = Config.getInt("uiGunHeight");
+        this.gunUI.put(GunType.DEAGLE, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/DEagle.png"), w, h));
+        this.gunUI.put(GunType.MP5, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/MP5.png"), w, h));
     }
 
     public BufferedImage getGunImage(GunType type){
@@ -171,15 +179,28 @@ public class ImageHandler {
     /// /////////// START ENEMY LOGIC //////////////
     
     private void loadEnemies(){
-        ArrayList<BufferedImage> zombies = new ArrayList<>();
-        int width = Config.getInt("thugWidth");
-        int height = Config.getInt("thugHeight");
-        for (int i = 0; i < ENEMY_SPRITE_COUNT; i++) {
-            String path = String.format("/no/uib/inf112/map/npcs/zombie/zombie_%d.png", i);
+
+
+        //Zombie (generic placeholder)
+        ArrayList<BufferedImage> zombieWalk = new ArrayList<>();
+        for (int i = 0; i < ZOMBIE_WALK_COUNT; i++) {
+            String path = String.format("/no/uib/inf112/npcs/zombie/zombie_%s.png", i);
             BufferedImage rawImage = ImageReader.fetchImage(path);
-            zombies.add(ImageReader.resizeExact(rawImage, width, height));
+            zombieWalk.add(rawImage);
         }
-            this.enemies.put(EnemyType.ZOMBIE, zombies);
+        this.enemies.put(EnemyType.ZOMBIE, zombieWalk);
+
+        //Ghoul
+        ArrayList<BufferedImage> ghoulWalk = new ArrayList<>();
+        for (int i = 0; i < GHOUL_WALK_COUNT; i++) {
+            String path = String.format("/no/uib/inf112/npcs/ghoul/Walk/walk_00%s.png", i);
+            BufferedImage rawImage = ImageReader.fetchImage(path);
+            ghoulWalk.add(rawImage);
+        }
+
+        this.enemies.put(EnemyType.GHOUL, ghoulWalk);
+
+
 
     }
 

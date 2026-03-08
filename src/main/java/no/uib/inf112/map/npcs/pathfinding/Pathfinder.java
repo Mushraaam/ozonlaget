@@ -4,6 +4,7 @@ import java.util.*;
 
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.interfaces.ICell;
+import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.IMap;
@@ -19,7 +20,7 @@ public class Pathfinder {
     private final int[] lastVisitedId;
     private int currentSearchId = 0;
 
-    private static final int OCCUPIED_WEIGHT = 5;
+    private static final int OCCUPIED_WEIGHT = 3;
 
     public Pathfinder(IMap map) {
         this.map = map;
@@ -33,9 +34,11 @@ public class Pathfinder {
         this.lastVisitedId = new int[totalCells];
     }
 
-    public List<ICell> findPath(ICell start, ICell goal, EnemySize size) {
-        if (start == null || goal == null || !canEnter(goal, size)) return List.of();
-        if (start.equals(goal)) return List.of(start);
+    public List<ICell> findPath(IEnemy enemy, ICell start, ICell goal, EnemySize size, List<ICell> currentPath) {
+        if (start == null || goal == null || !canEnter(goal, size))
+            return findPath(enemy, start, currentPath.getLast(), size, currentPath);
+        if (start.equals(goal))
+            return List.of(start);
 
         currentSearchId++;
 
@@ -61,10 +64,11 @@ public class Pathfinder {
             }
 
             for (ICell neighbor : grid.getNeighbours(current)) {
-                if (neighbor == null || !canEnter(neighbor, size)) continue;
+                if (neighbor == null || !canEnter(neighbor, size))
+                    continue;
 
                 int nIdx = getIdx(neighbor);
-                double tentativeG = gScore[currentIdx] + stepCost(current, neighbor);
+                double tentativeG = gScore[currentIdx] + stepCost(enemy, current, neighbor);
 
                 // If neighbor hasn't been seen this search, or we found a better way
                 if (lastVisitedId[nIdx] != currentSearchId || tentativeG < gScore[nIdx]) {
@@ -75,7 +79,7 @@ public class Pathfinder {
                 }
             }
         }
-        return List.of();
+        return currentPath;
     }
 
     private int getIdx(ICell cell) {
@@ -92,7 +96,8 @@ public class Pathfinder {
         int curr = getIdx(goalCell);
         while (curr != -1) {
             path.addFirst(grid.getCell(curr / width, curr % width));
-            if (curr == startIdx) break;
+            if (curr == startIdx)
+                break;
             curr = cameFromIdx[curr];
         }
         return path;
@@ -109,26 +114,33 @@ public class Pathfinder {
      * Calculates the movement cost between two adjacent cells.
      * Account for diagonal movement (sqrt(2)) vs orthogonal movement (1.0).
      */
-    private double stepCost(ICell from, ICell to) {
+    private double stepCost(IEnemy enemy, ICell from, ICell to) {
         int dx = from.col() - to.col();
         int dy = from.row() - to.row();
         double cost = (dx != 0 && dy != 0) ? 1.4142 : 1.0;
-        int enemyCount = to.getEnemies().size();
 
-        double trafficPenalty = enemyCount * OCCUPIED_WEIGHT;
+        double trafficPenalty = 0;
+        if (to.isOccupied(enemy.size())){
+            int i = 0;
+            if (to.occupiedBy(enemy)){i++;}
+            trafficPenalty = OCCUPIED_WEIGHT * (to.occupiedCount(enemy.size())-i) * enemy.size().footprint();
+        }
+        // double trafficPenalty = enemyCount * OCCUPIED_WEIGHT;
 
         return cost + trafficPenalty;
     }
 
     /**
-     * Checks if a specific enemy size is allowed to enter a cell based on its PathType.
+     * Checks if a specific enemy size is allowed to enter a cell based on its
+     * PathType.
      */
     public boolean canEnter(ICell cell, EnemySize size) {
 
-        PathType type = cell.pathType(); //Need to do somthing about this one, Probably only 2 layers, or bigger layers?
+        PathType type = cell.pathType(); // Need to do somthing about this one, Probably only 2 layers, or bigger
+                                         // layers?
         switch (size) {
             case SMALL -> {
-                return type != PathType.BLOCKED && type != PathType.BLOCKED_FOR_MEDIUM;
+                return type != PathType.BLOCKED;// && type != PathType.BLOCKED_FOR_MEDIUM;
             }
             case MEDIUM -> {
                 return type != PathType.BLOCKED && type != PathType.BLOCKED_FOR_MEDIUM;
@@ -139,10 +151,5 @@ public class Pathfinder {
             default -> throw new IllegalStateException("No known case for size");
         }
     }
-
-
-
-
-
 
 }

@@ -5,10 +5,12 @@ import java.awt.geom.Rectangle2D;
 import java.util.*;
 
 import no.uib.inf112.config.Config;
+import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.ICell;
+import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IStaticObject;
 
@@ -23,6 +25,11 @@ public class Grid implements IGrid {
     private final static int CELLWIDTH = Config.getInt("cellWidth");
     private final static int CELLHEIGHT = Config.getInt("cellHeight");
 
+    // Enemy sizes
+    private static final double SMALL = Config.getInt("smallEnemy") * 0.1;
+    private static final double MEDIUM = Config.getInt("mediumEnemy") * 0.34;
+    private static final double LARGE = Config.getInt("largeEnemy") * 0.51;
+
     private int colCount;
     private int rowCount;
 
@@ -30,7 +37,7 @@ public class Grid implements IGrid {
 
     public Grid(IMap map) {
         this.map = map;
-        this.bounds =this.map.getBounds();
+        this.bounds = this.map.getBounds();
 
         if (this.bounds.getX() != 0 || this.bounds.getY() != 0) {
             throw new IllegalArgumentException("Bounds for Map must start with x, y = 0");
@@ -46,7 +53,7 @@ public class Grid implements IGrid {
         this.cellGrid = makeGrid(this.rowCount, this.colCount, CELLWIDTH, CELLHEIGHT, FloorType.NONE);
         fillGrid(this.cellGrid, map.getStaticObjects());
 
-        int[] levelsToCompute = {1, 2, 3, 4, 5, 6};
+        int[] levelsToCompute = { 1, 2, 3, 4, 5, 6 };
         for (int r = 0; r < rowCount; r++) {
             for (int c = 0; c < colCount; c++) {
                 ICell cell = getCell(r, c);
@@ -93,12 +100,13 @@ public class Grid implements IGrid {
 
     /**
      * Should only be run once in constructor else your pc will break
+     * 
      * @param grid
      * @param blockers
      */
     private void fillGrid(ArrayList<ArrayList<ICell>> grid, ArrayList<IStaticObject> blockers) {
 
-        //Sets illegal cells for all enemies
+        // Sets illegal cells for all enemies
         for (ArrayList<ICell> row : grid) {
             for (ICell cell : row) {
                 for (IStaticObject blocker : blockers) {
@@ -109,7 +117,7 @@ public class Grid implements IGrid {
             }
         }
 
-        //Sets illegal cells for medium and large enemies
+        // Sets illegal cells for medium and large enemies
         for (ArrayList<ICell> row : grid) {
             for (ICell cell : row) {
                 if (cell.pathType() == PathType.BLOCKED) {
@@ -122,7 +130,7 @@ public class Grid implements IGrid {
             }
         }
 
-        //Sets illegal cells for large enemies
+        // Sets illegal cells for large enemies
         for (ArrayList<ICell> row : grid) {
             for (ICell cell : row) {
                 if (cell.pathType() == PathType.BLOCKED_FOR_MEDIUM) {
@@ -182,22 +190,29 @@ public class Grid implements IGrid {
             neighbours.add(right);
         }
 
-        if (over != null && left != null && !over.isBlocked() && !left.isBlocked()) {
-            neighbours.add(getCell(row - 1, col - 1)); // up-left
+        if (over != null && left != null
+                && over.pathType() != PathType.BLOCKED
+                && left.pathType() != PathType.BLOCKED) {
+            neighbours.add(getCell(row - 1, col - 1));
         }
-        if (over != null && right != null && !over.isBlocked() && !right.isBlocked()) {
-            neighbours.add(getCell(row - 1, col + 1)); // up-right
+        if (over != null && right != null
+                && over.pathType() != PathType.BLOCKED
+                && right.pathType() != PathType.BLOCKED) {
+            neighbours.add(getCell(row - 1, col + 1));
         }
-        if (under != null && left != null && !under.isBlocked() && !left.isBlocked()) {
-            neighbours.add(getCell(row + 1, col - 1)); // down-left
+        if (under != null && left != null
+                && under.pathType() != PathType.BLOCKED
+                && left.pathType() != PathType.BLOCKED) {
+            neighbours.add(getCell(row + 1, col - 1));
         }
-        if (under != null && right != null && !under.isBlocked() && !right.isBlocked()) {
-            neighbours.add(getCell(row + 1, col + 1)); // down-right
+        if (under != null && right != null
+                && under.pathType() != PathType.BLOCKED
+                && right.pathType() != PathType.BLOCKED) {
+            neighbours.add(getCell(row + 1, col + 1));
         }
 
         return neighbours;
     }
-
 
     @Override
     public Iterator<ICell> iterator() {
@@ -229,22 +244,6 @@ public class Grid implements IGrid {
     }
 
     public ArrayList<ICell> getCellsInView(Graphics2D graphics) {
-        // double x1 = Math.min(this.bounds.getWidth(), Math.max(0,
-        // graphics.getClipBounds().getMinX()));
-        // double y1 = Math.min(this.bounds.getHeight(), Math.max(0,
-        // graphics.getClipBounds().getMinY()));
-        // double x2 = Math.min(this.bounds.getWidth(), Math.max(0,
-        // graphics.getClipBounds().getMaxX()));
-        // double y2 = Math.min(this.bounds.getHeight(), Math.max(0,
-        // graphics.getClipBounds().getMaxY()));
-
-        // ICell topLeft = getCellFromXY(x1, y1);
-        // ICell botRight = getCellFromXY(x2, y2);
-
-        // int startRow = topLeft.row();
-        // int endRow = botRight.row();
-        // int startCol = topLeft.col();
-        // int endCol = botRight.col();
 
         // optimalisert versjon av kommenter kode over
         Rectangle2D clip = graphics.getClipBounds();
@@ -286,6 +285,55 @@ public class Grid implements IGrid {
     @Override
     public int getColCount() {
         return this.colCount;
+    }
+
+    @Override
+    public void gatherOccupiedCells() {
+        for (IEnemy enemy : this.map.getEnemies()) {
+            Rectangle2D.Double hitbox = enemy.getHitbox();
+
+            for (EnemySize size : EnemySize.values()) {
+                double w = pixelsFromSize(size);
+                double h = pixelsFromSize(size);
+
+                double x1 = hitbox.getMinX() - w;
+                double y1 = hitbox.getMinY() - h;
+                double x2 = hitbox.getMaxX() + w;
+                double y2 = hitbox.getMaxY() + h;
+
+                ICell topLeft = getCellFromXY(x1, y1);
+                ICell botRight = getCellFromXY(x2, y2);
+
+                if (topLeft == null || botRight == null) {
+                    continue;
+                }
+
+                for (int row = topLeft.row(); row <= botRight.row(); row++) {
+                    for (int col = topLeft.col(); col <= botRight.col(); col++) {
+                        ICell cell = getCell(row, col);
+                        if (cell != null) {
+                            cell.setOccupant(enemy, size);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private double pixelsFromSize(EnemySize size) {
+        if (size == EnemySize.SMALL) {
+            return SMALL;
+        } else if (size == EnemySize.MEDIUM) {
+            return MEDIUM;
+        }
+        return LARGE;
+    }
+
+    @Override
+    public void resetOccupied() {
+        for (ICell cell : this) {
+            cell.clearOccupants();
+        }
     }
 
 }

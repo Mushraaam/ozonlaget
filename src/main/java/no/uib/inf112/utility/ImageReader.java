@@ -29,31 +29,7 @@ public class ImageReader {
         }
     }
 
-    // public static BufferedImage resizeExact(BufferedImage original, int width,
-    // int height) {
-    // GraphicsConfiguration config =
-    // GraphicsEnvironment.getLocalGraphicsEnvironment()
-    // .getDefaultScreenDevice().getDefaultConfiguration();
-    // BufferedImage resized = config.createCompatibleImage(width, height,
-    // original.getTransparency());
-
-    // Graphics2D g2d = resized.createGraphics();
-
-    // // This is gippity magic, improves image quality /////////
-    // g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-    // RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-    // g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
-    // RenderingHints.VALUE_RENDER_QUALITY);
-    // g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-    // RenderingHints.VALUE_ANTIALIAS_ON);
-
-    // g2d.drawImage(original, 0, 0, width, height, null);
-    // g2d.dispose();
-
-    // return resized;
-    // }
-
-    //Originally hand made, but improved with chatgpt
+    //Originally hand made, but improved with chatgpt in order to improve image quality
     public static BufferedImage resizeExact(BufferedImage original, int width, int height) {
         GraphicsConfiguration config = GraphicsEnvironment.getLocalGraphicsEnvironment()
                 .getDefaultScreenDevice().getDefaultConfiguration();
@@ -63,6 +39,7 @@ public class ImageReader {
 
         BufferedImage img = original;
 
+        //gradually scale seems to improve quality compared to a single scale action
         while (w / 2 >= width && h / 2 >= height) {
             w /= 2;
             h /= 2;
@@ -81,7 +58,6 @@ public class ImageReader {
             img = tmp;
         }
 
-        // Final precise resize to requested size (highest quality)
         BufferedImage resized = config.createCompatibleImage(width, height, original.getTransparency());
         Graphics2D g2d = resized.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);

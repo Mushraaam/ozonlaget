@@ -1,8 +1,8 @@
 package no.uib.inf112.controller;
 
 import no.uib.inf112.enums.Direction;
-import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.GameState;
+import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.IControllablePlayer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
@@ -71,6 +71,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             for (IEnemy enemy : map.getEnemies()) {
                 enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
             }
+            this.map.resetOccupied();
             PerfTracker.stop("Pathfinding");
         });
 
@@ -85,7 +86,6 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             for (IEnemy enemy : enemies) {
                 enemy.move(grid);
             }
-            map.updateEnemyLocations(map.getEnemies());
             PerfTracker.stop("Movement Logic");
             
         });
@@ -161,11 +161,27 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
                 player.pressMove(Direction.EAST);
             }
 
+            case KeyEvent.VK_1 -> {
+                this.player.setGunType(GunType.DEAGLE);
+            }
+            case KeyEvent.VK_2 -> {
+                this.player.setGunType(GunType.MP5);
+            }
+
+            case KeyEvent.VK_I -> { 
+                if (this.map.debugMode()){
+                    this.player.takeDamage(10);
+                }
+            }
+
             case KeyEvent.VK_P -> {
                 flipDebug();
             }
             case KeyEvent.VK_O -> {
-                map.getSpawner().spawnThug();
+                map.getSpawner().spawnGhoul();
+            }
+            case KeyEvent.VK_L -> {
+                map.getSpawner().spawnZombie();
             }
         }
     }
