@@ -16,24 +16,20 @@ import no.uib.inf112.interfaces.IStaticObject;
 
 public class Grid implements IGrid {
 
-    private ArrayList<ArrayList<ICell>> cellGrid;
-
-    private Rectangle2D.Double bounds;
-    private IMap map;
-
     // Represent pixel width
     private final static int CELLWIDTH = Config.getInt("cellWidth");
     private final static int CELLHEIGHT = Config.getInt("cellHeight");
-
     // Enemy sizes
     private static final double SMALL = Config.getInt("smallEnemy") * 0.1;
     private static final double MEDIUM = Config.getInt("mediumEnemy") * 0.34;
     private static final double LARGE = Config.getInt("largeEnemy") * 0.51;
-
+    private final Set<ICell> taintedCells = new HashSet<>();
+    private final HashMap<ICell, HashMap<Integer, List<ICell>>> neighbourMap = new HashMap<>();
+    private ArrayList<ArrayList<ICell>> cellGrid;
+    private Rectangle2D.Double bounds;
+    private IMap map;
     private int colCount;
     private int rowCount;
-
-    private final HashMap<ICell, HashMap<Integer, List<ICell>>> neighbourMap = new HashMap<>();
 
     public Grid(IMap map) {
         this.map = map;
@@ -53,7 +49,7 @@ public class Grid implements IGrid {
         this.cellGrid = makeGrid(this.rowCount, this.colCount, CELLWIDTH, CELLHEIGHT, FloorType.NONE);
         fillGrid(this.cellGrid, map.getStaticObjects());
 
-        int[] levelsToCompute = { 1, 2, 3, 4, 5, 6 };
+        int[] levelsToCompute = {1, 2, 3, 4, 5, 6};
         for (int r = 0; r < rowCount; r++) {
             for (int c = 0; c < colCount; c++) {
                 ICell cell = getCell(r, c);
@@ -100,7 +96,7 @@ public class Grid implements IGrid {
 
     /**
      * Should only be run once in constructor else your pc will break
-     * 
+     *
      * @param grid
      * @param blockers
      */
@@ -292,28 +288,28 @@ public class Grid implements IGrid {
         for (IEnemy enemy : this.map.getEnemies()) {
             Rectangle2D.Double hitbox = enemy.getHitbox();
 
-            for (EnemySize size : EnemySize.values()) {
-                double w = pixelsFromSize(size);
-                double h = pixelsFromSize(size);
+            EnemySize size = enemy.size();
+            double w = pixelsFromSize(size);
+            double h = pixelsFromSize(size);
 
-                double x1 = hitbox.getMinX() - w;
-                double y1 = hitbox.getMinY() - h;
-                double x2 = hitbox.getMaxX() + w;
-                double y2 = hitbox.getMaxY() + h;
+            double x1 = hitbox.getMinX() - w;
+            double y1 = hitbox.getMinY() - h;
+            double x2 = hitbox.getMaxX() + w;
+            double y2 = hitbox.getMaxY() + h;
 
-                ICell topLeft = getCellFromXY(x1, y1);
-                ICell botRight = getCellFromXY(x2, y2);
+            ICell topLeft = getCellFromXY(x1, y1);
+            ICell botRight = getCellFromXY(x2, y2);
 
-                if (topLeft == null || botRight == null) {
-                    continue;
-                }
+            if (topLeft == null || botRight == null) {
+                continue;
+            }
 
-                for (int row = topLeft.row(); row <= botRight.row(); row++) {
-                    for (int col = topLeft.col(); col <= botRight.col(); col++) {
-                        ICell cell = getCell(row, col);
-                        if (cell != null) {
-                            cell.setOccupant(enemy, size);
-                        }
+            for (int row = topLeft.row(); row <= botRight.row(); row++) {
+                for (int col = topLeft.col(); col <= botRight.col(); col++) {
+                    ICell cell = getCell(row, col);
+                    if (cell != null) {
+                        cell.setOccupant(enemy, size);
+                        taintedCells.add(cell);
                     }
                 }
             }
@@ -331,9 +327,10 @@ public class Grid implements IGrid {
 
     @Override
     public void resetOccupied() {
-        for (ICell cell : this) {
+        for (ICell cell : taintedCells) {
             cell.clearOccupants();
         }
+        taintedCells.clear();
     }
 
 }

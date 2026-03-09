@@ -146,6 +146,9 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     changeState(GameState.ACTIVE_GAME);
                 }
+                else if (e.getKeyCode() == KeyEvent.VK_R) {
+                    view.getMainMenu().resetAnimation();
+                }
             }
 
             case ACTIVE_GAME -> {
