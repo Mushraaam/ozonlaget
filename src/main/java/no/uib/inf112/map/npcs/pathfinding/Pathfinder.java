@@ -136,6 +136,9 @@ public class Pathfinder {
      */
     public boolean canEnter(ICell cell, EnemySize size) {
 
+        if (cell == null){
+            return false;
+        }
         PathType type = cell.pathType(); // Need to do somthing about this one, Probably only 2 layers, or bigger
                                          // layers?
         switch (size) {

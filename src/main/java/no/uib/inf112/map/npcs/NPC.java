@@ -67,7 +67,6 @@ public abstract class NPC implements IEnemy {
 
     public abstract void attack(Rectangle2D.Double target);
 
-
     // shared methods
 
     @Override
@@ -154,10 +153,15 @@ public abstract class NPC implements IEnemy {
 
     private void unStuck(boolean moveX, boolean moveY) {
         ICell myCell = this.getStandingCell();
+        if (myCell == null) {
+            return;
+        }
 
         checkCellAndPush(myCell, moveX, moveY);
         for (ICell neighbor : map.getGrid().getNeighboursAtDepth(myCell, 2)) {
-            checkCellAndPush(neighbor, moveX, moveY);
+            if (neighbor != null) {
+                checkCellAndPush(neighbor, moveX, moveY);
+            }
         }
     }
 
@@ -298,7 +302,11 @@ public abstract class NPC implements IEnemy {
         if (movementHitbox.intersects(this.player.getHitbox())) {
             return false;
         }
-        
+
+        if (getStandingCell() == null) {
+            return false;
+        }
+
         if (!checkCell(getStandingCell(), movementHitbox)) {
             return false;
         }
@@ -313,6 +321,10 @@ public abstract class NPC implements IEnemy {
     }
 
     private boolean checkCell(ICell cell, Rectangle2D.Double movementHitbox) {
+        if (cell == null){
+            return false;
+        }
+
         for (IEnemy enemy : map.getEnemies()) {
             if (enemy != this) {
                 Rectangle2D enemyHitbox = enemy.getHitbox();
@@ -406,13 +418,14 @@ public abstract class NPC implements IEnemy {
     public EnemySize size() {
         return this.size;
     }
+
     @Override
-    public void takeDamage(int damage){
+    public void takeDamage(int damage) {
         this.health -= damage;
-        if (this.health < 0){
+        if (this.health < 0) {
             this.health = 0;
         }
-        if (this.health <= 0){
+        if (this.health <= 0) {
             this.map.removeEnemy(this);
         }
     }
@@ -434,19 +447,18 @@ public abstract class NPC implements IEnemy {
         this.type = type;
     }
 
-    protected void setAnimationCount(int count){
+    protected void setAnimationCount(int count) {
         this.animationCount = count;
     }
-    
+
     /**
      * Sets animationCount and sets animationIndex to 0
+     * 
      * @param count
      */
-    protected void setAttackAnimationCount(int count){
+    protected void setAttackAnimationCount(int count) {
         this.animationCount = count;
         this.animationIndex = 0;
     }
-
-    
 
 }
