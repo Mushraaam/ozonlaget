@@ -32,7 +32,7 @@ public class Controller
     private Timer playerAnimationTimer;
     private Timer movementTimer;
     private Timer pathFindingTimer;
-    private IGrid grid;
+    private IGrid grid; 
     private Timer gunshotTimer;
     private int fireRate;
     private Timer shootTimer;
@@ -101,6 +101,7 @@ public class Controller
         this.repaintTimer = new Timer(8, e -> {
             this.view.repaint();
         });
+        this.repaintTimer.start();
 
         this.gunshotTimer = new Timer(5, e -> {
             for (IGunShot shot : this.map.gunShots()) {
@@ -138,7 +139,6 @@ public class Controller
                 pathFindingTimer.start();
                 movementTimer.start();
                 this.gunshotTimer.start();
-                this.repaintTimer.start();
             }
             default -> {
 

@@ -47,6 +47,7 @@ public class ImageHandler {
     //Main Menu
     private BufferedImage menuBackground;
     private BufferedImage startButton;
+    private BufferedImage menuTitle;
 
 
     public ImageHandler(){
@@ -234,6 +235,8 @@ public class ImageHandler {
     private void loadMenu() {
         this.menuBackground = ImageReader.fetchImage("/no/uib/inf112/mainmenu/menu_background.png");
         this.startButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/start_button.png");
+        this.menuTitle = ImageReader.fetchImage("/no/uib/inf112/mainmenu/menu_title.png");
+        
     }
 
     public BufferedImage getFloor(FloorType type){
@@ -257,6 +260,10 @@ public class ImageHandler {
 
     public BufferedImage getStartButton() {
         return this.startButton;
+    }
+
+    public BufferedImage getMenuTitle() {
+        return this.menuTitle;
     }
 }
 
