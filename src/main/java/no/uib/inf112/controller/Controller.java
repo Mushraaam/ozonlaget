@@ -34,7 +34,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
     private Timer playerAnimationTimer;
     private Timer movementTimer;
     private Timer pathFindingTimer;
-    private IGrid grid;
+    private IGrid grid; 
     private Timer gunshotTimer;
 
     //test 60fps
@@ -100,6 +100,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
         this.repaintTimer = new Timer(8, e -> {
             this.view.repaint();
         });
+        this.repaintTimer.start();
 
         this.gunshotTimer = new Timer(5, e -> {
             for (IGunShot shot : this.map.gunShots()){
@@ -130,7 +131,6 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
                 pathFindingTimer.start();
                 movementTimer.start();
                 this.gunshotTimer.start();
-                this.repaintTimer.start();
             }
             default -> {
 
