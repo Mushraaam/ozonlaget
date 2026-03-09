@@ -362,8 +362,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
         // Check walls
         for (IStaticObject obj : this.map.getStaticObjects()) {
-            if (!obj.isWall()) {
-                continue; // Shoots over furniture etc
+            if (!obj.isWall() || !line.intersects(obj.getBounds())) {
+                continue; // Shoots over furniture, skip if not intersecting with object 
             }
             Point2D.Double hit = firstIntersection(line, obj.getBounds());
             if (hit != null) {
@@ -378,6 +378,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
         // Check enemies
         for (IEnemy enemy : this.map.getEnemies()) {
+            if (!line.intersects(enemy.getHitbox())){
+                continue; //Skip if not intersecting enemy
+            }
+
             Point2D.Double hit = firstIntersection(line, enemy.getHitbox());
             if (hit != null) {
                 double distSq = hit.distanceSq(startX, startY);
