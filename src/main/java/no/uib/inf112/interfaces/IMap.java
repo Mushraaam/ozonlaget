@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
+import no.uib.inf112.utility.Camera;
 
 public interface IMap {
     
@@ -115,4 +116,25 @@ public interface IMap {
      */
     public void resetOccupied();
 
+    /**
+     * Removes the gunShot from the list of gunshots;
+     * @param shot
+     */
+    public void removeShot(IGunShot shot);
+
+    /**
+     * @return iterable of all gunshots
+     */
+    public Iterable<IGunShot> gunShots();
+
+    /**
+     * Adds the gunshot to map
+     * @param shot
+     */
+    public void addShot(IGunShot shot);
+
+    /**
+     * @return camera object
+     */
+    public Camera getCamera();
 }

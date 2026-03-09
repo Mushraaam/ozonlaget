@@ -1,5 +1,6 @@
 package no.uib.inf112.player;
 
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
@@ -14,6 +15,8 @@ import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.player.guns.DEagle;
 import no.uib.inf112.player.guns.MP5;
+import no.uib.inf112.player.guns.gunShots.PistolShot;
+import no.uib.inf112.utility.Camera;
 
 public class Player implements IControllablePlayer, IViewablePlayer {
     private static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
@@ -42,7 +45,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         this.aimAngle = 0;
         setDirection(Direction.WEST);
 
-        //GUNS
+        // GUNS
         this.currentGun = new DEagle();
         this.guns = new HashMap<>();
         this.guns.put(this.currentGun.type(), this.currentGun);
@@ -294,12 +297,25 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public void takeDamage(int damage) {
         int newHP = this.currentHP - damage;
-        if (newHP < 0){
+        if (newHP < 0) {
             this.currentHP = 0;
-        }
-        else{
+        } else {
             this.currentHP = newHP;
         }
+    }
+
+    @Override
+    public void shoot(MouseEvent e) {
+        Camera cam = this.map.getCamera();
+
+        double x1 = this.hitbox.getCenterX();
+        double y1 = this.hitbox.getCenterY();
+
+        double x2 = e.getX() - cam.getTranslateX();
+        double y2 = e.getY() - cam.getTranslateY();
+
+        this.map.addShot(new PistolShot(x1, y1, x2, y2, this.map));
+
     }
 
 }

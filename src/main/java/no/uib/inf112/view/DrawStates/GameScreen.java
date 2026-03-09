@@ -8,6 +8,7 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
+import no.uib.inf112.interfaces.IGunShot;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IStaticDrawableObject;
 import no.uib.inf112.interfaces.IStaticObject;
@@ -28,7 +29,7 @@ public class GameScreen implements IDrawer {
 
     // private BufferedImage playerSprite;
 
-    public GameScreen(IMap map, ImageHandler handler) {
+    public GameScreen(IMap map, ImageHandler handler, Camera camera) {
 
 
         this.map = map;
@@ -36,7 +37,7 @@ public class GameScreen implements IDrawer {
         this.player = (IViewablePlayer) map.getPlayer();
         this.handler = handler;
         this.tiles = map.getTiles();
-        this.camera = new Camera(0, 0);
+        this.camera = camera;
     }
 
     @Override
@@ -48,8 +49,18 @@ public class GameScreen implements IDrawer {
         drawStaticObjects(graphic);
         drawPlayer(graphic);
         drawEnemies(graphic);
+        drawGunShots(graphic);
         
         this.ui.draw(graphic);
+    }
+
+    private void drawGunShots(Graphics2D graphic) {
+        graphic.setColor(Color.YELLOW);
+        graphic.setStroke(new BasicStroke(2));
+        for (IGunShot shot : this.map.gunShots()){
+            // graphic.fill(shot.bounds());
+            graphic.draw(shot.bounds());
+        }
     }
 
     private void drawStaticObjects(Graphics2D graphic) {

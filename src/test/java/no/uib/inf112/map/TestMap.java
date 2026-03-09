@@ -8,11 +8,13 @@ import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IFloor;
 import no.uib.inf112.interfaces.IGrid;
+import no.uib.inf112.interfaces.IGunShot;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IMovingDrawableObject;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
+import no.uib.inf112.utility.Camera;
 
 public class TestMap implements IMap {
 
@@ -170,6 +172,30 @@ public class TestMap implements IMap {
     public void resetOccupied() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'resetOccupied'");
+    }
+
+    @Override
+    public void removeShot(IGunShot shot) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeShot'");
+    }
+
+    @Override
+    public Iterable<IGunShot> gunShots() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'gunShots'");
+    }
+
+    @Override
+    public void addShot(IGunShot shot) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addShot'");
+    }
+
+    @Override
+    public Camera getCamera() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCamera'");
     }
 
 

@@ -1,7 +1,5 @@
 package no.uib.inf112.map.npcs;
 
-import no.uib.inf112.config.Config;
-import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.interfaces.ICell;

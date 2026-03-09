@@ -7,5 +7,6 @@ public enum StaticObjectType {
     LONG_WOODEN_WALL,
 
     //Furniture
-    DARK_TABLE_ROUNDED
+    DARK_TABLE_ROUNDED,
+    BEIGE_COUCH
 }

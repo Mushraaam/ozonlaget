@@ -8,6 +8,7 @@ import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.map.levels.Level1;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
+import no.uib.inf112.utility.Camera;
 
 public class Map implements IMap {
 
@@ -25,7 +26,12 @@ public class Map implements IMap {
     private ArrayList<IFloor> floors;
     private final Spawner spawner;
 
-    public Map() {
+    private Camera camera;
+
+    //GunLogic
+    private ArrayList<IGunShot> gunShots;
+
+    public Map(Camera camera) {
 
         this.level = new Level1(this);
         this.levelNumber = this.level.levelNumber();
@@ -34,6 +40,7 @@ public class Map implements IMap {
         this.floors = this.level.getFloor();
 
         this.enemies = new ArrayList<>();
+        this.gunShots = new ArrayList<>();
 
         this.debug = false;
 
@@ -47,8 +54,8 @@ public class Map implements IMap {
         this.spawner = new Spawner(this); // Spawner comes after grid, or else uh-oh.
         this.pathfinder = new Pathfinder(this);
 
-
-
+        
+        this.camera = camera;
         gatherOccupiedCells();
     }
 
@@ -157,6 +164,26 @@ public class Map implements IMap {
     @Override
     public int level() {
         return this.levelNumber;
+    }
+
+    @Override
+    public void removeShot(IGunShot shot) {
+        this.gunShots.remove(shot);
+    }
+
+    @Override
+    public Iterable<IGunShot> gunShots() {
+        return new ArrayList<>(this.gunShots);
+    }
+
+    @Override
+    public void addShot(IGunShot shot){
+        this.gunShots.add(shot);
+    }
+
+    @Override
+    public Camera getCamera(){
+        return this.camera;
     }
 
 

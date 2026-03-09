@@ -6,6 +6,7 @@ import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.IControllablePlayer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
+import no.uib.inf112.interfaces.IGunShot;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.view.GameDrawer;
 import no.uib.inf112.utility.PerfTracker;
@@ -34,6 +35,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
     private Timer movementTimer;
     private Timer pathFindingTimer;
     private IGrid grid;
+    private Timer gunshotTimer;
 
     //test 60fps
     private Timer repaintTimer;
@@ -98,12 +100,18 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
         this.repaintTimer = new Timer(8, e -> {
             this.view.repaint();
         });
-        this.repaintTimer.start();
+
+        this.gunshotTimer = new Timer(5, e -> {
+            for (IGunShot shot : this.map.gunShots()){
+                shot.reduceLifeTime();
+            }
+        });
         
         this.timers = new ArrayList<>();
         this.timers.add(playerAnimationTimer);
         this.timers.add(pathFindingTimer);
         this.timers.add(movementTimer);
+        this.timers.add(gunshotTimer);
 
         applyTimers(map.getGameState());
     }
@@ -121,6 +129,8 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
                 playerAnimationTimer.start();
                 pathFindingTimer.start();
                 movementTimer.start();
+                this.gunshotTimer.start();
+                this.repaintTimer.start();
             }
             default -> {
 
@@ -243,6 +253,10 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
     public void mousePressed(MouseEvent e) {
         switch (this.map.getGameState()) {
             
+            case ACTIVE_GAME -> {
+                this.player.shoot(e);
+            }
+
             case MAIN_MENU -> {
                 mainMenuMousePressEvent(e);
             }
@@ -259,9 +273,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
         }
 
         Point p = e.getPoint();
-
         var startButton = view.getMainMenu().getStartButton();
-
         if (startButton != null && startButton.contains(p)) {
             changeState(GameState.ACTIVE_GAME);
         }

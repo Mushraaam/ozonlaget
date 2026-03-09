@@ -1,5 +1,6 @@
 package no.uib.inf112.interfaces;
 
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
 import no.uib.inf112.enums.GunType;
@@ -41,5 +42,11 @@ public interface IPlayer {
      * @param damage
      */
     public void takeDamage(int damage);
+
+    /**
+     * Shoots towards mouseClick
+     * @param e
+     */
+    public void shoot(MouseEvent e);
 }
 
