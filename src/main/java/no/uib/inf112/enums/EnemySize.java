@@ -1,6 +1,6 @@
 package no.uib.inf112.enums;
 
-import java.awt.*;
+import java.awt.Color;
 
 public enum EnemySize {
     SMALL(4, Color.lightGray),
