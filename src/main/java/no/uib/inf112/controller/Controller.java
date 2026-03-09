@@ -16,6 +16,8 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.awt.event.MouseEvent;
 import javax.swing.Timer;
 import javax.swing.SwingUtilities;
@@ -36,6 +38,10 @@ public class Controller
     private int fireRate;
     private Timer shootTimer;
     private MouseEvent lastMouseEvent;
+
+    //Executor for pathfinding
+    private final ExecutorService pathExecutor;
+    private volatile boolean pathfindingRunning;
 
     // test 60fps
     private Timer repaintTimer;
@@ -61,6 +67,10 @@ public class Controller
         this.view.addMouseListener(this);
         this.view.setFocusable(true);
 
+        //
+        this.pathExecutor = Executors.newSingleThreadExecutor();
+        this.pathfindingRunning = false;
+
         // TIMERS
         this.playerAnimationTimer = new Timer(100, (ActionEvent e) -> {
             if (player.isMoving()) {
@@ -72,17 +82,27 @@ public class Controller
 
         });
 
+
         this.pathFindingTimer = new Timer(600, (ActionEvent e) -> {
-            Thread finder = new Thread(() -> {
-                PerfTracker.start("Pathfinding");
-                this.map.gatherOccupiedCells();
-                for (IEnemy enemy : map.getEnemies()) {
-                    enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
+            if (pathfindingRunning) {
+                return;
+            }
+            pathfindingRunning = true;
+            pathExecutor.submit(() -> {
+                try {
+                    PerfTracker.start("Pathfinding");
+                    this.map.gatherOccupiedCells();
+
+                    for (IEnemy enemy : map.getEnemies()) {
+                        enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
+                    }
+
+                    this.map.resetOccupied();
+                    PerfTracker.stop("Pathfinding");
+                } finally {
+                    pathfindingRunning = false;
                 }
-                this.map.resetOccupied();
-                PerfTracker.stop("Pathfinding");
             });
-            finder.start();
         });
 
         this.movementTimer = new Timer(16, e -> {
