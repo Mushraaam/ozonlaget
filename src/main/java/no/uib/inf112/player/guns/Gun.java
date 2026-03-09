@@ -17,6 +17,14 @@ public abstract class Gun implements IGun {
     }
 
     @Override
+    public boolean shoot(){
+        if (this.currentAmmunition > 0){
+            this.currentAmmunition--;
+        }
+        return this.currentAmmunition <= 0;
+    }
+
+    @Override
     public int maxAmmunition() {
         return maxAmmo;
     }

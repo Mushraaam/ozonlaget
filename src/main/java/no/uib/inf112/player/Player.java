@@ -320,6 +320,11 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public void shoot(MouseEvent e) {
 
+        if (this.currentGun.shoot()){
+            return;
+        }
+        
+
         double x1 = this.hitbox.getCenterX();
         double y1 = this.hitbox.getCenterY();
 

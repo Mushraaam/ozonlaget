@@ -8,5 +8,5 @@ public enum StaticObjectType {
 
     //Furniture
     DARK_TABLE_ROUNDED,
-    BEIGE_COUCH
+    BEIGE_COUCH_DOWN
 }

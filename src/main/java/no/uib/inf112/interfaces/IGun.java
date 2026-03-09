@@ -39,5 +39,10 @@ public interface IGun {
      * @return the ammount of damage this gun deals
      */
     public int damage();
-    //TODO: shoot, reload, firerate?
+
+    /**
+     * Reduces ammunition by 1
+     * returns True if out of ammunition
+     */
+    public boolean shoot();
 }
