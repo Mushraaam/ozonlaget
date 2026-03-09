@@ -120,7 +120,6 @@ public class ImageHandler {
             playerSouthEast.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south_east.png", i)));
         }
 
-
         this.playerSprites.put(Direction.NORTH, playerNorth);
         this.playerSprites.put(Direction.SOUTH, playerSouth);
         this.playerSprites.put(Direction.WEST, playerWest);

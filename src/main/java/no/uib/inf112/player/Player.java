@@ -42,6 +42,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         this.aimAngle = 0;
         setDirection(Direction.WEST);
 
+        //GUNS
         this.currentGun = new DEagle();
         this.guns = new HashMap<>();
         this.guns.put(this.currentGun.type(), this.currentGun);

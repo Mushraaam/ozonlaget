@@ -9,13 +9,10 @@ public class PerfTracker {
     public static double fps = 0;
     public static double ups = 0;
     public static double lastFrameTime = 0;
-
     public static final Map<String, Double> taskMs = new ConcurrentHashMap<>();
     private static final Map<String, Long> startTimes = new ConcurrentHashMap<>();
-
     private static long lastSnapshot = System.nanoTime();
     private static int frames, updates;
-
     public static void start(String task) {
         startTimes.put(task, System.nanoTime());
     }
