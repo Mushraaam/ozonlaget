@@ -10,15 +10,20 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.view.GameDrawer;
 import no.uib.inf112.utility.PerfTracker;
 import no.uib.inf112.utility.Camera;
+
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.awt.event.MouseEvent;
+
 
 import javax.swing.Timer;
+import javax.swing.SwingUtilities;
 
 
 
-public class Controller implements java.awt.event.KeyListener, java.awt.event.MouseMotionListener {
+public class Controller implements java.awt.event.KeyListener, java.awt.event.MouseMotionListener, java.awt.event.MouseListener {
 
     private final Camera camera;
 
@@ -51,6 +56,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
 
         this.view.addKeyListener(this);
         this.view.addMouseMotionListener(this);
+        this.view.addMouseListener(this);
         this.view.setFocusable(true);
 
         // TIMERS
@@ -128,8 +134,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
 
             case MAIN_MENU -> {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    map.setGameState(GameState.ACTIVE_GAME);
-                    applyTimers(GameState.ACTIVE_GAME);
+                    changeState(GameState.ACTIVE_GAME);
                 }
             }
 
@@ -233,6 +238,57 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             map.debugOn();
         }
     }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        switch (this.map.getGameState()) {
+            
+            case MAIN_MENU -> {
+                mainMenuMousePressEvent(e);
+            }
+
+            default -> {
+            }
+        }
+    }
+
+    private void mainMenuMousePressEvent(MouseEvent e) {
+        
+        if (!SwingUtilities.isLeftMouseButton(e)) {
+            return;
+        }
+
+        Point p = e.getPoint();
+
+        var startButton = view.getMainMenu().getStartButton();
+
+        if (startButton != null && startButton.contains(p)) {
+            changeState(GameState.ACTIVE_GAME);
+        }
+    }
+
+
+    private void changeState(GameState state) {
+        map.setGameState(state);
+        applyTimers(state);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
 
     @Override
     public void mouseMoved(java.awt.event.MouseEvent e) {
