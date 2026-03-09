@@ -59,51 +59,63 @@ public class Level1 implements ILevel {
 
         //start box testing
 
-
+        ///////////
         //house 1
         this.floors.add(new WoodFloor(new Rectangle2D.Double(100,100, 450, 410)));
 
-
-        staticObjects.add(new WoodWall( // Left wall
-                new Rectangle2D.Double(900 - 30, 900 - 30, 15, 300 + 60), StaticObjectType.LONG_WOODEN_WALL));
-        staticObjects.add(new WoodWall( // Bottom wall
-                new Rectangle2D.Double(900 - 30, 900 + 330, 360, 15), StaticObjectType.LONG_WOODEN_WALL));
-        staticObjects.add(new WoodWall( // Top wall
-                new Rectangle2D.Double(900 - 30, 900 - 30, 300 + 60, 15), StaticObjectType.LONG_WOODEN_WALL));
-        staticObjects.add(new WoodWall( // Right top
-                new Rectangle2D.Double(900 + 330, 900 - 30, 15, 100), StaticObjectType.WOODEN_WALL));
-        staticObjects.add(new WoodWall( // Right bot
-                new Rectangle2D.Double(900 + 330, 900 + 300 - 100, 15, 145), StaticObjectType.WOODEN_WALL));
+        //exterior walls
+        staticObjects.add(new WoodWall( // Top 
+            new Rectangle2D.Double(80, 80, 480, 15), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Left 
+                new Rectangle2D.Double(80, 90, 15, 415), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Right
+                new Rectangle2D.Double(545, 90, 15, 415), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom left 
+                new Rectangle2D.Double(80, 505, 200, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom right 
+                new Rectangle2D.Double(360, 505, 200, 15), StaticObjectType.WOODEN_WALL));
 
         //furniture
         staticObjects.add(new DarkWoodenTable(
                 new Rectangle2D.Double(960, 940, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
+        ///////////
 
+        ///////////
         //house 2
-            this.floors.add(new WoodFloor(new Rectangle2D.Double(1710,20, 2480-1710, 260)));
+        this.floors.add(new WoodFloor(new Rectangle2D.Double(1710,20, 2480-1710, 260)));
+        ///////////
 
 
+        ///////////
         //house 3
         this.floors.add(new WoodFloor(new Rectangle2D.Double(410, 705, 350, 1170-700)));
 
         this.staticObjects.add(new WoodWall(new Rectangle2D.Double(100-20, 900-20, 10, 700+20), StaticObjectType.LONG_WOODEN_WALL));
-                staticObjects.add(new DarkWoodenTable(
-                new Rectangle2D.Double(130, 1300, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
+        //furniture
+        this.staticObjects.add(new DarkWoodenTable(new Rectangle2D.Double(130, 1300, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
         this.staticObjects.add(new BeigeCouch(new Rectangle2D.Double(130, 1200, Config.getInt("couchWidth"), Config.getInt("couchHeight"))));
-
+        ///////////
+        
+        ///////////
         //house 4
         this.floors.add(new WoodFloor(new Rectangle2D.Double(1480,680, 1915-1480, 1205-680)));
+        ///////////
 
+        ///////////
         //house 5 
         this.floors.add(new WoodFloor(new Rectangle2D.Double(2100,880, 400, 1770-880)));
+        ///////////
 
+        ///////////
         //house 6
         this.floors.add(new WoodFloor(new Rectangle2D.Double(700,1450, 1510-700, 1820-1450)));
         this.floors.add(new WoodFloor(new Rectangle2D.Double(970,1820, 1510-1240, 2260-1820)));
+        ///////////
 
+        ///////////
         //house 7
         this.floors.add(new WoodFloor(new Rectangle2D.Double(1790,2185, 2430-1790, 2485-2185)));
-
+        ///////////
 
 
 
