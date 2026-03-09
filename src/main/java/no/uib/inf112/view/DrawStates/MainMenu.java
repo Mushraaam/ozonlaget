@@ -33,6 +33,7 @@ public class MainMenu implements IDrawer{
     //use for later when going back to mainmenu
     public void resetAnimation() {
         animationStarted = false;
+        startButtonX = -BUTTON_WIDTH;
     }
 
     @Override
