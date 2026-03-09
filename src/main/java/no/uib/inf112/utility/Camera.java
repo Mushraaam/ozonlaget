@@ -26,7 +26,7 @@ public class Camera {
         double ty = (screenHeight / 2 - playerCenterY);
 
         double minTranslateX = screenWidth - mapBounds.getWidth();
-        double minTranslateY = screenHeight - mapBounds.getHeight() - UI_HEIGHT; //allow UI to go below grid
+        double minTranslateY = screenHeight - mapBounds.getHeight() - UI_HEIGHT; // allow UI to go below grid
 
         tx = Math.min(0, Math.max(tx, minTranslateX));
         ty = Math.min(0, Math.max(ty, minTranslateY));
