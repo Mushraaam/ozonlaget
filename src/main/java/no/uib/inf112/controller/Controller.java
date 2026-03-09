@@ -17,7 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.event.MouseEvent;
-
 import javax.swing.Timer;
 import javax.swing.SwingUtilities;
 
@@ -32,7 +31,7 @@ public class Controller
     private Timer playerAnimationTimer;
     private Timer movementTimer;
     private Timer pathFindingTimer;
-    private IGrid grid; 
+    private IGrid grid;
     private Timer gunshotTimer;
     private int fireRate;
     private Timer shootTimer;
@@ -49,7 +48,6 @@ public class Controller
      * and pathfinding.
      */
     public Controller(IMap map, GameDrawer view) {
-
         this.map = map;
         this.player = (IControllablePlayer) map.getPlayer();
         this.view = view;
@@ -75,13 +73,16 @@ public class Controller
         });
 
         this.pathFindingTimer = new Timer(600, (ActionEvent e) -> {
-            PerfTracker.start("Pathfinding");
-            this.map.gatherOccupiedCells();
-            for (IEnemy enemy : map.getEnemies()) {
-                enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
-            }
-            this.map.resetOccupied();
-            PerfTracker.stop("Pathfinding");
+            Thread finder = new Thread(() -> {
+                PerfTracker.start("Pathfinding");
+                this.map.gatherOccupiedCells();
+                for (IEnemy enemy : map.getEnemies()) {
+                    enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
+                }
+                this.map.resetOccupied();
+                PerfTracker.stop("Pathfinding");
+            });
+            finder.start();
         });
 
         this.movementTimer = new Timer(16, e -> {
@@ -270,7 +271,7 @@ public class Controller
 
             case ACTIVE_GAME -> {
                 if (!this.shootTimer.isRunning()) {
-                    this.player.shoot(e); //Shoot once then start timer
+                    this.player.shoot(e); // Shoot once then start timer
                     this.shootTimer.start();
                 }
             }

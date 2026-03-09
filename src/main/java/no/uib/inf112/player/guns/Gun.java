@@ -71,7 +71,6 @@ public abstract class Gun implements IGun {
     protected void setRange(int range) {
         this.range = range;
     }
-
     
     protected void setDamage(int damage) {
         this.damage = damage;

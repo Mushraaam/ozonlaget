@@ -28,7 +28,9 @@ public class DebugScreen implements IDrawer {
 
     @Override
     public void draw(Graphics2D graphic) {
+        
         // Draw grid cells
+        graphic.setStroke(new BasicStroke(1));
         debugCellsInView(graphic, this.grid);
 
         // Draw player hitbox
@@ -37,13 +39,11 @@ public class DebugScreen implements IDrawer {
         graphic.fill(hitbox);
 
         // Draw enemy hitbox
-
         for (IEnemy enemy : this.map.getEnemies()) {
             hitbox = enemy.getHitbox();
             if (isVisible(graphic, hitbox)) {
                 graphic.setColor(enemy.size().getDebugColor());
                 graphic.fill(hitbox);
-
             }
         }
 
