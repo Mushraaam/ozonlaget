@@ -8,9 +8,12 @@ public class DEagle extends Gun {
     private static final int MAX_AMMO = 100;
 
     public DEagle() {
-        super();
+        super(500);
         setMaxAmmo(MAX_AMMO);
         setCurrentAmmo(MAX_AMMO);
         setGunType(GUNTYPE);
+        setAccuracy(0.1);
+        setRange(700);
+        setDamage(50);
     }
 }

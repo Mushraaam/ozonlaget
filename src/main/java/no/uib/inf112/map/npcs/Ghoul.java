@@ -16,7 +16,7 @@ public class Ghoul extends NPC {
     private static final int ANIMATION_COUNT = 8;
 
     public Ghoul(Double pos, IMap map) {
-        super(pos, map);
+        super(pos, map, Config.getInt("ghoulHP"));
         setSpeed(SPEED);
         setRotationSpeed(ROTATION_SPEED);
         setSize(SIZE);

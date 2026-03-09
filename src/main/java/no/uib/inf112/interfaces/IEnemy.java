@@ -83,4 +83,10 @@ public interface IEnemy extends IMovingDrawableObject {
 
     ICell getStandingCell();
 
+    /**
+     * Deals damage to enemy
+     * @param damage
+     */
+    public void takeDamage(int damage);
+
 }

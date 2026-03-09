@@ -7,11 +7,11 @@ import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.map.levels.Level1;
+import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import no.uib.inf112.utility.Camera;
 
 public class Map implements IMap {
-
     private ILevel level;
     private int levelNumber;
     private IPlayer player;
@@ -184,6 +184,11 @@ public class Map implements IMap {
     @Override
     public Camera getCamera(){
         return this.camera;
+    }
+
+    @Override
+    public void removeEnemy(NPC npc) {
+        this.enemies.remove(npc);
     }
 
 

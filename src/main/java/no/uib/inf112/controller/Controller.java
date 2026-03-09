@@ -18,13 +18,11 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 
-
 import javax.swing.Timer;
 import javax.swing.SwingUtilities;
 
-
-
-public class Controller implements java.awt.event.KeyListener, java.awt.event.MouseMotionListener, java.awt.event.MouseListener {
+public class Controller
+        implements java.awt.event.KeyListener, java.awt.event.MouseMotionListener, java.awt.event.MouseListener {
 
     private final Camera camera;
 
@@ -36,8 +34,11 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
     private Timer pathFindingTimer;
     private IGrid grid;
     private Timer gunshotTimer;
+    private int fireRate;
+    private Timer shootTimer;
+    private MouseEvent lastMouseEvent;
 
-    //test 60fps
+    // test 60fps
     private Timer repaintTimer;
 
     private ArrayList<Timer> timers;
@@ -53,6 +54,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
         this.player = (IControllablePlayer) map.getPlayer();
         this.view = view;
         this.grid = map.getGrid();
+        this.fireRate = this.player.fireRate();
 
         this.camera = new Camera(0, 0);
 
@@ -69,7 +71,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             for (IEnemy enemy : map.getEnemies()) {
                 enemy.incrementAnimationIndex();
             }
-            
+
         });
 
         this.pathFindingTimer = new Timer(600, (ActionEvent e) -> {
@@ -88,13 +90,12 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
 
             this.player.updateMovement();
 
-
             ArrayList<IEnemy> enemies = map.getEnemies();
             for (IEnemy enemy : enemies) {
                 enemy.move(grid);
             }
             PerfTracker.stop("Movement Logic");
-            
+
         });
 
         this.repaintTimer = new Timer(8, e -> {
@@ -102,24 +103,31 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
         });
 
         this.gunshotTimer = new Timer(5, e -> {
-            for (IGunShot shot : this.map.gunShots()){
+            for (IGunShot shot : this.map.gunShots()) {
                 shot.reduceLifeTime();
             }
         });
-        
+
+        this.shootTimer = new Timer(this.fireRate, e -> {
+            player.shoot(this.lastMouseEvent);
+
+        });
+
         this.timers = new ArrayList<>();
         this.timers.add(playerAnimationTimer);
         this.timers.add(pathFindingTimer);
         this.timers.add(movementTimer);
         this.timers.add(gunshotTimer);
 
+        this.repaintTimer.start();
         applyTimers(map.getGameState());
     }
 
-    //STOP AND START TIMERS
+    // STOP AND START TIMERS
     private void applyTimers(GameState state) {
         for (Timer t : timers) {
-            if (t != null && t.isRunning()) t.stop();
+            if (t != null && t.isRunning())
+                t.stop();
         }
         switch (state) {
             case MAIN_MENU -> {
@@ -145,8 +153,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             case MAIN_MENU -> {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     changeState(GameState.ACTIVE_GAME);
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_R) {
+                } else if (e.getKeyCode() == KeyEvent.VK_R) {
                     view.getMainMenu().resetAnimation();
                 }
             }
@@ -158,7 +165,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             default -> {
             }
         }
-        
+
     }
 
     // GAMESTATE BOUND KEY EVENTS FOR KEY PRESSED
@@ -180,13 +187,15 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
 
             case KeyEvent.VK_1 -> {
                 this.player.setGunType(GunType.DEAGLE);
+                this.shootTimer.setDelay(this.player.fireRate());
             }
             case KeyEvent.VK_2 -> {
                 this.player.setGunType(GunType.MP5);
+                this.shootTimer.setDelay(this.player.fireRate());
             }
 
-            case KeyEvent.VK_I -> { 
-                if (this.map.debugMode()){
+            case KeyEvent.VK_I -> {
+                if (this.map.debugMode()) {
                     this.player.takeDamage(10);
                 }
             }
@@ -241,7 +250,8 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
     }
 
     /// ///////////// HELPER METHODS - THESE SHOULD BE SHORT AND SELF EXPLANATORY
-    /// /////////////// Maybe move the helpers to their classes, at a later occasion.
+    /// /////////////// Maybe move the helpers to their classes, at a later
+    /// occasion.
     /// e.g map.flipDebug()
 
     private void flipDebug() {
@@ -254,10 +264,15 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
 
     @Override
     public void mousePressed(MouseEvent e) {
+        this.lastMouseEvent = e;
+        this.fireRate = this.player.fireRate();
         switch (this.map.getGameState()) {
-            
+
             case ACTIVE_GAME -> {
-                this.player.shoot(e);
+                if (!this.shootTimer.isRunning()) {
+                    this.player.shoot(e); //Shoot once then start timer
+                    this.shootTimer.start();
+                }
             }
 
             case MAIN_MENU -> {
@@ -270,7 +285,7 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
     }
 
     private void mainMenuMousePressEvent(MouseEvent e) {
-        
+
         if (!SwingUtilities.isLeftMouseButton(e)) {
             return;
         }
@@ -281,7 +296,6 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
             changeState(GameState.ACTIVE_GAME);
         }
     }
-
 
     private void changeState(GameState state) {
         map.setGameState(state);
@@ -294,6 +308,9 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        if (this.shootTimer.isRunning()) {
+            this.shootTimer.stop();
+        }
     }
 
     @Override
@@ -304,27 +321,26 @@ public class Controller implements java.awt.event.KeyListener, java.awt.event.Mo
     public void mouseExited(MouseEvent e) {
     }
 
-
     @Override
     public void mouseMoved(java.awt.event.MouseEvent e) {
+        this.lastMouseEvent = e;
         updateAimFromMouse(e);
     }
 
     @Override
     public void mouseDragged(java.awt.event.MouseEvent e) {
+        this.lastMouseEvent = e;
         updateAimFromMouse(e);
     }
 
-
-    // This method converts the mouse position to world coordinates and updates the player's aim accordingly. It also recenters the camera on the player.
+    // This method converts the mouse position to world coordinates and updates the
+    // player's aim accordingly. It also recenters the camera on the player.
     private void updateAimFromMouse(java.awt.event.MouseEvent e) {
         camera.update(player.getHitbox(), view.getWidth(), view.getHeight(), map.getBounds());
 
         var worldMouse = camera.screenToWorld(e.getX(), e.getY());
 
         player.aimAtWorldPosition(worldMouse.x, worldMouse.y);
-
-
 
     }
 }

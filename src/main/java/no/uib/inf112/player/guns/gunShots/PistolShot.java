@@ -16,7 +16,7 @@ public class PistolShot implements IGunShot {
 
     public PistolShot(double x1, double y1, double x2, double y2, IMap map){
         this.bounds = new Line2D.Double(x1, y1, x2, y2);
-        this.lifeTime = 8;
+        this.lifeTime = 4;
         this.type = GunType.DEAGLE;
         this.map = map;
     }

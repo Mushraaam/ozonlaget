@@ -45,9 +45,11 @@ public abstract class NPC implements IEnemy {
     private int slideYDir = 1;
     private boolean slidePreferX = true;
 
+    private int health;
+
     private IPlayer player;
 
-    public NPC(Rectangle2D.Double pos, IMap map) {
+    public NPC(Rectangle2D.Double pos, IMap map, int health) {
         this.pos = pos;
         this.map = map;
 
@@ -57,6 +59,7 @@ public abstract class NPC implements IEnemy {
         this.player = map.getPlayer();
 
         this.currentTarget = 0;
+        this.health = health;
 
     }
 
@@ -403,6 +406,16 @@ public abstract class NPC implements IEnemy {
     public EnemySize size() {
         return this.size;
     }
+    @Override
+    public void takeDamage(int damage){
+        this.health -= damage;
+        if (this.health < 0){
+            this.health = 0;
+        }
+        if (this.health <= 0){
+            this.map.removeEnemy(this);
+        }
+    }
 
     // CONSTRUCTOR SETTERS
     protected void setSpeed(double speed) {
@@ -433,5 +446,7 @@ public abstract class NPC implements IEnemy {
         this.animationCount = count;
         this.animationIndex = 0;
     }
+
+    
 
 }

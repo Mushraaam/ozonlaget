@@ -13,6 +13,7 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IMovingDrawableObject;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import no.uib.inf112.utility.Camera;
 
@@ -196,6 +197,12 @@ public class TestMap implements IMap {
     public Camera getCamera() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getCamera'");
+    }
+
+    @Override
+    public void removeEnemy(NPC npc) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeEnemy'");
     }
 
 

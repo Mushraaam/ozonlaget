@@ -47,9 +47,9 @@ public class GameScreen implements IDrawer {
         centerCamera(graphic);
         drawBackground(graphic);
         drawStaticObjects(graphic);
-        drawPlayer(graphic);
         drawEnemies(graphic);
         drawGunShots(graphic);
+        drawPlayer(graphic);
         
         this.ui.draw(graphic);
     }

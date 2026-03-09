@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
+import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import no.uib.inf112.utility.Camera;
 
@@ -137,4 +138,10 @@ public interface IMap {
      * @return camera object
      */
     public Camera getCamera();
+
+    /**
+     * Removes the enemy from the list of enemies
+     * @param npc
+     */
+    public void removeEnemy(NPC npc);
 }

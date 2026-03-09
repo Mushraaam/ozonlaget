@@ -16,7 +16,7 @@ public class Zombie extends NPC {
     private static final int ANIMATION_COUNT = 8;
 
     public Zombie(Rectangle2D.Double pos, IMap map) {
-        super(pos, map);
+        super(pos, map, Config.getInt("zombieHP"));
         setSpeed(SPEED);
         setRotationSpeed(ROTATION_SPEED);
         setSize(SIZE);

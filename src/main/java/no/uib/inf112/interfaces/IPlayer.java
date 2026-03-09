@@ -48,5 +48,10 @@ public interface IPlayer {
      * @param e
      */
     public void shoot(MouseEvent e);
+
+    /**
+     * @return firerate of current gun - ms between shots
+     */
+    public int fireRate();
 }
 

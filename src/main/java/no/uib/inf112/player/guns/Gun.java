@@ -7,8 +7,13 @@ public abstract class Gun implements IGun {
     private GunType gunType;
     private int maxAmmo;
     private int currentAmmunition;
+    private int fireRate;
+    private double accuracy;
+    private int range;
+    private int damage;
 
-    public Gun() {
+    public Gun(int fireRate) {
+        this.fireRate = fireRate;
     }
 
     @Override
@@ -26,6 +31,24 @@ public abstract class Gun implements IGun {
         return gunType;
     }
 
+    @Override
+    public int damage(){
+        return this.damage;
+    }
+    @Override
+    public int range(){
+        return this.range;
+    }
+
+    @Override
+    public int fireRate(){
+        return this.fireRate;
+    }
+    @Override
+    public double accuracy(){
+        return this.accuracy;
+    }
+
     // Setters for constructors
 
     protected void setCurrentAmmo(int ammo) {
@@ -39,5 +62,21 @@ public abstract class Gun implements IGun {
     protected void setMaxAmmo(int maxAmmo) {
         this.maxAmmo = maxAmmo;
     }
+
+    protected void setAccuracy(double accuracy) {
+        this.accuracy = accuracy;
+    }
+
+    
+    protected void setRange(int range) {
+        this.range = range;
+    }
+
+    
+    protected void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+
     
 }
