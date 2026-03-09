@@ -44,6 +44,10 @@ public class ImageHandler {
     private HashMap<GunType, BufferedImage> gunUI;
     private BufferedImage uiBar;
 
+    //Main Menu
+    private BufferedImage menuBackground;
+    private BufferedImage startButton;
+
 
     public ImageHandler(){
         this.playerSprites = new HashMap<>();
@@ -67,6 +71,8 @@ public class ImageHandler {
         this.gunUI = new HashMap<>();
         loadGunUI();
         this.uiBar = ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/ui-bar.png"), 1200, Config.getInt("uiSize"));
+
+        loadMenu();
     }
 
 
@@ -223,6 +229,12 @@ public class ImageHandler {
 
     }
 
+    //MAIN MENY LOGIC
+    private void loadMenu() {
+        this.menuBackground = ImageReader.fetchImage("/no/uib/inf112/mainmenu/menu_background.png");
+        this.startButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/start_button.png");
+    }
+
     public BufferedImage getFloor(FloorType type){
         return this.floors.get(type);
     }
@@ -236,6 +248,14 @@ public class ImageHandler {
 
     public BufferedImage uiBar() {
         return this.uiBar;
+    }
+
+    public BufferedImage getMenuBackground() {
+        return this.menuBackground;
+    }
+
+    public BufferedImage getStartButton() {
+        return this.startButton;
     }
 }
 
