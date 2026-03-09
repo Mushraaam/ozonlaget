@@ -73,10 +73,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     public void aimAtWorldPosition(double worldX, double worldY) {
         double playerCenterX = this.hitbox.getCenterX();
         double playerCenterY = this.hitbox.getCenterY();
-
         double deltaX = worldX - playerCenterX;
         double deltaY = worldY - playerCenterY;
-
         this.aimAngle = Math.atan2(deltaY, deltaX);
     }
 
@@ -87,21 +85,18 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void movePlayer(Direction dir) {
-
         Rectangle2D.Double proposedMove = possibleMove(dir);
         if (legalMove(proposedMove)) {
             this.hitbox = proposedMove;
         } else {
             trySlide(dir);
         }
-
     }
 
     private void trySlide(Direction dir) {
         switch (dir) {
             case SOUTH_EAST -> {
                 Rectangle2D.Double east = possibleMove(Direction.EAST);
-
                 if (legalMove(east)) {
                     this.hitbox = east;
                 }
