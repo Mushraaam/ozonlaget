@@ -10,10 +10,30 @@ import no.uib.inf112.utility.ImageHandler;
 public class MainMenu implements IDrawer{
 
     private Rectangle2D.Double startButton;
-    private ImageHandler handler;
+
+    private final ImageHandler handler;
+
+    private double startButtonX;
+    private double startButtonY;
+    private boolean animationStarted = false;
+
+    private static final int BUTTON_WIDTH = 350;
+    private static final int BUTTON_HEIGHT = 150;
+
+    private static final int MARGIN_LEFT = 85;
+    private static final int MARGIN_RIGHT = 85;
+    private static final int MARGIN_TOP = 55;
+    private static final int MARGIN_BOTTOM = 60;
 
     public MainMenu(ImageHandler handler) {
         this.handler = handler;
+        this.startButton = new Rectangle2D.Double();
+    }
+
+    //use for later when going back to mainmenu
+    public void resetAnimation() {
+        animationStarted = false;
+        startButtonX = -BUTTON_WIDTH;
     }
 
     @Override
@@ -52,25 +72,35 @@ public class MainMenu implements IDrawer{
 
         BufferedImage buttonImage = handler.getStartButton();
 
-        int buttonWidth = 350;
-        int buttonHeight = 150;
+        int targetX = (bounds.width - BUTTON_WIDTH) / 2;
+        int targetY = bounds.height / 2;
 
-        int x = (bounds.width - buttonWidth) / 2;
-        int y = bounds.height / 2;
+        if (!animationStarted) {
+            startButtonX = -BUTTON_WIDTH;
+            startButtonY = targetY;
+            animationStarted = true;
+        }
 
-        graphic.drawImage(buttonImage, x, y, buttonWidth, buttonHeight ,null);
+        startButtonX += (targetX - startButtonX) * 0.05;
 
-        int marginLeft = 85;
-        int marginRight = 85;
+        if (Math.abs(targetX - startButtonX) < 0.5) {
+            startButtonX = targetX;
+        }
 
-        int marginTop = 55;
-        int marginBottom = 60;
+        graphic.drawImage(
+            buttonImage, 
+            (int) startButtonX, 
+            (int) startButtonY, 
+            BUTTON_WIDTH, 
+            BUTTON_HEIGHT,
+            null
+        );
 
-        startButton = new Rectangle2D.Double(
-            x + marginLeft, 
-            y + marginTop, 
-            buttonWidth - marginLeft - marginRight, 
-            buttonHeight - marginTop - marginBottom
+        startButton.setRect(
+            startButtonX + MARGIN_LEFT,
+            startButtonY + MARGIN_TOP,
+            BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
+            BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM
         );
 
         // DEBUG – viser hitboxen
