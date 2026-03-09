@@ -25,6 +25,8 @@ public class MainMenu implements IDrawer{
     private static final int MARGIN_TOP = 55;
     private static final int MARGIN_BOTTOM = 60;
 
+    private static final int TITLE_OFFSET_Y = -80;
+
     public MainMenu(ImageHandler handler) {
         this.handler = handler;
         this.startButton = new Rectangle2D.Double();
@@ -55,16 +57,17 @@ public class MainMenu implements IDrawer{
     private void drawTitle(Graphics2D graphic) {
         Rectangle bounds = graphic.getClipBounds();
 
-        graphic.setFont(new Font("Arial", Font.BOLD, 70));
-        graphic.setColor(Color.WHITE);
+        BufferedImage titleImage = handler.getMenuTitle();
 
-        String title = "FUN GAME";
+        int width = 1100;
+        
+        double aspectRatio = (double) titleImage.getHeight() / titleImage.getWidth();
+        int height = (int) (width * aspectRatio);
 
-        FontMetrics metrics = graphic.getFontMetrics();
-        int x = (bounds.width - metrics.stringWidth(title)) / 2;
-        int y = bounds.height / 3;
+        int x = (bounds.width - width) / 2;
+        int y = 5;
 
-        graphic.drawString(title, x, y);
+        graphic.drawImage(titleImage, x, y + TITLE_OFFSET_Y, width, height, null);
     }
 
     private void drawStartButton(Graphics2D graphic) {
@@ -102,10 +105,6 @@ public class MainMenu implements IDrawer{
             BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
             BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM
         );
-
-        // DEBUG – viser hitboxen
-        graphic.setColor(Color.RED);
-        graphic.draw(startButton);
     }
 
     public Rectangle2D.Double getStartButton() {
