@@ -10,13 +10,7 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.controller.DirectionHandler;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.GunType;
-import no.uib.inf112.interfaces.IControllablePlayer;
-import no.uib.inf112.interfaces.IEnemy;
-import no.uib.inf112.interfaces.IGun;
-import no.uib.inf112.interfaces.IGunShot;
-import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IStaticObject;
-import no.uib.inf112.interfaces.IViewablePlayer;
+import no.uib.inf112.interfaces.*;
 import no.uib.inf112.player.guns.DEagle;
 import no.uib.inf112.player.guns.MP5;
 import no.uib.inf112.player.guns.gunShots.PistolShot;
@@ -155,7 +149,43 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             }
         }
 
+        //Check for enemy collisions (nearby)
+        ICell standingCell = map.getGrid().getCellFromPos(proposedMove);
+        if (!standingCell.getEnemies().isEmpty()) {
+            for (IEnemy enemy : standingCell.getEnemies()) {
+                if (intersectsCore(proposedMove, enemy)) {
+                    return false;
+                }
+            }
+        }
+        for(ICell cell : map.getGrid().getNeighboursAtDepth(standingCell, 4)){//covers 9x9 cell square, should be enough if 5 cell wide hitbox.
+            if (cell == null ||cell.getEnemies().isEmpty()){
+                continue;
+            }
+            for(IEnemy enemy : cell.getEnemies()){
+                if(intersectsCore(proposedMove, enemy)){
+                    return false;
+                }
+            }
+        }
+
         return true;
+    }
+
+    /**
+     * Checks if the "solid cores" of two hitboxes overlap, allowing the
+     * outer edges (shoulders) to brush past each other smoothly.
+     */
+    private boolean intersectsCore(Rectangle2D.Double playerBox, IEnemy enemy) {
+        double pShrink = 0.8;
+        double pW = playerBox.width * pShrink;
+        double pH = playerBox.height * pShrink;
+        double pX = playerBox.getCenterX() - (pW / 2);
+        double pY = playerBox.getCenterY() - (pH / 2);
+        Rectangle2D.Double playerCore = new Rectangle2D.Double(pX, pY, pW, pH);
+
+
+        return playerCore.intersects(enemy.getEnemyCore());
     }
 
     /**

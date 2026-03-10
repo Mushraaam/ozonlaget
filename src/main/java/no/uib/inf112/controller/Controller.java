@@ -90,10 +90,14 @@ public class Controller
             PerfTracker.tick(false);
             PerfTracker.start("Master Logic");
 
+            this.map.gatherOccupiedCells();
             this.player.updateMovement(dt);
             for (IEnemy enemy : map.getEnemies()) {
                 enemy.move(grid, dt);
             }
+            this.map.resetOccupied();
+
+
 
             for (IGunShot shot : this.map.gunShots()) {
                 shot.reduceLifeTime();
@@ -117,11 +121,9 @@ public class Controller
             pathExecutor.submit(() -> {
                 try {
                     PerfTracker.start("Pathfinding");
-                    this.map.gatherOccupiedCells();
                     for (IEnemy enemy : map.getEnemies()) {
                         enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
                     }
-                    this.map.resetOccupied();
                     PerfTracker.stop("Pathfinding");
                 } finally {
                     pathfindingRunning = false;

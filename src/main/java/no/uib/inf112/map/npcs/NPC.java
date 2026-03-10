@@ -49,6 +49,8 @@ public abstract class NPC implements IEnemy {
 
     private IPlayer player;
 
+    Rectangle2D enemyCore; //used for collision checks
+
     public NPC(Rectangle2D.Double pos, IMap map, int health) {
         this.pos = pos;
         this.map = map;
@@ -60,6 +62,7 @@ public abstract class NPC implements IEnemy {
 
         this.currentTarget = 0;
         this.health = health;
+        setEnemyCore(this);
 
     }
 
@@ -323,20 +326,29 @@ public abstract class NPC implements IEnemy {
 
         for (IEnemy enemy : cell.getEnemies()) {
             if (enemy != this) {
-                Rectangle2D enemyHitbox = enemy.getHitbox();
-                double shrinkFactor = 0.8; // Only 80% of the center is "solid" to other NPCs
-
-                double coreW = enemyHitbox.getWidth() * shrinkFactor;
-                double coreH = enemyHitbox.getHeight() * shrinkFactor;
-                double coreX = enemyHitbox.getCenterX() - (coreW / 2);
-                double coreY = enemyHitbox.getCenterY() - (coreH / 2);
-                Rectangle2D enemyCore = new Rectangle2D.Double(coreX, coreY, coreW, coreH);
+                setEnemyCore(enemy);
                 if (movementHitbox.intersects(enemyCore)) {
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    private void setEnemyCore(IEnemy enemy){
+        Rectangle2D enemyHitbox = enemy.getHitbox();
+        double shrinkFactor = 0.8; // Only 80% of the center is "solid" to other NPCs
+
+        double coreW = enemyHitbox.getWidth() * shrinkFactor;
+        double coreH = enemyHitbox.getHeight() * shrinkFactor;
+        double coreX = enemyHitbox.getCenterX() - (coreW / 2);
+        double coreY = enemyHitbox.getCenterY() - (coreH / 2);
+        enemyCore = new Rectangle2D.Double(coreX, coreY, coreW, coreH);
+    }
+
+    @Override
+    public Rectangle2D getEnemyCore(){
+        return this.enemyCore;
     }
 
     @Override
