@@ -86,7 +86,7 @@ public class Controller
 
             if (dt > 0.1) dt = 0.1;
 
-            tickCount++;
+            this.tickCount = (this.tickCount + 1) % 10000;
             PerfTracker.tick(false);
             PerfTracker.start("Master Logic");
 

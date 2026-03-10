@@ -8,11 +8,11 @@ public class MP5 extends Gun {
     private static final GunType GUNTYPE = GunType.MP5;
 
     public MP5() {
-        super(200);
+        super(100);
         setMaxAmmo(MAX_AMMO);
         setCurrentAmmo(MAX_AMMO);
         setGunType(GUNTYPE);
-        setAccuracy(0.15);
+        setAccuracy(0.12);
         setRange(500);
         setDamage(20);
     }
