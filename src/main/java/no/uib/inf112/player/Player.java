@@ -324,7 +324,6 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             return;
         }
         
-
         double x1 = this.hitbox.getCenterX();
         double y1 = this.hitbox.getCenterY();
 

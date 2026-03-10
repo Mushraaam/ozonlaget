@@ -50,13 +50,12 @@ public class GameScreen implements IDrawer {
         drawEnemies(graphic);
         drawGunShots(graphic);
         drawPlayer(graphic);
-        
         this.ui.draw(graphic);
     }
 
     private void drawGunShots(Graphics2D graphic) {
         graphic.setColor(Color.YELLOW);
-        graphic.setStroke(new BasicStroke(2));
+        graphic.setStroke(new BasicStroke(1));
         for (IGunShot shot : this.map.gunShots()){
             // graphic.fill(shot.bounds());
             graphic.draw(shot.bounds());
