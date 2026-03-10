@@ -138,12 +138,45 @@ public class Level1 implements ILevel {
         ///////////
         //house 5 
         this.floors.add(new WoodFloor(new Rectangle2D.Double(2100,880, 400, 1770-880)));
+        //exterior walls
+        staticObjects.add(new WoodWall( // Top 
+                new Rectangle2D.Double(2080, 880, 400, 15), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top Left 
+                new Rectangle2D.Double(2080, 890, 15, 650), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom left 
+                new Rectangle2D.Double(2080, 1690, 15, 110), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Right
+                new Rectangle2D.Double(2465, 890, 15, 910), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom 
+                new Rectangle2D.Double(2080, 1785, 400, 15), StaticObjectType.WOODEN_WALL));
         ///////////
 
         ///////////
         //house 6
         this.floors.add(new WoodFloor(new Rectangle2D.Double(700,1450, 1510-700, 1820-1450)));
         this.floors.add(new WoodFloor(new Rectangle2D.Double(970,1820, 1510-1240, 2260-1820)));
+
+        //exterior walls
+        //---top rectangle
+        staticObjects.add(new WoodWall( // Top 
+                new Rectangle2D.Double(677.5, 1440, 842.5, 15), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Left 
+                new Rectangle2D.Double(680, 1450, 15, 390), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Right
+                new Rectangle2D.Double(1505, 1450, 15, 390), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom left 
+                new Rectangle2D.Double(680, 1825, 280, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom Right
+                new Rectangle2D.Double(1240, 1825, 280, 15), StaticObjectType.WOODEN_WALL));
+        //---bottom rectangle
+        staticObjects.add(new WoodWall( // Left 
+                new Rectangle2D.Double(960, 1825, 15, 455), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Right 
+                new Rectangle2D.Double(1225, 1825, 15, 455), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom Left 
+                new Rectangle2D.Double(960, 2265, 110, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom Left 
+                new Rectangle2D.Double(1130, 2265, 110, 15), StaticObjectType.WOODEN_WALL));
         ///////////
 
         ///////////
