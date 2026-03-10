@@ -5,5 +5,7 @@ public enum GameState {
     GAME_OVER,
     ACTIVE_GAME,
     VICTORY,
+    SETTINGS,
+    HELP
 }
 

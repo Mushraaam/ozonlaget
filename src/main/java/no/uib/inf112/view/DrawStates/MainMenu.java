@@ -10,12 +10,20 @@ import no.uib.inf112.utility.ImageHandler;
 public class MainMenu implements IDrawer{
 
     private Rectangle2D.Double startButton;
+    private Rectangle2D.Double settingsButton;
+    private Rectangle2D.Double helpButton;
 
     private final ImageHandler handler;
 
     private double startButtonX;
     private double startButtonY;
-    private boolean animationStarted = false;
+    private double settingsButtonX;
+    private double settingsButtonY;
+    private double helpButtonX;
+    private double helpButtonY;
+    private boolean startAnimationStarted = false;
+    private boolean settingAnimationStarted = false;
+    private boolean helpAnimationStarted = false;
 
     private static final int BUTTON_WIDTH = 350;
     private static final int BUTTON_HEIGHT = 150;
@@ -30,20 +38,24 @@ public class MainMenu implements IDrawer{
     public MainMenu(ImageHandler handler) {
         this.handler = handler;
         this.startButton = new Rectangle2D.Double();
+        this.settingsButton = new Rectangle2D.Double();
+        this.helpButton = new Rectangle2D.Double();
     }
 
     //use for later when going back to mainmenu
     public void resetAnimation() {
-        animationStarted = false;
-        startButtonX = -BUTTON_WIDTH;
+        startAnimationStarted = false;
+        settingAnimationStarted = false;
+        helpAnimationStarted = false;
     }
 
     @Override
     public void draw(Graphics2D graphic) {
-       
         drawBackground(graphic);
         drawTitle(graphic);
         drawStartButton(graphic);
+        drawSettingsButton(graphic);
+        drawHelpButton(graphic);
     }
 
     private void drawBackground(Graphics2D graphic) {
@@ -73,15 +85,15 @@ public class MainMenu implements IDrawer{
     private void drawStartButton(Graphics2D graphic) {
         Rectangle bounds = graphic.getClipBounds();
 
-        BufferedImage buttonImage = handler.getStartButton();
+        BufferedImage startImage = handler.getStartButton();
 
-        int targetX = (bounds.width - BUTTON_WIDTH) / 2;
+        int targetX = bounds.width / 2 - BUTTON_WIDTH + 35;
         int targetY = bounds.height / 2;
 
-        if (!animationStarted) {
+        if (!startAnimationStarted) {
             startButtonX = -BUTTON_WIDTH;
             startButtonY = targetY;
-            animationStarted = true;
+            startAnimationStarted = true;
         }
 
         startButtonX += (targetX - startButtonX) * 0.05;
@@ -91,7 +103,7 @@ public class MainMenu implements IDrawer{
         }
 
         graphic.drawImage(
-            buttonImage, 
+            startImage, 
             (int) startButtonX, 
             (int) startButtonY, 
             BUTTON_WIDTH, 
@@ -104,6 +116,80 @@ public class MainMenu implements IDrawer{
             startButtonY + MARGIN_TOP,
             BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
             BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM
+        );
+    }
+
+    private void drawSettingsButton(Graphics2D graphic) {
+        Rectangle bounds = graphic.getClipBounds();
+
+        BufferedImage settingImage = handler.getSettingsButton();
+
+        int targetX = bounds.width / 2 - 35;
+        int targetY = bounds.height / 2;
+
+        if (!settingAnimationStarted) {
+            settingsButtonX = bounds.width;
+            settingsButtonY = targetY;
+            settingAnimationStarted = true;
+        }
+
+        settingsButtonX += (targetX - settingsButtonX) * 0.05;
+
+        if (Math.abs(targetX - settingsButtonX) < 0.5) {
+            settingsButtonX = targetX;
+        }
+
+        graphic.drawImage(
+            settingImage,
+            (int) settingsButtonX,
+            (int) settingsButtonY,
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+            null
+        );
+
+        settingsButton.setRect(
+            settingsButtonX + MARGIN_LEFT - 2,
+            settingsButtonY + MARGIN_TOP - 3,
+            BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT + 3,
+            BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 3
+        );
+    }
+
+    private void drawHelpButton(Graphics2D graphic) {
+        Rectangle bounds = graphic.getClipBounds();
+
+        BufferedImage helpImage = handler.getHelpButton();
+
+        int targetX = bounds.width / 2 - BUTTON_WIDTH / 2;
+        int targetY = bounds.height / 2 + 120;
+
+        if (!helpAnimationStarted) {
+            helpButtonX = targetX;
+            helpButtonY = bounds.height + BUTTON_HEIGHT;
+            helpAnimationStarted = true;
+        }
+
+        helpButtonY += (targetY - helpButtonY) * 0.05;
+
+        if (Math.abs(targetY - helpButtonY) < 0.5) {
+            helpButtonY = targetY;
+        }
+
+        graphic.drawImage(
+            helpImage,
+            (int) helpButtonX,
+            (int) helpButtonY,
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+            null
+        );
+
+        helpButton.setRect(
+            helpButtonX + MARGIN_LEFT,
+            helpButtonY + MARGIN_TOP - 2,
+            BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
+            BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 2
         );
     }
 

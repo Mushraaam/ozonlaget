@@ -48,6 +48,8 @@ public class ImageHandler {
     private BufferedImage menuBackground;
     private BufferedImage startButton;
     private BufferedImage menuTitle;
+    private BufferedImage settingsButton;
+    private BufferedImage helpButton;
 
 
     public ImageHandler(){
@@ -237,19 +239,17 @@ public class ImageHandler {
         this.menuBackground = ImageReader.fetchImage("/no/uib/inf112/mainmenu/menu_background.png");
         this.startButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/start_button.png");
         this.menuTitle = ImageReader.fetchImage("/no/uib/inf112/mainmenu/menu_title.png");
-        
+        this.settingsButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/settings_button.png");
+        this.helpButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/help_button.png");
     }
 
     public BufferedImage getFloor(FloorType type){
         return this.floors.get(type);
     }
 
-
     public BufferedImage getStaticObjectImage(StaticObjectType type) {
         return this.staticObjects.get(type);
     }
-
-
 
     public BufferedImage uiBar() {
         return this.uiBar;
@@ -265,6 +265,14 @@ public class ImageHandler {
 
     public BufferedImage getMenuTitle() {
         return this.menuTitle;
+    }
+
+    public BufferedImage getSettingsButton() {
+        return this.settingsButton;
+    }
+
+    public BufferedImage getHelpButton() {
+        return this.helpButton;
     }
 }
 
