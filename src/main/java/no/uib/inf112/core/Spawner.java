@@ -25,14 +25,11 @@ public class Spawner {
     }
 
     public boolean spawnGhoul() {
-        var p = map.getPlayer().getHitbox();
-
-        double xOffset = ThreadLocalRandom.current().nextDouble(200, 500);
-        double yOffset = ThreadLocalRandom.current().nextDouble(200, 500);
+        double x = ThreadLocalRandom.current().nextDouble(100, map.getBounds().getMaxX() - 100);
+        double y = ThreadLocalRandom.current().nextDouble(100, map.getBounds().getMaxY() - 100);
 
         Rectangle2D.Double hitbox = new Rectangle2D.Double(
-                p.getX() + xOffset,
-                p.getY() + yOffset,
+                x, y,
                 GHOUL_WIDTH,
                 GHOUL_HEIGHT);
         ICell spawnCell = map.getGrid().getCellFromPos(hitbox);
@@ -51,16 +48,17 @@ public class Spawner {
     }
 
     public boolean spawnZombie() {
-        var p = map.getPlayer().getHitbox();
 
-        double xOffset = ThreadLocalRandom.current().nextDouble(200, 500);
-        double yOffset = ThreadLocalRandom.current().nextDouble(200, 500);
+        double x = ThreadLocalRandom.current().nextDouble(100, map.getBounds().getMaxX() - 100);
+        double y = ThreadLocalRandom.current().nextDouble(100, map.getBounds().getMaxY() - 100);
 
         Rectangle2D.Double hitbox = new Rectangle2D.Double(
-                p.getX() + xOffset,
-                p.getY() + yOffset,
+                x, y,
                 ZOMBIE_WIDTH,
                 ZOMBIE_HEIGHT);
+
+        if (!map.getBounds().contains(hitbox))
+            return false;
         ICell spawnCell = map.getGrid().getCellFromPos(hitbox);
         if (spawnCell == null || (spawnCell.pathType() == PathType.BLOCKED))
             return false;

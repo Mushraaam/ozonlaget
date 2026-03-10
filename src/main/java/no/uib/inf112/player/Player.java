@@ -21,7 +21,6 @@ import no.uib.inf112.player.guns.DEagle;
 import no.uib.inf112.player.guns.MP5;
 import no.uib.inf112.player.guns.gunShots.PistolShot;
 import no.uib.inf112.records.ShotDestination;
-import no.uib.inf112.utility.Camera;
 
 public class Player implements IControllablePlayer, IViewablePlayer {
     private static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
