@@ -119,10 +119,13 @@ public abstract class NPC implements IEnemy {
     }
 
     @Override
-    public void move(IGrid grid) {
+    public void move(IGrid grid, double dt) {
         this.from = getStandingCell();
         if (currentPath == null || pathIndex >= currentPath.size())
             return;
+
+        double frameSpeed = this.speed * dt * 60.0;
+
         int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
         for (int i = pathIndex; i < lookAheadLimit; i++) {
             Rectangle2D target = currentPath.get(i).getBounds();
@@ -130,10 +133,13 @@ public abstract class NPC implements IEnemy {
             double dy = target.getCenterY() - pos.getCenterY();
             double dist = Math.hypot(dx, dy);
 
-            if (tryMove(dx, dy, dist, target)) {
+            // Pass frameSpeed down
+            if (tryMove(dx, dy, dist, target, frameSpeed)) {
                 updateFacing(dx, dy, dist);
                 this.pathIndex = i;
-                if (dist <= speed) {
+
+                // Use frameSpeed here too
+                if (dist <= frameSpeed) {
                     pathIndex++;
                 }
 
@@ -144,7 +150,6 @@ public abstract class NPC implements IEnemy {
                 }
                 break;
             }
-
         }
         if (from == lastStart) {
             unStuck(true, true);
@@ -200,9 +205,8 @@ public abstract class NPC implements IEnemy {
             }
         }
     }
-
-    private boolean tryMove(double dx, double dy, double dist, Rectangle2D target) {
-        Rectangle2D.Double candidate = generateCandidate(dx, dy, dist, target);
+    private boolean tryMove(double dx, double dy, double dist, Rectangle2D target, double frameSpeed) {
+        Rectangle2D.Double candidate = generateCandidate(dx, dy, dist, target, frameSpeed);
 
         if (isLegal(candidate)) {
             this.sliding = false;
@@ -210,17 +214,15 @@ public abstract class NPC implements IEnemy {
             return true;
 
         } else {
-
             if (!this.sliding) {
                 this.slideXDir = (dx >= 0) ? 1 : -1;
                 this.slideYDir = (dy >= 0) ? 1 : -1;
 
-                Rectangle2D.Double testX = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width,
-                        this.pos.height);
-                Rectangle2D.Double testY = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width,
-                        this.pos.height);
-                testX.x += slideXDir * speed;
-                testY.y += slideYDir * speed;
+                Rectangle2D.Double testX = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
+                Rectangle2D.Double testY = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
+
+                testX.x += slideXDir * frameSpeed;
+                testY.y += slideYDir * frameSpeed;
 
                 boolean xOk = isLegal(testX);
                 boolean yOk = isLegal(testY);
@@ -233,7 +235,7 @@ public abstract class NPC implements IEnemy {
                     this.slidePreferX = Math.abs(dx) >= Math.abs(dy);
             }
 
-            if (trySlide(dx, dy, dist, target)) {
+            if (trySlide(dx, dy, dist, target, frameSpeed)) {
                 sliding = true;
                 return true;
             }
@@ -241,57 +243,49 @@ public abstract class NPC implements IEnemy {
         this.sliding = false;
         return false;
     }
-
-    private boolean trySlide(double dx, double dy, double dist, Rectangle2D target) {
+    private boolean trySlide(double dx, double dy, double dist, Rectangle2D target, double frameSpeed) {
         Rectangle2D.Double slideX = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
         Rectangle2D.Double slideY = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
         int x = 1;
         int y = 1;
-        if (dx <= 0) {
-            x = x * (-1);
-        }
-        if (dy <= 0) {
-            y = y * (-1);
-        }
+        if (dx <= 0) { x = x * (-1); }
+        if (dy <= 0) { y = y * (-1); }
+
         // Slide X
-        if (dist <= speed) {
+        if (dist <= frameSpeed) {
             slideX.x = target.getCenterX() - pos.width / 2.0;
         } else {
-            slideX.x += (dx / dist) * speed;
+            slideX.x += (dx / dist) * frameSpeed; // Use frameSpeed
         }
         if (isLegal(slideX)) {
             this.pos = slideX;
             return true;
 
-        } else { // Slide Y
-            if (dist <= speed) {
+        } else {
+            // Slide Y
+            if (dist <= frameSpeed) {
                 slideY.y = target.getCenterY() - pos.height / 2.0;
             } else {
-                slideY.y += (dy / dist) * speed;
+                slideY.y += (dy / dist) * frameSpeed; // Use frameSpeed
             }
             if (isLegal(slideY)) {
                 this.pos = slideY;
                 return true;
-            } else {
             }
         }
-
         return false;
-
     }
-
-    private Rectangle2D.Double generateCandidate(double dx, double dy, double dist, Rectangle2D target) {
-
+    private Rectangle2D.Double generateCandidate(double dx, double dy, double dist, Rectangle2D target, double frameSpeed) {
         Rectangle2D.Double candidate = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
-        if (dist <= speed) {
+
+        if (dist <= frameSpeed) {
             candidate.x = target.getCenterX() - pos.width / 2.0;
             candidate.y = target.getCenterY() - pos.height / 2.0;
         } else {
-            candidate.x += (dx / dist) * speed;
-            candidate.y += (dy / dist) * speed;
+            candidate.x += (dx / dist) * frameSpeed;
+            candidate.y += (dy / dist) * frameSpeed;
         }
         return candidate;
-
     }
 
     private boolean isLegal(Rectangle2D.Double candidate) {

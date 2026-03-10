@@ -4,7 +4,8 @@ public interface IMovingDrawableObject {
 
     /**
      * @param grid Current grid.
-     * Moves the object.
+     *             Moves the object.
+     * @param dt
      */
-    void move(IGrid grid);
+    void move(IGrid grid, double dt);
 }

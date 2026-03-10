@@ -21,7 +21,6 @@ import no.uib.inf112.player.guns.DEagle;
 import no.uib.inf112.player.guns.MP5;
 import no.uib.inf112.player.guns.gunShots.PistolShot;
 import no.uib.inf112.records.ShotDestination;
-import no.uib.inf112.utility.Camera;
 
 public class Player implements IControllablePlayer, IViewablePlayer {
     private static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
@@ -73,10 +72,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         return dirHandler.isMoving();
     }
 
-    public void updateMovement() {
+    public void updateMovement(double dt) {
         Direction dir = dirHandler.getDirection();
         if (dir != null) {
-            movePlayer(dir);
+            movePlayer(dir, dt);
             setDirection(dir);
         }
     }
@@ -95,66 +94,41 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     }
 
     @Override
-    public void movePlayer(Direction dir) {
-        Rectangle2D.Double proposedMove = possibleMove(dir);
+    public void movePlayer(Direction dir, double dt) {
+        Rectangle2D.Double proposedMove = possibleMove(dir, dt);
         if (legalMove(proposedMove)) {
             this.hitbox = proposedMove;
         } else {
-            trySlide(dir);
+            trySlide(dir, dt);
         }
     }
-
-    private void trySlide(Direction dir) {
+    private void trySlide(Direction dir, double dt) {
         switch (dir) {
             case SOUTH_EAST -> {
-                Rectangle2D.Double east = possibleMove(Direction.EAST);
-                if (legalMove(east)) {
-                    this.hitbox = east;
-                }
-                Rectangle2D.Double south = possibleMove(Direction.SOUTH);
-                if (legalMove(south)) {
-                    this.hitbox = south;
-                }
-                break;
+                Rectangle2D.Double east = possibleMove(Direction.EAST, dt);
+                if (legalMove(east)) this.hitbox = east;
+                Rectangle2D.Double south = possibleMove(Direction.SOUTH, dt);
+                if (legalMove(south)) this.hitbox = south;
             }
             case SOUTH_WEST -> {
-                Rectangle2D.Double west = possibleMove(Direction.WEST);
-
-                if (legalMove(west)) {
-                    this.hitbox = west;
-                }
-                Rectangle2D.Double south = possibleMove(Direction.SOUTH);
-                if (legalMove(south)) {
-                    this.hitbox = south;
-                }
-                break;
+                Rectangle2D.Double west = possibleMove(Direction.WEST, dt);
+                if (legalMove(west)) this.hitbox = west;
+                Rectangle2D.Double south = possibleMove(Direction.SOUTH, dt);
+                if (legalMove(south)) this.hitbox = south;
             }
             case NORTH_WEST -> {
-                Rectangle2D.Double north = possibleMove(Direction.NORTH);
-
-                if (legalMove(north)) {
-                    this.hitbox = north;
-                }
-                Rectangle2D.Double west = possibleMove(Direction.WEST);
-                if (legalMove(west)) {
-                    this.hitbox = west;
-                }
-                break;
+                Rectangle2D.Double north = possibleMove(Direction.NORTH, dt);
+                if (legalMove(north)) this.hitbox = north;
+                Rectangle2D.Double west = possibleMove(Direction.WEST, dt);
+                if (legalMove(west)) this.hitbox = west;
             }
             case NORTH_EAST -> {
-                Rectangle2D.Double north = possibleMove(Direction.NORTH);
-
-                if (legalMove(north)) {
-                    this.hitbox = north;
-                }
-                Rectangle2D.Double east = possibleMove(Direction.EAST);
-                if (legalMove(east)) {
-                    this.hitbox = east;
-                }
-                break;
+                Rectangle2D.Double north = possibleMove(Direction.NORTH, dt);
+                if (legalMove(north)) this.hitbox = north;
+                Rectangle2D.Double east = possibleMove(Direction.EAST, dt);
+                if (legalMove(east)) this.hitbox = east;
             }
-            default -> {
-                /* No legal move - do nothing */}
+            default -> { /* No legal move - do nothing */ }
         }
     }
 
@@ -186,56 +160,49 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     /**
      * Gives a new player position based on proposed direction.
-     * 
+     *
      * @param dir proposed movement direction.
+     * @param dt
      * @return a new position for player
      */
-    private Rectangle2D.Double possibleMove(Direction dir) {
-        int deltaX = 0;
-        int deltaY = 0;
+    private Rectangle2D.Double possibleMove(Direction dir, double dt) {
+        double moveStep = PLAYER_MOVE_SPEED * dt * 60.0;
+
+        double deltaX = 0.0;
+        double deltaY = 0.0;
+
+        double diag = 0.7071;
 
         switch (dir) {
-            case NORTH:
-                deltaY = -PLAYER_MOVE_SPEED;
-                break;
-            case SOUTH:
-                deltaY = PLAYER_MOVE_SPEED;
-                break;
-            case EAST:
-                deltaX = PLAYER_MOVE_SPEED;
-                break;
-            case WEST:
-                deltaX = -PLAYER_MOVE_SPEED;
-                break;
-            case NORTH_EAST: {
-                deltaX = PLAYER_MOVE_SPEED;
-                deltaY = -PLAYER_MOVE_SPEED;
-                break;
-            }
-            case NORTH_WEST: {
-                deltaX = -PLAYER_MOVE_SPEED;
-                deltaY = -PLAYER_MOVE_SPEED;
-                break;
-            }
-            case SOUTH_EAST: {
-                deltaX = PLAYER_MOVE_SPEED;
-                deltaY = PLAYER_MOVE_SPEED;
-                break;
-            }
-            case SOUTH_WEST: {
-                deltaX = -PLAYER_MOVE_SPEED;
-                deltaY = PLAYER_MOVE_SPEED;
-                break;
-            }
+            case NORTH -> deltaY = -moveStep;
+            case SOUTH -> deltaY = moveStep;
+            case EAST  -> deltaX = moveStep;
+            case WEST  -> deltaX = -moveStep;
 
-            default:
-                break;
+            case NORTH_EAST -> {
+                deltaX = moveStep * diag;
+                deltaY = -moveStep * diag;
+            }
+            case NORTH_WEST -> {
+                deltaX = -moveStep * diag;
+                deltaY = -moveStep * diag;
+            }
+            case SOUTH_EAST -> {
+                deltaX = moveStep * diag;
+                deltaY = moveStep * diag;
+            }
+            case SOUTH_WEST -> {
+                deltaX = -moveStep * diag;
+                deltaY = moveStep * diag;
+            }
         }
+
         return new Rectangle2D.Double(
                 this.hitbox.getX() + deltaX,
                 this.hitbox.getY() + deltaY,
                 hitbox.getWidth(),
-                hitbox.getHeight());
+                hitbox.getHeight()
+        );
     }
 
     @Override
