@@ -152,33 +152,36 @@ public abstract class NPC implements IEnemy {
             }
         }
         if (from == lastStart) {
-            unStuck(true, true);
+            unStuck(true, true, frameSpeed);
         }
     }
 
-    private void unStuck(boolean moveX, boolean moveY) {
+    private void unStuck(boolean moveX, boolean moveY, double frameSpeed) {
         ICell myCell = this.getStandingCell();
-        if (myCell == null) {
-            return;
-        }
+        if (myCell == null) return;
 
-        checkCellAndPush(myCell, moveX, moveY);
-        for (ICell neighbor : map.getGrid().getNeighboursAtDepth(myCell, 2)) {
+        checkCellAndPush(myCell, moveX, moveY, frameSpeed);
+        for (ICell neighbor : map.getGrid().getNeighboursAtDepth(myCell, this.size().footprint() / 2)) {
             if (neighbor != null) {
-                checkCellAndPush(neighbor, moveX, moveY);
+                checkCellAndPush(neighbor, moveX, moveY, frameSpeed);
             }
         }
     }
 
-    private void checkCellAndPush(ICell cell, boolean moveX, boolean moveY) {
-
-        for (IEnemy other : map.getEnemies()) {
-            if (other == this) {
-                continue;
-            }
+    private void checkCellAndPush(ICell cell, boolean moveX, boolean moveY, double frameSpeed) {
+        for (IEnemy other : cell.getEnemies()) {
+            if (other == this) continue;
 
             Rectangle2D otherBox = other.getHitbox();
-            if (this.pos.intersects(otherBox)) {
+            double shrinkFactor = 0.8;
+
+            double coreW = otherBox.getWidth() * shrinkFactor;
+            double coreH = otherBox.getHeight() * shrinkFactor;
+            double coreX = otherBox.getCenterX() - (coreW / 2);
+            double coreY = otherBox.getCenterY() - (coreH / 2);
+
+            // Only push if we hit the 80% inner core
+            if (this.pos.intersects(coreX, coreY, coreW, coreH)) {
                 double dx = this.pos.getCenterX() - otherBox.getCenterX();
                 double dy = this.pos.getCenterY() - otherBox.getCenterY();
 
@@ -189,17 +192,16 @@ public abstract class NPC implements IEnemy {
 
                 Rectangle2D.Double pushed = new Rectangle2D.Double(pos.x, pos.y, pos.width, pos.height);
 
-                if (moveX)
-                    pushed.x += Math.signum(dx) * 0.5;
-                if (moveY)
-                    pushed.y += Math.signum(dy) * 0.5;
+                double pushForce = frameSpeed * 0.2;
+                if (moveX) pushed.x += Math.signum(dx) * pushForce;
+                if (moveY) pushed.y += Math.signum(dy) * pushForce;
 
                 if (!pushed.intersects(player.getHitbox()) &&
-                        map.getPathfinder().canEnter(map.getGrid().getCellFromPos(pushed), size)) {
+                        map.getPathfinder().canEnter(map.getGrid().getCellFromPos(pushed), size())) {
                     this.pos = pushed;
                 } else if (moveX && moveY) {
-                    unStuck(true, false);
-                    unStuck(false, true);
+                    unStuck(true, false, frameSpeed);
+                    unStuck(false, true, frameSpeed);
                     return;
                 }
             }
@@ -305,7 +307,7 @@ public abstract class NPC implements IEnemy {
             return false;
         }
 
-        for (ICell cell : map.getGrid().getNeighboursAtDepth(getStandingCell(), 2)) {
+        for (ICell cell : map.getGrid().getNeighboursAtDepth(getStandingCell(), size().footprint()/2)) {
             if (!checkCell(cell, movementHitbox)) {
                 return false;
             }
@@ -319,7 +321,7 @@ public abstract class NPC implements IEnemy {
             return false;
         }
 
-        for (IEnemy enemy : map.getEnemies()) {
+        for (IEnemy enemy : cell.getEnemies()) {
             if (enemy != this) {
                 Rectangle2D enemyHitbox = enemy.getHitbox();
                 double shrinkFactor = 0.8; // Only 80% of the center is "solid" to other NPCs

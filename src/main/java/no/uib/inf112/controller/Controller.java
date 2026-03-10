@@ -73,6 +73,11 @@ public class Controller
             player.shoot(this.lastMouseEvent);
         });
 
+        Timer repaintTimer = new Timer(16, e -> {
+            this.view.repaint();
+        });
+        repaintTimer.start();
+
         //master Timer
         this.movementTimer = new Timer(16, e -> {
             long now = System.nanoTime();
@@ -102,8 +107,6 @@ public class Controller
                     enemy.incrementAnimationIndex();
                 }
             }
-
-            this.view.repaint();
 
             PerfTracker.stop("Master Logic");
         });
@@ -137,6 +140,7 @@ public class Controller
         for (Timer t : timers) {
             if (t != null && t.isRunning()) t.stop();
         }
+
         if (state == GameState.ACTIVE_GAME) {
             lastTime = System.nanoTime();
             movementTimer.start();
