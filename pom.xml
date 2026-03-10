@@ -3,15 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- FIXME - set group id -->
 	<groupId>no.uib.ii.inf112.ozonlaget</groupId>
-	<!-- FIXME - set artifact name -->
 	<artifactId>ozonlaget</artifactId>
 	<version>1.26-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<!-- FIXME - set app name -->
 	<name>fun_game</name>
-	<!-- FIXME change it to the project's website -->
 	<url>https://git.app.uib.no/inf112/26v/proj/ozonlaget</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,7 +15,6 @@
 		<libgdx.version>1.14.0</libgdx.version>
 		<slf4j.version>2.0.17</slf4j.version>
 		<junit.version>6.0.2</junit.version>
-		<!-- FIXME - set to app's main class' -->
 		<main.class>no.uib.inf112.core.Main</main.class>
 		<jvm.extra.args>--enable-native-access=ALL-UNNAMED</jvm.extra.args>
 	</properties>

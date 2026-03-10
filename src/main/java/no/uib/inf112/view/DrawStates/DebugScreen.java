@@ -19,7 +19,7 @@ public class DebugScreen implements IDrawer {
     private long lastFrameNs = System.nanoTime();
     private double frameMs = 0.0;
     private double fps = 0.0;
-    double smoothedMs = 0;
+    private double smoothedMs = 0;
 
     public DebugScreen(IMap map) {
         this.map = map;

@@ -1,13 +1,16 @@
 package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
-import java.util.*;
 
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
+
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Set;
 
 public class Cell implements ICell {
 
@@ -17,10 +20,11 @@ public class Cell implements ICell {
     private int col;
     private FloorType floorType;
     private PathType pathType;
-    private HashSet<IEnemy> smallOccupants;
-    private HashSet<IEnemy> mediumOccupants;
-    private HashSet<IEnemy> largeOccupants;
-    private ArrayList<HashSet<IEnemy>> occupants;
+    private Set<IEnemy> smallOccupants;
+    private Set<IEnemy> mediumOccupants;
+    private Set<IEnemy> largeOccupants;
+    private ArrayList<Set<IEnemy>> occupants;
+    private Set<IEnemy> allOccupants;
 
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
         this.bounds = bounds;
@@ -31,10 +35,11 @@ public class Cell implements ICell {
         this.pathType = type;
 
         // Occupants for pathing
-        this.smallOccupants = new HashSet<>();
-        this.mediumOccupants = new HashSet<>();
-        this.largeOccupants = new HashSet<>();
+        this.smallOccupants = ConcurrentHashMap.newKeySet();
+        this.mediumOccupants = ConcurrentHashMap.newKeySet();
+        this.largeOccupants = ConcurrentHashMap.newKeySet();
         this.occupants = new ArrayList<>();
+        this.allOccupants = ConcurrentHashMap.newKeySet();
         this.occupants.add(this.smallOccupants);
         this.occupants.add(this.mediumOccupants);
         this.occupants.add(this.largeOccupants);
@@ -126,6 +131,7 @@ public class Cell implements ICell {
     @Override
     public void setOccupant(IEnemy enemy, EnemySize size) {
 
+        allOccupants.add(enemy);
         if (size == EnemySize.SMALL){
             this.smallOccupants.add(enemy);
             // this.mediumOccupants.add(enemy);
@@ -179,8 +185,14 @@ public class Cell implements ICell {
 
     @Override
     public void clearOccupants() {
-        for (HashSet<IEnemy> oc : this.occupants) {
+        allOccupants.clear();
+        for (Set<IEnemy> oc : this.occupants) {
             oc.clear();
         }
+    }
+
+    @Override
+    public Set<IEnemy> getEnemies(){
+        return this.allOccupants;
     }
 }
