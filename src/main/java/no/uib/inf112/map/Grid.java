@@ -143,7 +143,7 @@ public class Grid implements IGrid {
 
     public ICell getCell(int row, int col) {
         if (row < 0 || row >= rowCount || col < 0 || col >= colCount) {
-            return null;
+            throw new IndexOutOfBoundsException();
         }
         return cellGrid.get(row).get(col);
     }
