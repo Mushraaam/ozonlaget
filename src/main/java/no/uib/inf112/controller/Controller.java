@@ -88,12 +88,13 @@ public class Controller
                 return;
             }
             pathfindingRunning = true;
+            ArrayList<IEnemy> enemies = map.getEnemies();
             pathExecutor.submit(() -> {
                 try {
                     PerfTracker.start("Pathfinding");
                     this.map.gatherOccupiedCells();
 
-                    for (IEnemy enemy : map.getEnemies()) {
+                    for (IEnemy enemy : enemies) {
                         enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
                     }
 
