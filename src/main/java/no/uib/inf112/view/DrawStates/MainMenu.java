@@ -10,12 +10,16 @@ import no.uib.inf112.utility.ImageHandler;
 public class MainMenu implements IDrawer{
 
     private Rectangle2D.Double startButton;
+    private Rectangle2D.Double settingsButton;
 
     private final ImageHandler handler;
 
     private double startButtonX;
     private double startButtonY;
-    private boolean animationStarted = false;
+    private double settingsButtonX;
+    private double settingsButtonY;
+    private boolean startAnimationStarted = false;
+    private boolean settingAnimationStarted = false;
 
     private static final int BUTTON_WIDTH = 350;
     private static final int BUTTON_HEIGHT = 150;
@@ -30,20 +34,21 @@ public class MainMenu implements IDrawer{
     public MainMenu(ImageHandler handler) {
         this.handler = handler;
         this.startButton = new Rectangle2D.Double();
+        this.settingsButton = new Rectangle2D.Double();
     }
 
     //use for later when going back to mainmenu
     public void resetAnimation() {
-        animationStarted = false;
-        startButtonX = -BUTTON_WIDTH;
+        startAnimationStarted = false;
+        settingAnimationStarted = false;
     }
 
     @Override
     public void draw(Graphics2D graphic) {
-       
         drawBackground(graphic);
         drawTitle(graphic);
         drawStartButton(graphic);
+        drawSettingsButton(graphic);
     }
 
     private void drawBackground(Graphics2D graphic) {
@@ -75,13 +80,13 @@ public class MainMenu implements IDrawer{
 
         BufferedImage buttonImage = handler.getStartButton();
 
-        int targetX = (bounds.width - BUTTON_WIDTH) / 2;
+        int targetX =bounds.width / 3 - BUTTON_WIDTH / 2;
         int targetY = bounds.height / 2;
 
-        if (!animationStarted) {
+        if (!startAnimationStarted) {
             startButtonX = -BUTTON_WIDTH;
             startButtonY = targetY;
-            animationStarted = true;
+            startAnimationStarted = true;
         }
 
         startButtonX += (targetX - startButtonX) * 0.05;
@@ -104,6 +109,43 @@ public class MainMenu implements IDrawer{
             startButtonY + MARGIN_TOP,
             BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
             BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM
+        );
+    }
+
+    private void drawSettingsButton(Graphics2D graphic) {
+        Rectangle bounds = graphic.getClipBounds();
+
+        BufferedImage buttonImage = handler.getSettingsButton();
+
+        int targetX = bounds.width * 2/ 3 - BUTTON_WIDTH / 2;
+        int targetY = bounds.height / 2;
+
+        if (!settingAnimationStarted) {
+            settingsButtonX = bounds.width;
+            settingsButtonY = targetY;
+            settingAnimationStarted = true;
+        }
+
+        settingsButtonX += (targetX - settingsButtonX) * 0.05;
+
+        if (Math.abs(targetX - settingsButtonX) < 0.5) {
+            settingsButtonX = targetX;
+        }
+
+        graphic.drawImage(
+            buttonImage,
+            (int) settingsButtonX,
+            (int) settingsButtonY,
+            BUTTON_WIDTH,
+            BUTTON_HEIGHT,
+            null
+        );
+
+        settingsButton.setRect(
+            settingsButtonX + MARGIN_LEFT - 2,
+            settingsButtonY + MARGIN_TOP - 3,
+            BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT + 3,
+            BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 3
         );
     }
 
