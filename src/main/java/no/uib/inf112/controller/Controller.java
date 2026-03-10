@@ -26,22 +26,27 @@ public class Controller
         implements java.awt.event.KeyListener, java.awt.event.MouseMotionListener, java.awt.event.MouseListener {
 
     private final Camera camera;
-    private final ExecutorService pathExecutor;
+
     private IMap map;
     private IControllablePlayer player;
     private GameDrawer view;
+    private Timer playerAnimationTimer;
     private Timer movementTimer;
     private Timer pathFindingTimer;
     private IGrid grid;
+    private Timer gunshotTimer;
     private int fireRate;
     private Timer shootTimer;
     private MouseEvent lastMouseEvent;
+
+    //Executor for pathfinding
+    private final ExecutorService pathExecutor;
     private volatile boolean pathfindingRunning;
 
-    private ArrayList<Timer> timers;
+    // test 60fps
+    private Timer repaintTimer;
 
-    private long lastTime;
-    private int tickCount;
+    private ArrayList<Timer> timers;
 
     /**
      * The main controller for the game. It handles user input via the keyboard
@@ -62,69 +67,38 @@ public class Controller
         this.view.addMouseListener(this);
         this.view.setFocusable(true);
 
+        //
         this.pathExecutor = Executors.newSingleThreadExecutor();
         this.pathfindingRunning = false;
 
-        this.lastTime = System.nanoTime();
-        this.tickCount = 0;
-
-        // Shoot Timer
-        this.shootTimer = new Timer(this.fireRate, e -> {
-            player.shoot(this.lastMouseEvent);
-        });
-
-        Timer repaintTimer = new Timer(16, e -> {
-            this.view.repaint();
-        });
-        repaintTimer.start();
-
-        //master Timer
-        this.movementTimer = new Timer(16, e -> {
-            long now = System.nanoTime();
-            double dt = (now - lastTime) / 1_000_000_000.0;
-            lastTime = now;
-
-            if (dt > 0.1) dt = 0.1;
-
-            this.tickCount = (this.tickCount + 1) % 10000;
-            PerfTracker.tick(false);
-            PerfTracker.start("Master Logic");
-
-            this.map.gatherOccupiedCells();
-            this.player.updateMovement(dt);
+        // TIMERS
+        this.playerAnimationTimer = new Timer(100, (ActionEvent e) -> {
+            if (player.isMoving()) {
+                this.player.incrementAnimationIndex();
+            }
             for (IEnemy enemy : map.getEnemies()) {
-                enemy.move(grid, dt);
-            }
-            this.map.resetOccupied();
-
-
-
-            for (IGunShot shot : this.map.gunShots()) {
-                shot.reduceLifeTime();
+                enemy.incrementAnimationIndex();
             }
 
-            if (tickCount % 6 == 0) {
-                if (player.isMoving()) {
-                    this.player.incrementAnimationIndex();
-                }
-                for (IEnemy enemy : map.getEnemies()) {
-                    enemy.incrementAnimationIndex();
-                }
-            }
-
-            PerfTracker.stop("Master Logic");
         });
+
 
         this.pathFindingTimer = new Timer(600, (ActionEvent e) -> {
-            if (pathfindingRunning) return;
+            if (pathfindingRunning) {
+                return;
+            }
+            ArrayList<IEnemy> enemies = this.map.getEnemies();
             pathfindingRunning = true;
-            ArrayList<IEnemy> enemies = map.getEnemies();
             pathExecutor.submit(() -> {
                 try {
                     PerfTracker.start("Pathfinding");
+                    this.map.gatherOccupiedCells();
+
                     for (IEnemy enemy : enemies) {
                         enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
                     }
+
+                    this.map.resetOccupied();
                     PerfTracker.stop("Pathfinding");
                 } finally {
                     pathfindingRunning = false;
@@ -132,28 +106,72 @@ public class Controller
             });
         });
 
-        this.timers = new ArrayList<>();
-        this.timers.add(movementTimer);
-        this.timers.add(pathFindingTimer);
+        this.movementTimer = new Timer(16, e -> {
+            PerfTracker.tick(false);
+            PerfTracker.start("Movement Logic");
 
+            this.player.updateMovement();
+
+            ArrayList<IEnemy> enemies = map.getEnemies();
+            for (IEnemy enemy : enemies) {
+                enemy.move(grid);
+            }
+            PerfTracker.stop("Movement Logic");
+
+        });
+
+        this.repaintTimer = new Timer(8, e -> {
+            this.view.repaint();
+        });
+        this.repaintTimer.start();
+
+        this.gunshotTimer = new Timer(5, e -> {
+            for (IGunShot shot : this.map.gunShots()) {
+                shot.reduceLifeTime();
+            }
+        });
+
+        this.shootTimer = new Timer(this.fireRate, e -> {
+            player.shoot(this.lastMouseEvent);
+
+        });
+
+        this.timers = new ArrayList<>();
+        this.timers.add(playerAnimationTimer);
+        this.timers.add(pathFindingTimer);
+        this.timers.add(movementTimer);
+        this.timers.add(gunshotTimer);
+
+        this.repaintTimer.start();
         applyTimers(map.getGameState());
     }
 
+    // STOP AND START TIMERS
     private void applyTimers(GameState state) {
         for (Timer t : timers) {
-            if (t != null && t.isRunning()) t.stop();
+            if (t != null && t.isRunning())
+                t.stop();
         }
+        switch (state) {
+            case MAIN_MENU -> {
 
-        if (state == GameState.ACTIVE_GAME) {
-            lastTime = System.nanoTime();
-            movementTimer.start();
-            pathFindingTimer.start();
+            }
+            case ACTIVE_GAME -> {
+                playerAnimationTimer.start();
+                pathFindingTimer.start();
+                movementTimer.start();
+                this.gunshotTimer.start();
+            }
+            default -> {
+
+            }
         }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         switch (this.map.getGameState()) {
+
             case MAIN_MENU -> {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     changeState(GameState.ACTIVE_GAME);
@@ -161,21 +179,34 @@ public class Controller
                     view.getMainMenu().resetAnimation();
                 }
             }
+
             case ACTIVE_GAME -> {
                 activeGamePressEvent(e);
             }
+
             default -> {
             }
         }
+
     }
 
     // GAMESTATE BOUND KEY EVENTS FOR KEY PRESSED
     private void activeGamePressEvent(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_W -> player.pressMove(Direction.NORTH);
-            case KeyEvent.VK_S -> player.pressMove(Direction.SOUTH);
-            case KeyEvent.VK_A -> player.pressMove(Direction.WEST);
-            case KeyEvent.VK_D -> player.pressMove(Direction.EAST);
+            // movement
+            case KeyEvent.VK_W -> {
+                player.pressMove(Direction.NORTH);
+            }
+            case KeyEvent.VK_S -> {
+                player.pressMove(Direction.SOUTH);
+            }
+            case KeyEvent.VK_A -> {
+                player.pressMove(Direction.WEST);
+            }
+            case KeyEvent.VK_D -> {
+                player.pressMove(Direction.EAST);
+            }
+
             case KeyEvent.VK_1 -> {
                 this.player.setGunType(GunType.DEAGLE);
                 this.shootTimer.setDelay(this.player.fireRate());
@@ -184,38 +215,66 @@ public class Controller
                 this.player.setGunType(GunType.MP5);
                 this.shootTimer.setDelay(this.player.fireRate());
             }
+
             case KeyEvent.VK_I -> {
                 if (this.map.debugMode()) {
                     this.player.takeDamage(10);
                 }
             }
-            case KeyEvent.VK_P -> flipDebug();
-            case KeyEvent.VK_O -> map.getSpawner().spawnGhoul();
-            case KeyEvent.VK_L -> map.getSpawner().spawnZombie();
+
+            case KeyEvent.VK_P -> {
+                flipDebug();
+            }
+            case KeyEvent.VK_O -> {
+                map.getSpawner().spawnGhoul();
+            }
+            case KeyEvent.VK_L -> {
+                map.getSpawner().spawnZombie();
+            }
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (this.map.getGameState() == GameState.ACTIVE_GAME) {
-            activeGameReleaseEvent(e);
+        switch (this.map.getGameState()) {
+
+            case ACTIVE_GAME -> {
+                activeGameReleaseEvent(e);
+            }
+
+            default -> {
+            }
         }
     }
 
     // GAMESTATE BOUND KEY EVENTS FOR KEY RELEASED
     private void activeGameReleaseEvent(KeyEvent e) {
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_W -> player.releaseMove(Direction.NORTH);
-            case KeyEvent.VK_S -> player.releaseMove(Direction.SOUTH);
-            case KeyEvent.VK_A -> player.releaseMove(Direction.WEST);
-            case KeyEvent.VK_D -> player.releaseMove(Direction.EAST);
+            case KeyEvent.VK_W -> {
+                player.releaseMove(Direction.NORTH);
+            }
+            case KeyEvent.VK_S -> {
+                player.releaseMove(Direction.SOUTH);
+            }
+            case KeyEvent.VK_A -> {
+                player.releaseMove(Direction.WEST);
+            }
+            case KeyEvent.VK_D -> {
+                player.releaseMove(Direction.EAST);
+            }
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+
         // not implemented
     }
+
+    /// ///////////// HELPER METHODS - THESE SHOULD BE SHORT AND SELF EXPLANATORY
+    /// /////////////// Maybe move the helpers to their classes, at a later
+    /// occasion.
+    /// e.g map.flipDebug()
 
     private void flipDebug() {
         if (map.debugMode()) {
@@ -230,22 +289,29 @@ public class Controller
         this.lastMouseEvent = e;
         this.fireRate = this.player.fireRate();
         switch (this.map.getGameState()) {
+
             case ACTIVE_GAME -> {
                 if (!this.shootTimer.isRunning()) {
                     this.player.shoot(e); // Shoot once then start timer
                     this.shootTimer.start();
                 }
             }
-            case MAIN_MENU -> mainMenuMousePressEvent(e);
+
+            case MAIN_MENU -> {
+                mainMenuMousePressEvent(e);
+            }
+
             default -> {
             }
         }
     }
 
     private void mainMenuMousePressEvent(MouseEvent e) {
+
         if (!SwingUtilities.isLeftMouseButton(e)) {
             return;
         }
+
         Point p = e.getPoint();
         var startButton = view.getMainMenu().getStartButton();
         if (startButton != null && startButton.contains(p)) {
@@ -289,9 +355,14 @@ public class Controller
         updateAimFromMouse(e);
     }
 
+    // This method converts the mouse position to world coordinates and updates the
+    // player's aim accordingly. It also recenters the camera on the player.
     private void updateAimFromMouse(java.awt.event.MouseEvent e) {
         camera.update(player.getHitbox(), view.getWidth(), view.getHeight(), map.getBounds());
+
         var worldMouse = camera.screenToWorld(e.getX(), e.getY());
+
         player.aimAtWorldPosition(worldMouse.x, worldMouse.y);
+
     }
 }
