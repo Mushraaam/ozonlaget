@@ -178,6 +178,8 @@ public class ImageHandler {
         this.staticObjects.put(StaticObjectType.BEIGE_COUCH_DOWN, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_couch.png"), Config.getInt("couchWidth"), Config.getInt("couchHeight")));
         this.staticObjects.put(StaticObjectType.DARK_TABLE_ROUNDED, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentable.png"), Config.getInt("tableWidth"), Config.getInt("tableHeight")));
         this.staticObjects.put(StaticObjectType.DARK_TABLE_SQUARE, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentablesquare.png"), Config.getInt("tableWidth"), Config.getInt("tableHeight")));
+        this.staticObjects.put(StaticObjectType.WHITEWATER, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/water/whitewater.png"), Config.getInt("waterWidth"), Config.getInt("waterHeight")));
+    
     }
 
 
@@ -228,6 +230,7 @@ public class ImageHandler {
         this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"), width, height));
         // this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_hd.png"), width, height));
         this.floors.put(FloorType.WOODFLOOR, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/woodfloor.png"), width, height));
+        this.floors.put(FloorType.ROCK_ROAD, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/rock_road.png"), width, height));
         this.floors.put(FloorType.GRAY_TILE, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/graytile.png"), width, height));
 
     }

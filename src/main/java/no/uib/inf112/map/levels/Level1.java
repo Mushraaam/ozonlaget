@@ -10,11 +10,13 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.player.Player;
+import no.uib.inf112.terrain.floor.RockRoad;
 import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;
 import no.uib.inf112.terrain.furniture.DarkWoodenTableSquare;
 import no.uib.inf112.terrain.static_objects.WoodWall;
+import no.uib.inf112.terrain.water.WhiteWater;
 
 public class Level1 implements ILevel {
 
@@ -197,9 +199,17 @@ public class Level1 implements ILevel {
         ///////////
 
         //water
+        this.staticObjects.add(new WhiteWater(new Rectangle2D.Double(900, 20, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new WhiteWater(new Rectangle2D.Double(1000, 20, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new WhiteWater(new Rectangle2D.Double(1100, 20, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new WhiteWater(new Rectangle2D.Double(1200, 20, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new WhiteWater(new Rectangle2D.Double(1300, 20, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+
+        //vegetation
 
 
-        //trees
+        //path
+        this.floors.add(new RockRoad(new Rectangle2D.Double(900,900, 100, 100)));
 
 
 
