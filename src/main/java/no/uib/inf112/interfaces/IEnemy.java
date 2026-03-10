@@ -65,8 +65,6 @@ public interface IEnemy extends IMovingDrawableObject {
 
     ICell getOldCell();
 
-    Rectangle2D getEnemyCore();
-
     boolean boundsChanged(int minR, int maxR, int minC, int maxC);
 
     void updateBounds(int minR, int maxR, int minC, int maxC);

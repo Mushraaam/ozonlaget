@@ -6,11 +6,9 @@ public interface IControllablePlayer extends IPlayer{
     
     /**
      * Moves the player in some direction.
-     *
      * @param direction
-     * @param dt
      */
-    public void movePlayer(Direction dir, double dt);
+    public void movePlayer(Direction dir);
 
     /**
      * Gets the current direction.
@@ -40,7 +38,6 @@ public interface IControllablePlayer extends IPlayer{
 
     public void aimAtWorldPosition(double worldX, double worldY);
 
-    public void updateMovement(double dt);
+    public void updateMovement();
 }
-
 
