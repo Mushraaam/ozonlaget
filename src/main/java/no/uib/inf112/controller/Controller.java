@@ -118,10 +118,11 @@ public class Controller
         this.pathFindingTimer = new Timer(600, (ActionEvent e) -> {
             if (pathfindingRunning) return;
             pathfindingRunning = true;
+            ArrayList<IEnemy> enemies = map.getEnemies();
             pathExecutor.submit(() -> {
                 try {
                     PerfTracker.start("Pathfinding");
-                    for (IEnemy enemy : map.getEnemies()) {
+                    for (IEnemy enemy : enemies) {
                         enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
                     }
                     PerfTracker.stop("Pathfinding");
