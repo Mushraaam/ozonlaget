@@ -13,7 +13,7 @@ public class DEagle extends Gun {
         setCurrentAmmo(MAX_AMMO);
         setGunType(GUNTYPE);
         setAccuracy(0.1);
-        setRange(700);
+        setRange(550);
         setDamage(50);
     }
 }

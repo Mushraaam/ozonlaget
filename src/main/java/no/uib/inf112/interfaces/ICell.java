@@ -1,6 +1,8 @@
 package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
+import java.util.Set;
+
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
@@ -32,5 +34,6 @@ public interface ICell {
 
     public void clearOccupants();
 
-    
+
+    Set<IEnemy> getEnemies();
 }
