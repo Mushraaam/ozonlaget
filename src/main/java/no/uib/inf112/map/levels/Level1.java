@@ -13,6 +13,7 @@ import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;
+import no.uib.inf112.terrain.furniture.DarkWoodenTableSquare;
 import no.uib.inf112.terrain.static_objects.WoodWall;
 
 public class Level1 implements ILevel {
@@ -65,7 +66,7 @@ public class Level1 implements ILevel {
 
         //exterior walls
         staticObjects.add(new WoodWall( // Top 
-            new Rectangle2D.Double(80, 80, 480, 15), StaticObjectType.LONG_WOODEN_WALL));
+                new Rectangle2D.Double(80, 80, 480, 15), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Left 
                 new Rectangle2D.Double(80, 90, 15, 415), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Right
@@ -76,8 +77,8 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(360, 505, 200, 15), StaticObjectType.WOODEN_WALL));
 
         //furniture
-        staticObjects.add(new DarkWoodenTable(
-                new Rectangle2D.Double(960, 940, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
+        staticObjects.add(new DarkWoodenTableSquare(
+                new Rectangle2D.Double(200, 200, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
         ///////////
 
         ///////////
@@ -86,7 +87,7 @@ public class Level1 implements ILevel {
 
         //exterior walls
         staticObjects.add(new WoodWall( // Top 
-            new Rectangle2D.Double(1677.5, 0, 800, 15), StaticObjectType.LONG_WOODEN_WALL));
+                new Rectangle2D.Double(1677.5, 0, 800, 15), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Left 
                 new Rectangle2D.Double(1680, 12.5, 15, 260), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Right
@@ -194,6 +195,12 @@ public class Level1 implements ILevel {
         staticObjects.add(new WoodWall( // Bottom 
                 new Rectangle2D.Double(1760, 2480, 680, 15), StaticObjectType.WOODEN_WALL));
         ///////////
+
+        //water
+
+
+        //trees
+
 
 
 
