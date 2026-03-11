@@ -27,9 +27,6 @@ public abstract class NPC implements IEnemy {
     private EnemySize size;
     private EnemyType type;
 
-
-    private double goalOffsetX;
-    private double goalOffsetY;
     private ICell lastStart;
     private ICell lastGoal;
     private IEnemy nextInCell = null;
@@ -42,11 +39,9 @@ public abstract class NPC implements IEnemy {
     private int lastMaxC = -1;
 
     // test
-    private int currentTarget;
     private boolean sliding = false;
     private int slideXDir = 1;
     private int slideYDir = 1;
-    private boolean slidePreferX = true;
 
     private int health;
 
@@ -66,12 +61,8 @@ public abstract class NPC implements IEnemy {
         this.pos = pos;
         this.map = map;
 
-        double r = pos.getHeight(); // Eller width
-        this.goalOffsetX = (Math.random() * 2 - 1) * r;
-        this.goalOffsetY = (Math.random() * 2 - 1) * r;
         this.player = map.getPlayer();
 
-        this.currentTarget = 0;
         this.health = health;
         this.currentAction = EnemyAction.WALK;
 
@@ -172,12 +163,6 @@ public abstract class NPC implements IEnemy {
                     if (dist <= speed) {
                         pathIndex++;
                     }
-
-                    if (this.sliding) {
-                        this.currentTarget = i;
-                    } else {
-                        this.currentTarget = pathIndex;
-                    }
                     break;
                 }
 
@@ -262,16 +247,6 @@ public abstract class NPC implements IEnemy {
                         this.pos.height);
                 testX.x += slideXDir * speed;
                 testY.y += slideYDir * speed;
-
-                boolean xOk = isLegal(testX);
-                boolean yOk = isLegal(testY);
-
-                if (xOk && !yOk)
-                    this.slidePreferX = true;
-                else if (!xOk && yOk)
-                    this.slidePreferX = false;
-                else
-                    this.slidePreferX = Math.abs(dx) >= Math.abs(dy);
             }
 
             if (trySlide(dx, dy, dist, target)) {

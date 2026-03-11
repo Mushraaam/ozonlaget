@@ -10,7 +10,6 @@ import no.uib.inf112.enums.PathType;
 import no.uib.inf112.interfaces.IMap;
 
 public class Pathfinder {
-    private final IMap map;
     private final IGrid grid;
     private final int width;
     private final int height;
@@ -23,7 +22,6 @@ public class Pathfinder {
     private static final int OCCUPIED_WEIGHT = 3;
 
     public Pathfinder(IMap map) {
-        this.map = map;
         this.grid = map.getGrid();
         this.width = grid.getColCount();
         this.height = grid.getRowCount();

@@ -1,6 +1,5 @@
 package no.uib.inf112.map.npcs;
 
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
@@ -9,10 +8,7 @@ import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IStaticDrawableObject;
-import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.projectiles.AcidProjectile;
-import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
 
 public class Ghoul extends NPC {
 

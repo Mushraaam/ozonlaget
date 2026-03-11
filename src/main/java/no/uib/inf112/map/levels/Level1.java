@@ -39,8 +39,6 @@ public class Level1 implements ILevel {
     private static final int MAPWIDTH = Config.getInt("mapWidth");
     private static final int MAPHEIGHT = Config.getInt("mapHeight");
 
-    private IMap map;
-
     public Level1(IMap map) {
 
         // README: For now it looks like it is easier to make floors before making walls
