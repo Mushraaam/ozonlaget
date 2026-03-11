@@ -44,6 +44,12 @@ public class AcidProjectile implements IProjectile {
 
         double distance = Math.sqrt(dx * dx + dy * dy);
 
+        if (distance <= SPEED) {
+            map.addAOEPuddle(new AcidPuddle(target, map));
+            map.removeProjectile(this);
+            return;
+        }
+
         // Normalize
         double dirX = dx / distance;
         double dirY = dy / distance;
@@ -52,12 +58,6 @@ public class AcidProjectile implements IProjectile {
         startY += dirY * SPEED;
 
         this.bounds = new Rectangle2D.Double(startX, startY, WIDTH, HEIGHT);
-
-        if (this.bounds.intersects(this.target)){
-            this.map.addAOEPuddle(new AcidPuddle(this.target, this.map));
-            this.map.removeProjectile(this);
-        }
-
     }
 
     @Override
