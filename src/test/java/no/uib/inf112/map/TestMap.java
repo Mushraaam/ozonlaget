@@ -12,6 +12,8 @@ import no.uib.inf112.interfaces.IGunShot;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IMovingDrawableObject;
 import no.uib.inf112.interfaces.IPlayer;
+import no.uib.inf112.interfaces.IProjectile;
+import no.uib.inf112.interfaces.IPuddle;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
@@ -203,6 +205,42 @@ public class TestMap implements IMap {
     public void removeEnemy(NPC npc) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'removeEnemy'");
+    }
+
+    @Override
+    public ArrayList<IPuddle> getAOEPuddles() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAOEPuddles'");
+    }
+
+    @Override
+    public void removeAOEPuddle(IPuddle puddle) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeAOEPuddle'");
+    }
+
+    @Override
+    public void addAOEPuddle(IPuddle puddle) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addAOEPuddle'");
+    }
+
+    @Override
+    public ArrayList<IProjectile> getProjectiles() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getProjectiles'");
+    }
+
+    @Override
+    public void removeProjectile(IProjectile projectile) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'removeProjectile'");
+    }
+
+    @Override
+    public void addProjectile(IProjectile projectile) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addProjectile'");
     }
 
 

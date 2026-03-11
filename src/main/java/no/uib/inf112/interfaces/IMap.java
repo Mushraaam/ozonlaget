@@ -144,4 +144,38 @@ public interface IMap {
      * @param npc
      */
     public void removeEnemy(NPC npc);
+
+    /**
+     * @return list of all IPuddles
+     */
+    public ArrayList<IPuddle> getAOEPuddles();
+
+    /**
+     * Removes puddle from map
+     * @param puddle
+     */
+    public void removeAOEPuddle(IPuddle puddle);
+
+    /**
+     * Adds puddle to map
+     * @param puddle
+     */
+    public void addAOEPuddle(IPuddle puddle);
+
+    /**
+     * @return list of all projectiles
+     */
+    public ArrayList<IProjectile> getProjectiles();
+
+    /**
+     * Removes projectile from map
+     * @param projectile
+     */
+    public void removeProjectile(IProjectile projectile);
+
+    /**
+     * Adds projectile to map
+     * @param projectile
+     */
+    public void addProjectile(IProjectile projectile);
 }

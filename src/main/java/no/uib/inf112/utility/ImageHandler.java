@@ -10,8 +10,10 @@ import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.GunType;
+import no.uib.inf112.enums.PuddleType;
 import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.enums.WallDirection;
+import no.uib.inf112.interfaces.IPuddle;
 
 public class ImageHandler {
 
@@ -32,10 +34,18 @@ public class ImageHandler {
     // Enemy image
     private HashMap<EnemyType, ArrayList<BufferedImage>> walkingEnemies;
     private HashMap<EnemyType, ArrayList<BufferedImage>> attackingEnemies;
+    private HashMap<EnemyType, ArrayList<BufferedImage>> rangedAttackingEnemies;
+
 
     private HashMap<FloorType, BufferedImage> floors;
 
     private HashMap<Integer, BufferedImage> levelBackground;
+
+    // Puddles
+    private HashMap<PuddleType, ArrayList<BufferedImage>> puddles;
+
+    // Projectiles
+    private HashMap<PuddleType, BufferedImage> projectiles;
 
     // UI
     private HashMap<GunType, BufferedImage> gunUI;
@@ -47,6 +57,7 @@ public class ImageHandler {
     private BufferedImage menuTitle;
     private BufferedImage settingsButton;
     private BufferedImage helpButton;
+
 
     public ImageHandler() {
         this.playerSprites = new HashMap<>();
@@ -60,6 +71,7 @@ public class ImageHandler {
 
         this.walkingEnemies = new HashMap<>();
         this.attackingEnemies = new HashMap<>();
+        this.rangedAttackingEnemies = new HashMap<>();
         loadEnemies();
 
         this.floors = new HashMap<>();
@@ -74,8 +86,50 @@ public class ImageHandler {
                 Config.getInt("uiSize"));
 
         loadMenu();
+
+        this.puddles = new HashMap<>();
+        this.projectiles = new HashMap<>();
+        loadPuddles();
     }
 
+    // PUDDLES AND PROJECTILES
+    private void loadPuddles() {
+
+        //ACID
+        ArrayList<BufferedImage> acidPuddles = new ArrayList<>();
+        for (int i = 0; i < 4; i++){
+            BufferedImage img = ImageReader.fetchImage(String.format("/no/uib/inf112/npcs/ghoul/projectile/puddle_%s.png", i));
+            acidPuddles.add(img);
+        }
+        this.puddles.put(PuddleType.ACID, acidPuddles);
+        this.projectiles.put(PuddleType.ACID, ImageReader.fetchImage("/no/uib/inf112/npcs/ghoul/projectile/projectile.png"));
+    }
+
+    public BufferedImage getProjectile(PuddleType type){
+        return this.projectiles.get(type);
+    }
+
+    public BufferedImage getPuddleImage(PuddleType type, int index, int lifetime){
+        
+        int i = 0;
+        if (index > 20){
+            i = 3;
+        }else if (index > 15){
+            i = 2;
+        }else if (index > 10){
+            i = 1;
+        }
+
+        if (index > lifetime - 10){
+            i = 1;
+        }else if (index > lifetime - 20){
+            i = 2;
+        }else if (index > lifetime - 30){
+            i = 3;
+        }
+        return this.puddles.get(type).get(i);
+    }
+    //GUN UI
     private void loadGunUI() {
         int w = Config.getInt("uiGunWidth");
         int h = Config.getInt("uiGunHeight");
@@ -215,14 +269,25 @@ public class ImageHandler {
         }
         this.attackingEnemies.put(EnemyType.GHOUL, ghoulMelee);
 
+        // Ghoul ranged
+        ArrayList<BufferedImage> ghoulRanged = new ArrayList<>();
+            for (int i = 0; i < GHOUL_ANIMATION_COUNT; i++) {
+            String path = String.format("/no/uib/inf112/npcs/ghoul/rangedGhoul/Attack2_00%s.png", i);
+            BufferedImage rawImage = ImageReader.fetchImage(path);
+            ghoulRanged.add(rawImage);
+        }
+        this.rangedAttackingEnemies.put(EnemyType.GHOUL, ghoulRanged);
+
     }
 
-    public BufferedImage getEnemySprites(EnemyType type, EnemyAction action, int Index){
+    public BufferedImage getEnemySprites(EnemyType type, EnemyAction action, int index){
 
         return switch (action){
-            case WALK -> this.walkingEnemies.get(type).get(Index);
+            case WALK -> this.walkingEnemies.get(type).get(index);
 
-            case ATTACK -> this.attackingEnemies.get(type).get(Index);
+            case ATTACK -> this.attackingEnemies.get(type).get(index);
+
+            case RANGED_ATTACK -> this.rangedAttackingEnemies.get(type).get(index);
 
             default -> throw new IllegalArgumentException("Illegal argument: " + action);
         };

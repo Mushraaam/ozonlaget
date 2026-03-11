@@ -8,19 +8,20 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
+import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class NPC implements IEnemy {
     private double speed;
-    private Rectangle2D.Double pos;
     private List<ICell> currentPath = new ArrayList<>();
     private int pathIndex = 0;
     private int animationCount;
-    private int attackAnimationCount;
     private double facingAngle = 0.0;
     private double rotationSpeed = 0.12;
     private EnemySize size;
@@ -55,6 +56,9 @@ public abstract class NPC implements IEnemy {
     protected IPlayer player;
     protected Rectangle2D.Double attackTarget;
     protected int animationIndex = 0;
+    protected boolean hasRangedAmmo;
+    protected int range = 0;
+    protected Rectangle2D.Double pos;
 
 
 
@@ -73,9 +77,6 @@ public abstract class NPC implements IEnemy {
 
     }
 
-    // methods that need to be implemented per NPC:
-
-    public abstract void attack(Rectangle2D.Double target);
 
     // shared methods
 
@@ -131,8 +132,15 @@ public abstract class NPC implements IEnemy {
     @Override
     public void move(IGrid grid) {
 
-        if (!(this.currentAction == EnemyAction.ATTACK)){
-            if (inMeleeRange()){
+        if (this.currentAction == EnemyAction.WALK){
+
+            if (canShootPlayer()){
+                this.currentAction = EnemyAction.RANGED_ATTACK;
+                this.animationIndex = 0;
+                this.attackTarget = this.player.getHitbox();
+            }
+
+            else if (inMeleeRange()){
                 this.currentAction = EnemyAction.ATTACK;
                 this.animationIndex = 0;
                 this.attackTarget = this.player.getHitbox();
@@ -140,7 +148,10 @@ public abstract class NPC implements IEnemy {
         }
 
         if (this.currentAction == EnemyAction.ATTACK){
-            attack(this.player.getHitbox());
+            attack(this.attackTarget);
+        }
+        else if (this.currentAction == EnemyAction.RANGED_ATTACK){
+            rangedAttack(this.attackTarget);
         }
 
         if (this.currentAction == EnemyAction.WALK) {
@@ -176,6 +187,10 @@ public abstract class NPC implements IEnemy {
             }
         }
     }
+
+
+    protected abstract void rangedAttack(Double attackTarget2);
+
 
     private void unStuck(boolean moveX, boolean moveY) {
         ICell myCell = this.getStandingCell();
@@ -497,14 +512,42 @@ public abstract class NPC implements IEnemy {
         this.animationIndex = 0;
     }
 
+    protected double distance(Rectangle2D.Double source, Rectangle2D.Double target){
+        double dx = target.getCenterX() - source.getCenterX();
+        double dy = target.getCenterY() - source.getCenterY();
+        return Math.sqrt(dx * dx + dy * dy);
+    }
     protected boolean inMeleeRange() {
         double w = this.pos.width;
-
-        Rectangle2D.Double target = this.player.getHitbox();
-        double dx = target.getCenterX() - this.pos.getCenterX();
-        double dy = target.getCenterY() - this.pos.getCenterY();
-
-        return Math.sqrt(dx * dx + dy * dy) <= w;
+        return distance(this.pos, this.player.getHitbox()) <= w;
+    }
+    
+    protected boolean canShootPlayer(){
+        return inShootingRange() && hasLineOfSight() && this.hasRangedAmmo;
+        
     }
 
+    private boolean hasLineOfSight() {
+        Rectangle2D.Double pos1 = this.getHitbox();
+        Rectangle2D.Double pos2 = this.player.getHitbox();
+        Line2D.Double line = new Line2D.Double(pos1.getCenterX(), pos1.getCenterY(), pos2.getCenterX(), pos2.getCenterY());
+
+        for (IStaticObject obj : this.map.getStaticObjects()){
+            if (!obj.isWall()){
+                continue;
+            }
+            if (line.intersects(obj.getBounds())){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean inShootingRange() {
+        return distance(this.getHitbox(), this.player.getHitbox()) <= this.range;
+    }
+
+    // ABSTRACT METHODS
+
+    public abstract void attack(Rectangle2D.Double target);
 }

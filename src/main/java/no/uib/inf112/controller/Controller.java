@@ -8,6 +8,9 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IGunShot;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.interfaces.IProjectile;
+import no.uib.inf112.interfaces.IPuddle;
+import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
 import no.uib.inf112.view.GameDrawer;
 import no.uib.inf112.utility.PerfTracker;
 import no.uib.inf112.utility.Camera;
@@ -39,7 +42,9 @@ public class Controller
     private Timer shootTimer;
     private MouseEvent lastMouseEvent;
 
-    //Executor for pathfinding
+    private Timer AOETimer;
+
+    // Executor for pathfinding
     private final ExecutorService pathExecutor;
     private volatile boolean pathfindingRunning;
 
@@ -82,7 +87,6 @@ public class Controller
 
         });
 
-
         this.pathFindingTimer = new Timer(600, (ActionEvent e) -> {
             if (pathfindingRunning) {
                 return;
@@ -116,6 +120,17 @@ public class Controller
             for (IEnemy enemy : enemies) {
                 enemy.move(grid);
             }
+
+            // puddles and projectiles also in movement for now
+
+            ArrayList<IPuddle> puddles = map.getAOEPuddles();
+            for (IPuddle puddle : puddles) {
+                puddle.incrementAnimationIndex();
+            }
+            ArrayList<IProjectile> projectiles = map.getProjectiles();
+            for (IProjectile projectile : projectiles){
+                projectile.move();
+            }
             PerfTracker.stop("Movement Logic");
 
         });
@@ -136,11 +151,19 @@ public class Controller
 
         });
 
+        this.AOETimer = new Timer(500, e -> {
+            ArrayList<IPuddle> puddles = map.getAOEPuddles();
+            for (IPuddle puddle : puddles) {
+                puddle.dealDamage();
+            }
+        });
+
         this.timers = new ArrayList<>();
         this.timers.add(playerAnimationTimer);
         this.timers.add(pathFindingTimer);
         this.timers.add(movementTimer);
         this.timers.add(gunshotTimer);
+        this.timers.add(AOETimer);
 
         this.repaintTimer.start();
         applyTimers(map.getGameState());
@@ -160,6 +183,7 @@ public class Controller
                 playerAnimationTimer.start();
                 pathFindingTimer.start();
                 movementTimer.start();
+                AOETimer.start();
                 this.gunshotTimer.start();
             }
             default -> {
@@ -229,7 +253,8 @@ public class Controller
                 map.getSpawner().spawnGhoul();
             }
             case KeyEvent.VK_L -> {
-                //placeholder
+                // place puddle on player
+                this.map.addAOEPuddle(new AcidPuddle(this.player.getHitbox(), this.map));
             }
         }
     }
