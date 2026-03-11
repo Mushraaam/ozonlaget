@@ -8,7 +8,7 @@ import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.map.npcs.projectiles.AcidProjectile;
+import no.uib.inf112.map.npcs.projectiles.AcidPuddleProjectile;
 
 public class Ghoul extends NPC {
 
@@ -75,7 +75,7 @@ public class Ghoul extends NPC {
             Rectangle2D.Double puddlePos = new Rectangle2D.Double(
                 playerPos.x - 30, playerPos.y - 30, playerPos.getWidth() + 60, playerPos.getHeight() + 60);
             
-            this.map.addProjectile(new AcidProjectile(this.pos, puddlePos, this.map));
+            this.map.addProjectile(new AcidPuddleProjectile(this.pos, puddlePos, this.map));
 
             this.hasRangedAmmo = false;
             setAction(EnemyAction.WALK);

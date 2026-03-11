@@ -1,5 +1,4 @@
 package no.uib.inf112.map.npcs.projectiles;
-
 import java.awt.geom.Rectangle2D;
 
 import no.uib.inf112.enums.PuddleType;
@@ -7,34 +6,49 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
 
-public class AcidProjectile implements IProjectile {
 
+
+public abstract class PuddleProjectile implements IProjectile {
+    
     private double startX;
     private double startY;
     private double destX;
     private double destY;
-    private IMap map;
     private Rectangle2D.Double bounds;
     private Rectangle2D.Double target;
 
-    private static final PuddleType TYPE = PuddleType.ACID;
-    private static final int SPEED = 10;
-    private static final double WIDTH = 100;
-    private static final double HEIGHT = 20;
+    private double width;
+    private double height;
+    private int speed;
+    private PuddleType type;
 
-    public AcidProjectile(Rectangle2D.Double startPos, Rectangle2D.Double endPos, IMap map) {
+    protected IMap map;
+
+
+    public PuddleProjectile(Rectangle2D.Double startPos, Rectangle2D.Double endPos, IMap map, double width, double height, int speed, PuddleType type) {
         this.startX = startPos.getCenterX();
         this.startY = startPos.getCenterY();
         this.destX = endPos.getCenterX();
         this.destY = endPos.getCenterY();
-        this.bounds = new Rectangle2D.Double(startX, startY, WIDTH, HEIGHT);
+        this.width = width;
+        this.height = height;
+        this.speed = speed;
+        this.bounds = new Rectangle2D.Double(startX, startY, this.width, this.height);
         this.target = endPos;
         this.map = map;
     }
 
+    //Abstract func
+
+    /**
+     * Defines the effect that happens when projectile reaches its target
+     */
+    protected abstract void payload();
+
+
     @Override
     public PuddleType getType() {
-        return TYPE;
+        return this.type;
     }
 
     @Override
@@ -44,8 +58,8 @@ public class AcidProjectile implements IProjectile {
 
         double distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance <= SPEED) {
-            map.addAOEPuddle(new AcidPuddle(target, map));
+        if (distance <= this.speed) {
+            payload();
             map.removeProjectile(this);
             return;
         }
@@ -54,10 +68,10 @@ public class AcidProjectile implements IProjectile {
         double dirX = dx / distance;
         double dirY = dy / distance;
 
-        startX += dirX * SPEED;
-        startY += dirY * SPEED;
+        startX += dirX * this.speed;
+        startY += dirY * this.speed;
 
-        this.bounds = new Rectangle2D.Double(startX, startY, WIDTH, HEIGHT);
+        this.bounds = new Rectangle2D.Double(startX, startY, this.width, this.height);
     }
 
     @Override
