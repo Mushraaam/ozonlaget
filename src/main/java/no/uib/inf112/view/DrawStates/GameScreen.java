@@ -114,7 +114,7 @@ public class GameScreen implements IDrawer {
             if(isVisible(graphic, e.getHitbox())){
             drawRotated(
                     graphic,
-                    handler.getEnemySprites(e.getEnemyType(), e.getAnimationIndex()),
+                    handler.getEnemySprites(e.getEnemyType(), e.currentAction(), e.getAnimationIndex()),
                     e.getHitbox(),
                     e.getFacingAngle()
             );}

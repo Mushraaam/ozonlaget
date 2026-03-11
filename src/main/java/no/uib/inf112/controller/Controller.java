@@ -229,7 +229,7 @@ public class Controller
                 map.getSpawner().spawnGhoul();
             }
             case KeyEvent.VK_L -> {
-                map.getSpawner().spawnZombie();
+                //placeholder
             }
         }
     }

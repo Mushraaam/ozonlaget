@@ -1,5 +1,6 @@
 package no.uib.inf112.map.npcs;
 
+import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.interfaces.ICell;
@@ -18,20 +19,21 @@ public abstract class NPC implements IEnemy {
     private Rectangle2D.Double pos;
     private List<ICell> currentPath = new ArrayList<>();
     private int pathIndex = 0;
-    private int animationIndex = 0;
     private int animationCount;
     private int attackAnimationCount;
     private double facingAngle = 0.0;
     private double rotationSpeed = 0.12;
     private EnemySize size;
     private EnemyType type;
-    private IMap map;
+
+
     private double goalOffsetX;
     private double goalOffsetY;
     private ICell lastStart;
     private ICell lastGoal;
     private IEnemy nextInCell = null;
     private ICell from;
+    private EnemyAction currentAction;
 
     private int lastMinR = -1;
     private int lastMaxR = -1;
@@ -47,7 +49,14 @@ public abstract class NPC implements IEnemy {
 
     private int health;
 
-    private IPlayer player;
+
+    //Protected variables
+    protected IMap map;
+    protected IPlayer player;
+    protected Rectangle2D.Double attackTarget;
+    protected int animationIndex = 0;
+
+
 
     public NPC(Rectangle2D.Double pos, IMap map, int health) {
         this.pos = pos;
@@ -60,6 +69,7 @@ public abstract class NPC implements IEnemy {
 
         this.currentTarget = 0;
         this.health = health;
+        this.currentAction = EnemyAction.WALK;
 
     }
 
@@ -120,34 +130,50 @@ public abstract class NPC implements IEnemy {
 
     @Override
     public void move(IGrid grid) {
-        this.from = getStandingCell();
-        if (currentPath == null || pathIndex >= currentPath.size())
-            return;
-        int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
-        for (int i = pathIndex; i < lookAheadLimit; i++) {
-            Rectangle2D target = currentPath.get(i).getBounds();
-            double dx = target.getCenterX() - pos.getCenterX();
-            double dy = target.getCenterY() - pos.getCenterY();
-            double dist = Math.hypot(dx, dy);
 
-            if (tryMove(dx, dy, dist, target)) {
-                updateFacing(dx, dy, dist);
-                this.pathIndex = i;
-                if (dist <= speed) {
-                    pathIndex++;
-                }
-
-                if (this.sliding) {
-                    this.currentTarget = i;
-                } else {
-                    this.currentTarget = pathIndex;
-                }
-                break;
+        if (!(this.currentAction == EnemyAction.ATTACK)){
+            if (inMeleeRange()){
+                this.currentAction = EnemyAction.ATTACK;
+                this.animationIndex = 0;
+                this.attackTarget = this.player.getHitbox();
             }
-
         }
-        if (from == lastStart) {
-            unStuck(true, true);
+
+        if (this.currentAction == EnemyAction.ATTACK){
+            attack(this.player.getHitbox());
+        }
+
+        if (this.currentAction == EnemyAction.WALK) {
+
+            this.from = getStandingCell();
+            if (currentPath == null || pathIndex >= currentPath.size())
+                return;
+            int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
+            for (int i = pathIndex; i < lookAheadLimit; i++) {
+                Rectangle2D target = currentPath.get(i).getBounds();
+                double dx = target.getCenterX() - pos.getCenterX();
+                double dy = target.getCenterY() - pos.getCenterY();
+                double dist = Math.hypot(dx, dy);
+
+                if (tryMove(dx, dy, dist, target)) {
+                    updateFacing(dx, dy, dist);
+                    this.pathIndex = i;
+                    if (dist <= speed) {
+                        pathIndex++;
+                    }
+
+                    if (this.sliding) {
+                        this.currentTarget = i;
+                    } else {
+                        this.currentTarget = pathIndex;
+                    }
+                    break;
+                }
+
+            }
+            if (from == lastStart) {
+                unStuck(true, true);
+            }
         }
     }
 
@@ -321,7 +347,7 @@ public abstract class NPC implements IEnemy {
     }
 
     private boolean checkCell(ICell cell, Rectangle2D.Double movementHitbox) {
-        if (cell == null){
+        if (cell == null) {
             return false;
         }
 
@@ -430,6 +456,16 @@ public abstract class NPC implements IEnemy {
         }
     }
 
+    @Override
+    public EnemyAction currentAction() {
+        return this.currentAction;
+    }
+
+    @Override
+    public void setAction(EnemyAction action) {
+        this.currentAction = action;
+    }
+
     // CONSTRUCTOR SETTERS
     protected void setSpeed(double speed) {
         this.speed = speed;
@@ -459,6 +495,16 @@ public abstract class NPC implements IEnemy {
     protected void setAttackAnimationCount(int count) {
         this.animationCount = count;
         this.animationIndex = 0;
+    }
+
+    protected boolean inMeleeRange() {
+        double w = this.pos.width;
+
+        Rectangle2D.Double target = this.player.getHitbox();
+        double dx = target.getCenterX() - this.pos.getCenterX();
+        double dy = target.getCenterY() - this.pos.getCenterY();
+
+        return Math.sqrt(dx * dx + dy * dy) <= w;
     }
 
 }
