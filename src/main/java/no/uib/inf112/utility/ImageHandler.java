@@ -13,7 +13,6 @@ import no.uib.inf112.enums.GunType;
 import no.uib.inf112.enums.PuddleType;
 import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.enums.WallDirection;
-import no.uib.inf112.interfaces.IPuddle;
 
 public class ImageHandler {
 

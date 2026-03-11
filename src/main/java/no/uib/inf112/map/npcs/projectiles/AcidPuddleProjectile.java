@@ -4,13 +4,10 @@ import java.awt.geom.Rectangle2D;
 
 import no.uib.inf112.enums.PuddleType;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
 
 public class AcidPuddleProjectile extends PuddleProjectile {
 
-
-    private IMap map;
     private Rectangle2D.Double target;
     private static final PuddleType TYPE = PuddleType.ACID;
     private static final int SPEED = 10;
@@ -19,11 +16,14 @@ public class AcidPuddleProjectile extends PuddleProjectile {
 
     public AcidPuddleProjectile(Rectangle2D.Double startPos, Rectangle2D.Double endPos, IMap map) {
         super(startPos, endPos, map, WIDTH, HEIGHT, SPEED, TYPE);
+        this.target = endPos;
     }
 
     @Override
     protected void payload() {
-        map.addAOEPuddle(new AcidPuddle(target, map));
+        Rectangle2D.Double target = new Rectangle2D.Double(this.target.getX() - 30, this.target.getY() - 30,
+                this.target.getWidth() + 60, this.target.getHeight() + 60);
+        map.addAOEPuddle(new AcidPuddle(target, super.map));
 
     }
 }

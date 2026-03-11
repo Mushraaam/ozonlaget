@@ -4,7 +4,6 @@ import java.awt.geom.Rectangle2D;
 import no.uib.inf112.enums.PuddleType;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IProjectile;
-import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
 
 
 
@@ -15,7 +14,6 @@ public abstract class PuddleProjectile implements IProjectile {
     private double destX;
     private double destY;
     private Rectangle2D.Double bounds;
-    private Rectangle2D.Double target;
 
     private double width;
     private double height;
@@ -34,8 +32,8 @@ public abstract class PuddleProjectile implements IProjectile {
         this.height = height;
         this.speed = speed;
         this.bounds = new Rectangle2D.Double(startX, startY, this.width, this.height);
-        this.target = endPos;
         this.map = map;
+        this.type = type;
     }
 
     //Abstract func
