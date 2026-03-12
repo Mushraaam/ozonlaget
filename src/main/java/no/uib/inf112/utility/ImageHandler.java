@@ -6,9 +6,11 @@ import java.util.HashMap;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.Direction;
+import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.GunType;
+import no.uib.inf112.enums.PuddleType;
 import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.enums.WallDirection;
 
@@ -16,35 +18,39 @@ public class ImageHandler {
 
     private HashMap<Direction, ArrayList<BufferedImage>> playerSprites;
 
-    //PlayerSprite (put into hashmap layer?)
+    // PlayerSprite (put into hashmap layer?)
     private static final int PLAYER_SPRITE_COUNT = 8;
 
-    //Zombie Sprite
-    private static final int ZOMBIE_WALK_COUNT = 8;
+    // Ghoul sprite
+    private static final int GHOUL_ANIMATION_COUNT = 8;
 
-    //Ghoul sprite
-    private static final int GHOUL_WALK_COUNT = 8;
-
-
-    //Wall images
+    // Wall images
     private HashMap<StaticObjectType, HashMap<WallDirection, BufferedImage>> walls;
 
-    //Static Objects (not walls)
+    // Static Objects (not walls)
     private HashMap<StaticObjectType, BufferedImage> staticObjects;
 
-    //Enemy image
-    private HashMap<EnemyType, ArrayList<BufferedImage>> enemies;
+    // Enemy image
+    private HashMap<EnemyType, ArrayList<BufferedImage>> walkingEnemies;
+    private HashMap<EnemyType, ArrayList<BufferedImage>> attackingEnemies;
+    private HashMap<EnemyType, ArrayList<BufferedImage>> rangedAttackingEnemies;
+
 
     private HashMap<FloorType, BufferedImage> floors;
 
-
     private HashMap<Integer, BufferedImage> levelBackground;
+
+    // Puddles
+    private HashMap<PuddleType, ArrayList<BufferedImage>> puddles;
+
+    // Projectiles
+    private HashMap<PuddleType, BufferedImage> projectiles;
 
     // UI
     private HashMap<GunType, BufferedImage> gunUI;
     private BufferedImage uiBar;
 
-    //Main Menu
+    // Main Menu
     private BufferedImage menuBackground;
     private BufferedImage startButton;
     private BufferedImage menuTitle;
@@ -52,7 +58,7 @@ public class ImageHandler {
     private BufferedImage helpButton;
 
 
-    public ImageHandler(){
+    public ImageHandler() {
         this.playerSprites = new HashMap<>();
         loadPlayerSprite();
 
@@ -62,7 +68,9 @@ public class ImageHandler {
         this.staticObjects = new HashMap<>();
         loadStaticObjects();
 
-        this.enemies = new HashMap<>();
+        this.walkingEnemies = new HashMap<>();
+        this.attackingEnemies = new HashMap<>();
+        this.rangedAttackingEnemies = new HashMap<>();
         loadEnemies();
 
         this.floors = new HashMap<>();
@@ -73,40 +81,86 @@ public class ImageHandler {
 
         this.gunUI = new HashMap<>();
         loadGunUI();
-        this.uiBar = ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/ui-bar.png"), 1200, Config.getInt("uiSize"));
+        this.uiBar = ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/ui-bar.png"), 1200,
+                Config.getInt("uiSize"));
 
         loadMenu();
+
+        this.puddles = new HashMap<>();
+        this.projectiles = new HashMap<>();
+        loadPuddles();
     }
 
+    // PUDDLES AND PROJECTILES
+    private void loadPuddles() {
 
+        //ACID
+        ArrayList<BufferedImage> acidPuddles = new ArrayList<>();
+        for (int i = 0; i < 4; i++){
+            BufferedImage img = ImageReader.fetchImage(String.format("/no/uib/inf112/npcs/ghoul/projectile/puddle_%s.png", i));
+            acidPuddles.add(img);
+        }
+        this.puddles.put(PuddleType.ACID, acidPuddles);
+        this.projectiles.put(PuddleType.ACID, ImageReader.fetchImage("/no/uib/inf112/npcs/ghoul/projectile/projectile.png"));
+    }
+
+    public BufferedImage getProjectile(PuddleType type){
+        return this.projectiles.get(type);
+    }
+
+    public BufferedImage getPuddleImage(PuddleType type, int index, int lifetime){
+        
+        int i = 0;
+        if (index > 20){
+            i = 3;
+        }else if (index > 15){
+            i = 2;
+        }else if (index > 10){
+            i = 1;
+        }
+
+        if (index > lifetime - 10){
+            i = 1;
+        }else if (index > lifetime - 20){
+            i = 2;
+        }else if (index > lifetime - 30){
+            i = 3;
+        }
+        return this.puddles.get(type).get(i);
+    }
+    //GUN UI
     private void loadGunUI() {
         int w = Config.getInt("uiGunWidth");
         int h = Config.getInt("uiGunHeight");
-        this.gunUI.put(GunType.DEAGLE, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/DEagle.png"), w, h));
-        this.gunUI.put(GunType.MP5, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/MP5.png"), w, h));
+        this.gunUI.put(GunType.DEAGLE,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/DEagle.png"), w, h));
+        this.gunUI.put(GunType.MP5,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/MP5.png"), w, h));
     }
 
-    public BufferedImage getGunImage(GunType type){
+    public BufferedImage getGunImage(GunType type) {
         return this.gunUI.get(type);
     }
 
-
     private void loadBackgrounds() {
-        // this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/generic_grass.png"), Config.getInt("mapWidth"), Config.getInt("mapHeight")));
-        // this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/ground_2500x2500.png"), Config.getInt("mapWidth"), Config.getInt("mapHeight")));
-        this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/ground_2.png"), Config.getInt("mapWidth"), Config.getInt("mapHeight")));
+        // this.levelBackground.put(1,
+        // ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/generic_grass.png"),
+        // Config.getInt("mapWidth"), Config.getInt("mapHeight")));
+        // this.levelBackground.put(1,
+        // ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/ground_2500x2500.png"),
+        // Config.getInt("mapWidth"), Config.getInt("mapHeight")));
+        this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/ground_2.png"),
+                Config.getInt("mapWidth"), Config.getInt("mapHeight")));
     }
 
-    public BufferedImage getBackground(int level){
+    public BufferedImage getBackground(int level) {
         return this.levelBackground.get(level);
     }
-
-
 
     //////////////////////// PLAYER METHODS //////////////////////////////////
     private void loadPlayerSprite() {
 
-        //this should probably be elegantified later
+        // this should probably be elegantified later
         ArrayList<BufferedImage> playerNorth = new ArrayList<>(PLAYER_SPRITE_COUNT);
         ArrayList<BufferedImage> playerSouth = new ArrayList<>(PLAYER_SPRITE_COUNT);
         ArrayList<BufferedImage> playerWest = new ArrayList<>(PLAYER_SPRITE_COUNT);
@@ -123,10 +177,14 @@ public class ImageHandler {
             playerSouth.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south.png", i)));
             playerWest.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_west.png", i)));
             playerEast.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_east.png", i)));
-            playerNorthWest.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_north_west.png", i)));
-            playerNorthEast.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_north_east.png", i)));
-            playerSouthWest.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south_west.png", i)));
-            playerSouthEast.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south_east.png", i)));
+            playerNorthWest
+                    .add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_north_west.png", i)));
+            playerNorthEast
+                    .add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_north_east.png", i)));
+            playerSouthWest
+                    .add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south_west.png", i)));
+            playerSouthEast
+                    .add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south_east.png", i)));
         }
 
         this.playerSprites.put(Direction.NORTH, playerNorth);
@@ -140,17 +198,15 @@ public class ImageHandler {
     }
 
     public BufferedImage getPlayerSprite(Direction dir, int index) {
-            return this.playerSprites.get(Direction.EAST).get(index);
-        }
-    
-
+        return this.playerSprites.get(Direction.EAST).get(index);
+    }
 
     //////////////////////////////// END PLAYER METHODS //////////////////////////
-    /// 
+    ///
     /// //////////////////////////// START WALL METHODS //////////////////////////
-    /// 
-    
-    private void loadWalls(){
+    ///
+
+    private void loadWalls() {
 
         HashMap<WallDirection, BufferedImage> shortWoodenWalls = new HashMap<>();
         shortWoodenWalls.put(WallDirection.HORIZONTAL, ImageReader.fetchImage("/no/uib/inf112/walls/ShortWall1_1.png"));
@@ -165,17 +221,15 @@ public class ImageHandler {
 
     }
 
-    public BufferedImage getWallImage(StaticObjectType type, WallDirection dir){
+    public BufferedImage getWallImage(StaticObjectType type, WallDirection dir) {
         return this.walls.get(type).get(dir);
     }
 
-
     //////////////// END WALL LOGIC//////////////
-    /// 
+    ///
     /////////////// START STATIC OBJECT LOGIC //////////////
-    /// 
-    
-    
+    ///
+
     private void loadStaticObjects() {
         this.staticObjects.put(StaticObjectType.BEIGE_COUCH_DOWN, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_couch.png"), Config.getInt("couchWidth"), Config.getInt("couchHeight")));
         this.staticObjects.put(StaticObjectType.DARK_TABLE_ROUNDED, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentable.png"), Config.getInt("tableWidth"), Config.getInt("tableHeight")));
@@ -184,60 +238,77 @@ public class ImageHandler {
     
     }
 
-
-
-
-
     /// /////////// START ENEMY LOGIC //////////////
-    
-    private void loadEnemies(){
 
+    private void loadEnemies() {
 
-        //Zombie (generic placeholder)
-        ArrayList<BufferedImage> zombieWalk = new ArrayList<>();
-        for (int i = 0; i < ZOMBIE_WALK_COUNT; i++) {
-            String path = String.format("/no/uib/inf112/npcs/zombie/zombie_%s.png", i);
-            BufferedImage rawImage = ImageReader.fetchImage(path);
-            zombieWalk.add(rawImage);
-        }
-        this.enemies.put(EnemyType.ZOMBIE, zombieWalk);
-
-        //Ghoul
+        // Ghoul Walk
         ArrayList<BufferedImage> ghoulWalk = new ArrayList<>();
-        for (int i = 0; i < GHOUL_WALK_COUNT; i++) {
+        for (int i = 0; i < GHOUL_ANIMATION_COUNT; i++) {
             String path = String.format("/no/uib/inf112/npcs/ghoul/Walk/walk_00%s.png", i);
             BufferedImage rawImage = ImageReader.fetchImage(path);
             ghoulWalk.add(rawImage);
         }
+        this.walkingEnemies.put(EnemyType.GHOUL, ghoulWalk);
 
-        this.enemies.put(EnemyType.GHOUL, ghoulWalk);
+        // Ghoul melee
+        ArrayList<BufferedImage> ghoulMelee = new ArrayList<>();
+            for (int i = 0; i < GHOUL_ANIMATION_COUNT; i++) {
+            String path = String.format("/no/uib/inf112/npcs/ghoul/Attack/Attack_00%s.png", i);
+            BufferedImage rawImage = ImageReader.fetchImage(path);
+            ghoulMelee.add(rawImage);
+        }
+        this.attackingEnemies.put(EnemyType.GHOUL, ghoulMelee);
 
-
+        // Ghoul ranged
+        ArrayList<BufferedImage> ghoulRanged = new ArrayList<>();
+            for (int i = 0; i < GHOUL_ANIMATION_COUNT; i++) {
+            String path = String.format("/no/uib/inf112/npcs/ghoul/rangedGhoul/Attack2_00%s.png", i);
+            BufferedImage rawImage = ImageReader.fetchImage(path);
+            ghoulRanged.add(rawImage);
+        }
+        this.rangedAttackingEnemies.put(EnemyType.GHOUL, ghoulRanged);
 
     }
 
-    public BufferedImage getEnemySprites(EnemyType type, int Index){
-        return this.enemies.get(type).get(Index);
+    public BufferedImage getEnemySprites(EnemyType type, EnemyAction action, int index){
+
+        return switch (action){
+            case WALK -> this.walkingEnemies.get(type).get(index);
+
+            case ATTACK -> this.attackingEnemies.get(type).get(index);
+
+            case RANGED_ATTACK -> this.rangedAttackingEnemies.get(type).get(index);
+
+            default -> throw new IllegalArgumentException("Illegal argument: " + action);
+        };
     }
 
     ///////////////////// END ENEMY LOGIC ////////////////////
-    /// 
+    ///
     /// ////////////////START FLOOR LOGIC ////////////////////
-    /// 
-    
-    private void loadFloors(){
+    ///
+
+    private void loadFloors() {
         int width = Config.getInt("tileWidth");
         int height = Config.getInt("tileHeight");
-        this.floors.put(FloorType.STONE_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"), width, height));
-        this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"), width, height));
-        // this.floors.put(FloorType.GRASS_TILES, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_hd.png"), width, height));
-        this.floors.put(FloorType.WOODFLOOR, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/woodfloor.png"), width, height));
-        this.floors.put(FloorType.ROCK_ROAD, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/rock_road.png"), width, height));
-        this.floors.put(FloorType.GRAY_TILE, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/graytile.png"), width, height));
+        this.floors.put(FloorType.STONE_TILES,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"), width, height));
+        this.floors.put(FloorType.GRASS_TILES,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"), width, height));
+        // this.floors.put(FloorType.GRASS_TILES,
+        // ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_hd.png"),
+        // width, height));
+        this.floors.put(FloorType.WOODFLOOR,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/woodfloor.png"), width, height));
+        this.floors.put(FloorType.ROCK_ROAD,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/rock_road.png"), width, height));
+        this.floors.put(FloorType.GRAY_TILE,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/graytile.png"), width, height));
 
     }
 
-    //MAIN MENY LOGIC
+    // MAIN MENY LOGIC
     private void loadMenu() {
         this.menuBackground = ImageReader.fetchImage("/no/uib/inf112/mainmenu/menu_background.png");
         this.startButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/start_button.png");
@@ -246,7 +317,7 @@ public class ImageHandler {
         this.helpButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/help_button.png");
     }
 
-    public BufferedImage getFloor(FloorType type){
+    public BufferedImage getFloor(FloorType type) {
         return this.floors.get(type);
     }
 
@@ -278,5 +349,3 @@ public class ImageHandler {
         return this.helpButton;
     }
 }
-
-

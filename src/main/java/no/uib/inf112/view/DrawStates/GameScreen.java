@@ -10,6 +10,8 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IGunShot;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.interfaces.IProjectile;
+import no.uib.inf112.interfaces.IPuddle;
 import no.uib.inf112.interfaces.IStaticDrawableObject;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IViewablePlayer;
@@ -24,13 +26,13 @@ public class GameScreen implements IDrawer {
     private IViewablePlayer player;
     private ImageHandler handler;
     private Camera camera;
-    private static final Rectangle2D.Double MAPDIMENSION = new Rectangle2D.Double(0, 0, Config.getInt("mapHeight"),Config.getInt("mapWidth"));
+    private static final Rectangle2D.Double MAPDIMENSION = new Rectangle2D.Double(0, 0, Config.getInt("mapHeight"),
+            Config.getInt("mapWidth"));
     private GameUI ui;
 
     // private BufferedImage playerSprite;
 
     public GameScreen(IMap map, ImageHandler handler, Camera camera) {
-
 
         this.map = map;
         this.ui = new GameUI(this.map, handler);
@@ -46,6 +48,8 @@ public class GameScreen implements IDrawer {
         /* Order matters(tror jeg) */
         centerCamera(graphic);
         drawBackground(graphic);
+        drawPuddles(graphic);
+        drawProjectiles(graphic);
         drawStaticObjects(graphic);
         drawEnemies(graphic);
         drawGunShots(graphic);
@@ -53,10 +57,26 @@ public class GameScreen implements IDrawer {
         this.ui.draw(graphic);
     }
 
+    private void drawProjectiles(Graphics2D graphic) {
+        for (IProjectile projectile : this.map.getProjectiles()) {
+            drawRotated(graphic, this.handler.getProjectile(projectile.getType()), projectile.getBounds(), projectile.angle());
+        }
+    }
+
+    private void drawPuddles(Graphics2D graphic) {
+        for (IPuddle puddle : this.map.getAOEPuddles()) {
+            Rectangle2D.Double bounds = puddle.getBounds();
+            drawImage(graphic,
+                    this.handler.getPuddleImage(puddle.getType(), puddle.getAnimationIndex(), puddle.lifeTime()),
+                    bounds);
+
+        }
+    }
+
     private void drawGunShots(Graphics2D graphic) {
         graphic.setColor(Color.YELLOW);
         graphic.setStroke(new BasicStroke(1));
-        for (IGunShot shot : this.map.gunShots()){
+        for (IGunShot shot : this.map.gunShots()) {
             // graphic.fill(shot.bounds());
             graphic.draw(shot.bounds());
         }
@@ -76,8 +96,7 @@ public class GameScreen implements IDrawer {
                 IWall wall = (IWall) obj;
                 BufferedImage image = handler.getWallImage(wall.getType(), wall.getWallDirection());
                 drawImage(graphic, image, wall.getBounds());
-            }
-            else {
+            } else {
                 BufferedImage image = handler.getStaticObjectImage(obj.getType());
                 drawImage(graphic, image, obj.getBounds());
             }
@@ -105,19 +124,19 @@ public class GameScreen implements IDrawer {
     private void drawPlayer(Graphics2D graphic) {
         drawRotated(
                 graphic,
-                handler.getPlayerSprite(player.getDirection(), player.getAnimationIndex()), player.getHitbox(), player.getFacingAngle()
-        );
+                handler.getPlayerSprite(player.getDirection(), player.getAnimationIndex()), player.getHitbox(),
+                player.getFacingAngle());
     }
 
     private void drawEnemies(Graphics2D graphic) {
         for (IEnemy e : map.getEnemies()) {
-            if(isVisible(graphic, e.getHitbox())){
-            drawRotated(
-                    graphic,
-                    handler.getEnemySprites(e.getEnemyType(), e.getAnimationIndex()),
-                    e.getHitbox(),
-                    e.getFacingAngle()
-            );}
+            if (isVisible(graphic, e.getHitbox())) {
+                drawRotated(
+                        graphic,
+                        handler.getEnemySprites(e.getEnemyType(), e.currentAction(), e.getAnimationIndex()),
+                        e.getHitbox(),
+                        e.getFacingAngle());
+            }
         }
 
     }
@@ -126,10 +145,9 @@ public class GameScreen implements IDrawer {
         var old = g2.getTransform();
         g2.translate(hb.getCenterX(), hb.getCenterY());
         g2.rotate(angle);
-        g2.drawImage(img, (int)-hb.width/2, (int)-hb.height/2, (int)hb.width, (int)hb.height, null);
+        g2.drawImage(img, (int) -hb.width / 2, (int) -hb.height / 2, (int) hb.width, (int) hb.height, null);
 
         g2.setTransform(old);
     }
-
 
 }

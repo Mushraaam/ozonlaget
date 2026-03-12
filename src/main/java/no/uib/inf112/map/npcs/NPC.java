@@ -1,5 +1,6 @@
 package no.uib.inf112.map.npcs;
 
+import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.interfaces.ICell;
@@ -7,31 +8,30 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
+import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class NPC implements IEnemy {
     private double speed;
-    private Rectangle2D.Double pos;
     private List<ICell> currentPath = new ArrayList<>();
     private int pathIndex = 0;
-    private int animationIndex = 0;
     private int animationCount;
-    private int attackAnimationCount;
     private double facingAngle = 0.0;
     private double rotationSpeed = 0.12;
     private EnemySize size;
     private EnemyType type;
-    private IMap map;
-    private double goalOffsetX;
-    private double goalOffsetY;
+
     private ICell lastStart;
     private ICell lastGoal;
     private IEnemy nextInCell = null;
     private ICell from;
+    private EnemyAction currentAction;
 
     private int lastMinR = -1;
     private int lastMaxR = -1;
@@ -39,33 +39,35 @@ public abstract class NPC implements IEnemy {
     private int lastMaxC = -1;
 
     // test
-    private int currentTarget;
     private boolean sliding = false;
     private int slideXDir = 1;
     private int slideYDir = 1;
-    private boolean slidePreferX = true;
 
     private int health;
 
-    private IPlayer player;
+
+    //Protected variables
+    protected IMap map;
+    protected IPlayer player;
+    protected Rectangle2D.Double attackTarget;
+    protected int animationIndex = 0;
+    protected boolean hasRangedAmmo;
+    protected int range = 0;
+    protected Rectangle2D.Double pos;
+
+
 
     public NPC(Rectangle2D.Double pos, IMap map, int health) {
         this.pos = pos;
         this.map = map;
 
-        double r = pos.getHeight(); // Eller width
-        this.goalOffsetX = (Math.random() * 2 - 1) * r;
-        this.goalOffsetY = (Math.random() * 2 - 1) * r;
         this.player = map.getPlayer();
 
-        this.currentTarget = 0;
         this.health = health;
+        this.currentAction = EnemyAction.WALK;
 
     }
 
-    // methods that need to be implemented per NPC:
-
-    public abstract void attack(Rectangle2D.Double target);
 
     // shared methods
 
@@ -120,36 +122,60 @@ public abstract class NPC implements IEnemy {
 
     @Override
     public void move(IGrid grid) {
-        this.from = getStandingCell();
-        if (currentPath == null || pathIndex >= currentPath.size())
-            return;
-        int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
-        for (int i = pathIndex; i < lookAheadLimit; i++) {
-            Rectangle2D target = currentPath.get(i).getBounds();
-            double dx = target.getCenterX() - pos.getCenterX();
-            double dy = target.getCenterY() - pos.getCenterY();
-            double dist = Math.hypot(dx, dy);
 
-            if (tryMove(dx, dy, dist, target)) {
-                updateFacing(dx, dy, dist);
-                this.pathIndex = i;
-                if (dist <= speed) {
-                    pathIndex++;
-                }
+        if (this.currentAction == EnemyAction.WALK){
 
-                if (this.sliding) {
-                    this.currentTarget = i;
-                } else {
-                    this.currentTarget = pathIndex;
-                }
-                break;
+            if (canShootPlayer()){
+                this.currentAction = EnemyAction.RANGED_ATTACK;
+                this.animationIndex = 0;
+                this.attackTarget = this.player.getHitbox();
             }
 
+            else if (inMeleeRange()){
+                this.currentAction = EnemyAction.ATTACK;
+                this.animationIndex = 0;
+                this.attackTarget = this.player.getHitbox();
+            }
         }
-        if (from == lastStart) {
-            unStuck(true, true);
+
+        if (this.currentAction == EnemyAction.ATTACK){
+            attack(this.attackTarget);
+        }
+        else if (this.currentAction == EnemyAction.RANGED_ATTACK){
+            rangedAttack(this.attackTarget);
+        }
+
+        if (this.currentAction == EnemyAction.WALK) {
+
+            this.from = getStandingCell();
+            if (currentPath == null || pathIndex >= currentPath.size())
+                return;
+            int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
+            for (int i = pathIndex; i < lookAheadLimit; i++) {
+                Rectangle2D target = currentPath.get(i).getBounds();
+                double dx = target.getCenterX() - pos.getCenterX();
+                double dy = target.getCenterY() - pos.getCenterY();
+                double dist = Math.hypot(dx, dy);
+
+                if (tryMove(dx, dy, dist, target)) {
+                    updateFacing(dx, dy, dist);
+                    this.pathIndex = i;
+                    if (dist <= speed) {
+                        pathIndex++;
+                    }
+                    break;
+                }
+
+            }
+            if (from == lastStart) {
+                unStuck(true, true);
+            }
         }
     }
+
+
+    protected abstract void rangedAttack(Double attackTarget2);
+
 
     private void unStuck(boolean moveX, boolean moveY) {
         ICell myCell = this.getStandingCell();
@@ -221,16 +247,6 @@ public abstract class NPC implements IEnemy {
                         this.pos.height);
                 testX.x += slideXDir * speed;
                 testY.y += slideYDir * speed;
-
-                boolean xOk = isLegal(testX);
-                boolean yOk = isLegal(testY);
-
-                if (xOk && !yOk)
-                    this.slidePreferX = true;
-                else if (!xOk && yOk)
-                    this.slidePreferX = false;
-                else
-                    this.slidePreferX = Math.abs(dx) >= Math.abs(dy);
             }
 
             if (trySlide(dx, dy, dist, target)) {
@@ -321,7 +337,7 @@ public abstract class NPC implements IEnemy {
     }
 
     private boolean checkCell(ICell cell, Rectangle2D.Double movementHitbox) {
-        if (cell == null){
+        if (cell == null) {
             return false;
         }
 
@@ -430,6 +446,16 @@ public abstract class NPC implements IEnemy {
         }
     }
 
+    @Override
+    public EnemyAction currentAction() {
+        return this.currentAction;
+    }
+
+    @Override
+    public void setAction(EnemyAction action) {
+        this.currentAction = action;
+    }
+
     // CONSTRUCTOR SETTERS
     protected void setSpeed(double speed) {
         this.speed = speed;
@@ -461,4 +487,42 @@ public abstract class NPC implements IEnemy {
         this.animationIndex = 0;
     }
 
+    protected double distance(Rectangle2D.Double source, Rectangle2D.Double target){
+        double dx = target.getCenterX() - source.getCenterX();
+        double dy = target.getCenterY() - source.getCenterY();
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+    protected boolean inMeleeRange() {
+        double w = this.pos.width;
+        return distance(this.pos, this.player.getHitbox()) <= w;
+    }
+    
+    protected boolean canShootPlayer(){
+        return inShootingRange() && hasLineOfSight() && this.hasRangedAmmo;
+        
+    }
+
+    private boolean hasLineOfSight() {
+        Rectangle2D.Double pos1 = this.getHitbox();
+        Rectangle2D.Double pos2 = this.player.getHitbox();
+        Line2D.Double line = new Line2D.Double(pos1.getCenterX(), pos1.getCenterY(), pos2.getCenterX(), pos2.getCenterY());
+
+        for (IStaticObject obj : this.map.getStaticObjects()){
+            if (!obj.isWall()){
+                continue;
+            }
+            if (line.intersects(obj.getBounds())){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean inShootingRange() {
+        return distance(this.getHitbox(), this.player.getHitbox()) <= this.range;
+    }
+
+    // ABSTRACT METHODS
+
+    public abstract void attack(Rectangle2D.Double target);
 }

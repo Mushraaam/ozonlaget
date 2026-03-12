@@ -1,5 +1,6 @@
 package no.uib.inf112.interfaces;
 
+import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
@@ -88,5 +89,20 @@ public interface IEnemy extends IMovingDrawableObject {
      * @param damage
      */
     public void takeDamage(int damage);
+
+    /**
+     * @return type of current action
+     */
+    public EnemyAction currentAction();
+
+    /**
+     * @param action
+     */
+    public void setAction(EnemyAction action);
+
+    /**
+     * @param target to attack
+     */
+    public void attack(Rectangle2D.Double target);
 
 }

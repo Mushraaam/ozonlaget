@@ -31,6 +31,10 @@ public class Map implements IMap {
     //GunLogic
     private ArrayList<IGunShot> gunShots;
 
+    //Puddles
+    private ArrayList<IPuddle> puddles;
+    private ArrayList<IProjectile> projectiles;
+
     public Map(Camera camera) {
 
         this.level = new Level1(this);
@@ -41,6 +45,8 @@ public class Map implements IMap {
 
         this.enemies = new ArrayList<>();
         this.gunShots = new ArrayList<>();
+        this.puddles = new ArrayList<>();
+        this.projectiles = new ArrayList<>();
 
         this.debug = false;
 
@@ -189,6 +195,36 @@ public class Map implements IMap {
     @Override
     public void removeEnemy(NPC npc) {
         this.enemies.remove(npc);
+    }
+
+    @Override
+    public ArrayList<IPuddle> getAOEPuddles() {
+        return new ArrayList<>(this.puddles);
+    }
+
+    @Override
+    public void removeAOEPuddle(IPuddle puddle) {
+        this.puddles.remove(puddle);
+    }
+
+    @Override
+    public void addAOEPuddle(IPuddle puddle) {
+        this.puddles.add(puddle);
+    }
+
+    @Override
+    public ArrayList<IProjectile> getProjectiles() {
+        return new ArrayList<>(this.projectiles);
+    }
+
+    @Override
+    public void removeProjectile(IProjectile projectile) {
+        this.projectiles.remove(projectile);
+    }
+
+    @Override
+    public void addProjectile(IProjectile projectile) {
+        this.projectiles.add(projectile);
     }
 
 

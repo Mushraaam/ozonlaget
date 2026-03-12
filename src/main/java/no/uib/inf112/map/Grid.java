@@ -49,7 +49,7 @@ public class Grid implements IGrid {
         this.cellGrid = makeGrid(this.rowCount, this.colCount, CELLWIDTH, CELLHEIGHT, FloorType.NONE);
         fillGrid(this.cellGrid, map.getStaticObjects());
 
-        int[] levelsToCompute = {1, 2, 3, 4}; //supports up to size 8 (large atm).
+        int[] levelsToCompute = { 1, 2, 3, 4 }; // supports up to size 8 (large atm).
         for (int r = 0; r < rowCount; r++) {
             for (int c = 0; c < colCount; c++) {
                 ICell cell = getCell(r, c);
@@ -236,6 +236,10 @@ public class Grid implements IGrid {
     public ICell getCellFromXY(double x, double y) {
         int col = (int) Math.floor(x / CELLWIDTH);
         int row = (int) Math.floor(y / CELLHEIGHT);
+
+        col = Math.max(0, Math.min(col, colCount - 1));
+        row = Math.max(0, Math.min(row, rowCount - 1));
+
         return getCell(row, col);
     }
 
