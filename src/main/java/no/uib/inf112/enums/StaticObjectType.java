@@ -12,5 +12,5 @@ public enum StaticObjectType {
     BEIGE_COUCH_DOWN,
 
     //water
-    WHITEWATER
+    WATER
 }

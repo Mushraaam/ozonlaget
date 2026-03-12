@@ -180,7 +180,7 @@ public class ImageHandler {
         this.staticObjects.put(StaticObjectType.BEIGE_COUCH_DOWN, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_couch.png"), Config.getInt("couchWidth"), Config.getInt("couchHeight")));
         this.staticObjects.put(StaticObjectType.DARK_TABLE_ROUNDED, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentable.png"), Config.getInt("tableWidth"), Config.getInt("tableHeight")));
         this.staticObjects.put(StaticObjectType.DARK_TABLE_SQUARE, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentablesquare.png"), Config.getInt("tableWidth"), Config.getInt("tableHeight")));
-        this.staticObjects.put(StaticObjectType.WHITEWATER, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/water/whitewater.png"), Config.getInt("waterWidth"), Config.getInt("waterHeight")));
+        this.staticObjects.put(StaticObjectType.WATER, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/water/water.png"), Config.getInt("waterWidth"), Config.getInt("waterHeight")));
     
     }
 

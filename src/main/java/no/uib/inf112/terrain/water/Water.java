@@ -7,11 +7,11 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.interfaces.IStaticDrawableObject;
 
-public class WhiteWater implements IStaticDrawableObject{
+public class Water implements IStaticDrawableObject{
 
     private Rectangle2D.Double bounds;
 
-    public WhiteWater(Rectangle2D.Double bounds){
+    public Water(Rectangle2D.Double bounds){
         this.bounds = bounds;
 
         if (this.bounds.width != Config.getInt("waterWidth") || this.bounds.getHeight() != Config.getInt("waterHeight")){
@@ -31,7 +31,7 @@ public class WhiteWater implements IStaticDrawableObject{
 
     @Override
     public StaticObjectType getType() {
-        return StaticObjectType.WHITEWATER;
+        return StaticObjectType.WATER;
     }
     
 }
