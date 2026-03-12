@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import no.uib.inf112.config.Config;
-import no.uib.inf112.enums.Direction;
+//import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.enums.FloorType;
@@ -16,10 +16,11 @@ import no.uib.inf112.enums.WallDirection;
 
 public class ImageHandler {
 
-    private HashMap<Direction, ArrayList<BufferedImage>> playerSprites;
+    private ArrayList<BufferedImage> playerBodySprites;
+    private ArrayList<BufferedImage> playerFeetSprites;
 
     // PlayerSprite (put into hashmap layer?)
-    private static final int PLAYER_SPRITE_COUNT = 8;
+    private static final int PLAYER_SPRITE_COUNT = 20;
 
     // Ghoul sprite
     private static final int GHOUL_ANIMATION_COUNT = 8;
@@ -59,7 +60,8 @@ public class ImageHandler {
 
 
     public ImageHandler() {
-        this.playerSprites = new HashMap<>();
+        this.playerBodySprites = new ArrayList<>();
+        this.playerFeetSprites = new ArrayList<>();
         loadPlayerSprite();
 
         this.walls = new HashMap<>();
@@ -160,45 +162,20 @@ public class ImageHandler {
     //////////////////////// PLAYER METHODS //////////////////////////////////
     private void loadPlayerSprite() {
 
-        // this should probably be elegantified later
-        ArrayList<BufferedImage> playerNorth = new ArrayList<>(PLAYER_SPRITE_COUNT);
-        ArrayList<BufferedImage> playerSouth = new ArrayList<>(PLAYER_SPRITE_COUNT);
-        ArrayList<BufferedImage> playerWest = new ArrayList<>(PLAYER_SPRITE_COUNT);
-        ArrayList<BufferedImage> playerEast = new ArrayList<>(PLAYER_SPRITE_COUNT);
-        ArrayList<BufferedImage> playerNorthWest = new ArrayList<>(PLAYER_SPRITE_COUNT);
-        ArrayList<BufferedImage> playerNorthEast = new ArrayList<>(PLAYER_SPRITE_COUNT);
-        ArrayList<BufferedImage> playerSouthWest = new ArrayList<>(PLAYER_SPRITE_COUNT);
-        ArrayList<BufferedImage> playerSouthEast = new ArrayList<>(PLAYER_SPRITE_COUNT);
-
-        this.playerSprites.put(Direction.NORTH, playerNorth);
-
-        for (int i = 1; i <= PLAYER_SPRITE_COUNT; i++) {
-            playerNorth.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_north.png", i)));
-            playerSouth.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south.png", i)));
-            playerWest.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_west.png", i)));
-            playerEast.add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_east.png", i)));
-            playerNorthWest
-                    .add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_north_west.png", i)));
-            playerNorthEast
-                    .add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_north_east.png", i)));
-            playerSouthWest
-                    .add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south_west.png", i)));
-            playerSouthEast
-                    .add(ImageReader.fetchImage(String.format("/no/uib/inf112/player/player%d_south_east.png", i)));
+        for (int i = 0; i < PLAYER_SPRITE_COUNT; i++) {
+            BufferedImage body = ImageReader.fetchImage(String.format("/no/uib/inf112/player/player_move%s.png", i + 1));
+            BufferedImage feet = ImageReader.fetchImage(String.format("/no/uib/inf112/player/player_feet%s.png", i + 1));
+            this.playerBodySprites.add(body);
+            this.playerFeetSprites.add(feet);
         }
-
-        this.playerSprites.put(Direction.NORTH, playerNorth);
-        this.playerSprites.put(Direction.SOUTH, playerSouth);
-        this.playerSprites.put(Direction.WEST, playerWest);
-        this.playerSprites.put(Direction.EAST, playerEast);
-        this.playerSprites.put(Direction.NORTH_WEST, playerNorthWest);
-        this.playerSprites.put(Direction.NORTH_EAST, playerNorthEast);
-        this.playerSprites.put(Direction.SOUTH_WEST, playerSouthWest);
-        this.playerSprites.put(Direction.SOUTH_EAST, playerSouthEast);
     }
 
-    public BufferedImage getPlayerSprite(Direction dir, int index) {
-        return this.playerSprites.get(Direction.EAST).get(index);
+    public BufferedImage getPlayerBodySprite(int index) {
+        return this.playerBodySprites.get(index);
+    }
+
+    public BufferedImage getPlayerFeetSprite(int index) {
+        return this.playerFeetSprites.get(index);
     }
 
     //////////////////////////////// END PLAYER METHODS //////////////////////////

@@ -3,6 +3,7 @@ package no.uib.inf112.view.DrawStates;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+//import java.nio.Buffer;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.interfaces.IDrawer;
@@ -122,10 +123,11 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawPlayer(Graphics2D graphic) {
-        drawRotated(
-                graphic,
-                handler.getPlayerSprite(player.getDirection(), player.getAnimationIndex()), player.getHitbox(),
-                player.getFacingAngle());
+        BufferedImage feet = handler.getPlayerFeetSprite(player.getAnimationIndex());
+        BufferedImage body = handler.getPlayerBodySprite(player.getAnimationIndex());
+
+        drawRotated(graphic, feet, player.getHitbox(), player.getFacingAngle());
+        drawRotated(graphic, body, player.getHitbox(), player.getFacingAngle());
     }
 
     private void drawEnemies(Graphics2D graphic) {

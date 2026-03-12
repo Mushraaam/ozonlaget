@@ -24,7 +24,7 @@ import no.uib.inf112.records.ShotDestination;
 
 public class Player implements IControllablePlayer, IViewablePlayer {
     private static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
-    private static final int ANIMATION_COUNT = 8;
+    private static final int ANIMATION_COUNT = 20;
     private static final int MAX_HP = 100;
     private int currentHP;
 
