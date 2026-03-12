@@ -1,14 +1,13 @@
 package no.uib.inf112.map.npcs.projectiles;
+
 import java.awt.geom.Rectangle2D;
 
 import no.uib.inf112.enums.PuddleType;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IProjectile;
 
-
-
 public abstract class PuddleProjectile implements IProjectile {
-    
+
     private double startX;
     private double startY;
     private double destX;
@@ -22,8 +21,8 @@ public abstract class PuddleProjectile implements IProjectile {
 
     protected IMap map;
 
-
-    public PuddleProjectile(Rectangle2D.Double startPos, Rectangle2D.Double endPos, IMap map, double width, double height, int speed, PuddleType type) {
+    public PuddleProjectile(Rectangle2D.Double startPos, Rectangle2D.Double endPos, IMap map, double width,
+            double height, int speed, PuddleType type) {
         this.startX = startPos.getCenterX();
         this.startY = startPos.getCenterY();
         this.destX = endPos.getCenterX();
@@ -31,18 +30,19 @@ public abstract class PuddleProjectile implements IProjectile {
         this.width = width;
         this.height = height;
         this.speed = speed;
-        this.bounds = new Rectangle2D.Double(startX, startY, this.width, this.height);
+        this.bounds = new Rectangle2D.Double(startX - this.width * 0.5, startY - this.height * 0.5,
+                this.width, this.height);
+
         this.map = map;
         this.type = type;
     }
 
-    //Abstract func
+    // Abstract func
 
     /**
      * Defines the effect that happens when projectile reaches its target
      */
     protected abstract void payload();
-
 
     @Override
     public PuddleType getType() {
@@ -69,7 +69,8 @@ public abstract class PuddleProjectile implements IProjectile {
         startX += dirX * this.speed;
         startY += dirY * this.speed;
 
-        this.bounds = new Rectangle2D.Double(startX, startY, this.width, this.height);
+        this.bounds = new Rectangle2D.Double(startX - this.bounds.width * 0.5, startY - this.bounds.height * 0.5,
+                this.width, this.height);
     }
 
     @Override
