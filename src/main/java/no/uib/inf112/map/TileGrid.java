@@ -38,9 +38,9 @@ public class TileGrid implements IGrid {
     }
 
     private void fillGrid() {
-        for (IFloor floor : this.map.getFloors()){
-            for (ICell cell : this){
-                if (floor.getArea().intersects(cell.getBounds())){
+        for (IFloor floor : this.map.getFloors()) {
+            for (ICell cell : this) {
+                if (floor.getArea().intersects(cell.getBounds())) {
                     cell.setFloorType(floor.floorType());
                 }
             }
@@ -77,8 +77,6 @@ public class TileGrid implements IGrid {
         return this.colCount;
     }
 
-
-
     @Override
     public ICell getCellFromPos(Rectangle2D.Double pos) {
         double centerX = pos.getCenterX();
@@ -89,6 +87,10 @@ public class TileGrid implements IGrid {
     public ICell getCellFromXY(double x, double y) {
         int col = (int) Math.floor(x / TILEWIDTH);
         int row = (int) Math.floor(y / TILEHEIGHT);
+
+        col = Math.max(0, Math.min(col, colCount - 1));
+        row = Math.max(0, Math.min(row, rowCount - 1));
+
         return getCell(row, col);
     }
 
@@ -107,9 +109,7 @@ public class TileGrid implements IGrid {
         return flattenedList.iterator();
     }
 
-
-
-    //Not used, should be abstracted out at a later date
+    // Not used, should be abstracted out at a later date
     @Override
     public double distance(ICell from, ICell to) {
         // TODO Auto-generated method stub
