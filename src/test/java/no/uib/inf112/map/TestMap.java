@@ -20,6 +20,7 @@ import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import no.uib.inf112.utility.Camera;
+import no.uib.inf112.utility.SoundHandler;
 
 public class TestMap implements IMap {
 
@@ -228,6 +229,12 @@ public class TestMap implements IMap {
     public Factory getFactory() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getFactory'");
+    }
+
+    @Override
+    public SoundHandler getSoundHandler() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSoundHandler'");
     }
 
 }

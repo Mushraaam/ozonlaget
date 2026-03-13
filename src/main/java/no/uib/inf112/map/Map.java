@@ -12,6 +12,7 @@ import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import no.uib.inf112.utility.Camera;
+import no.uib.inf112.utility.SoundHandler;
 
 public class Map implements IMap {
     private ILevel level;
@@ -29,6 +30,7 @@ public class Map implements IMap {
     private Factory factory;
 
     private Camera camera;
+    private SoundHandler soundHandler;
 
     // GunLogic
     private ArrayList<IGunShot> gunShots;
@@ -67,6 +69,8 @@ public class Map implements IMap {
 
         this.camera = camera;
         gatherOccupiedCells();
+
+        this.soundHandler = new SoundHandler();
     }
 
     @Override
@@ -239,6 +243,11 @@ public class Map implements IMap {
     @Override
     public Factory getFactory() {
         return this.factory;
+    }
+
+    @Override
+    public SoundHandler getSoundHandler() {
+        return this.soundHandler;
     }
 
 }

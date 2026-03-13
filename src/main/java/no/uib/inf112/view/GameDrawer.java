@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IMap;
@@ -38,7 +39,7 @@ public class GameDrawer extends JPanel {
 
 
         // Options
-        this.setPreferredSize(new Dimension(1200, 800));
+        this.setPreferredSize(new Dimension(Config.getInt("screenWidth"), Config.getInt("screenHeight")));
         this.setBackground(Color.DARK_GRAY);
 
     }

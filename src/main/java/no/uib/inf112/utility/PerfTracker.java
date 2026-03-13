@@ -3,7 +3,6 @@ package no.uib.inf112.utility;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 
-
 //AI assisted creating this as this, used for debugging, probably gone b4 release.
 public class PerfTracker {
     public static double fps = 0;
@@ -13,6 +12,7 @@ public class PerfTracker {
     private static final Map<String, Long> startTimes = new ConcurrentHashMap<>();
     private static long lastSnapshot = System.nanoTime();
     private static int frames, updates;
+
     public static void start(String task) {
         startTimes.put(task, System.nanoTime());
     }

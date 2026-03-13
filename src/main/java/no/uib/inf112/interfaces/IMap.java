@@ -9,6 +9,7 @@ import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import no.uib.inf112.utility.Camera;
+import no.uib.inf112.utility.SoundHandler;
 
 public interface IMap {
     
@@ -191,4 +192,9 @@ public interface IMap {
      * @return factory (spawn factory) of current map
      */
     public Factory getFactory();
+
+    /**
+     * @return the sound handler
+     */
+    public SoundHandler getSoundHandler();
 }

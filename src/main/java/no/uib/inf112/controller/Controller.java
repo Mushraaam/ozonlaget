@@ -14,6 +14,7 @@ import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
 import no.uib.inf112.view.GameDrawer;
 import no.uib.inf112.utility.PerfTracker;
+import no.uib.inf112.utility.SoundHandler;
 import no.uib.inf112.utility.Camera;
 
 import java.awt.Point;
@@ -48,6 +49,8 @@ public class Controller
 
     private Timer AOETimer;
 
+    private SoundHandler soundHandler;
+
     // Executor for pathfinding
     private final ExecutorService pathExecutor;
     private volatile boolean pathfindingRunning;
@@ -70,6 +73,7 @@ public class Controller
         this.fireRate = this.player.fireRate();
 
         this.camera = new Camera(0, 0);
+        this.soundHandler = new SoundHandler();
 
         this.view.addKeyListener(this);
         this.view.addMouseMotionListener(this);
@@ -137,7 +141,7 @@ public class Controller
                 puddle.incrementAnimationIndex();
             }
             ArrayList<IProjectile> projectiles = map.getProjectiles();
-            for (IProjectile projectile : projectiles){
+            for (IProjectile projectile : projectiles) {
                 projectile.move();
             }
             PerfTracker.stop("Movement Logic");
@@ -157,6 +161,7 @@ public class Controller
 
         this.shootTimer = new Timer(this.fireRate, e -> {
             player.shoot(this.lastMouseEvent);
+            soundHandler.playGunShot(player.gunType());
 
         });
 
@@ -177,6 +182,7 @@ public class Controller
 
         this.repaintTimer.start();
         applyTimers(map.getGameState());
+        soundHandler.playMusic(map.getGameState());
     }
 
     // STOP AND START TIMERS
@@ -261,7 +267,7 @@ public class Controller
                 flipDebug();
             }
             case KeyEvent.VK_O -> {
-                //nothing right now
+                // nothing right now
             }
             case KeyEvent.VK_L -> {
                 // place puddle on player
@@ -328,7 +334,10 @@ public class Controller
 
             case ACTIVE_GAME -> {
                 if (!this.shootTimer.isRunning()) {
+
                     this.player.shoot(e); // Shoot once then start timer
+                    soundHandler.playGunShot(player.gunType());
+
                     this.shootTimer.start();
                 }
             }
@@ -356,6 +365,7 @@ public class Controller
     }
 
     private void changeState(GameState state) {
+        soundHandler.playMusic(state);
         map.setGameState(state);
         applyTimers(state);
     }
