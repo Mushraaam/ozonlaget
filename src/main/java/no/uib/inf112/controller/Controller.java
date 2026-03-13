@@ -1,5 +1,6 @@
 package no.uib.inf112.controller;
 
+import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.enums.GunType;
@@ -33,7 +34,7 @@ public class Controller
     private final Camera camera;
 
     private Factory factory;
-    private Timer spawnTimer;
+    private Timer tickTimer;
 
     private IMap map;
     private IControllablePlayer player;
@@ -119,8 +120,17 @@ public class Controller
             });
         });
 
-        this.spawnTimer = new Timer(1000, e -> {
+        this.tickTimer = new Timer(600, e -> {
+            //Increment factory spawn
             this.factory.increment();
+
+            //handle buff countdowns
+            this.player.decrementBuff(this.soundHandler);
+            // if (this.player.buffCountDown() == 0 && this.player.buffType() != BuffType.NONE){
+            //     this.soundHandler.resumeMusic();
+            //     this.player.setBuff(BuffType.NONE, soundHandler);
+            // }
+
         });
 
         this.movementTimer = new Timer(16, e -> {
@@ -178,7 +188,7 @@ public class Controller
         this.timers.add(movementTimer);
         this.timers.add(gunshotTimer);
         this.timers.add(AOETimer);
-        this.timers.add(spawnTimer);
+        this.timers.add(tickTimer);
 
         this.repaintTimer.start();
         applyTimers(map.getGameState());
@@ -200,7 +210,7 @@ public class Controller
                 pathFindingTimer.start();
                 movementTimer.start();
                 AOETimer.start();
-                this.spawnTimer.start();
+                this.tickTimer.start();
                 this.gunshotTimer.start();
             }
             default -> {
@@ -267,7 +277,7 @@ public class Controller
                 flipDebug();
             }
             case KeyEvent.VK_O -> {
-                // nothing right now
+                this.player.setBuff(BuffType.RAINBOW, this.soundHandler);
             }
             case KeyEvent.VK_L -> {
                 // place puddle on player

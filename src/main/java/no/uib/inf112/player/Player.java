@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.controller.DirectionHandler;
+import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.IControllablePlayer;
@@ -21,6 +22,9 @@ import no.uib.inf112.player.guns.DEagle;
 import no.uib.inf112.player.guns.MP5;
 import no.uib.inf112.player.guns.gunShots.PistolShot;
 import no.uib.inf112.records.ShotDestination;
+import no.uib.inf112.utility.SoundHandler;
+
+
 
 public class Player implements IControllablePlayer, IViewablePlayer {
     private static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
@@ -40,6 +44,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private IGun currentGun;
     private HashMap<GunType, IGun> guns;
 
+    private BuffType buffType;
+    private int buffCounter;
 
 
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IMap map) {
@@ -58,6 +64,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         this.guns.put(GunType.MP5, new MP5());
 
         this.currentHP = MAX_HP;
+
+        //buffs
+        this.buffType = BuffType.NONE;
+        this.buffCounter = 0;
     }
 
     public void pressMove(Direction dir) {
@@ -465,5 +475,40 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
 
         return closest;
+    }
+
+    @Override
+    public BuffType buffType() {
+        return this.buffType;
+    }
+
+    @Override
+    public void setBuff(BuffType type, SoundHandler handler) {
+
+        this.buffType = type;
+        
+        if (type == BuffType.NONE){
+            return;
+        }
+        this.buffCounter = 40; //40 seconds
+        handler.playBuffMusic(type);
+    }
+
+    @Override
+    public int buffCountDown() {
+        return this.buffCounter;
+    }
+
+    @Override
+    public void decrementBuff(SoundHandler handler) {
+        if (this.buffCounter <= 0){
+            return;
+        }
+
+        this.buffCounter--;
+        if (this.buffCounter <= 0){
+            this.buffType = BuffType.NONE;
+            handler.resumeMusic();
+        }
     }
 }

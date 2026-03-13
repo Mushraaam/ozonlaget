@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 
+import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.enums.GameState;
@@ -19,6 +20,7 @@ public class SoundHandler {
 
     private HashMap<GameState, String> gameMusic;
     private HashMap<GunType, String> gunSounds;
+    private HashMap<BuffType, String> buffMusic;
 
     private HashMap<EnemyAction, HashMap<EnemyType, String>> enemySounds;
 
@@ -28,15 +30,22 @@ public class SoundHandler {
     private static final int NUM_CLIPS = 40;
 
     private Clip currentMusic;
+    private Clip currentBuffMusic;
 
     public SoundHandler() {
         loadMusic();
         loadEnemySounds();
         loadGunSounds();
+        loadBuffMusic();
 
         // Clips
         this.counter = 0;
         loadClips();
+    }
+
+    private void loadBuffMusic() {
+        this.buffMusic = new HashMap<>();
+        this.buffMusic.put(BuffType.RAINBOW, "/no/uib/inf112/sound/buffs/rainbowBuff.wav");
     }
 
     private void loadGunSounds() {
@@ -69,7 +78,7 @@ public class SoundHandler {
     private Clip playClip(AudioInputStream stream) {
         Clip clip = this.clips.get(this.counter);
 
-        while (clip.isActive()) {
+        while (clip.isActive() || clip == this.currentMusic) {
             increment();
             clip = this.clips.get(this.counter);
         }
@@ -127,5 +136,15 @@ public class SoundHandler {
         if (stream != null) {
             playClip(stream);
         }
+    }
+
+    public void playBuffMusic(BuffType type){
+        this.currentMusic.stop();
+        this.currentBuffMusic = playClip(SoundReader.loadSound(this.buffMusic.get(type)));
+    }
+
+    public void resumeMusic(){
+        this.currentBuffMusic.stop();
+        this.currentMusic.start();
     }
 }

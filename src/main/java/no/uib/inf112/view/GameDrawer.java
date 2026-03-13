@@ -12,11 +12,13 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.utility.Camera;
 import no.uib.inf112.utility.ImageHandler;
 import no.uib.inf112.view.DrawStates.DebugScreen;
 import no.uib.inf112.view.DrawStates.GameScreen;
 import no.uib.inf112.view.DrawStates.MainMenu;
+import no.uib.inf112.view.DrawStates.RainbowBuffOverlay;
 
 public class GameDrawer extends JPanel {
 
@@ -24,18 +26,22 @@ public class GameDrawer extends JPanel {
     private IDrawer gameScreen;
     private IDrawer mainMenu;
     private IDrawer debugScreen;
+    private IDrawer rainbowBuffOverlay;
     private ImageHandler handler;
     private Camera camera;
+    private IPlayer player;
 
     public GameDrawer(IMap map, Camera camera) {
         this.map = map;
         this.handler = new ImageHandler();
         this.camera = camera;
+        this.player = map.getPlayer();
 
         // Screens
         this.gameScreen = new GameScreen(this.map, this.handler, this.camera);
         this.mainMenu = new MainMenu(this.handler);
         this.debugScreen = new DebugScreen(this.map);
+        this.rainbowBuffOverlay = new RainbowBuffOverlay(this.player);
 
 
         // Options
@@ -65,6 +71,15 @@ public class GameDrawer extends JPanel {
 
         if (map.debugMode() && gameState == GameState.ACTIVE_GAME){
             this.debugScreen.draw(g2);
+        }
+
+        switch (this.player.buffType()){
+
+            case NONE -> {/* Do nothing if none */}
+
+            case RAINBOW -> {this.rainbowBuffOverlay.draw(g2);}
+
+            default -> {/* Do nothing is the default */}
         }
 
     }

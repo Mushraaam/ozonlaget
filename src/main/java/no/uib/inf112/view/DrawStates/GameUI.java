@@ -66,6 +66,13 @@ public class GameUI implements IDrawer {
         graphic.setFont(AMMO_FONT);
         graphic.drawString(String.format("%s/%s", currentAmmo, maxAmmo), (int) x1 + 100, (int) y1 + 98);
 
+        
+        // Buff
+        int buffTimer = this.player.buffCountDown();
+        graphic.drawString(String.format("%s", buffTimer), (int) x1 + 610, (int) y1 + 98);
+
+
+
         // HealthBar
         drawHealthBar(graphic, (int) x1 + 755, (int) y1 + 45);
     }
