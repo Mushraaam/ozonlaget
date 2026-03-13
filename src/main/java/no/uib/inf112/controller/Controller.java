@@ -126,11 +126,6 @@ public class Controller
 
             //handle buff countdowns
             this.player.decrementBuff(this.soundHandler);
-            // if (this.player.buffCountDown() == 0 && this.player.buffType() != BuffType.NONE){
-            //     this.soundHandler.resumeMusic();
-            //     this.player.setBuff(BuffType.NONE, soundHandler);
-            // }
-
         });
 
         this.movementTimer = new Timer(16, e -> {

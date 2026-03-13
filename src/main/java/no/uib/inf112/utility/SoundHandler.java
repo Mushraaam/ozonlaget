@@ -138,12 +138,15 @@ public class SoundHandler {
         }
     }
 
-    public void playBuffMusic(BuffType type){
+    public void playBuffMusic(BuffType type) {
         this.currentMusic.stop();
+        if (this.currentBuffMusic != null) {
+            this.currentBuffMusic.stop();
+        }
         this.currentBuffMusic = playClip(SoundReader.loadSound(this.buffMusic.get(type)));
     }
 
-    public void resumeMusic(){
+    public void resumeMusic() {
         this.currentBuffMusic.stop();
         this.currentMusic.start();
     }

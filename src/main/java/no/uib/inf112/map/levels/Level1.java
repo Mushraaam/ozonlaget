@@ -78,7 +78,7 @@ public class Level1 implements ILevel {
                 throw new IllegalStateException("Map cannot be null");
         }
         //top left, top right, bot left, bot right
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(50, 50, 100, 100)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(10, 10, 150, 150)));
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(50, MAPHEIGHT - 150, 100, 100)));
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(MAPWIDTH - 150, MAPHEIGHT - 150, 100, 100)));
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(MAPWIDTH - 150, 50, 100, 100)));
