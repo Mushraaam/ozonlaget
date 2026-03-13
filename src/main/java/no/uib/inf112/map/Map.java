@@ -8,6 +8,8 @@ import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.map.levels.Level1;
 import no.uib.inf112.map.npcs.NPC;
+import no.uib.inf112.map.npcs.factory.Factory;
+import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import no.uib.inf112.utility.Camera;
 
@@ -24,29 +26,32 @@ public class Map implements IMap {
     private Pathfinder pathfinder;
     private ArrayList<IEnemy> enemies;
     private ArrayList<IFloor> floors;
-    private final Spawner spawner;
+    private Factory factory;
 
     private Camera camera;
 
-    //GunLogic
+    // GunLogic
     private ArrayList<IGunShot> gunShots;
 
-    //Puddles
+    // Puddles
     private ArrayList<IPuddle> puddles;
     private ArrayList<IProjectile> projectiles;
+    private ArrayList<SpawnPoint> spawnPoints;
 
     public Map(Camera camera) {
-
-        this.level = new Level1(this);
-        this.levelNumber = this.level.levelNumber();
-        this.bounds = this.level.getBounds();
-        this.player = this.level.getPlayer();
-        this.floors = this.level.getFloor();
 
         this.enemies = new ArrayList<>();
         this.gunShots = new ArrayList<>();
         this.puddles = new ArrayList<>();
         this.projectiles = new ArrayList<>();
+        this.spawnPoints = new ArrayList<>();
+
+        this.level = new Level1(this);
+        this.bounds = this.level.getBounds();
+        this.player = this.level.getPlayer();
+        this.floors = this.level.getFloor();
+        this.levelNumber = this.level.levelNumber();
+
 
         this.debug = false;
 
@@ -57,10 +62,9 @@ public class Map implements IMap {
 
         this.grid = new Grid(this);
         this.tiles = new TileGrid(this);
-        this.spawner = new Spawner(this); // Spawner comes after grid, or else uh-oh.
         this.pathfinder = new Pathfinder(this);
+        this.factory = level.getFactory();
 
-        
         this.camera = camera;
         gatherOccupiedCells();
     }
@@ -71,19 +75,14 @@ public class Map implements IMap {
     }
 
     @Override
-    public void resetOccupied(){
+    public void resetOccupied() {
         this.grid.resetOccupied();
     }
-
 
     @Override
     public ArrayList<IMovingDrawableObject> getMovingObjects() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
-    }
-
-    public Spawner getSpawner() {
-        return this.spawner;
     }
 
     ////////////////// GETTERS AND SETTERS
@@ -183,12 +182,12 @@ public class Map implements IMap {
     }
 
     @Override
-    public void addShot(IGunShot shot){
+    public void addShot(IGunShot shot) {
         this.gunShots.add(shot);
     }
 
     @Override
-    public Camera getCamera(){
+    public Camera getCamera() {
         return this.camera;
     }
 
@@ -227,6 +226,19 @@ public class Map implements IMap {
         this.projectiles.add(projectile);
     }
 
+    @Override
+    public ArrayList<SpawnPoint> getSpawnPoints() {
+        return this.spawnPoints;
+    }
 
+    @Override
+    public void addSpawnPoint(SpawnPoint point) {
+        this.spawnPoints.add(point);
+    }
+
+    @Override
+    public Factory getFactory() {
+        return this.factory;
+    }
 
 }

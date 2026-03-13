@@ -10,6 +10,7 @@ import no.uib.inf112.interfaces.IGunShot;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.interfaces.IPuddle;
+import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
 import no.uib.inf112.view.GameDrawer;
 import no.uib.inf112.utility.PerfTracker;
@@ -29,6 +30,9 @@ public class Controller
         implements java.awt.event.KeyListener, java.awt.event.MouseMotionListener, java.awt.event.MouseListener {
 
     private final Camera camera;
+
+    private Factory factory;
+    private Timer spawnTimer;
 
     private IMap map;
     private IControllablePlayer player;
@@ -71,6 +75,7 @@ public class Controller
         this.view.addMouseMotionListener(this);
         this.view.addMouseListener(this);
         this.view.setFocusable(true);
+        this.factory = map.getFactory();
 
         //
         this.pathExecutor = Executors.newSingleThreadExecutor();
@@ -108,6 +113,10 @@ public class Controller
                     pathfindingRunning = false;
                 }
             });
+        });
+
+        this.spawnTimer = new Timer(1000, e -> {
+            this.factory.increment();
         });
 
         this.movementTimer = new Timer(16, e -> {
@@ -164,6 +173,7 @@ public class Controller
         this.timers.add(movementTimer);
         this.timers.add(gunshotTimer);
         this.timers.add(AOETimer);
+        this.timers.add(spawnTimer);
 
         this.repaintTimer.start();
         applyTimers(map.getGameState());
@@ -184,6 +194,7 @@ public class Controller
                 pathFindingTimer.start();
                 movementTimer.start();
                 AOETimer.start();
+                this.spawnTimer.start();
                 this.gunshotTimer.start();
             }
             default -> {
@@ -250,7 +261,7 @@ public class Controller
                 flipDebug();
             }
             case KeyEvent.VK_O -> {
-                map.getSpawner().spawnGhoul();
+                //nothing right now
             }
             case KeyEvent.VK_L -> {
                 // place puddle on player

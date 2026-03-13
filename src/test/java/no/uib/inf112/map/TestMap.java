@@ -16,6 +16,8 @@ import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.interfaces.IPuddle;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.map.npcs.NPC;
+import no.uib.inf112.map.npcs.factory.Factory;
+import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import no.uib.inf112.utility.Camera;
 
@@ -23,7 +25,7 @@ public class TestMap implements IMap {
 
     private Rectangle2D.Double bounds;
 
-    public TestMap(Rectangle2D.Double bounds){
+    public TestMap(Rectangle2D.Double bounds) {
         this.bounds = bounds;
     }
 
@@ -42,32 +44,11 @@ public class TestMap implements IMap {
         return new Pathfinder(this);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public ArrayList<IMovingDrawableObject> getMovingObjects() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
     }
-
-
 
     @Override
     public IPlayer getPlayer() {
@@ -117,17 +98,6 @@ public class TestMap implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'addEnemy'");
     }
 
-    // @Override
-    // public void updateEnemyLocations(List<IEnemy> allEnemies) {
-
-    // }
-
-    @Override
-    public Spawner getSpawner() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSpawner'");
-    }
-
     @Override
     public ArrayList<IEnemy> getEnemies() {
         // TODO Auto-generated method stub
@@ -145,7 +115,6 @@ public class TestMap implements IMap {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getEnemyCount'");
     }
-
 
     @Override
     public void gatherOccupiedCells() {
@@ -243,5 +212,22 @@ public class TestMap implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'addProjectile'");
     }
 
+    @Override
+    public ArrayList<SpawnPoint> getSpawnPoints() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSpawnPoints'");
+    }
+
+    @Override
+    public void addSpawnPoint(SpawnPoint point) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addSpawnPoint'");
+    }
+
+    @Override
+    public Factory getFactory() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFactory'");
+    }
 
 }

@@ -9,6 +9,8 @@ import no.uib.inf112.interfaces.ILevel;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.map.npcs.factory.Factory;
+import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.RockRoad;
 import no.uib.inf112.terrain.floor.WoodFloor;
@@ -40,10 +42,15 @@ public class Level1 implements ILevel {
     private static final int MAPWIDTH = Config.getInt("mapWidth");
     private static final int MAPHEIGHT = Config.getInt("mapHeight");
 
+    private IMap map;
+    private Factory factory;
+
     public Level1(IMap map) {
 
         // README: For now it looks like it is easier to make floors before making walls
         // (floors are grid-locked, walls are not)
+
+        this.map = map;
 
         this.staticObjects = new ArrayList<>();
         this.floors = new ArrayList<>();
@@ -53,9 +60,29 @@ public class Level1 implements ILevel {
                 map);
 
         generateStaticObjects();
+        generateSpawnPoints();
+
+        this.factory = new Factory(this.map);
     }
 
+    public Factory getFactory(){
+        return this.factory;
+    }
+
+
     // midlertidig løsning -> spawner implementeres senere
+
+    private void generateSpawnPoints() {
+
+        if (this.map == null){
+                throw new IllegalStateException("Map cannot be null");
+        }
+        //top left, top right, bot left, bot right
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(50, 50, 100, 100)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(50, MAPHEIGHT - 150, 100, 100)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(MAPWIDTH - 150, MAPHEIGHT - 150, 100, 100)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(MAPWIDTH - 150, 50, 100, 100)));
+}
 
     private void generateStaticObjects() {
 
@@ -211,7 +238,7 @@ public class Level1 implements ILevel {
         this.floors.add(new RockRoad(new Rectangle2D.Double(900,900, 100, 100)));
 
 
-
+        
 
 
     }

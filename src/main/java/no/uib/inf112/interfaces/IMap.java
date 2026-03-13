@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.map.npcs.NPC;
+import no.uib.inf112.map.npcs.factory.Factory;
+import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import no.uib.inf112.utility.Camera;
 
@@ -81,11 +83,6 @@ public interface IMap {
     void addEnemy(IEnemy enemy);
 
     // void updateEnemyLocations(List<IEnemy> allEnemies);
-
-    /**
-     * @return the an entity spawner.
-     */
-    Spawner getSpawner();
 
     /**
      * @return a list of all enemies on the level.
@@ -178,4 +175,20 @@ public interface IMap {
      * @param projectile
      */
     public void addProjectile(IProjectile projectile);
+
+    /**
+     * @return list of all spawnpoints
+     */
+    public ArrayList<SpawnPoint> getSpawnPoints();
+
+    /**
+     * Adds spawnPoint to the list of spawnPoints
+     * @param point
+     */
+    public void addSpawnPoint(SpawnPoint point);
+
+    /**
+     * @return factory (spawn factory) of current map
+     */
+    public Factory getFactory();
 }

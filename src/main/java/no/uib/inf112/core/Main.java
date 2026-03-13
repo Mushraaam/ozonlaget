@@ -18,6 +18,7 @@ public class Main {
         GameDrawer view = new GameDrawer(map, camera);
         JFrame frame = new JFrame("Ozonlaget");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         new Controller(map, view);
         frame.setContentPane(view);
         frame.pack();
