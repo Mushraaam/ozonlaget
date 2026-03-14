@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-public class ImageReader {
+public final class ImageReader {
 
     /**
      * @param url relative filepath
@@ -29,7 +29,8 @@ public class ImageReader {
         }
     }
 
-    //Originally hand made, but improved with chatgpt in order to improve image quality
+    // Originally hand made, but improved with chatgpt in order to improve image
+    // quality
     public static BufferedImage resizeExact(BufferedImage original, int width, int height) {
         GraphicsConfiguration config = GraphicsEnvironment.getLocalGraphicsEnvironment()
                 .getDefaultScreenDevice().getDefaultConfiguration();
@@ -39,7 +40,7 @@ public class ImageReader {
 
         BufferedImage img = original;
 
-        //gradually scale seems to improve quality compared to a single scale action
+        // gradually scale seems to improve quality compared to a single scale action
         while (w / 2 >= width && h / 2 >= height) {
             w /= 2;
             h /= 2;

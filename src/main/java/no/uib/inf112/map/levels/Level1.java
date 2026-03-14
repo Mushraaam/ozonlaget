@@ -17,7 +17,7 @@ import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;
 import no.uib.inf112.terrain.furniture.DarkWoodenTableSquare;
-import no.uib.inf112.terrain.static_objects.WoodWall;
+import no.uib.inf112.terrain.walls.WoodWall;
 import no.uib.inf112.terrain.water.Water;
 
 

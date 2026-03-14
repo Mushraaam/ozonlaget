@@ -1,6 +1,5 @@
 package no.uib.inf112.core;
 
-
 import javax.swing.JFrame;
 
 import no.uib.inf112.map.Map;
@@ -10,7 +9,6 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.view.GameDrawer;
 
 public class Main {
-    
 
     public static void main(String[] args) {
         Camera camera = new Camera(0, 0);
@@ -25,5 +23,7 @@ public class Main {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
+
+
     }
 }

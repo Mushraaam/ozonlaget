@@ -7,17 +7,19 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.interfaces.IStaticDrawableObject;
 
-public class DarkWoodenTableSquare implements IStaticDrawableObject{
+public class DarkWoodenTableSquare implements IStaticDrawableObject {
 
     private Rectangle2D.Double bounds;
 
-    public DarkWoodenTableSquare(Rectangle2D.Double bounds){
+    public DarkWoodenTableSquare(Rectangle2D.Double bounds) {
         this.bounds = bounds;
 
-        if (this.bounds.width != Config.getInt("tableWidth") || this.bounds.getHeight() != Config.getInt("tableHeight")){
+        if (this.bounds.width != Config.getInt("tableWidth")
+                || this.bounds.getHeight() != Config.getInt("tableHeight")) {
             throw new IllegalArgumentException("Height/Width must be consistent with config height/width");
         }
     }
+
     @Override
     public Double getBounds() {
         return this.bounds;
@@ -32,6 +34,5 @@ public class DarkWoodenTableSquare implements IStaticDrawableObject{
     public StaticObjectType getType() {
         return StaticObjectType.DARK_TABLE_SQUARE;
     }
-    
-    
+
 }

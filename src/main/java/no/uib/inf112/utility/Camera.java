@@ -16,7 +16,7 @@ public class Camera {
         this.translateX = translateX;
         this.translateY = translateY;
     }
-
+    
     public void update(Rectangle2D.Double playerHitbox, double screenWidth, double screenHeight,
             Rectangle2D.Double mapBounds) {
         double playerCenterX = playerHitbox.getCenterX();

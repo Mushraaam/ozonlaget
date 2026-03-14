@@ -32,6 +32,7 @@ public class SoundHandler {
     private Clip currentMusic;
     private Clip currentBuffMusic;
 
+    // TODO: Write documentation for public methods
     public SoundHandler() {
         loadMusic();
         loadEnemySounds();
@@ -77,7 +78,6 @@ public class SoundHandler {
 
     private Clip playClip(AudioInputStream stream) {
         Clip clip = this.clips.get(this.counter);
-
         while (clip.isActive() || clip == this.currentMusic) {
             increment();
             clip = this.clips.get(this.counter);
@@ -101,7 +101,7 @@ public class SoundHandler {
         // HashMap<EnemyAction, AudioInputStream> ghoulSounds = new HashMap<>();
         // for (EnemyAction action : EnemyAction.values()){
         // int i = action.index();
-        // ghoulSounds.put(action, SoundReader.loadSound(String.format("some/url/%s",
+        // ghoulSounds.put(action, String.format("some/url/%s",
         // i)));
         // }
     }

@@ -121,10 +121,10 @@ public class Controller
         });
 
         this.tickTimer = new Timer(600, e -> {
-            //Increment factory spawn
+            // Increment factory spawn
             this.factory.increment();
 
-            //handle buff countdowns
+            // handle buff countdowns
             this.player.decrementBuff(this.soundHandler);
         });
 
@@ -266,6 +266,10 @@ public class Controller
                 if (this.map.debugMode()) {
                     this.player.takeDamage(10);
                 }
+            }
+
+            case KeyEvent.VK_M -> {
+                memoryDebug();
             }
 
             case KeyEvent.VK_P -> {
@@ -415,5 +419,20 @@ public class Controller
 
         player.aimAtWorldPosition(worldMouse.x, worldMouse.y);
 
+    }
+
+    /* used for debugging memory usage */
+    private void memoryDebug() {
+        Runtime rt = Runtime.getRuntime();
+
+        long used = rt.totalMemory() - rt.freeMemory();
+        long committed = rt.totalMemory();
+        long max = rt.maxMemory();
+
+        int percentage_used = (int) ((used * 100) / max);
+
+        System.out.println(String.format(
+                "Used memory: %s \nMax memory: %s \nPercentage used: %s%%\nCommitted Memory: %s",
+                used, max, percentage_used, committed));
     }
 }

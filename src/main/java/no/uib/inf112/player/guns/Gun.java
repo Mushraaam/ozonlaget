@@ -17,8 +17,8 @@ public abstract class Gun implements IGun {
     }
 
     @Override
-    public boolean shoot(){
-        if (this.currentAmmunition > 0){
+    public boolean shoot() {
+        if (this.currentAmmunition > 0) {
             this.currentAmmunition--;
         }
         return this.currentAmmunition <= 0;
@@ -40,20 +40,22 @@ public abstract class Gun implements IGun {
     }
 
     @Override
-    public int damage(){
+    public int damage() {
         return this.damage;
     }
+
     @Override
-    public int range(){
+    public int range() {
         return this.range;
     }
 
     @Override
-    public int fireRate(){
+    public int fireRate() {
         return this.fireRate;
     }
+
     @Override
-    public double accuracy(){
+    public double accuracy() {
         return this.accuracy;
     }
 
@@ -75,15 +77,12 @@ public abstract class Gun implements IGun {
         this.accuracy = accuracy;
     }
 
-    
     protected void setRange(int range) {
         this.range = range;
     }
-    
+
     protected void setDamage(int damage) {
         this.damage = damage;
     }
 
-
-    
 }

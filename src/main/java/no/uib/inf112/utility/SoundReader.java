@@ -7,7 +7,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class SoundReader {
+public final class SoundReader {
     
     public static AudioInputStream loadSound(String url){
 

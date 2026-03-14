@@ -7,7 +7,7 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.interfaces.IStaticDrawableObject;
 
-public class DarkWoodenTable implements IStaticDrawableObject{
+public class DarkWoodenTable implements IStaticDrawableObject {
 
     private Rectangle2D.Double bounds;
 
@@ -15,28 +15,28 @@ public class DarkWoodenTable implements IStaticDrawableObject{
      * @param bounds
      * @throws exception if height/width not considtent with config size
      */
-    public DarkWoodenTable(Rectangle2D.Double bounds){
+    public DarkWoodenTable(Rectangle2D.Double bounds) {
         this.bounds = bounds;
 
-        if (this.bounds.width != Config.getInt("tableWidth") || this.bounds.getHeight() != Config.getInt("tableHeight")){
+        if (this.bounds.width != Config.getInt("tableWidth")
+                || this.bounds.getHeight() != Config.getInt("tableHeight")) {
             throw new IllegalArgumentException("Height/Width must be consistent with config height/width");
         }
     }
-
 
     @Override
     public Double getBounds() {
         return this.bounds;
     }
+
     @Override
     public StaticObjectType getType() {
         return StaticObjectType.DARK_TABLE_ROUNDED;
     }
 
-
     @Override
     public boolean isWall() {
-        return false; //not a wall
+        return false; // not a wall
     }
-    
+
 }

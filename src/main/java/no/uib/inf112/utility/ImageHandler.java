@@ -36,7 +36,6 @@ public class ImageHandler {
     private HashMap<EnemyType, ArrayList<BufferedImage>> attackingEnemies;
     private HashMap<EnemyType, ArrayList<BufferedImage>> rangedAttackingEnemies;
 
-
     private HashMap<FloorType, BufferedImage> floors;
 
     private HashMap<Integer, BufferedImage> levelBackground;
@@ -57,7 +56,6 @@ public class ImageHandler {
     private BufferedImage menuTitle;
     private BufferedImage settingsButton;
     private BufferedImage helpButton;
-
 
     public ImageHandler() {
         this.playerBodySprites = new ArrayList<>();
@@ -96,41 +94,44 @@ public class ImageHandler {
     // PUDDLES AND PROJECTILES
     private void loadPuddles() {
 
-        //ACID
+        // ACID
         ArrayList<BufferedImage> acidPuddles = new ArrayList<>();
-        for (int i = 0; i < 4; i++){
-            BufferedImage img = ImageReader.fetchImage(String.format("/no/uib/inf112/npcs/ghoul/projectile/puddle_%s.png", i));
+        for (int i = 0; i < 4; i++) {
+            BufferedImage img = ImageReader
+                    .fetchImage(String.format("/no/uib/inf112/npcs/ghoul/projectile/puddle_%s.png", i));
             acidPuddles.add(img);
         }
         this.puddles.put(PuddleType.ACID, acidPuddles);
-        this.projectiles.put(PuddleType.ACID, ImageReader.fetchImage("/no/uib/inf112/npcs/ghoul/projectile/projectile.png"));
+        this.projectiles.put(PuddleType.ACID,
+                ImageReader.fetchImage("/no/uib/inf112/npcs/ghoul/projectile/projectile.png"));
     }
 
-    public BufferedImage getProjectile(PuddleType type){
+    public BufferedImage getProjectile(PuddleType type) {
         return this.projectiles.get(type);
     }
 
-    public BufferedImage getPuddleImage(PuddleType type, int index, int lifetime){
-        
+    public BufferedImage getPuddleImage(PuddleType type, int index, int lifetime) {
+
         int i = 0;
-        if (index > 20){
+        if (index > 20) {
             i = 3;
-        }else if (index > 15){
+        } else if (index > 15) {
             i = 2;
-        }else if (index > 10){
+        } else if (index > 10) {
             i = 1;
         }
 
-        if (index > lifetime - 10){
+        if (index > lifetime - 10) {
             i = 1;
-        }else if (index > lifetime - 20){
+        } else if (index > lifetime - 20) {
             i = 2;
-        }else if (index > lifetime - 30){
+        } else if (index > lifetime - 30) {
             i = 3;
         }
         return this.puddles.get(type).get(i);
     }
-    //GUN UI
+
+    // GUN UI
     private void loadGunUI() {
         int w = Config.getInt("uiGunWidth");
         int h = Config.getInt("uiGunHeight");
@@ -163,8 +164,10 @@ public class ImageHandler {
     private void loadPlayerSprite() {
 
         for (int i = 0; i < PLAYER_SPRITE_COUNT; i++) {
-            BufferedImage body = ImageReader.fetchImage(String.format("/no/uib/inf112/player/player_move%s.png", i + 1));
-            BufferedImage feet = ImageReader.fetchImage(String.format("/no/uib/inf112/player/player_feet%s.png", i + 1));
+            BufferedImage body = ImageReader
+                    .fetchImage(String.format("/no/uib/inf112/player/player_move%s.png", i + 1));
+            BufferedImage feet = ImageReader
+                    .fetchImage(String.format("/no/uib/inf112/player/player_feet%s.png", i + 1));
             this.playerBodySprites.add(body);
             this.playerFeetSprites.add(feet);
         }
@@ -208,11 +211,19 @@ public class ImageHandler {
     ///
 
     private void loadStaticObjects() {
-        this.staticObjects.put(StaticObjectType.BEIGE_COUCH_DOWN, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_couch.png"), Config.getInt("couchWidth"), Config.getInt("couchHeight")));
-        this.staticObjects.put(StaticObjectType.DARK_TABLE_ROUNDED, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentable.png"), Config.getInt("tableWidth"), Config.getInt("tableHeight")));
-        this.staticObjects.put(StaticObjectType.DARK_TABLE_SQUARE, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentablesquare.png"), Config.getInt("tableWidth"), Config.getInt("tableHeight")));
-        this.staticObjects.put(StaticObjectType.WATER, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/water/water.png"), Config.getInt("waterWidth"), Config.getInt("waterHeight")));
-    
+        this.staticObjects.put(StaticObjectType.BEIGE_COUCH_DOWN,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_couch.png"),
+                        Config.getInt("couchWidth"), Config.getInt("couchHeight")));
+        this.staticObjects.put(StaticObjectType.DARK_TABLE_ROUNDED,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentable.png"),
+                        Config.getInt("tableWidth"), Config.getInt("tableHeight")));
+        this.staticObjects.put(StaticObjectType.DARK_TABLE_SQUARE,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentablesquare.png"),
+                        Config.getInt("tableWidth"), Config.getInt("tableHeight")));
+        this.staticObjects.put(StaticObjectType.WATER,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/water/water.png"),
+                        Config.getInt("waterWidth"), Config.getInt("waterHeight")));
+
     }
 
     /// /////////// START ENEMY LOGIC //////////////
@@ -230,7 +241,7 @@ public class ImageHandler {
 
         // Ghoul melee
         ArrayList<BufferedImage> ghoulMelee = new ArrayList<>();
-            for (int i = 0; i < GHOUL_ANIMATION_COUNT; i++) {
+        for (int i = 0; i < GHOUL_ANIMATION_COUNT; i++) {
             String path = String.format("/no/uib/inf112/npcs/ghoul/Attack/Attack_00%s.png", i);
             BufferedImage rawImage = ImageReader.fetchImage(path);
             ghoulMelee.add(rawImage);
@@ -239,7 +250,7 @@ public class ImageHandler {
 
         // Ghoul ranged
         ArrayList<BufferedImage> ghoulRanged = new ArrayList<>();
-            for (int i = 0; i < GHOUL_ANIMATION_COUNT; i++) {
+        for (int i = 0; i < GHOUL_ANIMATION_COUNT; i++) {
             String path = String.format("/no/uib/inf112/npcs/ghoul/rangedGhoul/Attack2_00%s.png", i);
             BufferedImage rawImage = ImageReader.fetchImage(path);
             ghoulRanged.add(rawImage);
@@ -248,9 +259,9 @@ public class ImageHandler {
 
     }
 
-    public BufferedImage getEnemySprites(EnemyType type, EnemyAction action, int index){
+    public BufferedImage getEnemySprites(EnemyType type, EnemyAction action, int index) {
 
-        return switch (action){
+        return switch (action) {
             case WALK -> this.walkingEnemies.get(type).get(index);
 
             case ATTACK -> this.attackingEnemies.get(type).get(index);

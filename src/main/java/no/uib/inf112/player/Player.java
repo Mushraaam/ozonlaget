@@ -24,8 +24,6 @@ import no.uib.inf112.player.guns.gunShots.PistolShot;
 import no.uib.inf112.records.ShotDestination;
 import no.uib.inf112.utility.SoundHandler;
 
-
-
 public class Player implements IControllablePlayer, IViewablePlayer {
     private static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
     private static final int ANIMATION_COUNT = 20;
@@ -47,7 +45,6 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private BuffType buffType;
     private int buffCounter;
 
-
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IMap map) {
         this.hitbox = hitbox;
         this.bounds = bounds;
@@ -65,7 +62,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
         this.currentHP = MAX_HP;
 
-        //buffs
+        // buffs
         this.buffType = BuffType.NONE;
         this.buffCounter = 0;
     }
@@ -183,8 +180,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             return false;
         }
 
-        for (IEnemy enemy : this.map.getEnemies()){
-            if (proposedMove.intersects(enemy.getHitbox())){
+        for (IEnemy enemy : this.map.getEnemies()) {
+            if (proposedMove.intersects(enemy.getHitbox())) {
                 return false;
             }
         }
@@ -326,7 +323,6 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
     }
 
-
     @Override
     public int fireRate() {
         return this.currentGun.fireRate();
@@ -335,10 +331,9 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public void shoot(MouseEvent e) {
 
-        if (this.currentGun.shoot()){
+        if (this.currentGun.shoot()) {
             return;
         }
-        
 
         double x1 = this.hitbox.getCenterX();
         double y1 = this.hitbox.getCenterY();
@@ -357,10 +352,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             case DEAGLE -> {
                 shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map);
             }
-            
+
             default -> {
                 shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map); // TEMP
-                //throw new IllegalStateException("No gun equipped");
+                // throw new IllegalStateException("No gun equipped");
             }
         }
         this.map.addShot(shot);
@@ -370,7 +365,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
     }
 
-    //Gippity helped with the math and calculations for the raycast functions - the core idea was my own
+    // Gippity helped with the math and calculations for the raycast functions - the
+    // core idea was my own
     public ShotDestination raycastShot(double startX, double startY, double angle, double range) {
         double endX = startX + Math.cos(angle) * range;
         double endY = startY + Math.sin(angle) * range;
@@ -383,7 +379,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         // Check walls
         for (IStaticObject obj : this.map.getStaticObjects()) {
             if (!obj.isWall() || !line.intersects(obj.getBounds())) {
-                continue; // Shoots over furniture, skip if not intersecting with object 
+                continue; // Shoots over furniture, skip if not intersecting with object
             }
             Point2D.Double hit = firstIntersection(line, obj.getBounds());
             if (hit != null) {
@@ -398,8 +394,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
         // Check enemies
         for (IEnemy enemy : this.map.getEnemies()) {
-            if (!line.intersects(enemy.getHitbox())){
-                continue; //Skip if not intersecting enemy
+            if (!line.intersects(enemy.getHitbox())) {
+                continue; // Skip if not intersecting enemy
             }
 
             Point2D.Double hit = firstIntersection(line, enemy.getHitbox());
@@ -421,7 +417,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         double y1 = a.y1;
         double x2 = a.x2;
         double y2 = a.y2;
-        double x3 = b.x1; 
+        double x3 = b.x1;
         double y3 = b.y1;
         double x4 = b.x2;
         double y4 = b.y2;
@@ -486,11 +482,11 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     public void setBuff(BuffType type, SoundHandler handler) {
 
         this.buffType = type;
-        
-        if (type == BuffType.NONE){
+
+        if (type == BuffType.NONE) {
             return;
         }
-        this.buffCounter = 40; //40 seconds
+        this.buffCounter = 40; // 40 seconds
         handler.playBuffMusic(type);
     }
 
@@ -501,12 +497,12 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void decrementBuff(SoundHandler handler) {
-        if (this.buffCounter <= 0){
+        if (this.buffCounter <= 0) {
             return;
         }
 
         this.buffCounter--;
-        if (this.buffCounter <= 0){
+        if (this.buffCounter <= 0) {
             this.buffType = BuffType.NONE;
             handler.resumeMusic();
         }
