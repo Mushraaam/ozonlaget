@@ -60,7 +60,8 @@ public class GameScreen implements IDrawer {
 
     private void drawProjectiles(Graphics2D graphic) {
         for (IProjectile projectile : this.map.getProjectiles()) {
-            drawRotated(graphic, this.handler.getProjectile(projectile.getType()), projectile.getBounds(), projectile.angle());
+            drawRotated(graphic, this.handler.getProjectile(projectile.getType()), projectile.getBounds(),
+                    projectile.angle());
         }
     }
 
@@ -91,15 +92,18 @@ public class GameScreen implements IDrawer {
                 throw new IllegalArgumentException("Object should be instance of IStaticDrawableObject");
             }
 
-            IStaticDrawableObject obj = (IStaticDrawableObject) o;
+            if (isVisible(graphic, o.getBounds())) {
 
-            if (obj.isWall()) {
-                IWall wall = (IWall) obj;
-                BufferedImage image = handler.getWallImage(wall.getType(), wall.getWallDirection());
-                drawImage(graphic, image, wall.getBounds());
-            } else {
-                BufferedImage image = handler.getStaticObjectImage(obj.getType());
-                drawImage(graphic, image, obj.getBounds());
+                IStaticDrawableObject obj = (IStaticDrawableObject) o;
+
+                if (obj.isWall()) {
+                    IWall wall = (IWall) obj;
+                    BufferedImage image = handler.getWallImage(wall.getType(), wall.getWallDirection());
+                    drawImage(graphic, image, wall.getBounds());
+                } else {
+                    BufferedImage image = handler.getStaticObjectImage(obj.getType());
+                    drawImage(graphic, image, obj.getBounds());
+                }
             }
         }
     }
