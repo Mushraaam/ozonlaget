@@ -26,7 +26,7 @@ public class Factory {
      * Increments counter - spawns enemy when counter reaches threshold
      */
     public void increment(){
-        this.counter = this.counter % 100000;
+        this.counter = this.counter + 1 % 100000;
         
         if (this.counter % GHOUL_INTENSITY == 0){
             SpawnPoint point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
