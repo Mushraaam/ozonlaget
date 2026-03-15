@@ -1,5 +1,6 @@
 package no.uib.inf112.player.guns;
 
+import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.IGun;
 
@@ -17,9 +18,13 @@ public abstract class Gun implements IGun {
     }
 
     @Override
-    public boolean shoot() {
+    public boolean shoot(BuffType type) {
+
         if (this.currentAmmunition > 0) {
             this.currentAmmunition--;
+        }
+        if (type == BuffType.RAINBOW) {
+            this.currentAmmunition = this.maxAmmo;
         }
         return this.currentAmmunition <= 0;
     }
@@ -40,7 +45,12 @@ public abstract class Gun implements IGun {
     }
 
     @Override
-    public int damage() {
+    public int damage(BuffType type) {
+        
+        if (type == BuffType.RAINBOW){
+            return this.damage * 2;
+        }
+
         return this.damage;
     }
 

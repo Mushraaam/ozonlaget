@@ -19,6 +19,7 @@ public class Ghoul extends NPC {
     private static final int DAMAGE = 2;
     private static final int ANIMATION_COUNT = 8;
     private static final int RANGE = 300;
+    private static final int RANGED_DELAY = 20;
     private IMap map;
     private int attackSlowDown;
     private boolean meleeSwing;
@@ -64,7 +65,7 @@ public class Ghoul extends NPC {
 
     @Override
     protected void rangedAttack(Double attackTarget2) {
-        this.attackSlowDown = (this.attackSlowDown + 1) % 10;
+        this.attackSlowDown = (this.attackSlowDown + 1) % RANGED_DELAY;
 
         if (this.attackSlowDown == 0) {
             this.incrementAnimationIndex();

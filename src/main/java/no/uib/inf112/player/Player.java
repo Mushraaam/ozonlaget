@@ -331,7 +331,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public void shoot(MouseEvent e) {
 
-        if (this.currentGun.shoot()) {
+        if (this.currentGun.shoot(this.buffType)) {
             return;
         }
 
@@ -361,7 +361,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         this.map.addShot(shot);
 
         if (hit.enemy() != null) {
-            hit.enemy().takeDamage(this.currentGun.damage());
+            hit.enemy().takeDamage(this.currentGun.damage(this.buffType));
         }
     }
 

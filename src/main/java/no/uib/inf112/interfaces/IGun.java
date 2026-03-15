@@ -1,5 +1,6 @@
 package no.uib.inf112.interfaces;
 
+import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.GunType;
 
 public interface IGun {
@@ -38,11 +39,11 @@ public interface IGun {
     /**
      * @return the ammount of damage this gun deals
      */
-    public int damage();
+    public int damage(BuffType type);
 
     /**
      * Reduces ammunition by 1
      * returns True if out of ammunition
      */
-    public boolean shoot();
+    public boolean shoot(BuffType type);
 }
