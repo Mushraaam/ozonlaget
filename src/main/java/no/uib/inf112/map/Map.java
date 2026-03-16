@@ -55,8 +55,8 @@ public class Map implements IMap {
         this.spawnPoints = new ArrayList<>();
         this.itemSpawnPoints = new ArrayList<>();
 
-        // this.level = new Level1(this);
-        this.level = new Level2(this);
+        this.level = new Level1(this);
+        //this.level = new Level2(this);
         this.bounds = this.level.getBounds();
         this.player = this.level.getPlayer();
         this.floors = this.level.getFloor();

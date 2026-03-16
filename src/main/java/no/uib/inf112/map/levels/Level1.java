@@ -33,8 +33,8 @@ public class Level1 implements ILevel {
     private ArrayList<IFloor> floors;
 
     // Player
-    private static final int START_X = 1200;// 2 * Config.getInt("cellWidth"); //Starts in row 2 now
-    private static final int START_Y = 1010;// 2 * Config.getInt("cellHeight");; //Same for 2nd col.
+    private static final int START_X = 1075;// 2 * Config.getInt("cellWidth"); //Starts in row 2 now
+    private static final int START_Y = 1080;// 2 * Config.getInt("cellHeight");; //Same for 2nd col.
     private static final int PLAYERWIDTH = Config.getInt("playerWidth");
     private static final int PLAYERHEIGHT = Config.getInt("playerHeight");
 
@@ -253,17 +253,107 @@ public class Level1 implements ILevel {
         ///////////
 
         //water
-        this.staticObjects.add(new Water(new Rectangle2D.Double(900, 20, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
-        this.staticObjects.add(new Water(new Rectangle2D.Double(1000, 20, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
-        this.staticObjects.add(new Water(new Rectangle2D.Double(1100, 20, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
-        this.staticObjects.add(new Water(new Rectangle2D.Double(1200, 20, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
-        this.staticObjects.add(new Water(new Rectangle2D.Double(1300, 20, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+
+        //water top
+        //row 1
+        this.staticObjects.add(new Water(new Rectangle2D.Double(700, 60, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(800, 60, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(900, 60, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1000, 60, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        //THIS IS WHERE THE POWERUP GOES
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1200, 60, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1300, 60, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1400, 60, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1500, 60, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        //row 2
+        this.staticObjects.add(new Water(new Rectangle2D.Double(700, 160, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(800, 160, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(900, 160, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1000, 160, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1100, 160, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1200, 160, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1300, 160, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1400, 160, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1500, 160, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        //row 3
+        this.staticObjects.add(new Water(new Rectangle2D.Double(700, 260, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(800, 260, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(900, 260, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1000, 260, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1100, 260, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1200, 260, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1300, 260, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1400, 260, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1500, 260, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+
+
+        //water bottom left
+        //row 0
+        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 1900, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(140, 1900, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(240, 1900, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(340, 1900, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(440, 1900, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(490, 1900, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+            this.staticObjects.add(new Water(new Rectangle2D.Double(590, 1950, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        // this.staticObjects.add(new Water(new Rectangle2D.Double(740, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+
+        //row 1
+        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(140, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(240, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(340, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(440, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(540, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(640, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+            this.staticObjects.add(new Water(new Rectangle2D.Double(690, 2050, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+
+        //row 2
+        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(140, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(240, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(340, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(440, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(540, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(640, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(690, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        //this.staticObjects.add(new Water(new Rectangle2D.Double(840, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+
+        //row 3
+        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(140, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(240, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(340, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(440, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(540, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(640, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(740, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+
+        //row 4
+        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(140, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(240, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(340, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(440, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(540, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(640, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(740, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+
+        //row 5
+        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 2360, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(140, 2360, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(240, 2400, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(340, 2400, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(440, 2400, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(540, 2400, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(640, 2400, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(740, 2400, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
 
         //vegetation
 
 
         //path
-        this.floors.add(new RockRoad(new Rectangle2D.Double(900,900, 100, 100)));
+        
 
 
         
