@@ -39,5 +39,6 @@ public interface IControllablePlayer extends IPlayer{
     public void aimAtWorldPosition(double worldX, double worldY);
 
     public void updateMovement();
+
 }
 

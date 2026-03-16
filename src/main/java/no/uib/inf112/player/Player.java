@@ -314,6 +314,17 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     }
 
     @Override
+    public void healHP(int heal) {
+        int newHP = this.currentHP + heal;
+        if (newHP >  this.getMaxHP()) {
+            this.currentHP = MAX_HP;
+        } else {
+            this.currentHP = newHP;
+        }
+    }
+
+
+    @Override
     public void takeDamage(int damage) {
         int newHP = this.currentHP - damage;
         if (newHP < 0) {

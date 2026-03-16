@@ -197,4 +197,11 @@ public interface IMap {
      * @return the sound handler
      */
     public SoundHandler getSoundHandler();
+
+    // Getters, Adders, Removers:
+    ArrayList<ICollectable> getCollectables();
+
+    void addCollectable(ICollectable item);
+
+    void removeCollectable(ICollectable item);
 }

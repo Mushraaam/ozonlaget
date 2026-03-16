@@ -38,6 +38,12 @@ public interface IPlayer {
      */
     public int getCurrentHP();
 
+    /**
+     * Increase player hp by heal amount
+     * @param heal
+     */
+    public void healHP(int heal);
+
 
     /**
      * deals damage to player

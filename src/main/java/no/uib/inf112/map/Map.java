@@ -3,10 +3,8 @@ package no.uib.inf112.map;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 
-import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
-import no.uib.inf112.map.levels.Level1;
 import no.uib.inf112.map.levels.Level2;
 import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.factory.Factory;
@@ -41,6 +39,9 @@ public class Map implements IMap {
     private ArrayList<IProjectile> projectiles;
     private ArrayList<SpawnPoint> spawnPoints;
 
+    private ArrayList<ICollectable> activeItems;
+
+
     public Map(Camera camera) {
 
         this.enemies = new ArrayList<>();
@@ -73,6 +74,8 @@ public class Map implements IMap {
         gatherOccupiedCells();
 
         this.soundHandler = new SoundHandler();
+
+        this.activeItems = new ArrayList<>();
     }
 
     @Override
@@ -250,6 +253,22 @@ public class Map implements IMap {
     @Override
     public SoundHandler getSoundHandler() {
         return this.soundHandler;
+    }
+
+
+    @Override
+    public ArrayList<ICollectable> getCollectables() {
+        return new ArrayList<>(this.activeItems);
+    }
+
+    @Override
+    public void addCollectable(ICollectable item) {
+        this.activeItems.add(item);
+    }
+
+    @Override
+    public void removeCollectable(ICollectable item) {
+        this.activeItems.remove(item);
     }
 
 }
