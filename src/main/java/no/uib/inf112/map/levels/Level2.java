@@ -1,5 +1,6 @@
 package no.uib.inf112.map.levels;
 
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import no.uib.inf112.config.Config;
@@ -86,8 +87,9 @@ public class Level2 implements ILevel {
 
     private void generateStaticObjects() {
 
-        
-
+        this.floors.add(new RockRoad(new Rectangle2D.Double(1100, 1100, 200, 300)));
+        this.staticObjects.add(new WoodWall(new Rectangle2D.Double(1000, 1000, 10, 100), StaticObjectType.LONG_WOODEN_WALL));
+        this.staticObjects.add(new DarkWoodenTable(new Rectangle2D.Double(1100, 1100, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
 
     }
 

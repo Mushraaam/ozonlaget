@@ -154,6 +154,8 @@ public class ImageHandler {
         // Config.getInt("mapWidth"), Config.getInt("mapHeight")));
         this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/ground_2.png"),
                 Config.getInt("mapWidth"), Config.getInt("mapHeight")));
+        this.levelBackground.put(2, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/city_grid.png"),
+                Config.getInt("mapWidth"), Config.getInt("mapHeight")));
     }
 
     public BufferedImage getBackground(int level) {
