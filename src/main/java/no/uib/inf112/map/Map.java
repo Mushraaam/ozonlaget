@@ -7,6 +7,7 @@ import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.map.levels.Level1;
+import no.uib.inf112.map.levels.Level2;
 import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
@@ -49,6 +50,7 @@ public class Map implements IMap {
         this.spawnPoints = new ArrayList<>();
 
         this.level = new Level1(this);
+        // this.level = new Level2(this);
         this.bounds = this.level.getBounds();
         this.player = this.level.getPlayer();
         this.floors = this.level.getFloor();

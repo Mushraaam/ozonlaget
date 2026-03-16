@@ -94,7 +94,6 @@ public class Controller
             for (IEnemy enemy : map.getEnemies()) {
                 enemy.incrementAnimationIndex();
             }
-
         });
 
         this.pathFindingTimer = new Timer(600, (ActionEvent e) -> {

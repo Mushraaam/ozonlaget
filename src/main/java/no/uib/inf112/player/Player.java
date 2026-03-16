@@ -486,8 +486,13 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         if (type == BuffType.NONE) {
             return;
         }
-        this.buffCounter = 40; // 40 seconds
+
+        if (type == BuffType.RAINBOW) {
+            this.buffCounter = 40; // 40 seconds * 0.6
+        }
+
         handler.playBuffMusic(type);
+
     }
 
     @Override
