@@ -18,8 +18,9 @@ public class Ghoul extends NPC {
     private static final EnemyType ENEMY_TYPE = EnemyType.GHOUL;
     private static final int DAMAGE = 2;
     private static final int ANIMATION_COUNT = 8;
-    private static final int RANGE = 300;
+    private static final int RANGE = 200;
     private static final int RANGED_DELAY = 20;
+    private static final int AGGRO_RANGE = 450;
     private IMap map;
     private int attackSlowDown;
     private boolean meleeSwing;
@@ -31,6 +32,7 @@ public class Ghoul extends NPC {
         setSize(SIZE);
         setEnemyType(ENEMY_TYPE);
         setAnimationCount(ANIMATION_COUNT);
+        setAggroRange(AGGRO_RANGE);
 
         super.hasRangedAmmo = true; // change to true when ranged attack implemented
         this.attackSlowDown = 0; // used to slow down attack animations
@@ -43,7 +45,6 @@ public class Ghoul extends NPC {
     @Override
     public void attack(Double target) {
 
-        // TODO implement checks for ranged attacks
 
         this.attackSlowDown = (this.attackSlowDown + 1) % 10;
 

@@ -1,6 +1,7 @@
 package no.uib.inf112.map;
 
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -126,6 +127,12 @@ public class TileGrid implements IGrid {
     public void resetOccupied() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'resetOccupied'");
+    }
+
+    @Override
+    public ArrayList<ICell> getNearbyCells(Double current, double distance) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getNearbyCells'");
     }
 
 }

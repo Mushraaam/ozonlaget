@@ -1,6 +1,5 @@
 package no.uib.inf112.map.npcs.factory;
 
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.Random;

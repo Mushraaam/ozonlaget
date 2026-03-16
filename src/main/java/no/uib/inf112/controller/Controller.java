@@ -112,7 +112,7 @@ public class Controller
                     this.map.gatherOccupiedCells();
 
                     for (IEnemy enemy : enemies) {
-                        enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox());
+                        enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox(), true);
                     }
 
                     this.map.resetOccupied();
@@ -168,7 +168,6 @@ public class Controller
                 } finally {
                     this.drawRunning = false;
                 }
-
             });
         });
         this.repaintTimer.start();

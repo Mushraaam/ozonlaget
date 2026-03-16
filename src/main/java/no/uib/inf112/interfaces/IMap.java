@@ -2,7 +2,6 @@ package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import no.uib.inf112.core.Spawner;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.factory.Factory;
