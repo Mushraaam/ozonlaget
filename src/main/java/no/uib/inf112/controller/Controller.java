@@ -87,7 +87,7 @@ public class Controller
         this.pathfindingRunning = false;
 
         // TIMERS
-        this.playerAnimationTimer = new Timer(100, (ActionEvent e) -> {
+        this.playerAnimationTimer = new Timer(50, (ActionEvent e) -> {
             if (player.isMoving()) {
                 this.player.incrementAnimationIndex();
             }
