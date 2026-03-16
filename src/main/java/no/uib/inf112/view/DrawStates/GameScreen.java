@@ -130,7 +130,14 @@ public class GameScreen implements IDrawer {
         BufferedImage feet = handler.getPlayerFeetSprite(player.getAnimationIndex());
         BufferedImage body = handler.getPlayerBodySprite(player.getAnimationIndex());
 
-        drawRotated(graphic, feet, player.getHitbox(), player.getFacingAngle());
+        Rectangle2D.Double feetBounds = new Rectangle2D.Double(
+                player.getHitbox().getX() + player.getHitbox().getWidth() * 0.15,
+                player.getHitbox().getY() + player.getHitbox().getHeight() * 0.10,
+                player.getHitbox().getWidth() * 0.7,
+                player.getHitbox().getHeight() * 0.7
+        );
+
+        drawRotated(graphic, feet, feetBounds, player.getFacingAngle());
         drawRotated(graphic, body, player.getHitbox(), player.getFacingAngle());
     }
 
