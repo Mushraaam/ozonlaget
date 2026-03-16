@@ -6,6 +6,7 @@ import java.util.*;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.map.items.factory.ItemFactory;
+import no.uib.inf112.map.levels.Level1;
 import no.uib.inf112.map.levels.Level2;
 import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.factory.Factory;
