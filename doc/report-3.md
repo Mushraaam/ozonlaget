@@ -43,6 +43,34 @@ Forklar om dere har nådd MVP og hvordan dere prioriterer videre funksjonalitet.
 ### Brukerhistorier
 Beskriv brukerhistoriene for kravene dere jobber med.
 
+#### Brukerhistorie 1:
+    Historie:
+    - Bruker vil kunne skyte zombier
+
+    Akseptansekriterie:
+    - Bruker kan skyte zombier, zombier tar skade og dør når de blir skutt tilstrekkelig ganger
+
+    Konkrete arbeidsoppgave(r):
+    - Implementere gunshots med kollisjon
+    - Implementere takeDamage for zombier
+    - Implementere zombie død
+
+#### Brukerhistorie 2:
+    Historie:
+    - Bruker vil kunne plukke opp items og power-ups
+
+    Akseptansekriterie:
+    - Bruker kan bevege karakteren sin over items som ammo og power-ups og få en korresponderende effekt
+
+    Konkrete arbeidsoppgave(r):
+    - Implementere pickup-able-objects
+    - Impementere power-up effekter
+    - Implementere healthpacks og ammo crates
+
+    
+
+
+
 ### Akseptansekriterier
 Definer hva som må være oppfylt for at funksjonaliteten skal være ferdig, Husk at akseptansekriterier ofte skrives mer eller mindre som tester.
 

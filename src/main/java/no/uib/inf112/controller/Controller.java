@@ -369,6 +369,11 @@ public class Controller
         var startButton = view.getMainMenu().getStartButton();
         if (startButton != null && startButton.contains(p)) {
             changeState(GameState.ACTIVE_GAME);
+            return;
+        }
+        var helpButton = view.getMainMenu().getHelpButton();
+        if (startButton != null && helpButton.contains(p)){
+            changeState(GameState.HELP);
         }
     }
 

@@ -11,6 +11,7 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.map.npcs.Ghoul;
 
 public class Spawner {
+
     private static final double GHOUL_WIDTH = Config.getInt("mediumEnemy");
     private static final double GHOUL_HEIGHT = Config.getInt("mediumEnemy");
 
