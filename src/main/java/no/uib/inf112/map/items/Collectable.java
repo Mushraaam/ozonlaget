@@ -63,6 +63,14 @@ public abstract class Collectable implements ICollectable {
      * Abstract, to be implemented by each item.
      */
     @Override
+    public abstract String getImagePath();
+
+
+    /**
+     * Abstract, to be implemented by each item.
+     */
+    @Override
     public abstract void affectPlayer();
+
 
 }

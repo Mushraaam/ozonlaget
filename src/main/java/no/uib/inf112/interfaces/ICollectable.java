@@ -18,6 +18,8 @@ public interface ICollectable {
     void pickUp();
 
 
+    String getImagePath();
+
     void affectPlayer();
 }
 

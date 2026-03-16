@@ -1,6 +1,7 @@
 package no.uib.inf112.map.levels;
 
 import java.awt.geom.Rectangle2D;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.StaticObjectType;
@@ -9,6 +10,7 @@ import no.uib.inf112.interfaces.ILevel;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.player.Player;
@@ -44,6 +46,7 @@ public class Level1 implements ILevel {
 
     private IMap map;
     private Factory factory;
+    private ItemFactory itemFactory;
 
     public Level1(IMap map) {
 
@@ -61,12 +64,19 @@ public class Level1 implements ILevel {
 
         generateStaticObjects();
         generateSpawnPoints();
+        generateItemSpawnPoints();
 
         this.factory = new Factory(this.map);
+        this.itemFactory = new ItemFactory(this.map);
     }
 
     public Factory getFactory(){
         return this.factory;
+    }
+
+    @Override
+    public ItemFactory getItemFactory() {
+        return this.itemFactory;
     }
 
 
@@ -83,6 +93,24 @@ public class Level1 implements ILevel {
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(MAPWIDTH - 150, MAPHEIGHT - 150, 100, 100)));
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(MAPWIDTH - 150, 50, 100, 100)));
 }
+
+    private void generateItemSpawnPoints() {
+        if (this.map == null) {
+            throw new IllegalStateException("Map cannot be null");
+        }
+
+        ArrayList<Rectangle2D.Double> itemSpawnPoints = new ArrayList<>();
+
+        double size = Config.getInt("collectableSize");
+
+
+        itemSpawnPoints.add(new Rectangle2D.Double(1000, 1000, size, size));
+        itemSpawnPoints.add(new Rectangle2D.Double(1100, 1100, size, size));
+        itemSpawnPoints.add(new Rectangle2D.Double(1200, 1200, size, size));
+        itemSpawnPoints.add(new Rectangle2D.Double(1100, 1200, size, size));
+
+        this.map.setItemSpawnPoints(itemSpawnPoints);
+    }
 
     private void generateStaticObjects() {
 

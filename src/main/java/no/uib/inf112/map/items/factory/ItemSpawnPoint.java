@@ -37,6 +37,7 @@ public class ItemSpawnPoint {
         refreshNodes();
 
         if (getCurrentCount(type) >= maxLimits.getOrDefault(type, 0)) {
+            System.out.println("max lim reached");
             return false; // Limit reached, abort!
         }
 
@@ -50,6 +51,7 @@ public class ItemSpawnPoint {
 
         // Wont spawn if there's no spots left on the map
         if (emptySpots.isEmpty()) {
+            System.out.println("no spots");
             return false;
         }
 
@@ -57,9 +59,10 @@ public class ItemSpawnPoint {
 
 
         ICollectable newItem = createItem(type, chosenSpot);
-        this.map.addCollectable(newItem);
+        this.map.addToActiveItems(newItem);
         this.spawnPoints.put(chosenSpot, newItem);
 
+        System.out.println("spawned hp");
         return true;
     }
 
@@ -68,7 +71,7 @@ public class ItemSpawnPoint {
      * If they aren't in the map's active item list anymore, they are probably gone...
      */
     private void refreshNodes() {
-        List<ICollectable> activeItems = map.getCollectables();
+        List<ICollectable> activeItems = map.getActiveItems();
         for (Map.Entry<Rectangle2D.Double, ICollectable> entry : spawnPoints.entrySet()) {
             ICollectable item = entry.getValue();
             if (item != null && !activeItems.contains(item)) {
@@ -79,7 +82,7 @@ public class ItemSpawnPoint {
 
     private int getCurrentCount(CollectableType type) {
         int count = 0;
-        for (ICollectable item : map.getCollectables()) {
+        for (ICollectable item : map.getActiveItems()) {
             if (item.getType() == type) {
                 count++;
             }

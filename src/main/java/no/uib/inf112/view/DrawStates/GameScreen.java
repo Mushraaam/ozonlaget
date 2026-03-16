@@ -6,17 +6,7 @@ import java.awt.image.BufferedImage;
 //import java.nio.Buffer;
 
 import no.uib.inf112.config.Config;
-import no.uib.inf112.interfaces.IDrawer;
-import no.uib.inf112.interfaces.IEnemy;
-import no.uib.inf112.interfaces.IGrid;
-import no.uib.inf112.interfaces.IGunShot;
-import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IProjectile;
-import no.uib.inf112.interfaces.IPuddle;
-import no.uib.inf112.interfaces.IStaticDrawableObject;
-import no.uib.inf112.interfaces.IStaticObject;
-import no.uib.inf112.interfaces.IViewablePlayer;
-import no.uib.inf112.interfaces.IWall;
+import no.uib.inf112.interfaces.*;
 import no.uib.inf112.utility.ImageHandler;
 import no.uib.inf112.utility.Camera;
 
@@ -54,6 +44,7 @@ public class GameScreen implements IDrawer {
         drawStaticObjects(graphic);
         drawEnemies(graphic);
         drawGunShots(graphic);
+        drawActiveItems(graphic);
         drawPlayer(graphic);
         this.ui.draw(graphic);
     }
@@ -83,6 +74,7 @@ public class GameScreen implements IDrawer {
             graphic.draw(shot.bounds());
         }
     }
+
 
     private void drawStaticObjects(Graphics2D graphic) {
         for (IStaticObject o : map.getStaticObjects()) {
@@ -139,6 +131,15 @@ public class GameScreen implements IDrawer {
 
         drawRotated(graphic, feet, feetBounds, player.getFacingAngle());
         drawRotated(graphic, body, player.getHitbox(), player.getFacingAngle());
+    }
+
+    private void drawActiveItems(Graphics2D graphic) {
+        for (ICollectable item : map.getActiveItems()) {
+            if (isVisible(graphic, item.getHitbox())) {
+                BufferedImage image = handler.getCollectableImage(item.getType());
+                drawImage(graphic, image, item.getHitbox());
+            }
+        }
     }
 
     private void drawEnemies(Graphics2D graphic) {

@@ -6,13 +6,7 @@ import java.util.HashMap;
 
 import no.uib.inf112.config.Config;
 //import no.uib.inf112.enums.Direction;
-import no.uib.inf112.enums.EnemyAction;
-import no.uib.inf112.enums.EnemyType;
-import no.uib.inf112.enums.FloorType;
-import no.uib.inf112.enums.GunType;
-import no.uib.inf112.enums.PuddleType;
-import no.uib.inf112.enums.StaticObjectType;
-import no.uib.inf112.enums.WallDirection;
+import no.uib.inf112.enums.*;
 
 public class ImageHandler {
 
@@ -57,6 +51,9 @@ public class ImageHandler {
     private BufferedImage settingsButton;
     private BufferedImage helpButton;
 
+    // Collectables
+    private HashMap<CollectableType, BufferedImage> collectables;
+
     public ImageHandler() {
         this.playerBodySprites = new ArrayList<>();
         this.playerFeetSprites = new ArrayList<>();
@@ -89,6 +86,9 @@ public class ImageHandler {
         this.puddles = new HashMap<>();
         this.projectiles = new HashMap<>();
         loadPuddles();
+
+        this.collectables = new HashMap<>();
+        loadCollectables();
     }
 
     // PUDDLES AND PROJECTILES
@@ -140,6 +140,8 @@ public class ImageHandler {
         this.gunUI.put(GunType.MP5,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/MP5.png"), w, h));
     }
+
+
 
     public BufferedImage getGunImage(GunType type) {
         return this.gunUI.get(type);
@@ -276,6 +278,26 @@ public class ImageHandler {
 
     ///////////////////// END ENEMY LOGIC ////////////////////
     ///
+
+    ///////////////////// COLLECTABLES LOGIC //////////////////////
+    private void loadCollectables() {
+        int size = Config.getInt("collectableSize");
+        this.collectables.put(CollectableType.HEALTH,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/healthBox.png"), size, size ));
+/*
+        this.collectables.put(CollectableType.AMMO,
+                ImageReader.fetchImage(""));
+
+        this.collectables.put(CollectableType.POWERUP_SPEED,
+                ImageReader.fetchImage(""));*/
+    }
+
+    public BufferedImage getCollectableImage(CollectableType type) {
+        return this.collectables.get(type);
+    }
+    ///////////////////// END COLLECTABLES LOGIC //////////////////////
+
+
     /// ////////////////START FLOOR LOGIC ////////////////////
     ///
 

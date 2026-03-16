@@ -5,12 +5,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import java.util.Map;
+
+import no.uib.inf112.interfaces.*;
 import no.uib.inf112.utility.PerfTracker;
-import no.uib.inf112.interfaces.ICell;
-import no.uib.inf112.interfaces.IDrawer;
-import no.uib.inf112.interfaces.IEnemy;
-import no.uib.inf112.interfaces.IGrid;
-import no.uib.inf112.interfaces.IMap;
 
 public class DebugScreen implements IDrawer {
 
@@ -44,6 +41,14 @@ public class DebugScreen implements IDrawer {
             if (isVisible(graphic, hitbox)) {
                 graphic.setColor(enemy.size().getDebugColor());
                 graphic.fill(hitbox);
+            }
+        }
+
+        //Draw item hitboxes
+        graphic.setColor(Color.PINK);
+        for(ICollectable item : this.map.getActiveItems()){
+            if(isVisible(graphic, item.getHitbox())){
+                graphic.fill(item.getHitbox());
             }
         }
 

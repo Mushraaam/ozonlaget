@@ -5,6 +5,7 @@ import java.util.*;
 
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
+import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.levels.Level2;
 import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.factory.Factory;
@@ -39,7 +40,10 @@ public class Map implements IMap {
     private ArrayList<IProjectile> projectiles;
     private ArrayList<SpawnPoint> spawnPoints;
 
+    //items
     private ArrayList<ICollectable> activeItems;
+    private ArrayList<Rectangle2D.Double> itemSpawnPoints;
+    private ItemFactory itemFactory;
 
 
     public Map(Camera camera) {
@@ -49,6 +53,7 @@ public class Map implements IMap {
         this.puddles = new ArrayList<>();
         this.projectiles = new ArrayList<>();
         this.spawnPoints = new ArrayList<>();
+        this.itemSpawnPoints = new ArrayList<>();
 
         // this.level = new Level1(this);
         this.level = new Level2(this);
@@ -69,6 +74,7 @@ public class Map implements IMap {
         this.tiles = new TileGrid(this);
         this.pathfinder = new Pathfinder(this);
         this.factory = level.getFactory();
+        this.itemFactory = level.getItemFactory();
 
         this.camera = camera;
         gatherOccupiedCells();
@@ -257,18 +263,33 @@ public class Map implements IMap {
 
 
     @Override
-    public ArrayList<ICollectable> getCollectables() {
+    public ArrayList<ICollectable> getActiveItems() {
         return new ArrayList<>(this.activeItems);
     }
 
     @Override
-    public void addCollectable(ICollectable item) {
+    public void addToActiveItems(ICollectable item) {
         this.activeItems.add(item);
     }
 
     @Override
-    public void removeCollectable(ICollectable item) {
+    public void removeActiveItem(ICollectable item) {
         this.activeItems.remove(item);
+    }
+
+    @Override
+    public void setItemSpawnPoints(ArrayList<Rectangle2D.Double> itemSpawnPoints) {
+        this.itemSpawnPoints = itemSpawnPoints;
+    }
+
+    @Override
+    public List<Rectangle2D.Double> getItemSpawnPoints() {
+        return itemSpawnPoints;
+    }
+
+    @Override
+    public ItemFactory getItemFactory() {
+        return this.itemFactory;
     }
 
 }

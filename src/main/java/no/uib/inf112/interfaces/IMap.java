@@ -2,8 +2,10 @@ package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import no.uib.inf112.core.Spawner;
+import java.util.List;
+
 import no.uib.inf112.enums.GameState;
+import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
@@ -198,10 +200,16 @@ public interface IMap {
      */
     public SoundHandler getSoundHandler();
 
-    // Getters, Adders, Removers:
-    ArrayList<ICollectable> getCollectables();
 
-    void addCollectable(ICollectable item);
+    ArrayList<ICollectable> getActiveItems();
 
-    void removeCollectable(ICollectable item);
+    void addToActiveItems(ICollectable item);
+
+    void removeActiveItem(ICollectable item);
+
+    void setItemSpawnPoints(ArrayList<Rectangle2D.Double> itemSpawnPoints);
+
+    List<Rectangle2D.Double> getItemSpawnPoints();
+
+    ItemFactory getItemFactory();
 }
