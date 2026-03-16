@@ -87,7 +87,7 @@ public class Controller
         this.pathfindingRunning = false;
 
         // TIMERS
-        this.playerAnimationTimer = new Timer(100, (ActionEvent e) -> {
+        this.playerAnimationTimer = new Timer(50, (ActionEvent e) -> {
             if (player.isMoving()) {
                 this.player.incrementAnimationIndex();
             }
@@ -369,6 +369,11 @@ public class Controller
         var startButton = view.getMainMenu().getStartButton();
         if (startButton != null && startButton.contains(p)) {
             changeState(GameState.ACTIVE_GAME);
+            return;
+        }
+        var helpButton = view.getMainMenu().getHelpButton();
+        if (startButton != null && helpButton.contains(p)){
+            changeState(GameState.HELP);
         }
     }
 
