@@ -29,8 +29,15 @@ public class Factory {
         this.counter = this.counter + 1 % 100000;
         
         if (this.counter % GHOUL_INTENSITY == 0){
+
             SpawnPoint point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
-            point.spawnEnemy(EnemyType.GHOUL);
+            boolean successfullSpawn = false;
+            int count = 0;
+            while (!(successfullSpawn) && count < 10){
+                successfullSpawn = point.spawnEnemy(EnemyType.GHOUL);
+                point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
+                count++;
+            }
         }
 
     }

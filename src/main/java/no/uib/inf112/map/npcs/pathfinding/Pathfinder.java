@@ -33,8 +33,19 @@ public class Pathfinder {
     }
 
     public List<ICell> findPath(IEnemy enemy, ICell start, ICell goal, EnemySize size, List<ICell> currentPath) {
-        if (start == null || goal == null || !canEnter(goal, size))
-            return findPath(enemy, start, currentPath.getLast(), size, currentPath);
+
+        if (start == null) {
+            return currentPath != null ? currentPath : List.of();
+        }
+
+        if (goal == null || !canEnter(goal, size)) {
+            if (currentPath != null && !currentPath.isEmpty()) {
+                ICell fallbackGoal = currentPath.get(currentPath.size() - 1);
+                return findPath(enemy, start, fallbackGoal, size, currentPath);
+            }
+            return List.of(start);
+        }
+
         if (start.equals(goal))
             return List.of(start);
 
@@ -118,10 +129,12 @@ public class Pathfinder {
         double cost = (dx != 0 && dy != 0) ? 1.4142 : 1.0;
 
         double trafficPenalty = 0;
-        if (to.isOccupied(enemy.size())){
+        if (to.isOccupied(enemy.size())) {
             int i = 0;
-            if (to.occupiedBy(enemy)){i++;}
-            trafficPenalty = OCCUPIED_WEIGHT * (to.occupiedCount(enemy.size())-i) * enemy.size().footprint();
+            if (to.occupiedBy(enemy)) {
+                i++;
+            }
+            trafficPenalty = OCCUPIED_WEIGHT * (to.occupiedCount(enemy.size()) - i) * enemy.size().footprint();
         }
         // double trafficPenalty = enemyCount * OCCUPIED_WEIGHT;
 
@@ -134,7 +147,7 @@ public class Pathfinder {
      */
     public boolean canEnter(ICell cell, EnemySize size) {
 
-        if (cell == null){
+        if (cell == null) {
             return false;
         }
         PathType type = cell.pathType(); // Need to do somthing about this one, Probably only 2 layers, or bigger
@@ -154,4 +167,3 @@ public class Pathfinder {
     }
 
 }
-

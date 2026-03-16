@@ -15,12 +15,8 @@ import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.RockRoad;
-import no.uib.inf112.terrain.floor.WoodFloor;
-import no.uib.inf112.terrain.furniture.BeigeCouch;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;
-import no.uib.inf112.terrain.furniture.DarkWoodenTableSquare;
 import no.uib.inf112.terrain.walls.WoodWall;
-import no.uib.inf112.terrain.water.Water;
 
 
 public class Level2 implements ILevel {

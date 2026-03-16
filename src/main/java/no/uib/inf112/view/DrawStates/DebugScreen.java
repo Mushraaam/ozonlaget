@@ -8,6 +8,7 @@ import java.util.Map;
 
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.utility.PerfTracker;
+import no.uib.inf112.map.npcs.factory.SpawnPoint;
 
 public class DebugScreen implements IDrawer {
 
@@ -26,6 +27,9 @@ public class DebugScreen implements IDrawer {
     @Override
     public void draw(Graphics2D graphic) {
         
+        // Draw spawn zones
+        drawSpawnZones(graphic);
+
         // Draw grid cells
         graphic.setStroke(new BasicStroke(1));
         debugCellsInView(graphic, this.grid);
@@ -111,5 +115,12 @@ public class DebugScreen implements IDrawer {
 
     }
 }
+
+    private void drawSpawnZones(Graphics2D graphic) {
+        for (SpawnPoint point : this.map.getSpawnPoints()){
+            graphic.setColor(Color.PINK);
+            graphic.fill(point.bounds());
+        }
+    }
 
 }

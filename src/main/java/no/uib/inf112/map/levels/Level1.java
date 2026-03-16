@@ -87,11 +87,17 @@ public class Level1 implements ILevel {
         if (this.map == null){
                 throw new IllegalStateException("Map cannot be null");
         }
-        //top left, top right, bot left, bot right
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(10, 10, 150, 150)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(50, MAPHEIGHT - 150, 100, 100)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(MAPWIDTH - 150, MAPHEIGHT - 150, 100, 100)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(MAPWIDTH - 150, 50, 100, 100)));
+        
+        //Currently this covers all houses
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(100, 100, 450, 400)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(410, 705, 350, 1170-700)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1710,20, 2480-1710, 260)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1480,680, 1915-1480, 1205-680)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(700,1450, 1510-700, 1820-1450)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1790,2185, 2430-1790, 2485-2185)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(2100,880, 400, 1770-880)));
+        
+        
 }
 
     private void generateItemSpawnPoints() {
@@ -353,7 +359,7 @@ public class Level1 implements ILevel {
 
 
         //path
-        
+        this.floors.add(new RockRoad(new Rectangle2D.Double(900,900, 100, 100)));
 
 
         

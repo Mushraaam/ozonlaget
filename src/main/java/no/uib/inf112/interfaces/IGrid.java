@@ -105,4 +105,12 @@ public interface IGrid extends Iterable<ICell> {
      */
     public void resetOccupied();
 
+    /**
+     * Returns a list of all cells withhin distance
+     * @param current
+     * @param distance
+     * @return
+     */
+    public ArrayList<ICell> getNearbyCells(Rectangle2D.Double current, double distance);
+
 }

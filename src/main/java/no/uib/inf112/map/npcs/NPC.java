@@ -16,6 +16,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class NPC implements IEnemy {
     private double speed;
@@ -45,8 +46,15 @@ public abstract class NPC implements IEnemy {
 
     private int health;
 
+    // Wander
+    private boolean aggroed;
+    private IGrid grid;
+    private Random random;
+    private int wanderDelay;
+    private int aggroRange;
+    private ICell wanderGoal;
 
-    //Protected variables
+    // Protected variables
     protected IMap map;
     protected IPlayer player;
     protected Rectangle2D.Double attackTarget;
@@ -55,21 +63,40 @@ public abstract class NPC implements IEnemy {
     protected int range = 0;
     protected Rectangle2D.Double pos;
 
-
-
     public NPC(Rectangle2D.Double pos, IMap map, int health) {
         this.pos = pos;
         this.map = map;
 
         this.player = map.getPlayer();
+        this.grid = this.map.getGrid();
 
         this.health = health;
         this.currentAction = EnemyAction.WALK;
 
+        // Wander
+        this.aggroed = false;
+        this.random = new Random();
+        this.wanderDelay = 0;
+        this.wanderGoal = this.grid.getCellFromPos(this.pos);
+
     }
 
+    private void wander() {
+        ICell current = this.grid.getCellFromPos(this.pos);
+        if (current == null) {
+            return;
+        }
 
-    // shared methods
+        List<ICell> nearbyCells = this.grid.getNearbyCells(this.pos, 1000);
+        if (nearbyCells == null || nearbyCells.isEmpty()) {
+            return;
+        }
+
+        ICell cell = nearbyCells.get(this.random.nextInt(nearbyCells.size()));
+        if (isLegal(cell.getBounds())) {
+            this.wanderGoal = cell;
+        }
+    }
 
     @Override
     public Ellipse2D.Double getTrueHitbox() {
@@ -77,15 +104,38 @@ public abstract class NPC implements IEnemy {
     }
 
     @Override
-    public void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds) {
+    public void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds,
+            boolean fromController) {
+        if (!this.aggroed) {
+            checkAggro();
+        }
+
+        if (!this.aggroed && fromController) {
+
+            if ((this.wanderGoal == null || this.wanderDelay % 5 == 0) && pathIndex >= currentPath.size()) {
+                this.wanderDelay = (this.wanderDelay + 1) % 1000;
+                wander();
+            }
+
+            if (this.wanderGoal == null) {
+                return;
+            }
+            if (!(this.wanderDelay % 1000 == 0)) {
+                this.wanderDelay = (this.wanderDelay + 1) % 1000;
+
+            }
+            targetBounds = this.wanderGoal.getBounds();
+        }
+
         ICell start = grid.getCellFromPos(getHitbox());
         ICell goal = grid.getCellFromPos(targetBounds);
 
-        if (start == null || goal == null)
+        if (start == null || goal == null) {
             return;
+        }
 
         if (start.equals(lastStart) && goal.equals(lastGoal) && currentPath != null && !currentPath.isEmpty()) {
-            return; // no need to repath
+            return;
         }
 
         lastStart = start;
@@ -93,7 +143,6 @@ public abstract class NPC implements IEnemy {
 
         currentPath = pathfinder.findPath(this, start, goal, size, currentPath);
         pathIndex = (currentPath.size() > 1) ? 1 : 0;
-
     }
 
     private void updateFacing(double dx, double dy, double dist) { // noe assistanse med matten trengtes.....
@@ -123,59 +172,71 @@ public abstract class NPC implements IEnemy {
     @Override
     public void move(IGrid grid) {
 
-        if (this.currentAction == EnemyAction.WALK){
+        // Continue ongoing attacks
 
-            if (canShootPlayer()){
+        if (this.currentAction == EnemyAction.ATTACK) {
+            attack(this.attackTarget);
+            return;
+        }
+
+        if (this.currentAction == EnemyAction.RANGED_ATTACK) {
+            rangedAttack(this.attackTarget);
+            return;
+        }
+
+        // Start new attacks if in range
+
+        if (this.aggroed) {
+            if (canShootPlayer()) {
                 this.currentAction = EnemyAction.RANGED_ATTACK;
                 this.animationIndex = 0;
                 this.attackTarget = this.player.getHitbox();
-            }
-
-            else if (inMeleeRange()){
+                rangedAttack(this.attackTarget);
+                return;
+            } else if (inMeleeRange()) {
                 this.currentAction = EnemyAction.ATTACK;
                 this.animationIndex = 0;
                 this.attackTarget = this.player.getHitbox();
-            }
-        }
-
-        if (this.currentAction == EnemyAction.ATTACK){
-            attack(this.attackTarget);
-        }
-        else if (this.currentAction == EnemyAction.RANGED_ATTACK){
-            rangedAttack(this.attackTarget);
-        }
-
-        if (this.currentAction == EnemyAction.WALK) {
-
-            this.from = getStandingCell();
-            if (currentPath == null || pathIndex >= currentPath.size())
+                attack(this.attackTarget);
                 return;
-            int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
-            for (int i = pathIndex; i < lookAheadLimit; i++) {
-                Rectangle2D target = currentPath.get(i).getBounds();
-                double dx = target.getCenterX() - pos.getCenterX();
-                double dy = target.getCenterY() - pos.getCenterY();
-                double dist = Math.hypot(dx, dy);
-
-                if (tryMove(dx, dy, dist, target)) {
-                    updateFacing(dx, dy, dist);
-                    this.pathIndex = i;
-                    if (dist <= speed) {
-                        pathIndex++;
-                    }
-                    break;
-                }
-
             }
-            if (from == lastStart) {
-                unStuck(true, true);
+        }
+
+        // Walk or wander if not attacking
+
+        this.currentAction = EnemyAction.WALK;
+
+        this.from = getStandingCell();
+        if (currentPath == null || pathIndex >= currentPath.size()) {
+            return;
+        }
+
+        int lookAheadLimit = Math.min(currentPath.size(), pathIndex + 3);
+        for (int i = pathIndex; i < lookAheadLimit; i++) {
+            Rectangle2D target = currentPath.get(i).getBounds();
+            double dx = target.getCenterX() - pos.getCenterX();
+            double dy = target.getCenterY() - pos.getCenterY();
+            double dist = Math.hypot(dx, dy);
+
+            if (tryMove(dx, dy, dist, target)) {
+                updateFacing(dx, dy, dist);
+                this.pathIndex = i;
+                if (dist <= speed) {
+                    pathIndex++;
+                }
+                break;
             }
         }
     }
 
+    private void checkAggro() {
+        double dist = distance(this.pos, this.player.getHitbox());
+        if (dist <= this.aggroRange && hasLineOfSight()) {
+            this.aggroed = true;
+        }
+    }
 
     protected abstract void rangedAttack(Double attackTarget2);
-
 
     private void unStuck(boolean moveX, boolean moveY) {
         ICell myCell = this.getStandingCell();
@@ -313,49 +374,43 @@ public abstract class NPC implements IEnemy {
     private boolean isLegal(Rectangle2D.Double candidate) {
         double padding = 6.0;
         Rectangle2D.Double movementHitbox = new Rectangle2D.Double(
-                candidate.x + padding, candidate.y + padding,
-                candidate.width - (padding * 2), candidate.height - (padding * 2));
+                candidate.x + padding,
+                candidate.y + padding,
+                candidate.width - (padding * 2),
+                candidate.height - (padding * 2));
+
         if (movementHitbox.intersects(this.player.getHitbox())) {
             return false;
         }
 
-        if (getStandingCell() == null) {
+        ICell candidateCell = map.getGrid().getCellFromPos(candidate);
+        if (candidateCell == null) {
             return false;
         }
 
-        if (!checkCell(getStandingCell(), movementHitbox)) {
-            return false;
-        }
-
-        for (ICell cell : map.getGrid().getNeighboursAtDepth(getStandingCell(), 2)) {
-            if (!checkCell(cell, movementHitbox)) {
-                return false;
-            }
-        }
-
-        return true; // The path is clear enough to squeeze through!
-    }
-
-    private boolean checkCell(ICell cell, Rectangle2D.Double movementHitbox) {
-        if (cell == null) {
+        if (!map.getPathfinder().canEnter(candidateCell, size)) {
             return false;
         }
 
         for (IEnemy enemy : map.getEnemies()) {
-            if (enemy != this) {
-                Rectangle2D enemyHitbox = enemy.getHitbox();
-                double shrinkFactor = 0.8; // Only 80% of the center is "solid" to other NPCs
+            if (enemy == this) {
+                continue;
+            }
 
-                double coreW = enemyHitbox.getWidth() * shrinkFactor;
-                double coreH = enemyHitbox.getHeight() * shrinkFactor;
-                double coreX = enemyHitbox.getCenterX() - (coreW / 2);
-                double coreY = enemyHitbox.getCenterY() - (coreH / 2);
-                Rectangle2D enemyCore = new Rectangle2D.Double(coreX, coreY, coreW, coreH);
-                if (movementHitbox.intersects(enemyCore)) {
-                    return false;
-                }
+            Rectangle2D enemyHitbox = enemy.getHitbox();
+            double shrinkFactor = 0.8;
+
+            double coreW = enemyHitbox.getWidth() * shrinkFactor;
+            double coreH = enemyHitbox.getHeight() * shrinkFactor;
+            double coreX = enemyHitbox.getCenterX() - (coreW / 2);
+            double coreY = enemyHitbox.getCenterY() - (coreH / 2);
+
+            Rectangle2D enemyCore = new Rectangle2D.Double(coreX, coreY, coreW, coreH);
+            if (movementHitbox.intersects(enemyCore)) {
+                return false;
             }
         }
+
         return true;
     }
 
@@ -487,31 +542,37 @@ public abstract class NPC implements IEnemy {
         this.animationIndex = 0;
     }
 
-    protected double distance(Rectangle2D.Double source, Rectangle2D.Double target){
+    protected double distance(Rectangle2D.Double source, Rectangle2D.Double target) {
         double dx = target.getCenterX() - source.getCenterX();
         double dy = target.getCenterY() - source.getCenterY();
         return Math.sqrt(dx * dx + dy * dy);
     }
+
     protected boolean inMeleeRange() {
         double w = this.pos.width;
         return distance(this.pos, this.player.getHitbox()) <= w;
     }
-    
-    protected boolean canShootPlayer(){
+
+    protected boolean canShootPlayer() {
         return inShootingRange() && hasLineOfSight() && this.hasRangedAmmo;
-        
+
+    }
+
+    protected void setAggroRange(int range) {
+        this.aggroRange = range;
     }
 
     private boolean hasLineOfSight() {
         Rectangle2D.Double pos1 = this.getHitbox();
         Rectangle2D.Double pos2 = this.player.getHitbox();
-        Line2D.Double line = new Line2D.Double(pos1.getCenterX(), pos1.getCenterY(), pos2.getCenterX(), pos2.getCenterY());
+        Line2D.Double line = new Line2D.Double(pos1.getCenterX(), pos1.getCenterY(), pos2.getCenterX(),
+                pos2.getCenterY());
 
-        for (IStaticObject obj : this.map.getStaticObjects()){
-            if (!obj.isWall()){
+        for (IStaticObject obj : this.map.getStaticObjects()) {
+            if (!obj.isWall()) {
                 continue;
             }
-            if (line.intersects(obj.getBounds())){
+            if (line.intersects(obj.getBounds())) {
                 return false;
             }
         }

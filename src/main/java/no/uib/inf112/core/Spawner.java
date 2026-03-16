@@ -12,6 +12,11 @@ import no.uib.inf112.map.npcs.Ghoul;
 
 public class Spawner {
 
+    //////////// THIS CLASS IS NO LONGER IN USE !!!!!!! /////////////////
+    //////////// THIS CLASS IS NO LONGER IN USE !!!!!!! /////////////////
+    //////////// THIS CLASS IS NO LONGER IN USE !!!!!!! /////////////////
+    //////////// THIS CLASS IS NO LONGER IN USE !!!!!!! /////////////////
+
     private static final double GHOUL_WIDTH = Config.getInt("mediumEnemy");
     private static final double GHOUL_HEIGHT = Config.getInt("mediumEnemy");
 
