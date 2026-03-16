@@ -55,6 +55,8 @@ public class Controller
     // Executor for pathfinding
     private final ExecutorService pathExecutor;
     private volatile boolean pathfindingRunning;
+    private final ExecutorService drawExecutor;
+    private volatile boolean drawRunning;
 
     // test 60fps
     private Timer repaintTimer;
@@ -85,6 +87,8 @@ public class Controller
         //
         this.pathExecutor = Executors.newSingleThreadExecutor();
         this.pathfindingRunning = false;
+        this.drawExecutor = Executors.newSingleThreadExecutor();
+        this.drawRunning = false;
 
         // TIMERS
         this.playerAnimationTimer = new Timer(50, (ActionEvent e) -> {
@@ -153,7 +157,19 @@ public class Controller
         });
 
         this.repaintTimer = new Timer(8, e -> {
-            this.view.repaint();
+            if (this.drawRunning) {
+                return;
+            }
+            this.drawRunning = true;
+            this.drawExecutor.submit(() -> {
+                try {
+                    this.view.repaint();
+
+                } finally {
+                    this.drawRunning = false;
+                }
+
+            });
         });
         this.repaintTimer.start();
 
@@ -372,7 +388,7 @@ public class Controller
             return;
         }
         var helpButton = view.getMainMenu().getHelpButton();
-        if (startButton != null && helpButton.contains(p)){
+        if (startButton != null && helpButton.contains(p)) {
             changeState(GameState.HELP);
         }
     }
