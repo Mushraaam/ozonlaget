@@ -11,6 +11,7 @@ import no.uib.inf112.interfaces.IGunShot;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.interfaces.IPuddle;
+import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
 import no.uib.inf112.view.GameDrawer;
@@ -35,6 +36,7 @@ public class Controller
 
     private Factory factory;
     private Timer tickTimer;
+    private ItemFactory itemFactory;
 
     private IMap map;
     private IControllablePlayer player;
@@ -83,6 +85,7 @@ public class Controller
         this.view.addMouseListener(this);
         this.view.setFocusable(true);
         this.factory = map.getFactory();
+        this.itemFactory = map.getItemFactory();
 
         //
         this.pathExecutor = Executors.newSingleThreadExecutor();
@@ -126,6 +129,7 @@ public class Controller
         this.tickTimer = new Timer(600, e -> {
             // Increment factory spawn
             this.factory.increment();
+            this.itemFactory.increment();
 
             // handle buff countdowns
             this.player.decrementBuff(this.soundHandler);

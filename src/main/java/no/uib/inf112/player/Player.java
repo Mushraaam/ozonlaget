@@ -11,13 +11,7 @@ import no.uib.inf112.controller.DirectionHandler;
 import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.GunType;
-import no.uib.inf112.interfaces.IControllablePlayer;
-import no.uib.inf112.interfaces.IEnemy;
-import no.uib.inf112.interfaces.IGun;
-import no.uib.inf112.interfaces.IGunShot;
-import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IStaticObject;
-import no.uib.inf112.interfaces.IViewablePlayer;
+import no.uib.inf112.interfaces.*;
 import no.uib.inf112.player.guns.DEagle;
 import no.uib.inf112.player.guns.MP5;
 import no.uib.inf112.player.guns.gunShots.PistolShot;
@@ -107,6 +101,15 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             this.hitbox = proposedMove;
         } else {
             trySlide(dir);
+        }
+        tryPickupItem();
+    }
+
+    private void tryPickupItem(){
+        for(ICollectable item : map.getActiveItems()){
+            if(item.getHitbox().intersects(this.hitbox)){
+               item.affectPlayer();
+            }
         }
     }
 
@@ -312,6 +315,17 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     public int getCurrentHP() {
         return this.currentHP;
     }
+
+    @Override
+    public void healHP(int heal) {
+        int newHP = this.currentHP + heal;
+        if (newHP >  this.getMaxHP()) {
+            this.currentHP = MAX_HP;
+        } else {
+            this.currentHP = newHP;
+        }
+    }
+
 
     @Override
     public void takeDamage(int damage) {
