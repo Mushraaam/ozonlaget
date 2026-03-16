@@ -30,6 +30,10 @@ public class SpawnPoint {
         this.random = new Random();
     }
 
+    public Rectangle2D.Double bounds(){
+        return this.bounds;
+    }
+
     public boolean spawnEnemy(EnemyType type) {
         IPlayer player = map.getPlayer();
         if (player == null) {
