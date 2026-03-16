@@ -31,8 +31,8 @@ public class Level1 implements ILevel {
     private ArrayList<IFloor> floors;
 
     // Player
-    private static final int START_X = 1200;// 2 * Config.getInt("cellWidth"); //Starts in row 2 now
-    private static final int START_Y = 1010;// 2 * Config.getInt("cellHeight");; //Same for 2nd col.
+    private static final int START_X = 1075;// 2 * Config.getInt("cellWidth"); //Starts in row 2 now
+    private static final int START_Y = 1080;// 2 * Config.getInt("cellHeight");; //Same for 2nd col.
     private static final int PLAYERWIDTH = Config.getInt("playerWidth");
     private static final int PLAYERHEIGHT = Config.getInt("playerHeight");
 
@@ -325,7 +325,7 @@ public class Level1 implements ILevel {
 
 
         //path
-        this.floors.add(new RockRoad(new Rectangle2D.Double(900,900, 100, 100)));
+        
 
 
         
