@@ -99,8 +99,9 @@ public class Level1 implements ILevel {
         
         
 }
+        
 
-    private void generateItemSpawnPoints() {
+   private void generateItemSpawnPoints() {
         if (this.map == null) {
             throw new IllegalStateException("Map cannot be null");
         }
@@ -251,8 +252,32 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(1225, 1825, 15, 455), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom Left 
                 new Rectangle2D.Double(960, 2265, 110, 15), StaticObjectType.WOODEN_WALL));
-        staticObjects.add(new WoodWall( // Bottom Left 
+        staticObjects.add(new WoodWall( // Bottom Right 
                 new Rectangle2D.Double(1130, 2265, 110, 15), StaticObjectType.WOODEN_WALL));
+        
+        //interior walls
+
+        //---top rectangle
+        //-left side
+        staticObjects.add(new WoodWall( // Left 
+                new Rectangle2D.Double(680, 1550, 280, 15), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Left 
+                new Rectangle2D.Double(960, 1550, 15, 200), StaticObjectType.LONG_WOODEN_WALL));
+        //-right side
+        staticObjects.add(new WoodWall( // Left 
+                new Rectangle2D.Double(1225, 1525, 15, 225), StaticObjectType.LONG_WOODEN_WALL));
+
+        //---bottom rectangle
+        staticObjects.add(new WoodWall( // Top Left
+                new Rectangle2D.Double(1030, 1825, 45, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top Right
+                new Rectangle2D.Double(1125, 1825, 45, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Middle Left 
+                new Rectangle2D.Double(1030, 1835, 15, 350), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Middle Right
+                new Rectangle2D.Double(1155, 1835, 15, 350), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom Middle
+                new Rectangle2D.Double(1030, 2170, 140, 15), StaticObjectType.WOODEN_WALL));
         ///////////
 
         ///////////
