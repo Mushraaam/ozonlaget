@@ -53,6 +53,7 @@ public class SoundHandler {
         this.gunSounds = new HashMap<>();
         this.gunSounds.put(GunType.DEAGLE, "/no/uib/inf112/sound/guns/deagle.wav");
         this.gunSounds.put(GunType.MP5, "/no/uib/inf112/sound/guns/mp5.wav");
+        this.gunSounds.put(GunType.SHOTGUN, "/no/uib/inf112/sound/guns/shotgun.wav");
     }
 
     private void loadMusic() {

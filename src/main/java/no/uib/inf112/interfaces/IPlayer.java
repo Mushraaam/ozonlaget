@@ -54,8 +54,9 @@ public interface IPlayer {
     /**
      * Shoots towards mouseClick
      * @param e
+     * @return true if successful shot
      */
-    public void shoot(MouseEvent e);
+    public boolean shoot(MouseEvent e);
 
     /**
      * @return firerate of current gun - ms between shots

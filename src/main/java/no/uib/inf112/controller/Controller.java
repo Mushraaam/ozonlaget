@@ -65,6 +65,8 @@ public class Controller
 
     private ArrayList<Timer> timers;
 
+    private Timer reloadTimer;
+
     /**
      * The main controller for the game. It handles user input via the keyboard
      * and manages game loops using Swing Timers for movement, animation,
@@ -182,9 +184,14 @@ public class Controller
             }
         });
 
-        this.shootTimer = new Timer(this.fireRate, e -> {
-            player.shoot(this.lastMouseEvent);
-            soundHandler.playGunShot(player.gunType());
+        this.reloadTimer = new Timer(20, e -> {
+            this.player.reload();
+        });
+
+        this.shootTimer = new Timer(10, e -> {
+            if (player.shoot(this.lastMouseEvent)) {
+                soundHandler.playGunShot(player.gunType());
+            }
 
         });
 
@@ -202,6 +209,7 @@ public class Controller
         this.timers.add(gunshotTimer);
         this.timers.add(AOETimer);
         this.timers.add(tickTimer);
+        this.timers.add(reloadTimer);
 
         this.repaintTimer.start();
         applyTimers(map.getGameState());
@@ -225,6 +233,7 @@ public class Controller
                 AOETimer.start();
                 this.tickTimer.start();
                 this.gunshotTimer.start();
+                this.reloadTimer.start();
             }
             default -> {
 
@@ -273,11 +282,12 @@ public class Controller
 
             case KeyEvent.VK_1 -> {
                 this.player.setGunType(GunType.DEAGLE);
-                this.shootTimer.setDelay(this.player.fireRate());
             }
             case KeyEvent.VK_2 -> {
                 this.player.setGunType(GunType.MP5);
-                this.shootTimer.setDelay(this.player.fireRate());
+            }
+            case KeyEvent.VK_3 -> {
+                this.player.setGunType(GunType.SHOTGUN);
             }
 
             case KeyEvent.VK_I -> {
@@ -361,9 +371,6 @@ public class Controller
 
             case ACTIVE_GAME -> {
                 if (!this.shootTimer.isRunning()) {
-
-                    this.player.shoot(e); // Shoot once then start timer
-                    soundHandler.playGunShot(player.gunType());
 
                     this.shootTimer.start();
                 }

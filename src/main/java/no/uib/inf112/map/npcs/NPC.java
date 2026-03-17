@@ -167,6 +167,9 @@ public abstract class NPC implements IEnemy {
         if (this.currentAction == EnemyAction.WALK && !this.moving){
             return; 
         }
+        if (!this.moving){
+            return;
+        }
         this.animationIndex = (this.animationIndex + 1) % animationCount;
     }
 
@@ -181,11 +184,13 @@ public abstract class NPC implements IEnemy {
         // Continue ongoing attacks
 
         if (this.currentAction == EnemyAction.ATTACK) {
+            this.moving = true;
             attack(this.attackTarget);
             return;
         }
 
         if (this.currentAction == EnemyAction.RANGED_ATTACK) {
+            this.moving = true;
             rangedAttack(this.attackTarget);
             return;
         }
@@ -203,6 +208,7 @@ public abstract class NPC implements IEnemy {
                 this.currentAction = EnemyAction.ATTACK;
                 this.animationIndex = 0;
                 this.attackTarget = this.player.getHitbox();
+                this.moving = true;
                 attack(this.attackTarget);
                 return;
             }

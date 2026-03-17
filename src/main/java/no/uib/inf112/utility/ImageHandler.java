@@ -139,12 +139,16 @@ public class ImageHandler {
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/DEagle.png"), w, h));
         this.gunUI.put(GunType.MP5,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/MP5.png"), w, h));
+        this.gunUI.put(GunType.SHOTGUN,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/gun_icons/shotgun.png"), w, h));
+        
     }
 
 
 
     public BufferedImage getGunImage(GunType type) {
-        return this.gunUI.get(type);
+    
+        return this.gunUI.getOrDefault(type, this.gunUI.get(GunType.DEAGLE));
     }
 
     private void loadBackgrounds() {
