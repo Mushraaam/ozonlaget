@@ -358,9 +358,6 @@ public class Level1 implements ILevel {
         //vegetation
 
 
-        //path
-        this.floors.add(new RockRoad(new Rectangle2D.Double(900,900, 100, 100)));
-
 
         
 
