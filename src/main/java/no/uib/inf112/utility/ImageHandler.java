@@ -281,9 +281,9 @@ public class ImageHandler {
 
     ///////////////////// COLLECTABLES LOGIC //////////////////////
     private void loadCollectables() {
-        int size = Config.getInt("collectableSize");
+        int size = 2*Config.getInt("collectableSize");
         this.collectables.put(CollectableType.HEALTH,
-                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/healthBox.png"), size, size ));
+                ImageReader.fetchImage("/no/uib/inf112/map/items/rifleAmmo.png"));
 /*
         this.collectables.put(CollectableType.AMMO,
                 ImageReader.fetchImage(""));

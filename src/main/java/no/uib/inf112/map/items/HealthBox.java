@@ -14,11 +14,6 @@ public class HealthBox extends Collectable {
     }
 
     @Override
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    @Override
     public void affectPlayer() {
         this.player.healHP(HEAL_AMOUNT);
     }

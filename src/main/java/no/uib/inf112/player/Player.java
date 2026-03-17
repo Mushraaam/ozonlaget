@@ -108,7 +108,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private void tryPickupItem(){
         for(ICollectable item : map.getActiveItems()){
             if(item.getHitbox().intersects(this.hitbox)){
-               item.affectPlayer();
+               item.pickUp();
             }
         }
     }

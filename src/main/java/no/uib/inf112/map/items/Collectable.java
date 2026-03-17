@@ -54,17 +54,10 @@ public abstract class Collectable implements ICollectable {
         }
         this.isCollected = true;
 
+        this.map.removeActiveItem(this);
         affectPlayer();
 
-        //todo this.map.removeCollectable(this);
     }
-
-    /**
-     * Abstract, to be implemented by each item.
-     */
-    @Override
-    public abstract String getImagePath();
-
 
     /**
      * Abstract, to be implemented by each item.
