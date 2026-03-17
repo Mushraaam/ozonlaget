@@ -33,6 +33,7 @@ public abstract class NPC implements IEnemy {
     private IEnemy nextInCell = null;
     private ICell from;
     private EnemyAction currentAction;
+    private boolean moving;
 
     private int lastMinR = -1;
     private int lastMaxR = -1;
@@ -72,6 +73,7 @@ public abstract class NPC implements IEnemy {
 
         this.health = health;
         this.currentAction = EnemyAction.WALK;
+        this.moving = false;
 
         // Wander
         this.aggroed = false;
@@ -161,6 +163,10 @@ public abstract class NPC implements IEnemy {
 
     @Override
     public void incrementAnimationIndex() {
+
+        if (this.currentAction == EnemyAction.WALK && !this.moving){
+            return; 
+        }
         this.animationIndex = (this.animationIndex + 1) % animationCount;
     }
 
@@ -171,7 +177,7 @@ public abstract class NPC implements IEnemy {
 
     @Override
     public void move(IGrid grid) {
-
+        this.moving = false;
         // Continue ongoing attacks
 
         if (this.currentAction == EnemyAction.ATTACK) {
@@ -219,6 +225,7 @@ public abstract class NPC implements IEnemy {
             double dist = Math.hypot(dx, dy);
 
             if (tryMove(dx, dy, dist, target)) {
+                this.moving = true;
                 updateFacing(dx, dy, dist);
                 this.pathIndex = i;
                 if (dist <= speed) {

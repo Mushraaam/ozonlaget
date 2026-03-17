@@ -118,7 +118,7 @@ public class DebugScreen implements IDrawer {
 
     private void drawSpawnZones(Graphics2D graphic) {
         for (SpawnPoint point : this.map.getSpawnPoints()){
-            graphic.setColor(Color.PINK);
+            graphic.setColor(Color.GREEN);
             graphic.fill(point.bounds());
         }
     }
