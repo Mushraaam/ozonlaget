@@ -1,6 +1,5 @@
 package no.uib.inf112.map.levels;
 
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import no.uib.inf112.config.Config;

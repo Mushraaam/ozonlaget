@@ -1,7 +1,6 @@
 package no.uib.inf112.map.levels;
 
 import java.awt.geom.Rectangle2D;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.StaticObjectType;
@@ -14,7 +13,6 @@ import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.player.Player;
-import no.uib.inf112.terrain.floor.RockRoad;
 import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;

@@ -12,8 +12,8 @@ public class ShotGun extends Gun{
         setMaxAmmo(MAX_AMMO);
         setCurrentAmmo(MAX_AMMO);
         setGunType(GUNTYPE);
-        setAccuracy(0.6);
-        setRange(150);
+        setAccuracy(0.5);
+        setRange(200);
         setDamage(30);
     }
     
