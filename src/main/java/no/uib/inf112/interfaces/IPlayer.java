@@ -83,5 +83,7 @@ public interface IPlayer {
      * Decrements time remaining on buffcounter
      */
     public void decrementBuff(SoundHandler soundHandler);
+
+    public int getArmor();
 }
 

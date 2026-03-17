@@ -7,6 +7,7 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.map.items.ArmorBox;
 import no.uib.inf112.map.items.HealthBox;
 
 public class ItemSpawnPoint {
@@ -30,6 +31,7 @@ public class ItemSpawnPoint {
         this.maxLimits = new EnumMap<>(CollectableType.class);
         this.maxLimits.put(CollectableType.HEALTH, Config.getInt("healthBoxCap"));
         this.maxLimits.put(CollectableType.AMMO, Config.getInt("ammoBoxCap"));
+        this.maxLimits.put(CollectableType.ARMOR, Config.getInt("armor"));
         this.maxLimits.put(CollectableType.POWERUP_SPEED, Config.getInt("powerup_SpeedCap"));
     }
 
@@ -93,7 +95,9 @@ public class ItemSpawnPoint {
         switch (type) {
             case HEALTH -> {
                 return new HealthBox(hitBox, CollectableType.HEALTH, map);
-                // case AMMO -> return new AmmoBox(hitBox,CollectableType.AMMO ,map);
+            }
+            case ARMOR -> {
+                return new ArmorBox(hitBox, CollectableType.ARMOR, map);
             }
             default -> throw new IllegalArgumentException("Unknown Item Type");
         }

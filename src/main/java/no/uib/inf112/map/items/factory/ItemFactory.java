@@ -9,6 +9,7 @@ public class ItemFactory {
     private int counter;
 
     private static final int HEALTH_RATE = Config.getInt("healthBox");
+    private static final int ARMOR_RATE = Config.getInt("armor");
     private static final int AMMO_RATE = Config.getInt("ammoBox");
     private static final int SPEED_RATE = Config.getInt("powerup_Speed");
     private static final int DAMAGE_RATE = Config.getInt("powerup_Damage");
@@ -21,8 +22,12 @@ public class ItemFactory {
     public void increment(){
         this.counter = (this.counter + 1) % 100000;
 
-        if (this.counter % HEALTH_RATE == 0){
+/*        if (this.counter % HEALTH_RATE == 0){
             this.itemSpawnPoint.spawnItem(CollectableType.HEALTH);
+        }*/
+
+        if (this.counter % ARMOR_RATE == 0){
+            this.itemSpawnPoint.spawnItem(CollectableType.ARMOR);
         }
         /*
         if (this.counter % AMMO_RATE == 0){

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.controller.DirectionHandler;
 import no.uib.inf112.enums.BuffType;
+import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.*;
@@ -32,6 +33,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private double aimAngle;
     private int animationIndex;
     private IMap map;
+    private int armor = 0;
 
     private IGun currentGun;
     private HashMap<GunType, IGun> guns;
@@ -329,12 +331,16 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void takeDamage(int damage) {
-        int newHP = this.currentHP - damage;
+        int newHP = (armor < 0) ? this.currentHP - damage : this.currentHP - damage/2; //half damage if armor is active
         if (newHP < 0) {
             this.currentHP = 0;
         } else {
             this.currentHP = newHP;
         }
+        if(armor > 0){
+            armor--;
+        }
+        System.out.printf(String.valueOf(armor));
     }
 
     @Override
@@ -505,8 +511,19 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             this.buffCounter = 40; // 40 seconds * 0.6
         }
 
+        if  (type == BuffType.ARMOR){
+            this.armor += CollectableType.ARMOR.getQuantity();
+        }
+
+
+
         handler.playBuffMusic(type);
 
+    }
+
+    @Override
+    public int getArmor(){
+        return this.armor;
     }
 
     @Override
