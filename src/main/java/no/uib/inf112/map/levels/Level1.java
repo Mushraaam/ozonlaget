@@ -257,11 +257,23 @@ public class Level1 implements ILevel {
         staticObjects.add(new WoodWall( // Top Left 
                 new Rectangle2D.Double(2080, 890, 15, 650), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom left 
-                new Rectangle2D.Double(2080, 1690, 15, 110), StaticObjectType.WOODEN_WALL));
+                new Rectangle2D.Double(2080, 1685, 15, 115), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Right
                 new Rectangle2D.Double(2465, 890, 15, 910), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom 
                 new Rectangle2D.Double(2080, 1785, 400, 15), StaticObjectType.WOODEN_WALL));
+
+        //interior walls
+        staticObjects.add(new WoodWall( // Top Left
+                new Rectangle2D.Double(2095, 1175, 80, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top Middle Horizontal
+                new Rectangle2D.Double(2230, 1175, 110, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top Middle Vertical
+                new Rectangle2D.Double(2275, 890, 15, 285), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top Right
+                new Rectangle2D.Double(2390, 1175, 75, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom Left  
+                new Rectangle2D.Double(2080, 1675, 270, 15), StaticObjectType.WOODEN_WALL));
         ///////////
 
         ///////////
