@@ -179,8 +179,10 @@ public class Level1 implements ILevel {
         this.floors.add(new WoodFloor(new Rectangle2D.Double(410, 705, 350, 1170-700)));
 
         //exterior walls
-        staticObjects.add(new WoodWall( // Top 
-                new Rectangle2D.Double(400, 680, 360, 15), StaticObjectType.LONG_WOODEN_WALL));
+         staticObjects.add(new WoodWall( // Top left 
+                new Rectangle2D.Double(400, 680, 150, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top right 
+                new Rectangle2D.Double(610, 680, 150, 15), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Left 
                 new Rectangle2D.Double(400, 690, 15, 510), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Right
