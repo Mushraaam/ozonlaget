@@ -1,6 +1,5 @@
 package no.uib.inf112.map.npcs.factory;
 
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.Random;
@@ -29,6 +28,10 @@ public class SpawnPoint {
         this.map = map;
         this.bounds = bounds;
         this.random = new Random();
+    }
+
+    public Rectangle2D.Double bounds(){
+        return this.bounds;
     }
 
     public boolean spawnEnemy(EnemyType type) {

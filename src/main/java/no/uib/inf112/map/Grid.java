@@ -71,6 +71,26 @@ public class Grid implements IGrid {
         return neighbourMap.get(cell).getOrDefault(depth, Collections.emptyList());
     }
 
+    public ArrayList<ICell> getNearbyCells(Rectangle2D.Double current, double distance) {
+        ArrayList<ICell> cells = new ArrayList<>();
+
+        ICell topLeft = getCellFromXY(current.x - distance, current.y - distance);
+        ICell botRight = getCellFromXY(current.x + distance, current.y + distance);
+
+
+
+        for (int row = topLeft.row(); row <= botRight.row(); row++) {
+            for (int col = topLeft.col(); col <= botRight.col(); col++) {
+                ICell cell = getCell(row, col);
+                if (cell != null) {
+                    cells.add(cell);
+                }
+            }
+        }
+        return cells;
+
+    }
+
     private List<ICell> neighbourLevelBFS(ICell start, int maxDepth) {
         List<ICell> result = new ArrayList<>();
         HashSet<ICell> visited = new HashSet<>();

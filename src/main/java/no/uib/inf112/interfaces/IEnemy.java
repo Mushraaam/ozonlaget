@@ -26,7 +26,7 @@ public interface IEnemy extends IMovingDrawableObject {
      * @param pathfinder   The pathfinding algorithm to use.
      * @param targetBounds The hitbox of the target.
      */
-    public void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds);
+    public void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds, boolean fromController);
 
 
     /**
