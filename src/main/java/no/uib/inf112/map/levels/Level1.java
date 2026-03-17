@@ -127,15 +127,15 @@ public class Level1 implements ILevel {
         ///////////
         
         //interior walls
-        staticObjects.add(new WoodWall(
+        staticObjects.add(new WoodWall( // Left wall left room
                 new Rectangle2D.Double(1850, 75, 15, 190), StaticObjectType.LONG_WOODEN_WALL));
-        staticObjects.add(new WoodWall(
+        staticObjects.add(new WoodWall( // right wall right room
                 new Rectangle2D.Double(2175, 80, 15, 100), StaticObjectType.WOODEN_WALL));
-        staticObjects.add(new WoodWall(
+        staticObjects.add(new WoodWall( // right bottom wall right room
                 new Rectangle2D.Double(2175, 245, 15, 20), StaticObjectType.WOODEN_WALL));
-        staticObjects.add(new WoodWall(
+        staticObjects.add(new WoodWall( //bottom left wall right room
                 new Rectangle2D.Double(1950, 75, 240, 15), StaticObjectType.LONG_WOODEN_WALL));
-        staticObjects.add(new WoodWall(
+        staticObjects.add(new WoodWall( // top left wall right room
                 new Rectangle2D.Double(1950, 15, 15, 74), StaticObjectType.WOODEN_WALL));
         ///////////
 
@@ -155,7 +155,43 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(400, 1185, 150, 15), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom right 
                 new Rectangle2D.Double(610, 1185, 150, 15), StaticObjectType.WOODEN_WALL));
+        ///////////
         
+        //interior walls
+        staticObjects.add(new WoodWall( // 1st room left bottom door wall
+                new Rectangle2D.Double(535, 1135, 15, 50), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 1st room right bottom door wall
+                new Rectangle2D.Double(609, 1135, 15, 50), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 1st room left top door wall
+                new Rectangle2D.Double(535, 1015, 15, 50), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 1st room right top door wall
+                new Rectangle2D.Double(609, 1015, 15, 50), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall(// left 2nd room wall
+                new Rectangle2D.Double(415, 1000, 135, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall(// right 2nd room wall
+                new Rectangle2D.Double(609, 1000, 135, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 2nd room left bottom door wall
+                new Rectangle2D.Double(535, 960, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 2nd room right bottom door wall
+                new Rectangle2D.Double(609, 960, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 2nd room left top door wall
+                new Rectangle2D.Double(535, 860, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 2nd room right top door wall
+                new Rectangle2D.Double(609, 860, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // left 3rd room wall
+                new Rectangle2D.Double(415, 845, 135, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // right 3rd room wall
+                new Rectangle2D.Double(609, 845, 135, 15), StaticObjectType.WOODEN_WALL));
+         staticObjects.add(new WoodWall( // 3nd room left bottom door wall
+                new Rectangle2D.Double(535, 805, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 3nd room right bottom door wall
+                new Rectangle2D.Double(609, 805, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 3nd room left top door wall
+                new Rectangle2D.Double(535, 695, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 3nd room right top door wall
+                new Rectangle2D.Double(609, 695, 15, 40), StaticObjectType.WOODEN_WALL));
+        ///////////
+
         //furniture
         this.staticObjects.add(new DarkWoodenTable(new Rectangle2D.Double(130, 1300, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
         this.staticObjects.add(new BeigeCouch(new Rectangle2D.Double(130, 1200, Config.getInt("couchWidth"), Config.getInt("couchHeight"))));
