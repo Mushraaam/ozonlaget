@@ -546,16 +546,21 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
         if (buffType == BuffType.RAINBOW) {
             this.buffCounter = buff.getAmount(); // 40 seconds * 0.6
+
+            handler.playBuffMusic(buff.getBuffType());
         }
 
         if  (buffType == BuffType.ARMOR){
             this.armor += buff.getAmount();
+d
+            handler.playBuffSound(buff.getBuffType());
         }
 
         if  (buffType == BuffType.HEALTH){
             healHP((buff.getAmount()));
+
+            handler.playBuffSound(buff.getBuffType());
         }
-        handler.playBuffMusic(buff.getBuffType());
 
     }
 

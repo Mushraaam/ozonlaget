@@ -21,6 +21,7 @@ public class SoundHandler {
     private HashMap<GameState, String> gameMusic;
     private HashMap<GunType, String> gunSounds;
     private HashMap<BuffType, String> buffMusic;
+    private HashMap<BuffType, String> buffSounds;
 
     private HashMap<EnemyAction, HashMap<EnemyType, String>> enemySounds;
 
@@ -41,6 +42,7 @@ public class SoundHandler {
         loadGunSounds();
         loadBuffMusic();
         loadDamageSounds();
+        loadBuffSounds();
 
         // Clips
         this.counter = 0;
@@ -56,8 +58,13 @@ public class SoundHandler {
     private void loadBuffMusic() {
         this.buffMusic = new HashMap<>();
         this.buffMusic.put(BuffType.RAINBOW, "/no/uib/inf112/sound/buffs/rainbowBuff.wav");
-        this.buffMusic.put(BuffType.ARMOR, "/no/uib/inf112/sound/buffs/rainbowBuff.wav");
-        this.buffMusic.put(BuffType.HEALTH, "/no/uib/inf112/sound/buffs/rainbowBuff.wav");
+
+    }
+
+    private void loadBuffSounds(){
+        this.buffSounds = new HashMap<>();
+        this.buffSounds.put(BuffType.ARMOR, "/no/uib/inf112/sound/buffs/armorSound.wav");
+        this.buffSounds.put(BuffType.HEALTH, "/no/uib/inf112/sound/buffs/hpSound.wav");
     }
 
     private void loadGunSounds() {
@@ -156,6 +163,19 @@ public class SoundHandler {
             this.currentBuffMusic.stop();
         }
         this.currentBuffMusic = playClip(SoundReader.loadSound(this.buffMusic.get(type)));
+    }
+
+    public void playBuffSound(BuffType type) {
+        String path = this.buffSounds.get(type);
+        if (path == null) {
+            System.out.println("No buff found");
+            return;
+        }
+
+        AudioInputStream stream = SoundReader.loadSound(path);
+        if (stream != null) {
+            playClip(stream);
+        }
     }
 
     public void resumeMusic() {
