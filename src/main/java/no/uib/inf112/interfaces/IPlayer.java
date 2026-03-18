@@ -84,5 +84,11 @@ public interface IPlayer {
      * Decrements time remaining on buffcounter
      */
     public void decrementBuff(SoundHandler soundHandler);
+
+    /**
+     * @return true if player is alive
+     */
+    public boolean isAlive();
+
 }
 
