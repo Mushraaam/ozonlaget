@@ -157,12 +157,7 @@ public class ImageHandler {
     }
 
     private void loadBackgrounds() {
-        // this.levelBackground.put(1,
-        // ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/generic_grass.png"),
-        // Config.getInt("mapWidth"), Config.getInt("mapHeight")));
-        // this.levelBackground.put(1,
-        // ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/ground_2500x2500.png"),
-        // Config.getInt("mapWidth"), Config.getInt("mapHeight")));
+
         this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/ground_2.png"),
                 Config.getInt("mapWidth"), Config.getInt("mapHeight")));
         this.levelBackground.put(2, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/city_grid.png"),
