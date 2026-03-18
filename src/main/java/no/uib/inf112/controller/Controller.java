@@ -230,10 +230,10 @@ public class Controller
 
             }
             case ACTIVE_GAME -> {
-                playerAnimationTimer.start();
-                pathFindingTimer.start();
-                movementTimer.start();
-                AOETimer.start();
+                this.playerAnimationTimer.start();
+                this.pathFindingTimer.start();
+                this.movementTimer.start();
+                this.AOETimer.start();
                 this.tickTimer.start();
                 this.gunshotTimer.start();
                 this.reloadTimer.start();
@@ -446,12 +446,14 @@ public class Controller
     // This method converts the mouse position to world coordinates and updates the
     // player's aim accordingly. It also recenters the camera on the player.
     private void updateAimFromMouse(java.awt.event.MouseEvent e) {
+
+        if (this.player.isAlive()){
         camera.update(player.getHitbox(), view.getWidth(), view.getHeight(), map.getBounds());
 
         var worldMouse = camera.screenToWorld(e.getX(), e.getY());
 
         player.aimAtWorldPosition(worldMouse.x, worldMouse.y);
-
+}
     }
 
     /* used for debugging memory usage */

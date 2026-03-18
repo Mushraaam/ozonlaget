@@ -86,5 +86,11 @@ public interface IPlayer {
     public void decrementBuff(SoundHandler soundHandler);
 
     public int getArmor();
+
+    /**
+     * @return true if player is alive
+     */
+    public boolean isAlive();
+
 }
 

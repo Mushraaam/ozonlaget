@@ -15,6 +15,7 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.utility.Camera;
 import no.uib.inf112.utility.ImageHandler;
+import no.uib.inf112.view.DrawStates.DeathOverlay;
 import no.uib.inf112.view.DrawStates.DebugScreen;
 import no.uib.inf112.view.DrawStates.GameScreen;
 import no.uib.inf112.view.DrawStates.HelpMenu;
@@ -33,6 +34,7 @@ public class GameDrawer extends JPanel {
     private ImageHandler handler;
     private Camera camera;
     private IPlayer player;
+    private DeathOverlay gameOverOverlay;
 
     public GameDrawer(IMap map, Camera camera) {
         this.map = map;
@@ -46,6 +48,7 @@ public class GameDrawer extends JPanel {
         this.debugScreen = new DebugScreen(this.map);
         this.rainbowBuffOverlay = new RainbowBuffOverlay(this.player);
         this.helpScreen = new HelpMenu(handler);
+        this.gameOverOverlay = new DeathOverlay(handler);
 
 
         // Options
@@ -70,6 +73,11 @@ public class GameDrawer extends JPanel {
             }
             case HELP -> {
                 this.helpScreen.draw(g2);
+            }
+
+            case GAME_OVER -> {
+                this.gameScreen.draw(g2);
+                this.gameOverOverlay.draw(g2);
             }
             default -> {
                 throw new IllegalArgumentException(String.format("Unknown GameState: %s", gameState));

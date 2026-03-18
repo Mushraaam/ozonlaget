@@ -45,6 +45,7 @@ public class ImageHandler {
     // UI
     private HashMap<GunType, BufferedImage> gunUI;
     private BufferedImage uiBar;
+    private BufferedImage youDied;
 
     // Main Menu
     private BufferedImage menuBackground;
@@ -83,6 +84,7 @@ public class ImageHandler {
         loadGunUI();
         this.uiBar = ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/ui-bar.png"), 1200,
                 Config.getInt("uiSize"));
+        this.youDied = ImageReader.fetchImage("/no/uib/inf112/UI/youdied.png");
 
         loadMenu();
 
@@ -374,5 +376,9 @@ public class ImageHandler {
 
     public BufferedImage getHelpButton() {
         return this.helpButton;
+    }
+
+    public BufferedImage youDied(){
+        return this.youDied;
     }
 }

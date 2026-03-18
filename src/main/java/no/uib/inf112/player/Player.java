@@ -11,6 +11,7 @@ import no.uib.inf112.controller.DirectionHandler;
 import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.Direction;
+import no.uib.inf112.enums.GameState;
 import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.player.guns.DEagle;
@@ -353,6 +354,9 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }else if (overHalf && this.currentHP < 50){
             this.map.getSoundHandler().playPlayerDamageSound(0);
         }
+        if (this.currentHP == 0){
+            this.map.setGameState(GameState.GAME_OVER);
+        }
         if(armor > 0){
             armor--;
         }
@@ -581,5 +585,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public void reload() {
         this.currentGun.reload();
+    }
+
+    @Override
+    public boolean isAlive() {
+        return this.currentHP > 0;
     }
 }
