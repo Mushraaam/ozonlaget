@@ -24,7 +24,7 @@ public class DeathOverlay implements IDrawer {
     public void draw(Graphics2D graphic) {
 
         if (this.alpha < 1) {
-            this.alpha = this.alpha + (float) 0.005;
+            this.alpha = this.alpha + (float) 0.006;
             if (this.alpha > 1) {
                 this.alpha = 1;
             }
@@ -34,6 +34,7 @@ public class DeathOverlay implements IDrawer {
         var oldComposite = graphic.getComposite();
         var oldTransform = graphic.getTransform();
 
+        
         //transform coordinates to screen
         graphic.setTransform(new java.awt.geom.AffineTransform());
         Rectangle2D bounds = graphic.getClipBounds();

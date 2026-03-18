@@ -1,9 +1,6 @@
 package no.uib.inf112.controller;
 
-import no.uib.inf112.enums.BuffType;
-import no.uib.inf112.enums.Direction;
-import no.uib.inf112.enums.GameState;
-import no.uib.inf112.enums.GunType;
+import no.uib.inf112.enums.*;
 import no.uib.inf112.interfaces.IControllablePlayer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
@@ -11,6 +8,7 @@ import no.uib.inf112.interfaces.IGunShot;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.interfaces.IPuddle;
+import no.uib.inf112.map.items.RainbowBuff;
 import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
@@ -307,7 +305,7 @@ public class Controller
                 flipDebug();
             }
             case KeyEvent.VK_O -> {
-                this.player.setBuff(BuffType.RAINBOW, this.soundHandler);
+                this.player.setBuff(new RainbowBuff(player.getHitbox(), CollectableType.POWERUP_RAINBOW, map), this.soundHandler); //spawns rainbow item ontop of player atm
             }
             case KeyEvent.VK_L -> {
                 // place puddle on player

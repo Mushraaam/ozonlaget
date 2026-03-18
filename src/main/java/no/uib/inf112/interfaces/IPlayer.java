@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 
 import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.GunType;
+import no.uib.inf112.map.items.Collectable;
 import no.uib.inf112.utility.SoundHandler;
 
 public interface IPlayer {
@@ -70,10 +71,11 @@ public interface IPlayer {
 
     /**
      * Applies buff of corresponding type.
-     * @param type
-     * @param soundHandler 
+     *
+     * @param buff
+     * @param soundHandler
      */
-    public void setBuff(BuffType type, SoundHandler soundHandler);
+    public void setBuff(Collectable buff, SoundHandler soundHandler);
 
     /**
      * @return remaining time of buff

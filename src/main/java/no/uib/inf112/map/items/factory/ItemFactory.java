@@ -13,6 +13,10 @@ public class ItemFactory {
     private static final int AMMO_RATE = Config.getInt("ammoBox");
     private static final int SPEED_RATE = Config.getInt("powerup_Speed");
     private static final int DAMAGE_RATE = Config.getInt("powerup_Damage");
+    private static final int RAINBOW_RATE = Config.getInt("powerup_Rainbow");
+
+
+
 
     public ItemFactory(IMap map){
         this.itemSpawnPoint = new ItemSpawnPoint(map, map.getItemSpawnPoints());
@@ -29,10 +33,10 @@ public class ItemFactory {
         if (this.counter % ARMOR_RATE == 0){
             this.itemSpawnPoint.spawnItem(CollectableType.ARMOR);
         }
-        /*
-        if (this.counter % AMMO_RATE == 0){
-            this.itemSpawnPoint.spawnItem(CollectableType.AMMO);
+        if (this.counter % RAINBOW_RATE == 0){
+            this.itemSpawnPoint.spawnItem(CollectableType.POWERUP_RAINBOW);
         }
+        /*
 
         if (this.counter % SPEED_RATE == 0){
             this.itemSpawnPoint.spawnItem(CollectableType.POWERUP_SPEED);

@@ -7,13 +7,12 @@ import java.awt.geom.Rectangle2D;
 
 
 public class HealthBox extends Collectable {
-    private final int HEAL_AMOUNT = 30;
     public HealthBox(Rectangle2D.Double hitbox, CollectableType type, IMap map) {
         super(hitbox, type, map);
     }
 
     @Override
     public void affectPlayer() {
-        this.player.healHP(HEAL_AMOUNT);
+        this.player.setBuff(this, map.getSoundHandler());
     }
 }

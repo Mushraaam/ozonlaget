@@ -9,11 +9,11 @@ import java.util.HashMap;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.controller.DirectionHandler;
 import no.uib.inf112.enums.BuffType;
-import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.*;
+import no.uib.inf112.map.items.Collectable;
 import no.uib.inf112.player.guns.DEagle;
 import no.uib.inf112.player.guns.MP5;
 import no.uib.inf112.player.guns.ShotGun;
@@ -536,25 +536,29 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     }
 
     @Override
-    public void setBuff(BuffType type, SoundHandler handler) {
+    public void setBuff(Collectable buff, SoundHandler handler) {
 
-        this.buffType = type;
+        this.buffType = buff.getBuffType();
 
-        if (type == BuffType.NONE) {
+        if (buffType == BuffType.NONE) {
             return;
         }
 
-        if (type == BuffType.RAINBOW) {
-            this.buffCounter = 40; // 40 seconds * 0.6
+        if (buffType == BuffType.RAINBOW) {
+            this.buffCounter = buff.getAmount(); // 40 seconds * 0.6
         }
 
-        if  (type == BuffType.ARMOR){
-            this.armor += CollectableType.ARMOR.getQuantity();
+        if  (buffType == BuffType.ARMOR){
+            this.armor += buff.getAmount();
+        }
+
+        if  (buffType == BuffType.HEALTH){
+            healHP((buff.getAmount()));
         }
 
 
 
-        handler.playBuffMusic(type);
+        handler.playBuffMusic(buff.getBuffType());
 
     }
 
