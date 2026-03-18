@@ -57,6 +57,7 @@ public class SoundHandler {
         this.buffMusic = new HashMap<>();
         this.buffMusic.put(BuffType.RAINBOW, "/no/uib/inf112/sound/buffs/rainbowBuff.wav");
         this.buffMusic.put(BuffType.ARMOR, "/no/uib/inf112/sound/buffs/rainbowBuff.wav");
+        this.buffMusic.put(BuffType.HEALTH, "/no/uib/inf112/sound/buffs/rainbowBuff.wav");
     }
 
     private void loadGunSounds() {
@@ -150,7 +151,7 @@ public class SoundHandler {
     }
 
     public void playBuffMusic(BuffType type) {
-        this.currentMusic.stop();
+        if (currentMusic != null){ this.currentMusic.stop();}
         if (this.currentBuffMusic != null) {
             this.currentBuffMusic.stop();
         }

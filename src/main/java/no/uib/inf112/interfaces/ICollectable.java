@@ -12,9 +12,9 @@ public interface ICollectable {
 
     CollectableType getType();
 
-    int getDuration();
+    int getAmount();
 
-    void setNewDuration(int seconds);
+    void setNewAmount(int amount);
 
     void pickUp();
 

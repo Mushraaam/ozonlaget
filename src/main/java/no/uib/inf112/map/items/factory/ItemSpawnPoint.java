@@ -30,9 +30,11 @@ public class ItemSpawnPoint {
 
         this.maxLimits = new EnumMap<>(CollectableType.class);
         this.maxLimits.put(CollectableType.HEALTH, Config.getInt("healthBoxCap"));
-        this.maxLimits.put(CollectableType.AMMO, Config.getInt("ammoBoxCap"));
         this.maxLimits.put(CollectableType.ARMOR, Config.getInt("armor"));
         this.maxLimits.put(CollectableType.POWERUP_SPEED, Config.getInt("powerup_SpeedCap"));
+        this.maxLimits.put(CollectableType.POWERUP_DAMAGE, Config.getInt("powerup_DamageCap"));
+        this.maxLimits.put(CollectableType.POWERUP_RAINBOW, Config.getInt("powerup_RainbowCap"));
+
     }
 
     public boolean spawnItem(CollectableType type) {

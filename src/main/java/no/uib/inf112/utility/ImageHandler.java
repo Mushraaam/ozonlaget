@@ -305,6 +305,18 @@ public class ImageHandler {
                 ImageReader.fetchImage("/no/uib/inf112/map/items/healthBox.png"));
         this.collectables.put(CollectableType.ARMOR,
                 ImageReader.fetchImage("/no/uib/inf112/map/items/armorBox.png"));
+        this.collectables.put(CollectableType.POWERUP_RAINBOW,
+                ImageReader.fetchImage("/no/uib/inf112/map/items/canaryBoost.png"));
+        this.collectables.put(CollectableType.POWERUP_SPEED,
+                ImageReader.fetchImage("/no/uib/inf112/map/items/speedBoost.png"));
+        this.collectables.put(CollectableType.POWERUP_DAMAGE,
+                ImageReader.fetchImage("/no/uib/inf112/map/items/damageBoost.png"));
+        this.collectables.put(CollectableType.AMMO_PISTOL,
+                ImageReader.fetchImage("/no/uib/inf112/map/items/pistolAmmo.png"));
+        this.collectables.put(CollectableType.AMMO_RIFLE,
+                ImageReader.fetchImage("/no/uib/inf112/map/items/rifleAmmo.png"));
+        this.collectables.put(CollectableType.AMMO_SHOTGUN,
+                ImageReader.fetchImage("/no/uib/inf112/map/items/shotgunAmmo.png"));
 
 
     }

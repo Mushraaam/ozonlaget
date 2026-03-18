@@ -14,7 +14,7 @@ public abstract class Collectable implements ICollectable {
     protected CollectableType type;
     protected IMap map;
     protected IPlayer player;
-    protected int duration;
+    protected int amount;
     protected BuffType buffType;
 
     protected boolean isCollected;
@@ -23,7 +23,7 @@ public abstract class Collectable implements ICollectable {
         this.hitbox = hitbox;
         this.type = type;
         this.map = map;
-        this.duration = type.getQuantity();
+        this.amount = type.getQuantity();
         this.buffType = type.buffType();
 
         this.player = map.getPlayer();
@@ -40,16 +40,23 @@ public abstract class Collectable implements ICollectable {
         return this.type;
     }
 
+    /**
+     *
+     * @return the amount of effect the buff has registered. Like: 10 seconds, or 15 charges, 20 bullets etc.
+     */
     @Override
-    public int getDuration() {
-        return this.duration;
+    public int getAmount() {
+        return this.amount;
     }
 
     @Override
-    public void setNewDuration(int seconds) {
-        this.duration = seconds;
+    public void setNewAmount(int amount) {
+        this.amount = amount;
     }
 
+    /**
+     * Handles removing of the object and effects given.
+     */
     @Override
     public void pickUp() {
         if (isCollected) {
