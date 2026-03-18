@@ -1,5 +1,6 @@
 package no.uib.inf112.interfaces;
 
+import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.CollectableType;
 
 import java.awt.geom.Rectangle2D;
@@ -18,7 +19,7 @@ public interface ICollectable {
     void pickUp();
 
 
-    String getImagePath();
+    BuffType getBuffType();
 
     void affectPlayer();
 }

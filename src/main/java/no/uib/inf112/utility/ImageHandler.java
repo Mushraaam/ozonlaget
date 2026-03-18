@@ -301,15 +301,12 @@ public class ImageHandler {
 
     ///////////////////// COLLECTABLES LOGIC //////////////////////
     private void loadCollectables() {
-        int size = Config.getInt("collectableSize");
         this.collectables.put(CollectableType.HEALTH,
-                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/healthBox.png"), size, size ));
-/*
-        this.collectables.put(CollectableType.AMMO,
-                ImageReader.fetchImage(""));
+                ImageReader.fetchImage("/no/uib/inf112/map/items/healthBox.png"));
+        this.collectables.put(CollectableType.ARMOR,
+                ImageReader.fetchImage("/no/uib/inf112/map/items/armorBox.png"));
 
-        this.collectables.put(CollectableType.POWERUP_SPEED,
-                ImageReader.fetchImage(""));*/
+
     }
 
     public BufferedImage getCollectableImage(CollectableType type) {

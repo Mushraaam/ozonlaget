@@ -1,8 +1,6 @@
 package no.uib.inf112.view.DrawStates;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -104,6 +102,14 @@ public class GameUI implements IDrawer {
         // border
         g.setColor(HP_BORDER);
         g.drawRoundRect(x1, y1, HP_BAR_WIDTH, HP_BAR_HEIGHT, 10, 10);
+
+        //armor
+        int armor = player.getArmor();
+        if(armor > 0 && currentHP > 0 ){
+            g.setColor(Color.blue);
+            g.setStroke(new BasicStroke(armor+2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g.drawRoundRect(x1 + 3, y1 + 3, innerWidth, HP_BAR_HEIGHT - 3 * 2, 8, 8);
+        }
 
         g.setFont(HP_TEXT_FONT);
         String hpText = String.format("%d/%d", currentHP, maxHp);

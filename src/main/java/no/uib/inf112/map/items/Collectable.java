@@ -1,5 +1,6 @@
 package no.uib.inf112.map.items;
 
+import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
@@ -14,6 +15,7 @@ public abstract class Collectable implements ICollectable {
     protected IMap map;
     protected IPlayer player;
     protected int duration;
+    protected BuffType buffType;
 
     protected boolean isCollected;
 
@@ -21,7 +23,8 @@ public abstract class Collectable implements ICollectable {
         this.hitbox = hitbox;
         this.type = type;
         this.map = map;
-        this.duration = type.duration();
+        this.duration = type.getQuantity();
+        this.buffType = type.buffType();
 
         this.player = map.getPlayer();
         this.isCollected = false;
@@ -54,16 +57,18 @@ public abstract class Collectable implements ICollectable {
         }
         this.isCollected = true;
 
+        this.map.removeActiveItem(this);
         affectPlayer();
 
-        //todo this.map.removeCollectable(this);
     }
 
     /**
-     * Abstract, to be implemented by each item.
+     * Returns which bufftype this item contains.
      */
     @Override
-    public abstract String getImagePath();
+    public BuffType getBuffType(){
+        return this.type.buffType();
+    }
 
 
     /**

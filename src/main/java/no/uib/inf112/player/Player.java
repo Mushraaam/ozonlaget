@@ -9,6 +9,7 @@ import java.util.HashMap;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.controller.DirectionHandler;
 import no.uib.inf112.enums.BuffType;
+import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.enums.GunType;
@@ -34,6 +35,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private double aimAngle;
     private int animationIndex;
     private IMap map;
+    private int armor = 0;
 
     private IGun currentGun;
     private HashMap<GunType, IGun> guns;
@@ -41,7 +43,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private BuffType buffType;
     private int buffCounter;
 
-    
+
 
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IMap map) {
         this.hitbox = hitbox;
@@ -86,6 +88,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
     }
 
+
     public void aimAtWorldPosition(double worldX, double worldY) {
         double playerCenterX = this.hitbox.getCenterX();
         double playerCenterY = this.hitbox.getCenterY();
@@ -110,10 +113,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         tryPickupItem();
     }
 
-    private void tryPickupItem() {
-        for (ICollectable item : map.getActiveItems()) {
-            if (item.getHitbox().intersects(this.hitbox)) {
-                item.affectPlayer();
+    private void tryPickupItem(){
+        for(ICollectable item : map.getActiveItems()){
+            if(item.getHitbox().intersects(this.hitbox)){
+               item.pickUp();
             }
         }
     }
@@ -337,7 +340,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void takeDamage(int damage) {
-        int newHP = this.currentHP - damage;
+        int newHP = (armor > 0) ? this.currentHP - damage/2 : this.currentHP - damage; //half damage if armor is active
 
         boolean overHalf = this.currentHP >= 50;
         boolean notDead = this.currentHP > 0;
@@ -353,6 +356,9 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
         if (this.currentHP == 0){
             this.map.setGameState(GameState.GAME_OVER);
+        }
+        if(armor > 0){
+            armor--;
         }
     }
 
@@ -542,8 +548,19 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             this.buffCounter = 40; // 40 seconds * 0.6
         }
 
+        if  (type == BuffType.ARMOR){
+            this.armor += CollectableType.ARMOR.getQuantity();
+        }
+
+
+
         handler.playBuffMusic(type);
 
+    }
+
+    @Override
+    public int getArmor(){
+        return this.armor;
     }
 
     @Override
@@ -563,6 +580,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             handler.resumeMusic();
         }
     }
+
 
     @Override
     public void reload() {

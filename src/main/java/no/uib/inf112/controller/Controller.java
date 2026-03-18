@@ -51,8 +51,8 @@ public class Controller
     private MouseEvent lastMouseEvent;
 
     private Timer AOETimer;
-
     private SoundHandler soundHandler;
+
 
     // Executor for pathfinding
     private final ExecutorService pathExecutor;
