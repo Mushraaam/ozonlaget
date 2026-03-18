@@ -310,6 +310,10 @@ public class Grid implements IGrid {
     @Override
     public void gatherOccupiedCells() {
         for (IEnemy enemy : this.map.getEnemies()) {
+            if (!enemy.isAlive()){
+                continue; //we walk over dead enemies
+            }
+
             Rectangle2D.Double hitbox = enemy.getHitbox();
 
             EnemySize size = enemy.size();

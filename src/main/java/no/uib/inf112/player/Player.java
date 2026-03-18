@@ -186,6 +186,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
 
         for (IEnemy enemy : this.map.getEnemies()) {
+            if (!enemy.isAlive()){
+                continue; //we can walk over dead enemies
+            }
+
             if (proposedMove.intersects(enemy.getHitbox())) {
                 return false;
             }
@@ -427,8 +431,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
         // Check enemies
         for (IEnemy enemy : this.map.getEnemies()) {
-            if (!line.intersects(enemy.getHitbox())) {
-                continue; // Skip if not intersecting enemy
+            if (!line.intersects(enemy.getHitbox()) || !enemy.isAlive()) {
+                continue; // Skip if not intersecting enemy or enemy is dead
             }
 
             Point2D.Double hit = firstIntersection(line, enemy.getHitbox());

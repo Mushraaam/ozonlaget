@@ -117,6 +117,9 @@ public class Controller
                     this.map.gatherOccupiedCells();
 
                     for (IEnemy enemy : enemies) {
+                        if (!enemy.isAlive()){
+                            continue;
+                        }
                         enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox(), true);
                     }
 

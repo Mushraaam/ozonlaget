@@ -29,6 +29,8 @@ public class ImageHandler {
     private HashMap<EnemyType, ArrayList<BufferedImage>> walkingEnemies;
     private HashMap<EnemyType, ArrayList<BufferedImage>> attackingEnemies;
     private HashMap<EnemyType, ArrayList<BufferedImage>> rangedAttackingEnemies;
+    private HashMap<EnemyType, ArrayList<BufferedImage>> dyingEnemies;
+
 
     private HashMap<FloorType, BufferedImage> floors;
 
@@ -68,6 +70,7 @@ public class ImageHandler {
         this.walkingEnemies = new HashMap<>();
         this.attackingEnemies = new HashMap<>();
         this.rangedAttackingEnemies = new HashMap<>();
+        this.dyingEnemies = new HashMap<>();
         loadEnemies();
 
         this.floors = new HashMap<>();
@@ -265,6 +268,15 @@ public class ImageHandler {
         }
         this.rangedAttackingEnemies.put(EnemyType.GHOUL, ghoulRanged);
 
+        // Ghoul death
+        ArrayList<BufferedImage> ghoulDeath = new ArrayList<>();
+        for (int i = 0; i < 6; i++) { //ghoul death has 6 images
+            String path = String.format("/no/uib/inf112/npcs/ghoul/Death/death_00%s.png", i);
+            BufferedImage rawImage = ImageReader.fetchImage(path);
+            ghoulDeath.add(rawImage);
+        }
+        this.dyingEnemies.put(EnemyType.GHOUL, ghoulDeath);
+
     }
 
     public BufferedImage getEnemySprites(EnemyType type, EnemyAction action, int index) {
@@ -275,6 +287,8 @@ public class ImageHandler {
             case ATTACK -> this.attackingEnemies.get(type).get(index);
 
             case RANGED_ATTACK -> this.rangedAttackingEnemies.get(type).get(index);
+
+            case DEAD -> this.dyingEnemies.get(type).get(index);
 
             default -> throw new IllegalArgumentException("Illegal argument: " + action);
         };
