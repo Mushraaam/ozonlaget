@@ -67,7 +67,7 @@ public abstract class NPC implements IEnemy {
     protected int range = 0;
     protected Rectangle2D.Double pos;
 
-    public NPC(Rectangle2D.Double pos, IMap map, int health) {
+    protected NPC(Rectangle2D.Double pos, IMap map, int health) {
         this.pos = pos;
         this.map = map;
 

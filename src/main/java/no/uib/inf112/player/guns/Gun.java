@@ -14,7 +14,7 @@ public abstract class Gun implements IGun {
     private int damage;
     private int reloadDelay;
 
-    public Gun(int fireRate) {
+    protected Gun(int fireRate) {
         this.fireRate = fireRate;
         this.reloadDelay = 0;
     }

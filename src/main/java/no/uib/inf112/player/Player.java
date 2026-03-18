@@ -558,7 +558,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
 
 
-        handler.playBuffMusic(buff.getBuffType());
+        handler.playBuffMusic(buffType);
 
     }
 

@@ -151,7 +151,7 @@ public class SoundHandler {
     }
 
     public void playBuffMusic(BuffType type) {
-        if (currentMusic != null){ this.currentMusic.stop();}
+        if (this.currentMusic != null){ this.currentMusic.stop();}
         if (this.currentBuffMusic != null) {
             this.currentBuffMusic.stop();
         }
