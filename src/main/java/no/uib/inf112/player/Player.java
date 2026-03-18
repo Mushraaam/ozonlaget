@@ -40,6 +40,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private BuffType buffType;
     private int buffCounter;
 
+    
+
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IMap map) {
         this.hitbox = hitbox;
         this.bounds = bounds;
@@ -335,10 +337,18 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public void takeDamage(int damage) {
         int newHP = this.currentHP - damage;
+
+        boolean overHalf = this.currentHP >= 50;
+        boolean notDead = this.currentHP > 0;
         if (newHP < 0) {
             this.currentHP = 0;
         } else {
             this.currentHP = newHP;
+        }
+        if (notDead && this.currentHP == 0){
+            this.map.getSoundHandler().playPlayerDamageSound(1);
+        }else if (overHalf && this.currentHP < 50){
+            this.map.getSoundHandler().playPlayerDamageSound(0);
         }
     }
 

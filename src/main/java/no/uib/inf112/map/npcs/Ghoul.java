@@ -34,7 +34,7 @@ public class Ghoul extends NPC {
         setAnimationCount(ANIMATION_COUNT);
         setAggroRange(AGGRO_RANGE);
 
-        super.hasRangedAmmo = true; // change to true when ranged attack implemented
+        super.hasRangedAmmo = true;
         this.attackSlowDown = 0; // used to slow down attack animations
         this.meleeSwing = false;
         this.range = RANGE;
