@@ -44,7 +44,6 @@ public class Controller
     private Timer pathFindingTimer;
     private IGrid grid;
     private Timer gunshotTimer;
-    private int fireRate;
     private Timer shootTimer;
     private MouseEvent lastMouseEvent;
 
@@ -75,10 +74,9 @@ public class Controller
         this.player = (IControllablePlayer) map.getPlayer();
         this.view = view;
         this.grid = map.getGrid();
-        this.fireRate = this.player.fireRate();
 
         this.camera = new Camera(0, 0);
-        this.soundHandler = new SoundHandler();
+        this.soundHandler = this.map.getSoundHandler();
 
         this.view.addKeyListener(this);
         this.view.addMouseMotionListener(this);
@@ -225,7 +223,7 @@ public class Controller
         }
         switch (state) {
             case MAIN_MENU -> {
-
+                /* Empty for now */
             }
             case ACTIVE_GAME -> {
                 this.playerAnimationTimer.start();
@@ -237,7 +235,7 @@ public class Controller
                 this.reloadTimer.start();
             }
             default -> {
-
+                /* this should never happen */
             }
         }
     }
@@ -259,6 +257,7 @@ public class Controller
             }
 
             default -> {
+                /*  */
             }
         }
 
@@ -311,6 +310,9 @@ public class Controller
                 // place puddle on player
                 this.map.addAOEPuddle(new AcidPuddle(this.player.getHitbox(), this.map));
             }
+            default -> {
+                /* Do nothing */
+            }
         }
     }
 
@@ -323,6 +325,7 @@ public class Controller
             }
 
             default -> {
+                /* do nothing */
             }
         }
     }
@@ -342,6 +345,9 @@ public class Controller
             case KeyEvent.VK_D -> {
                 player.releaseMove(Direction.EAST);
             }
+            default -> {
+                /* Do nothing */
+            }
         }
     }
 
@@ -351,10 +357,10 @@ public class Controller
         // not implemented
     }
 
-    /// ///////////// HELPER METHODS - THESE SHOULD BE SHORT AND SELF EXPLANATORY
-    /// /////////////// Maybe move the helpers to their classes, at a later
-    /// occasion.
-    /// e.g map.flipDebug()
+    // ///////////// HELPER METHODS - THESE SHOULD BE SHORT AND SELF EXPLANATORY
+    // /////////////// Maybe move the helpers to their classes, at a later
+    // occasion.
+    // e.g map.flipDebug()
 
     private void flipDebug() {
         if (map.debugMode()) {
@@ -367,7 +373,6 @@ public class Controller
     @Override
     public void mousePressed(MouseEvent e) {
         this.lastMouseEvent = e;
-        this.fireRate = this.player.fireRate();
         switch (this.map.getGameState()) {
 
             case ACTIVE_GAME -> {
@@ -412,6 +417,7 @@ public class Controller
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        /* Not implemented */
     }
 
     @Override
@@ -423,10 +429,12 @@ public class Controller
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        /* Not implemented */
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        /* Not implemented */
     }
 
     @Override
@@ -437,8 +445,7 @@ public class Controller
 
     @Override
     public void mouseDragged(java.awt.event.MouseEvent e) {
-        this.lastMouseEvent = e;
-        updateAimFromMouse(e);
+        mouseMoved(e);
     }
 
     // This method converts the mouse position to world coordinates and updates the
@@ -462,10 +469,10 @@ public class Controller
         long committed = rt.totalMemory();
         long max = rt.maxMemory();
 
-        int percentage_used = (int) ((used * 100) / max);
+        int percentageUsed = (int) ((used * 100) / max);
 
         System.out.println(String.format(
                 "Used memory: %s \nMax memory: %s \nPercentage used: %s%%\nCommitted Memory: %s",
-                used, max, percentage_used, committed));
+                used, max, percentageUsed, committed));
     }
 }

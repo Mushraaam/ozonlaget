@@ -9,6 +9,7 @@ import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.map.items.ArmorBox;
 import no.uib.inf112.map.items.HealthBox;
+import no.uib.inf112.map.items.RainbowBuff;
 
 public class ItemSpawnPoint {
     private IMap map;
@@ -100,6 +101,9 @@ public class ItemSpawnPoint {
             }
             case ARMOR -> {
                 return new ArmorBox(hitBox, CollectableType.ARMOR, map);
+            }
+            case POWERUP_RAINBOW -> {
+                return new RainbowBuff(hitBox, CollectableType.POWERUP_RAINBOW, map);
             }
             default -> throw new IllegalArgumentException("Unknown Item Type");
         }

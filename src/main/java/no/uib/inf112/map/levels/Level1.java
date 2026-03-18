@@ -378,9 +378,9 @@ public class Level1 implements ILevel {
         this.staticObjects.add(new Water(new Rectangle2D.Double(700, 60, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(800, 60, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(900, 60, WATER_WIDTH, WATER_HEIGHT)));
-        this.staticObjects.add(new Water(new Rectangle2D.Double(1000, 60, WATER_WIDTH, WATER_HEIGHT)));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(950, 110, WATER_WIDTH, WATER_HEIGHT)));
         //THIS IS WHERE THE POWERUP GOES
-        this.staticObjects.add(new Water(new Rectangle2D.Double(1200, 60, WATER_WIDTH, WATER_HEIGHT)));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1250, 110, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(1300, 60, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(1400, 60, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(1500, 60, WATER_WIDTH, WATER_HEIGHT)));
@@ -395,7 +395,7 @@ public class Level1 implements ILevel {
         this.staticObjects.add(new Water(new Rectangle2D.Double(1400, 160, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(1500, 160, WATER_WIDTH, WATER_HEIGHT)));
         //row 3
-        this.staticObjects.add(new Water(new Rectangle2D.Double(700, 260, WATER_WIDTH, WATER_HEIGHT)));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(750, 210, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(800, 260, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(900, 260, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(1000, 260, WATER_WIDTH, WATER_HEIGHT)));
@@ -403,12 +403,12 @@ public class Level1 implements ILevel {
         this.staticObjects.add(new Water(new Rectangle2D.Double(1200, 260, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(1300, 260, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(1400, 260, WATER_WIDTH, WATER_HEIGHT)));
-        this.staticObjects.add(new Water(new Rectangle2D.Double(1500, 260, WATER_WIDTH, WATER_HEIGHT)));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(1450, 210, WATER_WIDTH, WATER_HEIGHT)));
 
 
         //water bottom left
         //row 0
-        this.staticObjects.add(new Water(new Rectangle2D.Double(50, 1900, WATER_WIDTH, WATER_HEIGHT)));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(100, 1950, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(140, 1900, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(240, 1900, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(340, 1900, WATER_WIDTH, WATER_HEIGHT)));
@@ -425,7 +425,7 @@ public class Level1 implements ILevel {
         this.staticObjects.add(new Water(new Rectangle2D.Double(440, 2000, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(540, 2000, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(640, 2000, WATER_WIDTH, WATER_HEIGHT)));
-        this.staticObjects.add(new Water(new Rectangle2D.Double(690, 2050, WATER_WIDTH, WATER_HEIGHT)));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(665, 2050, WATER_WIDTH, WATER_HEIGHT)));
 
         //row 2
         this.staticObjects.add(new Water(new Rectangle2D.Double(50, 2100, WATER_WIDTH, WATER_HEIGHT)));
@@ -446,7 +446,7 @@ public class Level1 implements ILevel {
         this.staticObjects.add(new Water(new Rectangle2D.Double(440, 2200, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(540, 2200, WATER_WIDTH, WATER_HEIGHT)));
         this.staticObjects.add(new Water(new Rectangle2D.Double(640, 2200, WATER_WIDTH, WATER_HEIGHT)));
-        this.staticObjects.add(new Water(new Rectangle2D.Double(740, 2200, WATER_WIDTH, WATER_HEIGHT)));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(715, 2200, WATER_WIDTH, WATER_HEIGHT)));
 
         //row 4
         this.staticObjects.add(new Water(new Rectangle2D.Double(50, 2300, WATER_WIDTH, WATER_HEIGHT)));
