@@ -304,7 +304,7 @@ public class Controller
                 flipDebug();
             }
             case KeyEvent.VK_O -> {
-                this.player.setBuff(new RainbowBuff(player.getHitbox(), CollectableType.POWERUP_RAINBOW, map), this.soundHandler); //spawns rainbow item ontop of player atm
+                map.addToActiveItems(new RainbowBuff(player.getHitbox(), CollectableType.POWERUP_RAINBOW, map)); //spawns rainbow item ontop of player atm
             }
             case KeyEvent.VK_L -> {
                 // place puddle on player

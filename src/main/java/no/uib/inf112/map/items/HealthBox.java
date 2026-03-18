@@ -13,6 +13,7 @@ public class HealthBox extends Collectable {
 
     @Override
     public void affectPlayer() {
-        this.player.setBuff(this, map.getSoundHandler());
+        this.player.healHP(getAmount());
+        map.getSoundHandler().playBuffSound(this.getBuffType());
     }
 }

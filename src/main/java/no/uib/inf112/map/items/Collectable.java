@@ -5,6 +5,7 @@ import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
+import no.uib.inf112.player.Player;
 
 import java.awt.geom.Rectangle2D;
 
@@ -13,7 +14,7 @@ public abstract class Collectable implements ICollectable {
     protected Rectangle2D.Double hitbox;
     protected CollectableType type;
     protected IMap map;
-    protected IPlayer player;
+    protected Player player;
     protected int amount;
     protected BuffType buffType;
 
@@ -26,7 +27,7 @@ public abstract class Collectable implements ICollectable {
         this.amount = type.getQuantity();
         this.buffType = type.buffType();
 
-        this.player = map.getPlayer();
+        this.player = (Player) map.getPlayer();
         this.isCollected = false;
     }
 

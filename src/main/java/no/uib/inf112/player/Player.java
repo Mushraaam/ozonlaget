@@ -8,10 +8,7 @@ import java.util.HashMap;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.controller.DirectionHandler;
-import no.uib.inf112.enums.BuffType;
-import no.uib.inf112.enums.Direction;
-import no.uib.inf112.enums.GameState;
-import no.uib.inf112.enums.GunType;
+import no.uib.inf112.enums.*;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.map.items.Collectable;
 import no.uib.inf112.player.guns.DEagle;
@@ -535,33 +532,14 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         return this.buffType;
     }
 
-    @Override
-    public void setBuff(Collectable buff, SoundHandler handler) {
 
+    public void setBuffCounter(Collectable buff){
+        this.buffCounter = buff.getAmount();
         this.buffType = buff.getBuffType();
+    }
 
-        if (buffType == BuffType.NONE) {
-            return;
-        }
-
-        if (buffType == BuffType.RAINBOW) {
-            this.buffCounter = buff.getAmount(); // 40 seconds * 0.6
-
-            handler.playBuffMusic(buff.getBuffType());
-        }
-
-        if  (buffType == BuffType.ARMOR){
-            this.armor += buff.getAmount();
-d
-            handler.playBuffSound(buff.getBuffType());
-        }
-
-        if  (buffType == BuffType.HEALTH){
-            healHP((buff.getAmount()));
-
-            handler.playBuffSound(buff.getBuffType());
-        }
-
+    public void increaseArmor(int amount){
+        this.armor += amount;
     }
 
     @Override
