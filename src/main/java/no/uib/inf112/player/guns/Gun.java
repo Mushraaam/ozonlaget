@@ -12,20 +12,25 @@ public abstract class Gun implements IGun {
     private double accuracy;
     private int range;
     private int damage;
+    private int reloadDelay;
 
     public Gun(int fireRate) {
         this.fireRate = fireRate;
+        this.reloadDelay = 0;
     }
 
     @Override
     public boolean shoot(BuffType type) {
-
+        if (this.reloadDelay > 0) {
+            return true;
+        }
         if (this.currentAmmunition > 0) {
             this.currentAmmunition--;
         }
         if (type == BuffType.RAINBOW) {
             this.currentAmmunition = this.maxAmmo;
         }
+        this.reloadDelay = this.fireRate;
         return this.currentAmmunition <= 0;
     }
 
@@ -46,8 +51,8 @@ public abstract class Gun implements IGun {
 
     @Override
     public int damage(BuffType type) {
-        
-        if (type == BuffType.RAINBOW){
+
+        if (type == BuffType.RAINBOW) {
             return this.damage * 2;
         }
 
@@ -93,6 +98,13 @@ public abstract class Gun implements IGun {
 
     protected void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    @Override
+    public void reload() {
+        if (this.reloadDelay > 0) {
+            this.reloadDelay--;
+        }
     }
 
 }

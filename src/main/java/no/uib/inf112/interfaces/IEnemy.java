@@ -105,4 +105,9 @@ public interface IEnemy extends IMovingDrawableObject {
      */
     public void attack(Rectangle2D.Double target);
 
+    /**
+     * @return true if HP > 0
+     */
+    public boolean isAlive();
+
 }

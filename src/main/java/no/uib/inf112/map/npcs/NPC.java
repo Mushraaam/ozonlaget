@@ -55,6 +55,9 @@ public abstract class NPC implements IEnemy {
     private int aggroRange;
     private ICell wanderGoal;
 
+    // Dying
+    private int deathDelay;
+
     // Protected variables
     protected IMap map;
     protected IPlayer player;
@@ -80,6 +83,9 @@ public abstract class NPC implements IEnemy {
         this.random = new Random();
         this.wanderDelay = 0;
         this.wanderGoal = this.grid.getCellFromPos(this.pos);
+
+        // Dying
+        this.deathDelay = 200;
 
     }
 
@@ -164,8 +170,11 @@ public abstract class NPC implements IEnemy {
     @Override
     public void incrementAnimationIndex() {
 
-        if (this.currentAction == EnemyAction.WALK && !this.moving){
-            return; 
+        if (this.currentAction == EnemyAction.WALK && !this.moving) {
+            return;
+        }
+        if (!this.moving) {
+            return;
         }
         this.animationIndex = (this.animationIndex + 1) % animationCount;
     }
@@ -180,12 +189,24 @@ public abstract class NPC implements IEnemy {
         this.moving = false;
         // Continue ongoing attacks
 
+        if (this.currentAction == EnemyAction.DEAD) {
+            this.deathDelay--;
+            setDeathAnimationIndex();
+            if (this.deathDelay <= 0) {
+                this.map.removeEnemy(this);
+            }
+            return;
+
+        }
+
         if (this.currentAction == EnemyAction.ATTACK) {
+            this.moving = true;
             attack(this.attackTarget);
             return;
         }
 
         if (this.currentAction == EnemyAction.RANGED_ATTACK) {
+            this.moving = true;
             rangedAttack(this.attackTarget);
             return;
         }
@@ -203,6 +224,7 @@ public abstract class NPC implements IEnemy {
                 this.currentAction = EnemyAction.ATTACK;
                 this.animationIndex = 0;
                 this.attackTarget = this.player.getHitbox();
+                this.moving = true;
                 attack(this.attackTarget);
                 return;
             }
@@ -233,6 +255,22 @@ public abstract class NPC implements IEnemy {
                 }
                 break;
             }
+        }
+    }
+
+    private void setDeathAnimationIndex() {
+        if (this.deathDelay > 190) {
+            this.animationIndex = 0;
+        } else if (this.deathDelay > 180) {
+            this.animationIndex = 1;
+        }else if (this.deathDelay > 170){
+            this.animationIndex = 2;
+        }else if (this.deathDelay > 160){
+            this.animationIndex = 3;
+        }else if (this.deathDelay > 150){
+            this.animationIndex = 4;
+        }else {
+            this.animationIndex = 5;
         }
     }
 
@@ -400,7 +438,7 @@ public abstract class NPC implements IEnemy {
         }
 
         for (IEnemy enemy : map.getEnemies()) {
-            if (enemy == this) {
+            if (enemy == this || !enemy.isAlive()) {
                 continue;
             }
 
@@ -504,7 +542,8 @@ public abstract class NPC implements IEnemy {
             this.health = 0;
         }
         if (this.health <= 0) {
-            this.map.removeEnemy(this);
+            this.currentAction = EnemyAction.DEAD;
+            this.animationIndex = 0;
         }
     }
 
@@ -516,6 +555,11 @@ public abstract class NPC implements IEnemy {
     @Override
     public void setAction(EnemyAction action) {
         this.currentAction = action;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return this.health > 0;
     }
 
     // CONSTRUCTOR SETTERS

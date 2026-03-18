@@ -21,7 +21,7 @@ public interface IGun {
     public GunType type();
 
     /**
-     * @return fire rate of gun - returns ms between each shot
+     * @return fire rate of gun - lower number is faster
      */
     public int fireRate();
 
@@ -46,4 +46,9 @@ public interface IGun {
      * returns True if out of ammunition
      */
     public boolean shoot(BuffType type);
+
+    /**
+     * Prepares for a new shot
+     */
+    public void reload();
 }

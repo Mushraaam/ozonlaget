@@ -14,5 +14,8 @@ public interface IViewablePlayer extends IPlayer {
      */
     public int getAnimationIndex();
 
-    double getFacingAngle();
+    /**
+     * @return angle that player should be drawn at
+     */
+    public double getFacingAngle();
 }

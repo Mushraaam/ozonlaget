@@ -22,7 +22,7 @@ public class SpawnPoint {
     private static final int LARGE = Config.getInt("largeEnemy");
 
     /* Ensures no zombies spawn in view of / near player */
-    private static final double SAFE_ZONE = Math.ceil(Math.hypot(Config.getInt("screenWidth"), Config.getInt("screenHeight")));
+    private static final double SAFE_ZONE = Math.ceil(Math.hypot(Config.getInt("screenWidth"), Config.getInt("screenHeight")) / 2);
 
     public SpawnPoint(IMap map, Rectangle2D.Double bounds) {
         this.map = map;

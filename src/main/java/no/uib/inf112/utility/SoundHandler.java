@@ -24,6 +24,8 @@ public class SoundHandler {
 
     private HashMap<EnemyAction, HashMap<EnemyType, String>> enemySounds;
 
+    private ArrayList<String> damageSounds;
+
     // Clips
     private ArrayList<Clip> clips;
     private int counter;
@@ -38,10 +40,17 @@ public class SoundHandler {
         loadEnemySounds();
         loadGunSounds();
         loadBuffMusic();
+        loadDamageSounds();
 
         // Clips
         this.counter = 0;
         loadClips();
+    }
+
+    private void loadDamageSounds() {
+        this.damageSounds = new ArrayList<>();
+        this.damageSounds.add("/no/uib/inf112/sound/playersounds/damaged.wav");
+        this.damageSounds.add("/no/uib/inf112/sound/playersounds/death.wav");
     }
 
     private void loadBuffMusic() {
@@ -54,6 +63,7 @@ public class SoundHandler {
         this.gunSounds = new HashMap<>();
         this.gunSounds.put(GunType.DEAGLE, "/no/uib/inf112/sound/guns/deagle.wav");
         this.gunSounds.put(GunType.MP5, "/no/uib/inf112/sound/guns/mp5.wav");
+        this.gunSounds.put(GunType.SHOTGUN, "/no/uib/inf112/sound/guns/shotgun.wav");
     }
 
     private void loadMusic() {
@@ -150,5 +160,9 @@ public class SoundHandler {
     public void resumeMusic() {
         this.currentBuffMusic.stop();
         this.currentMusic.start();
+    }
+
+    public void playPlayerDamageSound(int index){
+        playClip(SoundReader.loadSound(this.damageSounds.get(index)));
     }
 }

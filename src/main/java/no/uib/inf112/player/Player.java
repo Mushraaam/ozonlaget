@@ -15,6 +15,7 @@ import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.player.guns.DEagle;
 import no.uib.inf112.player.guns.MP5;
+import no.uib.inf112.player.guns.ShotGun;
 import no.uib.inf112.player.guns.gunShots.PistolShot;
 import no.uib.inf112.records.ShotDestination;
 import no.uib.inf112.utility.SoundHandler;
@@ -41,6 +42,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private BuffType buffType;
     private int buffCounter;
 
+
+
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IMap map) {
         this.hitbox = hitbox;
         this.bounds = bounds;
@@ -55,6 +58,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         this.guns = new HashMap<>();
         this.guns.put(this.currentGun.type(), this.currentGun);
         this.guns.put(GunType.MP5, new MP5());
+        this.guns.put(GunType.SHOTGUN, new ShotGun());
 
         this.currentHP = MAX_HP;
 
@@ -82,6 +86,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             setDirection(dir);
         }
     }
+
 
     public void aimAtWorldPosition(double worldX, double worldY) {
         double playerCenterX = this.hitbox.getCenterX();
@@ -186,6 +191,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
 
         for (IEnemy enemy : this.map.getEnemies()) {
+            if (!enemy.isAlive()){
+                continue; //we can walk over dead enemies
+            }
+
             if (proposedMove.intersects(enemy.getHitbox())) {
                 return false;
             }
@@ -321,21 +330,28 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public void healHP(int heal) {
         int newHP = this.currentHP + heal;
-        if (newHP >  this.getMaxHP()) {
+        if (newHP > this.getMaxHP()) {
             this.currentHP = MAX_HP;
         } else {
             this.currentHP = newHP;
         }
     }
 
-
     @Override
     public void takeDamage(int damage) {
         int newHP = (armor > 0) ? this.currentHP - damage/2 : this.currentHP - damage; //half damage if armor is active
+
+        boolean overHalf = this.currentHP >= 50;
+        boolean notDead = this.currentHP > 0;
         if (newHP < 0) {
             this.currentHP = 0;
         } else {
             this.currentHP = newHP;
+        }
+        if (notDead && this.currentHP == 0){
+            this.map.getSoundHandler().playPlayerDamageSound(1);
+        }else if (overHalf && this.currentHP < 50){
+            this.map.getSoundHandler().playPlayerDamageSound(0);
         }
         if(armor > 0){
             armor--;
@@ -348,10 +364,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     }
 
     @Override
-    public void shoot(MouseEvent e) {
+    public boolean shoot(MouseEvent e) {
 
         if (this.currentGun.shoot(this.buffType)) {
-            return;
+            return false;
         }
 
         double x1 = this.hitbox.getCenterX();
@@ -370,6 +386,24 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
             case DEAGLE -> {
                 shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map);
+                this.map.addShot(shot);
+            }
+
+            case MP5 -> {
+                shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map);
+                this.map.addShot(shot);
+            }
+
+            case SHOTGUN -> {
+                for (int i = 0; i < 10; i++) {
+                    this.map.addShot(new PistolShot(x1, y1, hit.x(), hit.y(), this.map));
+                    spread = (Math.random() * 2 - 1) * inaccuracy;
+                    hit = raycastShot(x1, y1, baseAngle + spread, range);
+                    if (hit.enemy() != null) {
+                        hit.enemy().takeDamage(this.currentGun.damage(this.buffType));
+                    }
+                }
+                return true;
             }
 
             default -> {
@@ -377,11 +411,11 @@ public class Player implements IControllablePlayer, IViewablePlayer {
                 // throw new IllegalStateException("No gun equipped");
             }
         }
-        this.map.addShot(shot);
 
         if (hit.enemy() != null) {
             hit.enemy().takeDamage(this.currentGun.damage(this.buffType));
         }
+        return true;
     }
 
     // Gippity helped with the math and calculations for the raycast functions - the
@@ -413,8 +447,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
         // Check enemies
         for (IEnemy enemy : this.map.getEnemies()) {
-            if (!line.intersects(enemy.getHitbox())) {
-                continue; // Skip if not intersecting enemy
+            if (!line.intersects(enemy.getHitbox()) || !enemy.isAlive()) {
+                continue; // Skip if not intersecting enemy or enemy is dead
             }
 
             Point2D.Double hit = firstIntersection(line, enemy.getHitbox());
@@ -541,5 +575,11 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             this.buffType = BuffType.NONE;
             handler.resumeMusic();
         }
+    }
+
+
+    @Override
+    public void reload() {
+        this.currentGun.reload();
     }
 }

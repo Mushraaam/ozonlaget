@@ -1,9 +1,7 @@
 package no.uib.inf112.map.levels;
 
 import java.awt.geom.Rectangle2D;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.interfaces.IFloor;
@@ -15,7 +13,6 @@ import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.player.Player;
-import no.uib.inf112.terrain.floor.RockRoad;
 import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;
@@ -97,7 +94,8 @@ public class Level1 implements ILevel {
 
     }
 
-    private void generateItemSpawnPoints() {
+
+   private void generateItemSpawnPoints() {
         if (this.map == null) {
             throw new IllegalStateException("Map cannot be null");
         }
@@ -171,14 +169,29 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(2130, 265, 350, 15), StaticObjectType.WOODEN_WALL));
         ///////////
 
+        //interior walls
+        staticObjects.add(new WoodWall( // Left wall left room
+                new Rectangle2D.Double(1850, 75, 15, 190), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // right wall right room
+                new Rectangle2D.Double(2175, 80, 15, 100), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // right bottom wall right room
+                new Rectangle2D.Double(2175, 245, 15, 20), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( //bottom left wall right room
+                new Rectangle2D.Double(1950, 75, 240, 15), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // top left wall right room
+                new Rectangle2D.Double(1950, 15, 15, 74), StaticObjectType.WOODEN_WALL));
+        ///////////
+
 
         ///////////
         //house 3
         this.floors.add(new WoodFloor(new Rectangle2D.Double(410, 705, 350, 1170 - 700)));
 
         //exterior walls
-        staticObjects.add(new WoodWall( // Top 
-                new Rectangle2D.Double(400, 680, 360, 15), StaticObjectType.LONG_WOODEN_WALL));
+         staticObjects.add(new WoodWall( // Top left
+                new Rectangle2D.Double(400, 680, 150, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top right
+                new Rectangle2D.Double(610, 680, 150, 15), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Left 
                 new Rectangle2D.Double(400, 690, 15, 510), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Right
@@ -187,6 +200,43 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(400, 1185, 150, 15), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom right 
                 new Rectangle2D.Double(610, 1185, 150, 15), StaticObjectType.WOODEN_WALL));
+
+        ///////////
+
+        //interior walls
+        staticObjects.add(new WoodWall( // 1st room left bottom door wall
+                new Rectangle2D.Double(535, 1135, 15, 50), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 1st room right bottom door wall
+                new Rectangle2D.Double(609, 1135, 15, 50), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 1st room left top door wall
+                new Rectangle2D.Double(535, 1015, 15, 50), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 1st room right top door wall
+                new Rectangle2D.Double(609, 1015, 15, 50), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall(// left 2nd room wall
+                new Rectangle2D.Double(415, 1000, 135, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall(// right 2nd room wall
+                new Rectangle2D.Double(609, 1000, 135, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 2nd room left bottom door wall
+                new Rectangle2D.Double(535, 960, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 2nd room right bottom door wall
+                new Rectangle2D.Double(609, 960, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 2nd room left top door wall
+                new Rectangle2D.Double(535, 860, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 2nd room right top door wall
+                new Rectangle2D.Double(609, 860, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // left 3rd room wall
+                new Rectangle2D.Double(415, 845, 135, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // right 3rd room wall
+                new Rectangle2D.Double(609, 845, 135, 15), StaticObjectType.WOODEN_WALL));
+         staticObjects.add(new WoodWall( // 3nd room left bottom door wall
+                new Rectangle2D.Double(535, 805, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 3nd room right bottom door wall
+                new Rectangle2D.Double(609, 805, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 3nd room left top door wall
+                new Rectangle2D.Double(535, 695, 15, 40), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // 3nd room right top door wall
+                new Rectangle2D.Double(609, 695, 15, 40), StaticObjectType.WOODEN_WALL));
+        ///////////
 
         //furniture
         this.staticObjects.add(new DarkWoodenTable(new Rectangle2D.Double(130, 1300, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
@@ -218,11 +268,23 @@ public class Level1 implements ILevel {
         staticObjects.add(new WoodWall( // Top Left 
                 new Rectangle2D.Double(2080, 890, 15, 650), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom left 
-                new Rectangle2D.Double(2080, 1690, 15, 110), StaticObjectType.WOODEN_WALL));
+                new Rectangle2D.Double(2080, 1685, 15, 115), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Right
                 new Rectangle2D.Double(2465, 890, 15, 910), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom 
                 new Rectangle2D.Double(2080, 1785, 400, 15), StaticObjectType.WOODEN_WALL));
+
+        //interior walls
+        staticObjects.add(new WoodWall( // Top Left
+                new Rectangle2D.Double(2095, 1175, 80, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top Middle Horizontal
+                new Rectangle2D.Double(2230, 1175, 110, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top Middle Vertical
+                new Rectangle2D.Double(2275, 890, 15, 285), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top Right
+                new Rectangle2D.Double(2390, 1175, 75, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom Left
+                new Rectangle2D.Double(2080, 1675, 270, 15), StaticObjectType.WOODEN_WALL));
         ///////////
 
         ///////////
@@ -249,8 +311,32 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(1225, 1825, 15, 455), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom Left 
                 new Rectangle2D.Double(960, 2265, 110, 15), StaticObjectType.WOODEN_WALL));
-        staticObjects.add(new WoodWall( // Bottom Left 
+        staticObjects.add(new WoodWall( // Bottom Right
                 new Rectangle2D.Double(1130, 2265, 110, 15), StaticObjectType.WOODEN_WALL));
+
+        //interior walls
+
+        //---top rectangle
+        //-left side
+        staticObjects.add(new WoodWall( // Left
+                new Rectangle2D.Double(680, 1550, 280, 15), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Left
+                new Rectangle2D.Double(960, 1550, 15, 200), StaticObjectType.LONG_WOODEN_WALL));
+        //-right side
+        staticObjects.add(new WoodWall( // Left
+                new Rectangle2D.Double(1225, 1525, 15, 225), StaticObjectType.LONG_WOODEN_WALL));
+
+        //---bottom rectangle
+        staticObjects.add(new WoodWall( // Top Left
+                new Rectangle2D.Double(1030, 1825, 45, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top Right
+                new Rectangle2D.Double(1125, 1825, 45, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Middle Left
+                new Rectangle2D.Double(1030, 1835, 15, 350), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Middle Right
+                new Rectangle2D.Double(1155, 1835, 15, 350), StaticObjectType.LONG_WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom Middle
+                new Rectangle2D.Double(1030, 2170, 140, 15), StaticObjectType.WOODEN_WALL));
         ///////////
 
         ///////////
@@ -261,12 +347,22 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(1757.5, 2160, 682.5, 15), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Top Left 
                 new Rectangle2D.Double(1760, 2170, 15, 100), StaticObjectType.LONG_WOODEN_WALL));
-        staticObjects.add(new WoodWall( // Bottom left 
+        staticObjects.add(new WoodWall( // Bottom Left
                 new Rectangle2D.Double(1760, 2360, 15, 120), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Right
                 new Rectangle2D.Double(2425, 2170, 15, 310), StaticObjectType.LONG_WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom 
                 new Rectangle2D.Double(1760, 2480, 680, 15), StaticObjectType.WOODEN_WALL));
+
+        //interior walls
+        staticObjects.add(new WoodWall( // Left
+                new Rectangle2D.Double(1775, 2360, 180, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Middle
+                new Rectangle2D.Double(2055, 2360, 180, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Right Top
+                new Rectangle2D.Double(2235, 2175, 15, 120), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Right Bottom
+                new Rectangle2D.Double(2235, 2360, 15, 120), StaticObjectType.WOODEN_WALL));
         ///////////
 
         //water
@@ -306,7 +402,7 @@ public class Level1 implements ILevel {
 
         //water bottom left
         //row 0
-        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 1900, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(50, 1900, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(140, 1900, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(240, 1900, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(340, 1900, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
@@ -316,7 +412,7 @@ public class Level1 implements ILevel {
         // this.staticObjects.add(new Water(new Rectangle2D.Double(740, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
 
         //row 1
-        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(50, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(140, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(240, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(340, 2000, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
@@ -326,7 +422,7 @@ public class Level1 implements ILevel {
         this.staticObjects.add(new Water(new Rectangle2D.Double(690, 2050, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
 
         //row 2
-        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(50, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(140, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(240, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(340, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
@@ -337,7 +433,7 @@ public class Level1 implements ILevel {
         //this.staticObjects.add(new Water(new Rectangle2D.Double(840, 2100, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
 
         //row 3
-        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(50, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(140, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(240, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(340, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
@@ -347,7 +443,7 @@ public class Level1 implements ILevel {
         this.staticObjects.add(new Water(new Rectangle2D.Double(740, 2200, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
 
         //row 4
-        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(50, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(140, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(240, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(340, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
@@ -357,8 +453,8 @@ public class Level1 implements ILevel {
         this.staticObjects.add(new Water(new Rectangle2D.Double(740, 2300, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
 
         //row 5
-        this.staticObjects.add(new Water(new Rectangle2D.Double(40, 2360, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
-        this.staticObjects.add(new Water(new Rectangle2D.Double(140, 2360, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(50, 2350, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
+        this.staticObjects.add(new Water(new Rectangle2D.Double(140, 2350, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(240, 2400, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(340, 2400, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
         this.staticObjects.add(new Water(new Rectangle2D.Double(440, 2400, Config.getInt("waterWidth"), Config.getInt("waterHeight"))));
@@ -369,8 +465,8 @@ public class Level1 implements ILevel {
         //vegetation
 
 
-        //path
-        this.floors.add(new RockRoad(new Rectangle2D.Double(900, 900, 100, 100)));
+
+        
 
 
     }

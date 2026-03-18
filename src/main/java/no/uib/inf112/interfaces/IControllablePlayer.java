@@ -40,5 +40,10 @@ public interface IControllablePlayer extends IPlayer{
 
     public void updateMovement();
 
+    /**
+     * Reloads current gun
+     */
+    public void reload();
+
 }
 
