@@ -64,7 +64,7 @@ public class ItemSpawnPoint {
         this.map.addToActiveItems(newItem);
         this.spawnPoints.put(chosenSpot, newItem);
 
-        System.out.println("spawned hp");
+        System.out.println("spawned item");
         return true;
     }
 

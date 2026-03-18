@@ -331,7 +331,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void takeDamage(int damage) {
-        int newHP = (armor < 0) ? this.currentHP - damage : this.currentHP - damage/2; //half damage if armor is active
+        int newHP = (armor > 0) ? this.currentHP - damage/2 : this.currentHP - damage; //half damage if armor is active
         if (newHP < 0) {
             this.currentHP = 0;
         } else {
@@ -340,7 +340,6 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         if(armor > 0){
             armor--;
         }
-        System.out.printf(String.valueOf(armor));
     }
 
     @Override
