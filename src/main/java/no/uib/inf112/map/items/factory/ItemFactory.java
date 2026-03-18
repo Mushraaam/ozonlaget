@@ -22,9 +22,9 @@ public class ItemFactory {
     public void increment(){
         this.counter = (this.counter + 1) % 100000;
 
-/*        if (this.counter % HEALTH_RATE == 0){
+        if (this.counter % HEALTH_RATE == 0){
             this.itemSpawnPoint.spawnItem(CollectableType.HEALTH);
-        }*/
+        }
 
         if (this.counter % ARMOR_RATE == 0){
             this.itemSpawnPoint.spawnItem(CollectableType.ARMOR);

@@ -51,12 +51,7 @@ public class Controller
     private MouseEvent lastMouseEvent;
 
     private Timer AOETimer;
-    private static SoundHandler soundHandler; //TODO make this not static, or change its place?
-
-    //TODO remove this, integrate it better so it can follow items and buffs.
-    public static SoundHandler getSoundHandler() {
-        return soundHandler;
-    }
+    private SoundHandler soundHandler;
 
 
     // Executor for pathfinding
