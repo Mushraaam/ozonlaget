@@ -555,9 +555,6 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         if  (buffType == BuffType.HEALTH){
             healHP((buff.getAmount()));
         }
-
-
-
         handler.playBuffMusic(buff.getBuffType());
 
     }
