@@ -1,7 +1,5 @@
 package no.uib.inf112.map.items;
 
-import no.uib.inf112.controller.Controller;
-import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.IMap;
 

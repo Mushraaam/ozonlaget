@@ -4,9 +4,9 @@ import no.uib.inf112.config.Config;
 import java.awt.Color;
 
 public enum EnemySize {
-    SMALL((int)Config.getInt("smallEnemy")/10, Color.lightGray),
-    MEDIUM((int)Config.getInt("mediumEnemy")/10, Color.CYAN),
-    LARGE((int)Config.getInt("largeEnemy")/10, Color.GREEN);
+    SMALL(Config.getInt("smallEnemy")/10, Color.lightGray),
+    MEDIUM(Config.getInt("mediumEnemy")/10, Color.CYAN),
+    LARGE(Config.getInt("largeEnemy")/10, Color.GREEN);
 
     private final int footprintValue;
     private final Color debugColor;

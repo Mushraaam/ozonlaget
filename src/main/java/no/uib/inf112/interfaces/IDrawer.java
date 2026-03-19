@@ -27,6 +27,7 @@ public interface IDrawer {
                     null);
         }
     }
+
     /**
      * @param graphic
      * @param objectBounds
@@ -51,10 +52,10 @@ public interface IDrawer {
         int startRow = (int) Math.floor(clip.getMinY() / cellHeight);
         int endRow = (int) Math.floor((clip.getMaxY() - 1) / cellHeight);
 
-        startCol = Math.max(0, Math.min(startCol, colCount - 1));
-        endCol = Math.max(0, Math.min(endCol, colCount - 1));
-        startRow = Math.max(0, Math.min(startRow, rowCount - 1));
-        endRow = Math.max(0, Math.min(endRow, rowCount - 1));
+        startCol = Math.clamp(startCol, 0, colCount - 1);
+        endCol = Math.clamp(endCol, 0, colCount - 1);
+        startRow = Math.clamp(startRow, 0, rowCount - 1);
+        endRow = Math.clamp(endRow, 0, rowCount - 1);
 
         for (int row = startRow; row <= endRow; row++) {
             for (int col = startCol; col <= endCol; col++) {
@@ -77,10 +78,10 @@ public interface IDrawer {
         int startRow = (int) Math.floor(clip.getMinY() / cellHeight);
         int endRow = (int) Math.floor((clip.getMaxY() - 1) / cellHeight);
 
-        startCol = Math.max(0, Math.min(startCol, colCount - 1));
-        endCol = Math.max(0, Math.min(endCol, colCount - 1));
-        startRow = Math.max(0, Math.min(startRow, rowCount - 1));
-        endRow = Math.max(0, Math.min(endRow, rowCount - 1));
+        startCol = Math.clamp(startCol, 0, colCount - 1);
+        endCol = Math.clamp(endCol, 0, colCount - 1);
+        startRow = Math.clamp(startRow, 0, rowCount - 1);
+        endRow = Math.clamp(endRow, 0, rowCount - 1);
 
         for (int row = startRow; row <= endRow; row++) {
             for (int col = startCol; col <= endCol; col++) {
