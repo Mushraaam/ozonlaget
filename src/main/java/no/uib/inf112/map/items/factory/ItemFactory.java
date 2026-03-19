@@ -2,7 +2,14 @@ package no.uib.inf112.map.items.factory;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.CollectableType;
+import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.map.items.Collectable;
+import org.w3c.dom.css.Rect;
+
+import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
+import java.util.Random;
 
 public class ItemFactory {
     private ItemSpawnPoint itemSpawnPoint;
@@ -16,11 +23,41 @@ public class ItemFactory {
     private static final int RAINBOW_RATE = Config.getInt("powerup_Rainbow");
 
 
+    private HashMap<CollectableType, Integer> dropTable = new HashMap<>();
 
+    public void setDropTable() {
+        dropTable.put(CollectableType.HEALTH, 10);
+        dropTable.put(CollectableType.ARMOR, 10);
+        dropTable.put(CollectableType.AMMO_PISTOL, 35);
+        dropTable.put(CollectableType.AMMO_RIFLE, 15);
+        dropTable.put(CollectableType.AMMO_SHOTGUN, 15);
+        dropTable.put(CollectableType.NONE, 70);
+    }
 
     public ItemFactory(IMap map){
         this.itemSpawnPoint = new ItemSpawnPoint(map, map.getItemSpawnPoints());
         this.counter = 0;
+        setDropTable();
+    }
+
+    public void rollDropFromTable(Rectangle2D.Double targetLocation){
+        int totweight = 0;
+        for(int weight : dropTable.values()){
+            totweight+=weight;
+        }
+        Random random = new Random();
+        int roll = random.nextInt(totweight)+1;
+        for (HashMap.Entry<CollectableType, Integer> item : dropTable.entrySet()) {
+            roll -= item.getValue();
+            if (roll <= 0 && item.getKey() != CollectableType.NONE) {
+                dropItem(item.getKey(), targetLocation);
+                break;
+            }
+        }
+    }
+
+    public void dropItem(CollectableType itemType, Rectangle2D.Double targetLocation){
+        this.itemSpawnPoint.dropLoot(itemType, targetLocation);
     }
 
     public void increment(){

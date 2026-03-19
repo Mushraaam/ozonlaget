@@ -1,6 +1,7 @@
 package no.uib.inf112.map.items.factory;
 
 import java.awt.geom.Rectangle2D;
+import java.lang.reflect.Array;
 import java.util.*;
 
 import no.uib.inf112.config.Config;
@@ -8,6 +9,7 @@ import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.map.items.ArmorBox;
+import no.uib.inf112.map.items.Collectable;
 import no.uib.inf112.map.items.HealthBox;
 import no.uib.inf112.map.items.RainbowBuff;
 
@@ -18,6 +20,7 @@ public class ItemSpawnPoint {
     private Map<Rectangle2D.Double, ICollectable> spawnPoints;
 
     private Map<CollectableType, Integer> maxLimits;
+    int MAX_DROPPED_LOOT = 10, totalDroppedLoot =0;
 
     public ItemSpawnPoint(IMap map, List<Rectangle2D.Double> predefinedSpots) {
         this.map = map;
@@ -38,12 +41,26 @@ public class ItemSpawnPoint {
 
     }
 
-    public boolean spawnItem(CollectableType type) {
+    public void dropLoot(CollectableType itemType, Rectangle2D.Double targetLocation){
+        if(totalDroppedLoot >= this.MAX_DROPPED_LOOT){
+            System.out.println("too many dropped items");
+            return;
+        }
+        ICollectable newItem = createItem(itemType, targetLocation);
+        this.map.addToActiveItems(newItem);
+        totalDroppedLoot++;
+    }
+
+    public void decreaseDroppedLoot(){
+        totalDroppedLoot--;
+    }
+
+    public void spawnItem(CollectableType type) {
         refreshNodes();
 
         if (getCurrentCount(type) >= maxLimits.getOrDefault(type, 0)) {
             System.out.println("max lim reached");
-            return false; // Limit reached, abort!
+            return; // Limit reached, abort!
         }
 
         // Find empty spawn points
@@ -57,7 +74,7 @@ public class ItemSpawnPoint {
         // Wont spawn if there's no spots left on the map
         if (emptySpots.isEmpty()) {
             System.out.println("no spots");
-            return false;
+            return;
         }
 
         Rectangle2D.Double chosenSpot = emptySpots.get(random.nextInt(emptySpots.size()));
@@ -68,8 +85,9 @@ public class ItemSpawnPoint {
         this.spawnPoints.put(chosenSpot, newItem);
 
         System.out.println("spawned item");
-        return true;
     }
+
+
 
     /**
      * Checks if the items in the points have been picked up.

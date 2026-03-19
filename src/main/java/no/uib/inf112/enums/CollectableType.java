@@ -8,8 +8,8 @@ public enum CollectableType {
     ARMOR(10, BuffType.ARMOR),
     POWERUP_SPEED(12, BuffType.SPEED),
     POWERUP_DAMAGE(10, BuffType.DAMAGE),
-    POWERUP_RAINBOW(40, BuffType.RAINBOW)
-    ;
+    POWERUP_RAINBOW(40, BuffType.RAINBOW),
+    NONE(0, BuffType.NONE );
 
     final int quantity; //standard duration. Can be changed in the class itself if needed.
     final BuffType buffType;
