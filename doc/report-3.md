@@ -67,6 +67,17 @@ Beskriv brukerhistoriene for kravene dere jobber med.
     - Impementere power-up effekter
     - Implementere healthpacks og ammo crates
 
+#### Brukerhistorie 3:
+    Historie:
+    - Bruker vil ha et godt designet level med mange detaljer.
+
+    Akseptansekriterie:
+    - Bruker kan flytte karakteren rundt på levelet ettersom hvor stien går og komme til alle de viktigste punktene.
+
+    Konkrete arbeidsoppgave(r):
+    - Implementere et level med en klar og tydelig sti.
+    - Implementere bygninger med rom som bruker kan gå inn i.
+
     
 
 
