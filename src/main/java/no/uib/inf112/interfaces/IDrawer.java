@@ -39,7 +39,7 @@ public interface IDrawer {
         return objectBounds.intersects(clip);
     }
 
-    default void drawCellsInView(Graphics2D graphics, IGrid grid, ImageHandler handler) {
+    default void drawCellsInView(Graphics2D graphics, IGrid grid, ImageHandler handler, boolean debug) {
 
         int cellWidth = grid.getCellWidth();
         int cellHeight = grid.getCellHeight();
@@ -59,48 +59,31 @@ public interface IDrawer {
 
         for (int row = startRow; row <= endRow; row++) {
             for (int col = startCol; col <= endCol; col++) {
-                ICell cell = grid.getCell(row, col);
-                drawImage(graphics, handler.getFloor(cell.floorType()), cell.getBounds());
+                if (!debug) {
+                    ICell cell = grid.getCell(row, col);
+                    drawImage(graphics, handler.getFloor(cell.floorType()), cell.getBounds());
+                } else {
+                    ICell cell = grid.getCell(row, col);
+                    PathType type = cell.pathType();
+                    graphics.setColor(Color.BLACK);
+                    if (type == PathType.UNBLOCKED) {
+                        graphics.draw(cell.getBounds());
+                    } else if (type == PathType.BLOCKED) {
+                        graphics.fill(cell.getBounds());
+                    } else if (type == PathType.BLOCKED_FOR_MEDIUM) {
+                        graphics.setColor(Color.DARK_GRAY);
+                        graphics.fill(cell.getBounds());
+                    } else if (type == PathType.BLOCKED_FOR_LARGE) {
+                        graphics.setColor(Color.LIGHT_GRAY);
+                        graphics.fill(cell.getBounds());
+                    }
+                }
             }
         }
     }
 
     default void debugCellsInView(Graphics2D graphics, IGrid grid) {
-
-        int cellWidth = grid.getCellWidth();
-        int cellHeight = grid.getCellHeight();
-        int colCount = grid.getColCount();
-        int rowCount = grid.getRowCount();
-
-        Rectangle2D clip = graphics.getClipBounds();
-        int startCol = (int) Math.floor(clip.getMinX() / cellWidth);
-        int endCol = (int) Math.floor((clip.getMaxX() - 1) / cellWidth);
-        int startRow = (int) Math.floor(clip.getMinY() / cellHeight);
-        int endRow = (int) Math.floor((clip.getMaxY() - 1) / cellHeight);
-
-        startCol = Math.clamp(startCol, 0, colCount - 1);
-        endCol = Math.clamp(endCol, 0, colCount - 1);
-        startRow = Math.clamp(startRow, 0, rowCount - 1);
-        endRow = Math.clamp(endRow, 0, rowCount - 1);
-
-        for (int row = startRow; row <= endRow; row++) {
-            for (int col = startCol; col <= endCol; col++) {
-                ICell cell = grid.getCell(row, col);
-                PathType type = cell.pathType();
-                graphics.setColor(Color.BLACK);
-                if (type == PathType.UNBLOCKED) {
-                    graphics.draw(cell.getBounds());
-                } else if (type == PathType.BLOCKED) {
-                    graphics.fill(cell.getBounds());
-                } else if (type == PathType.BLOCKED_FOR_MEDIUM) {
-                    graphics.setColor(Color.DARK_GRAY);
-                    graphics.fill(cell.getBounds());
-                } else if (type == PathType.BLOCKED_FOR_LARGE) {
-                    graphics.setColor(Color.LIGHT_GRAY);
-                    graphics.fill(cell.getBounds());
-                }
-            }
-        }
+        drawCellsInView(graphics, grid, null, true);
     }
 
     /**

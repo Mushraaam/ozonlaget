@@ -27,7 +27,6 @@ public final class ImageReader {
             }
             return ImageIO.read(in);
         } catch (IOException ex) {
-            ex.printStackTrace();
             System.out.printf("Error reading resource: %s%n", url);
             return null;
         }
