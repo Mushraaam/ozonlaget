@@ -8,7 +8,6 @@ import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.interfaces.IMap;
 
 public class Factory {
-    private IMap map;
     private ArrayList<SpawnPoint> spawnPoints;
     private Random random;
     private int counter;
@@ -16,7 +15,6 @@ public class Factory {
     private static final int GHOUL_INTENSITY = Config.getInt("ghoulIntensity");
 
     public Factory(IMap map){
-        this.map = map;
         this.spawnPoints = map.getSpawnPoints();
         this.counter = 0;
         this.random = new Random();

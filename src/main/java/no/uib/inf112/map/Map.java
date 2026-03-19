@@ -97,11 +97,10 @@ public class Map implements IMap {
 
     @Override
     public ArrayList<IMovingDrawableObject> getMovingObjects() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
     }
 
-    ////////////////// GETTERS AND SETTERS
+    // //////////////// GETTERS AND SETTERS
 
     public ArrayList<IEnemy> getEnemies() {
         return new ArrayList<>(enemies);

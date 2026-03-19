@@ -42,7 +42,6 @@ public class ItemSpawnPoint {
         refreshNodes();
 
         if (getCurrentCount(type) >= maxLimits.getOrDefault(type, 0)) {
-            System.out.println("max lim reached");
             return false; // Limit reached, abort!
         }
 
@@ -56,7 +55,6 @@ public class ItemSpawnPoint {
 
         // Wont spawn if there's no spots left on the map
         if (emptySpots.isEmpty()) {
-            System.out.println("no spots");
             return false;
         }
 
@@ -66,8 +64,6 @@ public class ItemSpawnPoint {
         ICollectable newItem = createItem(type, chosenSpot);
         this.map.addToActiveItems(newItem);
         this.spawnPoints.put(chosenSpot, newItem);
-
-        System.out.println("spawned item");
         return true;
     }
 

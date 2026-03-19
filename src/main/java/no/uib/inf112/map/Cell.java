@@ -46,7 +46,6 @@ public class Cell implements ICell {
 
     }
 
-
     public Rectangle2D.Double getBounds() {
         return this.bounds;
     }
@@ -123,26 +122,27 @@ public class Cell implements ICell {
                 return (!this.largeOccupants.isEmpty());
             }
             default -> {
-                throw new IllegalArgumentException("Unknown EnemySize");
+                /* */
             }
         }
+        throw new IllegalArgumentException("Unknown EnemySize");
+
     }
 
     @Override
     public void setOccupant(IEnemy enemy, EnemySize size) {
 
         allOccupants.add(enemy);
-        if (size == EnemySize.SMALL){
-            this.smallOccupants.add(enemy);
-            // this.mediumOccupants.add(enemy);
-            // this.largeOccupants.add(enemy);
-        }
-        else if (size == EnemySize.MEDIUM){
-            this.mediumOccupants.add(enemy);
-            // this.largeOccupants.add(enemy);
-        }
-        else{
-            this.largeOccupants.add(enemy);
+        switch (size) {
+          case EnemySize.SMALL -> {
+              this.smallOccupants.add(enemy);
+          }
+          case EnemySize.MEDIUM -> {
+              this.mediumOccupants.add(enemy);
+          }
+          default -> {
+              this.largeOccupants.add(enemy);
+          }
         }
     }
 
@@ -192,7 +192,7 @@ public class Cell implements ICell {
     }
 
     @Override
-    public Set<IEnemy> getEnemies(){
+    public Set<IEnemy> getEnemies() {
         return this.allOccupants;
     }
 }

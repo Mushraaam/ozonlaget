@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import no.uib.inf112.interfaces.ICell;
 
-public class GridTest {
+class GridTest {
 
     int width;
     int height;
@@ -24,7 +24,7 @@ public class GridTest {
     int cellHeight;
 
     @BeforeEach
-    public void makeGrid() {
+    void makeGrid() {
 
         width = 1000;
         height = 1000;
@@ -41,7 +41,7 @@ public class GridTest {
      */
 
     @Test
-    public void getCellTest() {
+    void getCellTest() {
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
             grid.getCell(1, 10000000);
@@ -70,7 +70,7 @@ public class GridTest {
     }
 
     @Test
-    public void getCellFromPosTest() {
+    void getCellFromPosTest() {
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -100,7 +100,7 @@ public class GridTest {
     }
 
     @Test
-    public void getNeighboursTest(){
+    void getNeighboursTest(){
 
         ICell cell = grid.getCell(0, 0);
 
@@ -117,8 +117,8 @@ public class GridTest {
     }
 
     @Test
-    public void iteratorTest(){
-        int expectedCount =(int) Math.floor((height / cellHeight) * (width / cellWidth));
+    void iteratorTest(){
+        int expectedCount =(int) (height / cellHeight) * (width / cellWidth);
 
         int count = 0;
         for (ICell cell : grid){

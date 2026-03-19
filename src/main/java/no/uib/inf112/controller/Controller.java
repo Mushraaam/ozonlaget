@@ -65,7 +65,7 @@ public class Controller
     private Timer reloadTimer;
 
     /**
-     * The main controller for the game. It handles user input via the keyboard
+     * The main controller for the game. It handles user input via the mouse&keyboard
      * and manages game loops using Swing Timers for movement, animation,
      * and pathfinding.
      */

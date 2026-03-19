@@ -11,12 +11,12 @@ public final class Config {
                      Config.class.getResourceAsStream("/no/uib/inf112/config/config.properties")) {
 
             if (in == null) {
-                throw new RuntimeException("config.properties not found");
+                throw new IllegalStateException("config.properties not found");
             }
             PROPS.load(in);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("Failed to load config file");
         }
     }
     private Config() {}
