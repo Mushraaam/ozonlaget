@@ -263,7 +263,26 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(1480, 1225, 130, 15), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom right 
                 new Rectangle2D.Double(1690, 1225, 230, 15), StaticObjectType.WOODEN_WALL));
+<<<<<<< HEAD
         // /////////
+=======
+        ///////////
+        
+        //interior walls
+        staticObjects.add(new WoodWall( // Top long
+                new Rectangle2D.Double(1495, 900, 300, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top short
+                new Rectangle2D.Double(1875, 900, 30, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Top mid
+                new Rectangle2D.Double(1650, 750, 15, 150), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom left
+                new Rectangle2D.Double(1495, 1075, 220, 15), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom right short
+                new Rectangle2D.Double(1700, 1090, 15, 20), StaticObjectType.WOODEN_WALL));
+        staticObjects.add(new WoodWall( // Bottom right long
+                new Rectangle2D.Double(1700, 1175, 15, 50), StaticObjectType.WOODEN_WALL));
+        ///////////
+>>>>>>> house_4
 
         // /////////
         // house 5 

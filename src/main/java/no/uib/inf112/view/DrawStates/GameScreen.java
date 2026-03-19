@@ -111,7 +111,7 @@ public class GameScreen implements IDrawer {
 
     private void drawBackground(Graphics2D graphic) {
         drawImage(graphic, this.handler.getBackground(this.map.level()), MAPDIMENSION);
-        drawCellsInView(graphic, this.tiles, this.handler);
+        drawCellsInView(graphic, this.tiles, this.handler, false);
     }
 
     private void drawPlayer(Graphics2D graphic) {
