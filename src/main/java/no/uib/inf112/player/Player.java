@@ -17,7 +17,7 @@ import no.uib.inf112.map.items.Collectable;
 import no.uib.inf112.player.guns.DEagle;
 import no.uib.inf112.player.guns.MP5;
 import no.uib.inf112.player.guns.ShotGun;
-import no.uib.inf112.player.guns.gunShots.PistolShot;
+import no.uib.inf112.player.guns.gunshots.PistolShot;
 import no.uib.inf112.records.ShotDestination;
 import no.uib.inf112.utility.SoundHandler;
 
@@ -411,8 +411,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             }
 
             default -> {
-                shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map); // TEMP
-                // throw new IllegalStateException("No gun equipped");
+                shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map);
+                this.map.addShot(shot); //Should not happen
             }
         }
 

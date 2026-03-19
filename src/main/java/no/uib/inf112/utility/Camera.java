@@ -16,7 +16,7 @@ public class Camera {
         this.translateX = translateX;
         this.translateY = translateY;
     }
-    
+
     public void update(Rectangle2D.Double playerHitbox, double screenWidth, double screenHeight,
             Rectangle2D.Double mapBounds) {
         double playerCenterX = playerHitbox.getCenterX();
@@ -27,9 +27,9 @@ public class Camera {
 
         double minTranslateX = screenWidth - mapBounds.getWidth();
         double minTranslateY = screenHeight - mapBounds.getHeight() - UI_HEIGHT; // allow UI to go below grid
-
-        tx = Math.min(0, Math.max(tx, minTranslateX));
-        ty = Math.min(0, Math.max(ty, minTranslateY));
+        
+        tx = Math.clamp(tx, minTranslateX, 0);
+        ty = Math.clamp(ty, minTranslateY, 0);
 
         this.translateX = tx;
         this.translateY = ty;

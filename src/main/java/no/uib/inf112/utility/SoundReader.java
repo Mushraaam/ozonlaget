@@ -9,7 +9,12 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public final class SoundReader {
     
-    public static AudioInputStream loadSound(String url){
+    private SoundReader() {
+        /* This utility class should not be instantiated */
+    }
+
+    
+    static AudioInputStream loadSound(String url){
 
         URL path = SoundReader.class.getResource(url);
         try {
@@ -19,7 +24,6 @@ public final class SoundReader {
                 throw new IOException("Clip path not found.");
             }
         } catch (UnsupportedAudioFileException | IOException e) {
-            e.printStackTrace();
             return null;
         }
     }

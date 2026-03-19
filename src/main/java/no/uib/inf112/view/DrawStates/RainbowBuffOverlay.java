@@ -1,4 +1,4 @@
-package no.uib.inf112.view.DrawStates;
+package no.uib.inf112.view.drawstates;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

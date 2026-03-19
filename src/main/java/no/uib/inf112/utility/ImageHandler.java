@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import no.uib.inf112.config.Config;
-//import no.uib.inf112.enums.Direction;
 import no.uib.inf112.enums.*;
 
 public class ImageHandler {
@@ -160,8 +159,6 @@ public class ImageHandler {
 
         this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/ground_level1.png"),
                 Config.getInt("mapWidth"), Config.getInt("mapHeight")));
-        // this.levelBackground.put(1, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/desert_level1.png"),
-        //         Config.getInt("mapWidth"), Config.getInt("mapHeight")));
         this.levelBackground.put(2, ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/city_grid.png"),
                 Config.getInt("mapWidth"), Config.getInt("mapHeight")));
     }
@@ -170,7 +167,7 @@ public class ImageHandler {
         return this.levelBackground.get(level);
     }
 
-    //////////////////////// PLAYER METHODS //////////////////////////////////
+    // ////////////////////// PLAYER METHODS //////////////////////////////////
     private void loadPlayerSprite() {
 
         for (int i = 0; i < PLAYER_SPRITE_COUNT; i++) {
@@ -191,10 +188,10 @@ public class ImageHandler {
         return this.playerFeetSprites.get(index);
     }
 
-    //////////////////////////////// END PLAYER METHODS //////////////////////////
-    ///
-    /// //////////////////////////// START WALL METHODS //////////////////////////
-    ///
+    // ////////////////////////////// END PLAYER METHODS //////////////////////////
+    // /
+    // / //////////////////////////// START WALL METHODS //////////////////////////
+    // /
 
     private void loadWalls() {
 
@@ -215,10 +212,10 @@ public class ImageHandler {
         return this.walls.get(type).get(dir);
     }
 
-    //////////////// END WALL LOGIC//////////////
-    ///
-    /////////////// START STATIC OBJECT LOGIC //////////////
-    ///
+    // ////////////// END WALL LOGIC//////////////
+    // /
+    // ///////////// START STATIC OBJECT LOGIC //////////////
+    // /
 
     private void loadStaticObjects() {
         this.staticObjects.put(StaticObjectType.BEIGE_COUCH_DOWN,
@@ -236,7 +233,7 @@ public class ImageHandler {
 
     }
 
-    /// /////////// START ENEMY LOGIC //////////////
+    // / /////////// START ENEMY LOGIC //////////////
 
     private void loadEnemies() {
 
@@ -293,10 +290,10 @@ public class ImageHandler {
         };
     }
 
-    ///////////////////// END ENEMY LOGIC ////////////////////
-    ///
+    // /////////////////// END ENEMY LOGIC ////////////////////
+    // /
 
-    ///////////////////// COLLECTABLES LOGIC //////////////////////
+    // /////////////////// COLLECTABLES LOGIC //////////////////////
     private void loadCollectables() {
         this.collectables.put(CollectableType.HEALTH,
                 ImageReader.fetchImage("/no/uib/inf112/map/items/healthBox.png"));
@@ -321,11 +318,11 @@ public class ImageHandler {
     public BufferedImage getCollectableImage(CollectableType type) {
         return this.collectables.get(type);
     }
-    ///////////////////// END COLLECTABLES LOGIC //////////////////////
+    // /////////////////// END COLLECTABLES LOGIC //////////////////////
 
 
-    /// ////////////////START FLOOR LOGIC ////////////////////
-    ///
+    // / ////////////////START FLOOR LOGIC ////////////////////
+    // /
 
     private void loadFloors() {
         int width = Config.getInt("tileWidth");
@@ -334,9 +331,6 @@ public class ImageHandler {
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/stonefloor.png"), width, height));
         this.floors.put(FloorType.GRASS_TILES,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_tile.png"), width, height));
-        // this.floors.put(FloorType.GRASS_TILES,
-        // ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/grass_hd.png"),
-        // width, height));
         this.floors.put(FloorType.WOODFLOOR,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/floors/woodfloor.png"), width, height));
         this.floors.put(FloorType.ROCK_ROAD,

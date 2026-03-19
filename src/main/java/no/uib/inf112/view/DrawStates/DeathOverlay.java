@@ -1,9 +1,7 @@
-package no.uib.inf112.view.DrawStates;
+package no.uib.inf112.view.drawstates;
 
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.utility.ImageHandler;

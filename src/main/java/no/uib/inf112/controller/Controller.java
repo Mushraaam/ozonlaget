@@ -13,7 +13,6 @@ import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
 import no.uib.inf112.view.GameDrawer;
-import no.uib.inf112.utility.PerfTracker;
 import no.uib.inf112.utility.SoundHandler;
 import no.uib.inf112.utility.Camera;
 
@@ -109,7 +108,6 @@ public class Controller
             pathfindingRunning = true;
             pathExecutor.submit(() -> {
                 try {
-                    PerfTracker.start("Pathfinding");
                     this.map.gatherOccupiedCells();
 
                     for (IEnemy enemy : enemies) {
@@ -120,7 +118,6 @@ public class Controller
                     }
 
                     this.map.resetOccupied();
-                    PerfTracker.stop("Pathfinding");
                 } finally {
                     pathfindingRunning = false;
                 }
@@ -137,8 +134,6 @@ public class Controller
         });
 
         this.movementTimer = new Timer(16, e -> {
-            PerfTracker.tick(false);
-            PerfTracker.start("Movement Logic");
 
             this.player.updateMovement();
 
@@ -157,8 +152,6 @@ public class Controller
             for (IProjectile projectile : projectiles) {
                 projectile.move();
             }
-            PerfTracker.stop("Movement Logic");
-
         });
 
         this.repaintTimer = new Timer(8, e -> {
@@ -387,6 +380,7 @@ public class Controller
             }
 
             default -> {
+                /* nada */
             }
         }
     }

@@ -8,6 +8,10 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public final class ImageReader {
+    private ImageReader() {
+        /* This utility class should not be instantiated */
+    }
+
 
     /**
      * @param url relative filepath

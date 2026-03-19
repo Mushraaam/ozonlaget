@@ -15,12 +15,12 @@ import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.utility.Camera;
 import no.uib.inf112.utility.ImageHandler;
-import no.uib.inf112.view.DrawStates.DeathOverlay;
-import no.uib.inf112.view.DrawStates.DebugScreen;
-import no.uib.inf112.view.DrawStates.GameScreen;
-import no.uib.inf112.view.DrawStates.HelpMenu;
-import no.uib.inf112.view.DrawStates.MainMenu;
-import no.uib.inf112.view.DrawStates.RainbowBuffOverlay;
+import no.uib.inf112.view.drawstates.DeathOverlay;
+import no.uib.inf112.view.drawstates.DebugScreen;
+import no.uib.inf112.view.drawstates.GameScreen;
+import no.uib.inf112.view.drawstates.HelpMenu;
+import no.uib.inf112.view.drawstates.MainMenu;
+import no.uib.inf112.view.drawstates.RainbowBuffOverlay;
 
 public class GameDrawer extends JPanel {
 

@@ -1,4 +1,4 @@
-package no.uib.inf112.player.guns.gunShots;
+package no.uib.inf112.player.guns.gunshots;
 
 import java.awt.geom.Line2D;
 
