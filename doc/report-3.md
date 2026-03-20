@@ -78,9 +78,23 @@ Beskriv brukerhistoriene for kravene dere jobber med.
     - Implementere et level med en klar og tydelig sti.
     - Implementere bygninger med rom som bruker kan gå inn i.
 
-    
+#### Brukerhistorie 4:
+    Historie:
+    - Brukeren ønsker en startmeny med flere animerte knapper slik at det er enkelt og oversiktlig å navigere i spillet og velge ulike funksjoner ved hjelp av museklikk.
 
+    Akseptansekriterie:
+    - Brukeren kan se en startmeny når spillet starter.
+    - Startmenyen inneholder flere knapper (f.eks. Start, Settings, Help).
+    - Knappene er animerte.
+    - Brukeren kan trykke på knappene med musen.
+    - Hver knapp utfører riktig handling.
 
+    Konkrete arbeidsoppgave(r):
+    - Implementere en startmeny med bakgrunn og tittel.
+    - Implementere animerte knapper som beveger seg inn på skjermen.
+    - Implementere hitboxer for knappene.
+    - Implementere museklikk for interaksjon med knappene.
+    - Koble knappene til riktig funksjonalitet (bytte GameState).
 
 ### Akseptansekriterier
 Definer hva som må være oppfylt for at funksjonaliteten skal være ferdig, Husk at akseptansekriterier ofte skrives mer eller mindre som tester.
