@@ -34,6 +34,21 @@ public class TestMap implements IMap {
     }
 
     @Override
+    public int getTotalDroppedLoot() {
+        return 0;
+    }
+
+    @Override
+    public void increaseDroppedLoot() {
+
+    }
+
+    @Override
+    public void decreaseDroppedLoot() {
+
+    }
+
+    @Override
     public Pathfinder getPathfinder() {
         return new Pathfinder(this);
     }

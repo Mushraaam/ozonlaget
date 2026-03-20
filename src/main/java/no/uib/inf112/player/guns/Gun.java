@@ -1,6 +1,7 @@
 package no.uib.inf112.player.guns;
 
 import no.uib.inf112.enums.BuffType;
+import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.IGun;
 
@@ -13,6 +14,7 @@ public abstract class Gun implements IGun {
     private int range;
     private int damage;
     private int reloadDelay;
+    private CollectableType ammoType;
 
     protected Gun(int fireRate) {
         this.fireRate = fireRate;
@@ -60,6 +62,21 @@ public abstract class Gun implements IGun {
     }
 
     @Override
+    public void increaseAmmo(int byAmount){
+        int newAmmo = currentAmmunition+=byAmount;
+
+        if(maxAmmo < newAmmo){
+            newAmmo = maxAmmo;
+        }
+        currentAmmunition = newAmmo;
+    }
+
+    @Override
+    public CollectableType getAmmoType(){
+        return this.ammoType;
+    }
+
+    @Override
     public int range() {
         return this.range;
     }
@@ -98,6 +115,10 @@ public abstract class Gun implements IGun {
 
     protected void setDamage(int damage) {
         this.damage = damage;
+    }
+
+    protected void setAmmoType(CollectableType ammoType) {
+        this.ammoType = ammoType;
     }
 
     @Override

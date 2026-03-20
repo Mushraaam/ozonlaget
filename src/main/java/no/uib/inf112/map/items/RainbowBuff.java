@@ -12,6 +12,7 @@ public class RainbowBuff extends Collectable {
 
     @Override
     public void affectPlayer() {
-        player.setBuff(this, map.getSoundHandler());
+        player.setBuffCounter(this);
+        map.getSoundHandler().playBuffMusic(this.getBuffType());
     }
 }

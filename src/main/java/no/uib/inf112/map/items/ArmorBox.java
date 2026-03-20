@@ -12,6 +12,7 @@ public class ArmorBox extends Collectable{
 
     @Override
     public void affectPlayer() {
-        player.setBuff(this, map.getSoundHandler());
+        player.increaseArmor(getAmount());
+        map.getSoundHandler().playBuffSound(this.getBuffType());
     }
 }

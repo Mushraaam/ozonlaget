@@ -1,5 +1,6 @@
 package no.uib.inf112.player.guns;
 
+import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.GunType;
 
 public class MP5 extends Gun {
@@ -15,6 +16,7 @@ public class MP5 extends Gun {
         setAccuracy(0.12);
         setRange(500);
         setDamage(20);
+        setAmmoType(CollectableType.AMMO_RIFLE);
     }
 
 }

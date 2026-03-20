@@ -28,6 +28,12 @@ public interface IMap {
      */
     public ArrayList<IStaticObject> getStaticObjects();
 
+    int getTotalDroppedLoot();
+
+    void increaseDroppedLoot();
+
+    void decreaseDroppedLoot();
+
     Pathfinder getPathfinder();
 
     /**

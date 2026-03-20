@@ -192,6 +192,8 @@ public abstract class NPC implements IEnemy {
             setDeathAnimationIndex();
             if (this.deathDelay <= 0) {
                 this.map.removeEnemy(this);
+                map.getItemFactory().rollDropFromTable(this.getHitbox());
+
             }
             return;
 
