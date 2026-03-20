@@ -228,4 +228,14 @@ public class TestMap implements IMap {
         return null;
     }
 
+    @Override
+    public void resetMap() {
+        throw new UnsupportedOperationException("Unimplemented method 'resetMap'");
+    }
+
+    @Override
+    public void setLevel(int level) {
+        throw new UnsupportedOperationException("Unimplemented method 'setLevel'");
+    }
+
 }

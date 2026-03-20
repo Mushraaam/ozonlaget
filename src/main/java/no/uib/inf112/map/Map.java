@@ -3,6 +3,7 @@ package no.uib.inf112.map;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 
+import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.map.items.factory.ItemFactory;
@@ -41,48 +42,72 @@ public class Map implements IMap {
     private ArrayList<IProjectile> projectiles;
     private ArrayList<SpawnPoint> spawnPoints;
 
-    //items
+    // items
     private ArrayList<ICollectable> activeItems;
     private ArrayList<Rectangle2D.Double> itemSpawnPoints;
     private ItemFactory itemFactory;
 
+    public Map() {
+        this.camera = new Camera(0, 0);
 
-    public Map(Camera camera) {
+        setLevel(1);
+        resetMap();
 
-        this.enemies = new ArrayList<>();
-        this.gunShots = new ArrayList<>();
-        this.puddles = new ArrayList<>();
-        this.projectiles = new ArrayList<>();
-        this.spawnPoints = new ArrayList<>();
-        this.itemSpawnPoints = new ArrayList<>();
-
-        this.level = new Level1(this);
-        //this.level = new Level2(this);
-        this.bounds = this.level.getBounds();
-        this.player = this.level.getPlayer();
-        this.floors = this.level.getFloor();
-        this.levelNumber = this.level.levelNumber();
-
-
-        this.debug = false;
-
-        // Implementer egen metode/meny for denne
-        this.staticObjects = this.level.getStaticObjects();
-
-        this.gameState = GameState.MAIN_MENU;
-
-        this.grid = new Grid(this);
-        this.tiles = new TileGrid(this);
-        this.pathfinder = new Pathfinder(this);
-        this.factory = level.getFactory();
-        this.itemFactory = level.getItemFactory();
-
-        this.camera = camera;
         gatherOccupiedCells();
 
         this.soundHandler = new SoundHandler();
 
+    }
+
+    @Override
+    public void resetMap() {
+
+        this.camera.update(player.getHitbox(), Config.getInt("screenWidth"), Config.getInt("screenHeight"), this.bounds);
+        this.gameState = GameState.MAIN_MENU;
+
+        // lists
+        this.enemies = new ArrayList<>();
+        this.gunShots = new ArrayList<>();
+        this.puddles = new ArrayList<>();
+        this.projectiles = new ArrayList<>();
+
+        // grid
+        this.grid = new Grid(this);
+        this.tiles = new TileGrid(this);
+
+        // enemies
+        this.pathfinder = new Pathfinder(this);
+        this.factory = level.getFactory();
+        this.itemFactory = level.getItemFactory();
+    }
+
+    @Override
+    public void setLevel(int level) {
+
         this.activeItems = new ArrayList<>();
+        this.spawnPoints = new ArrayList<>();
+        this.itemSpawnPoints = new ArrayList<>();
+
+        switch (level) {
+            case 1 -> {
+                this.level = new Level1(this);
+            }
+
+            case 2 -> {
+                this.level = new Level2(this);
+            }
+
+            default -> throw new IllegalStateException("Unknown level");
+        }
+
+        // initiate level
+        this.bounds = this.level.getBounds();
+        this.player = this.level.getPlayer();
+        this.floors = this.level.getFloor();
+        this.levelNumber = this.level.levelNumber();
+        this.debug = false;
+        this.staticObjects = this.level.getStaticObjects();
+
     }
 
     @Override
@@ -260,7 +285,6 @@ public class Map implements IMap {
     public SoundHandler getSoundHandler() {
         return this.soundHandler;
     }
-
 
     @Override
     public ArrayList<ICollectable> getActiveItems() {

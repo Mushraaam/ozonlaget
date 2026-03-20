@@ -12,9 +12,8 @@ import no.uib.inf112.view.GameDrawer;
 public class Main {
 
     public static void main(String[] args) {
-        Camera camera = new Camera(0, 0);
-        IMap map = new Map(camera);
-        GameDrawer view = new GameDrawer(map, camera);
+        IMap map = new Map();
+        GameDrawer view = new GameDrawer(map);
         JFrame frame = new JFrame("Ozonlaget");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 

@@ -200,6 +200,16 @@ public interface IMap {
      */
     public SoundHandler getSoundHandler();
 
+    /**
+     * Resets the map, clears all lists etc
+     */
+    public void resetMap();
+
+    /**
+     * Resets the map, sets new level
+     * @input int level
+     */
+    public void setLevel(int level);
 
     ArrayList<ICollectable> getActiveItems();
 

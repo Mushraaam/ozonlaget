@@ -29,7 +29,7 @@ import javax.swing.SwingUtilities;
 public class Controller
         implements java.awt.event.KeyListener, java.awt.event.MouseMotionListener, java.awt.event.MouseListener {
 
-    private final Camera camera;
+    private Camera camera;
 
     private Factory factory;
     private Timer tickTimer;
@@ -49,7 +49,6 @@ public class Controller
     private Timer puddleTimer;
     private SoundHandler soundHandler;
 
-
     // Executor for pathfinding
     private final ExecutorService pathExecutor;
     private volatile boolean pathfindingRunning;
@@ -64,25 +63,17 @@ public class Controller
     private Timer reloadTimer;
 
     /**
-     * The main controller for the game. It handles user input via the mouse&keyboard
+     * The main controller for the game. It handles user input via the
+     * mouse&keyboard
      * and manages game loops using Swing Timers for movement, animation,
      * and pathfinding.
      */
     public Controller(IMap map, GameDrawer view) {
         this.map = map;
-        this.player = (IControllablePlayer) map.getPlayer();
         this.view = view;
-        this.grid = map.getGrid();
 
-        this.camera = new Camera(0, 0);
-        this.soundHandler = this.map.getSoundHandler();
-
-        this.view.addKeyListener(this);
-        this.view.addMouseMotionListener(this);
-        this.view.addMouseListener(this);
-        this.view.setFocusable(true);
-        this.factory = map.getFactory();
-        this.itemFactory = map.getItemFactory();
+        setListeners();
+        initiateMap();
 
         //
         this.pathExecutor = Executors.newSingleThreadExecutor();
@@ -111,7 +102,7 @@ public class Controller
                     this.map.gatherOccupiedCells();
 
                     for (IEnemy enemy : enemies) {
-                        if (!enemy.isAlive()){
+                        if (!enemy.isAlive()) {
                             continue;
                         }
                         enemy.requestPath(map.getGrid(), map.getPathfinder(), player.getHitbox(), true);
@@ -208,6 +199,23 @@ public class Controller
         soundHandler.playMusic(map.getGameState());
     }
 
+    private void setListeners() {
+        this.view.addKeyListener(this);
+        this.view.addMouseMotionListener(this);
+        this.view.addMouseListener(this);
+        this.view.setFocusable(true);
+    }
+
+    private void initiateMap() {
+        this.camera = this.map.getCamera();
+        this.player = (IControllablePlayer) map.getPlayer();
+        this.grid = map.getGrid();
+
+        this.soundHandler = this.map.getSoundHandler();
+        this.factory = map.getFactory();
+        this.itemFactory = map.getItemFactory();
+    }
+
     // STOP AND START TIMERS
     private void applyTimers(GameState state) {
         for (Timer t : timers) {
@@ -247,6 +255,10 @@ public class Controller
 
             case ACTIVE_GAME -> {
                 activeGamePressEvent(e);
+            }
+
+            case GAME_OVER -> {
+                gameOverPressEvent(e);
             }
 
             default -> {
@@ -297,12 +309,29 @@ public class Controller
                 flipDebug();
             }
             case KeyEvent.VK_O -> {
-                this.player.setBuff(new RainbowBuff(player.getHitbox(), CollectableType.POWERUP_RAINBOW, map), this.soundHandler); //spawns rainbow item ontop of player atm
+                this.player.setBuff(new RainbowBuff(player.getHitbox(), CollectableType.POWERUP_RAINBOW, map),
+                        this.soundHandler); // spawns rainbow item ontop of player atm
             }
             case KeyEvent.VK_L -> {
                 // place puddle on player
                 this.map.addAOEPuddle(new AcidPuddle(this.player.getHitbox(), this.map));
             }
+            default -> {
+                /* Do nothing */
+            }
+        }
+    }
+
+    private void gameOverPressEvent(KeyEvent e) {
+        switch (e.getKeyCode()) {
+
+            case KeyEvent.VK_R -> {
+                this.map.setLevel(1);
+                this.map.resetMap();
+                this.map.setGameState(GameState.MAIN_MENU);
+                initiateMap();
+            }
+
             default -> {
                 /* Do nothing */
             }
@@ -446,13 +475,13 @@ public class Controller
     // player's aim accordingly. It also recenters the camera on the player.
     private void updateAimFromMouse(java.awt.event.MouseEvent e) {
 
-        if (this.player.isAlive()){
-        camera.update(player.getHitbox(), view.getWidth(), view.getHeight(), map.getBounds());
+        if (this.player.isAlive()) {
+            camera.update(player.getHitbox(), view.getWidth(), view.getHeight(), map.getBounds());
 
-        var worldMouse = camera.screenToWorld(e.getX(), e.getY());
+            var worldMouse = camera.screenToWorld(e.getX(), e.getY());
 
-        player.aimAtWorldPosition(worldMouse.x, worldMouse.y);
-}
+            player.aimAtWorldPosition(worldMouse.x, worldMouse.y);
+        }
     }
 
     /* used for debugging memory usage */

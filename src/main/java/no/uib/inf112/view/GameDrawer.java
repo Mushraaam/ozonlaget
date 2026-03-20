@@ -13,8 +13,10 @@ import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
+import no.uib.inf112.player.Player;
 import no.uib.inf112.utility.Camera;
 import no.uib.inf112.utility.ImageHandler;
+import no.uib.inf112.view.drawstates.DarknessOverlay;
 import no.uib.inf112.view.drawstates.DeathOverlay;
 import no.uib.inf112.view.drawstates.DebugScreen;
 import no.uib.inf112.view.drawstates.GameScreen;
@@ -33,23 +35,20 @@ public class GameDrawer extends JPanel {
 
     private ImageHandler handler;
     private Camera camera;
-    private IPlayer player;
     private DeathOverlay gameOverOverlay;
 
-    public GameDrawer(IMap map, Camera camera) {
+    public GameDrawer(IMap map) {
         this.map = map;
         this.handler = new ImageHandler();
-        this.camera = camera;
-        this.player = map.getPlayer();
+        this.camera = map.getCamera();
 
         // Screens
         this.gameScreen = new GameScreen(this.map, this.handler, this.camera);
         this.mainMenu = new MainMenu(this.handler);
         this.debugScreen = new DebugScreen(this.map);
-        this.rainbowBuffOverlay = new RainbowBuffOverlay(this.player);
+        this.rainbowBuffOverlay = new RainbowBuffOverlay(this.map);
         this.helpScreen = new HelpMenu(handler);
         this.gameOverOverlay = new DeathOverlay(handler);
-
 
         // Options
         this.setPreferredSize(new Dimension(Config.getInt("screenWidth"), Config.getInt("screenHeight")));
@@ -60,7 +59,6 @@ public class GameDrawer extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
         Graphics2D g2 = (Graphics2D) g;
         GameState gameState = map.getGameState();
 
@@ -88,7 +86,8 @@ public class GameDrawer extends JPanel {
             this.debugScreen.draw(g2);
         }
 
-        switch (this.player.buffType()){
+        IPlayer player = this.map.getPlayer();
+        switch (player.buffType()){
 
             case NONE -> {/* Do nothing if none */}
 
