@@ -115,13 +115,13 @@ public class ItemSpawnPoint {
     private ICollectable createItem(CollectableType type, Rectangle2D.Double hitBox) {
         switch (type) {
             case HEALTH -> {
-                return new HealthBox(hitBox, CollectableType.HEALTH, map);
+                return new HealthBox(hitBox, type, map);
             }
             case ARMOR -> {
-                return new ArmorBox(hitBox, CollectableType.ARMOR, map);
+                return new ArmorBox(hitBox, type, map);
             }
             case POWERUP_RAINBOW -> {
-                return new RainbowBuff(hitBox, CollectableType.POWERUP_RAINBOW, map);
+                return new RainbowBuff(hitBox, type, map);
             }
             default -> throw new IllegalArgumentException("Unknown Item Type");
         }

@@ -16,4 +16,20 @@ public class HealthBox extends Collectable {
         this.player.healHP(getAmount());
         map.getSoundHandler().playBuffSound(this.getBuffType());
     }
+
+    @Override
+    public void pickUp() {
+        if(player.getMaxHP() == player.getCurrentHP()){
+            return; //dont waste it son!
+        }
+        if (isCollected) {
+            return;
+        }
+        this.isCollected = true;
+        this.map.removeActiveItem(this);
+        affectPlayer();
+
+    }
+
+
 }
