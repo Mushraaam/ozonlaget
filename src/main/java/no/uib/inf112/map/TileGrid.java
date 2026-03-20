@@ -89,15 +89,14 @@ public class TileGrid implements IGrid {
         int col = (int) Math.floor(x / TILEWIDTH);
         int row = (int) Math.floor(y / TILEHEIGHT);
 
-        col = Math.max(0, Math.min(col, colCount - 1));
-        row = Math.max(0, Math.min(row, rowCount - 1));
+        col = Math.clamp(col, 0, colCount - 1);
+        row = Math.clamp(row, 0, rowCount - 1);
 
         return getCell(row, col);
     }
 
     @Override
     public ArrayList<ICell> getNeighbours(ICell cell) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getNeighbours'");
     }
 
@@ -113,25 +112,21 @@ public class TileGrid implements IGrid {
     // Not used, should be abstracted out at a later date
     @Override
     public double distance(ICell from, ICell to) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'distance'");
     }
 
     @Override
     public void gatherOccupiedCells() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'gatherOccupiedCells'");
     }
 
     @Override
     public void resetOccupied() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'resetOccupied'");
     }
 
     @Override
     public ArrayList<ICell> getNearbyCells(Double current, double distance) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getNearbyCells'");
     }
 

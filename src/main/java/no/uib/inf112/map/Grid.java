@@ -17,8 +17,8 @@ import no.uib.inf112.interfaces.IStaticObject;
 public class Grid implements IGrid {
 
     // Represent pixel width
-    private final static int CELLWIDTH = Config.getInt("cellWidth");
-    private final static int CELLHEIGHT = Config.getInt("cellHeight");
+    private static final int CELLWIDTH = Config.getInt("cellWidth");
+    private static final int CELLHEIGHT = Config.getInt("cellHeight");
     // Enemy sizes
     private static final double SMALL = Config.getInt("smallEnemy") * 0.1;
     private static final double MEDIUM = Config.getInt("mediumEnemy") * 0.34;
@@ -76,8 +76,6 @@ public class Grid implements IGrid {
 
         ICell topLeft = getCellFromXY(current.x - distance, current.y - distance);
         ICell botRight = getCellFromXY(current.x + distance, current.y + distance);
-
-
 
         for (int row = topLeft.row(); row <= botRight.row(); row++) {
             for (int col = topLeft.col(); col <= botRight.col(); col++) {
@@ -257,13 +255,13 @@ public class Grid implements IGrid {
         int col = (int) Math.floor(x / CELLWIDTH);
         int row = (int) Math.floor(y / CELLHEIGHT);
 
-        col = Math.max(0, Math.min(col, colCount - 1));
-        row = Math.max(0, Math.min(row, rowCount - 1));
+        col = Math.clamp(col, 0, colCount - 1);
+        row = Math.clamp(row, 0, rowCount - 1);
 
         return getCell(row, col);
     }
 
-    public ArrayList<ICell> getCellsInView(Graphics2D graphics) {
+    public List<ICell> getCellsInView(Graphics2D graphics) {
 
         // optimalisert versjon av kommenter kode over
         Rectangle2D clip = graphics.getClipBounds();
@@ -272,10 +270,10 @@ public class Grid implements IGrid {
         int startRow = (int) Math.floor(clip.getMinY() / CELLHEIGHT);
         int endRow = (int) Math.floor((clip.getMaxY() - 1) / CELLHEIGHT);
 
-        startCol = Math.max(0, Math.min(startCol, colCount - 1));
-        endCol = Math.max(0, Math.min(endCol, colCount - 1));
-        startRow = Math.max(0, Math.min(startRow, rowCount - 1));
-        endRow = Math.max(0, Math.min(endRow, rowCount - 1));
+        startCol = Math.clamp(startCol, 0, colCount - 1);
+        endCol = Math.clamp(endCol, 0, colCount - 1);
+        startRow = Math.clamp(startRow, 0, rowCount - 1);
+        endRow = Math.clamp(endRow, 0, rowCount - 1);
 
         ArrayList<ICell> inView = new ArrayList<>();
         for (int row = startRow; row <= endRow; row++) {
@@ -310,8 +308,8 @@ public class Grid implements IGrid {
     @Override
     public void gatherOccupiedCells() {
         for (IEnemy enemy : this.map.getEnemies()) {
-            if (!enemy.isAlive()){
-                continue; //we walk over dead enemies
+            if (!enemy.isAlive()) {
+                continue; // we walk over dead enemies
             }
 
             Rectangle2D.Double hitbox = enemy.getHitbox();

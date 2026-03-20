@@ -1,9 +1,8 @@
-package no.uib.inf112.view.DrawStates;
+package no.uib.inf112.view.drawstates;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-//import java.nio.Buffer;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.interfaces.*;
@@ -20,8 +19,6 @@ public class GameScreen implements IDrawer {
     private static final Rectangle2D.Double MAPDIMENSION = new Rectangle2D.Double(0, 0, Config.getInt("mapHeight"),
             Config.getInt("mapWidth"));
     private GameUI ui;
-
-    // private BufferedImage playerSprite;
 
     public GameScreen(IMap map, ImageHandler handler, Camera camera) {
 
@@ -70,7 +67,6 @@ public class GameScreen implements IDrawer {
         graphic.setColor(Color.YELLOW);
         graphic.setStroke(new BasicStroke(1));
         for (IGunShot shot : this.map.gunShots()) {
-            // graphic.fill(shot.bounds());
             graphic.draw(shot.bounds());
         }
     }
@@ -115,7 +111,7 @@ public class GameScreen implements IDrawer {
 
     private void drawBackground(Graphics2D graphic) {
         drawImage(graphic, this.handler.getBackground(this.map.level()), MAPDIMENSION);
-        drawCellsInView(graphic, this.tiles, this.handler);
+        drawCellsInView(graphic, this.tiles, this.handler, false);
     }
 
     private void drawPlayer(Graphics2D graphic) {

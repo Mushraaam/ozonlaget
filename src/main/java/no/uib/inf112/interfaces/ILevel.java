@@ -20,5 +20,5 @@ public interface ILevel {
 
     public Factory getFactory();
 
-    ItemFactory getItemFactory();
+    public ItemFactory getItemFactory();
 }

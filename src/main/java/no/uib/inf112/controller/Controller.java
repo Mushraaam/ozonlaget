@@ -13,7 +13,6 @@ import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
 import no.uib.inf112.view.GameDrawer;
-import no.uib.inf112.utility.PerfTracker;
 import no.uib.inf112.utility.SoundHandler;
 import no.uib.inf112.utility.Camera;
 
@@ -47,7 +46,7 @@ public class Controller
     private Timer shootTimer;
     private MouseEvent lastMouseEvent;
 
-    private Timer AOETimer;
+    private Timer puddleTimer;
     private SoundHandler soundHandler;
 
 
@@ -65,7 +64,7 @@ public class Controller
     private Timer reloadTimer;
 
     /**
-     * The main controller for the game. It handles user input via the keyboard
+     * The main controller for the game. It handles user input via the mouse&keyboard
      * and manages game loops using Swing Timers for movement, animation,
      * and pathfinding.
      */
@@ -109,7 +108,6 @@ public class Controller
             pathfindingRunning = true;
             pathExecutor.submit(() -> {
                 try {
-                    PerfTracker.start("Pathfinding");
                     this.map.gatherOccupiedCells();
 
                     for (IEnemy enemy : enemies) {
@@ -120,7 +118,6 @@ public class Controller
                     }
 
                     this.map.resetOccupied();
-                    PerfTracker.stop("Pathfinding");
                 } finally {
                     pathfindingRunning = false;
                 }
@@ -137,8 +134,6 @@ public class Controller
         });
 
         this.movementTimer = new Timer(16, e -> {
-            PerfTracker.tick(false);
-            PerfTracker.start("Movement Logic");
 
             this.player.updateMovement();
 
@@ -157,8 +152,6 @@ public class Controller
             for (IProjectile projectile : projectiles) {
                 projectile.move();
             }
-            PerfTracker.stop("Movement Logic");
-
         });
 
         this.repaintTimer = new Timer(8, e -> {
@@ -194,7 +187,7 @@ public class Controller
 
         });
 
-        this.AOETimer = new Timer(500, e -> {
+        this.puddleTimer = new Timer(500, e -> {
             ArrayList<IPuddle> puddles = map.getAOEPuddles();
             for (IPuddle puddle : puddles) {
                 puddle.dealDamage();
@@ -206,7 +199,7 @@ public class Controller
         this.timers.add(pathFindingTimer);
         this.timers.add(movementTimer);
         this.timers.add(gunshotTimer);
-        this.timers.add(AOETimer);
+        this.timers.add(puddleTimer);
         this.timers.add(tickTimer);
         this.timers.add(reloadTimer);
 
@@ -229,7 +222,7 @@ public class Controller
                 this.playerAnimationTimer.start();
                 this.pathFindingTimer.start();
                 this.movementTimer.start();
-                this.AOETimer.start();
+                this.puddleTimer.start();
                 this.tickTimer.start();
                 this.gunshotTimer.start();
                 this.reloadTimer.start();
@@ -387,6 +380,7 @@ public class Controller
             }
 
             default -> {
+                /* nada */
             }
         }
     }

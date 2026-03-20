@@ -1,4 +1,4 @@
-package no.uib.inf112.view.DrawStates;
+package no.uib.inf112.view.drawstates;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;

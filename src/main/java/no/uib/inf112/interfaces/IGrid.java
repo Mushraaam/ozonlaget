@@ -21,8 +21,8 @@ public interface IGrid extends Iterable<ICell> {
             for (int col = 0; col < cols; col++) {
 
                 Rectangle2D.Double cellBounds = new Rectangle2D.Double(
-                        col * width,
-                        row * height,
+                        (double)col * width,
+                        (double)row * height,
                         width,
                         height);
                 cellRow.add(new Cell(cellBounds, row, col, type, PathType.UNBLOCKED));
@@ -47,7 +47,7 @@ public interface IGrid extends Iterable<ICell> {
      * @throws NullPointerException
      * @throws IllegalArgumentException when out of bounds
      */
-    public ArrayList<ICell> getNeighbours(ICell cell);
+    public List<ICell> getNeighbours(ICell cell);
 
     /**
      * Calculates the Euclidean distance between two cells
@@ -111,6 +111,6 @@ public interface IGrid extends Iterable<ICell> {
      * @param distance
      * @return
      */
-    public ArrayList<ICell> getNearbyCells(Rectangle2D.Double current, double distance);
+    public List<ICell> getNearbyCells(Rectangle2D.Double current, double distance);
 
 }

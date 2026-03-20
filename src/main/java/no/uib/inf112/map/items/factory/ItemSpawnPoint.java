@@ -87,8 +87,6 @@ public class ItemSpawnPoint {
         System.out.println("spawned item");
     }
 
-
-
     /**
      * Checks if the items in the points have been picked up.
      * If they aren't in the map's active item list anymore, they are probably gone...

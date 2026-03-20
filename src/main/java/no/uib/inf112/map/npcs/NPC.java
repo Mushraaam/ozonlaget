@@ -42,8 +42,6 @@ public abstract class NPC implements IEnemy {
 
     // test
     private boolean sliding = false;
-    private int slideXDir = 1;
-    private int slideYDir = 1;
 
     private int health;
 
@@ -128,7 +126,7 @@ public abstract class NPC implements IEnemy {
             if (this.wanderGoal == null) {
                 return;
             }
-            if (!(this.wanderDelay % 1000 == 0)) {
+            if ((this.wanderDelay % 1000 != 0)) {
                 this.wanderDelay = (this.wanderDelay + 1) % 1000;
 
             }
@@ -265,13 +263,13 @@ public abstract class NPC implements IEnemy {
             this.animationIndex = 0;
         } else if (this.deathDelay > 180) {
             this.animationIndex = 1;
-        }else if (this.deathDelay > 170){
+        } else if (this.deathDelay > 170) {
             this.animationIndex = 2;
-        }else if (this.deathDelay > 160){
+        } else if (this.deathDelay > 160) {
             this.animationIndex = 3;
-        }else if (this.deathDelay > 150){
+        } else if (this.deathDelay > 150) {
             this.animationIndex = 4;
-        }else {
+        } else {
             this.animationIndex = 5;
         }
     }
@@ -291,15 +289,15 @@ public abstract class NPC implements IEnemy {
             return;
         }
 
-        checkCellAndPush(myCell, moveX, moveY);
+        checkCellAndPush(moveX, moveY);
         for (ICell neighbor : map.getGrid().getNeighboursAtDepth(myCell, 2)) {
             if (neighbor != null) {
-                checkCellAndPush(neighbor, moveX, moveY);
+                checkCellAndPush(moveX, moveY);
             }
         }
     }
 
-    private void checkCellAndPush(ICell cell, boolean moveX, boolean moveY) {
+    private void checkCellAndPush(boolean moveX, boolean moveY) {
 
         for (IEnemy other : map.getEnemies()) {
             if (other == this) {
@@ -344,10 +342,12 @@ public abstract class NPC implements IEnemy {
             return true;
 
         } else {
+            int slideXDir = 1;
+            int slideYDir = 1;
 
             if (!this.sliding) {
-                this.slideXDir = (dx >= 0) ? 1 : -1;
-                this.slideYDir = (dy >= 0) ? 1 : -1;
+                slideXDir = (dx >= 0) ? 1 : -1;
+                slideYDir = (dy >= 0) ? 1 : -1;
 
                 Rectangle2D.Double testX = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width,
                         this.pos.height);
@@ -369,14 +369,7 @@ public abstract class NPC implements IEnemy {
     private boolean trySlide(double dx, double dy, double dist, Rectangle2D target) {
         Rectangle2D.Double slideX = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
         Rectangle2D.Double slideY = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
-        int x = 1;
-        int y = 1;
-        if (dx <= 0) {
-            x = x * (-1);
-        }
-        if (dy <= 0) {
-            y = y * (-1);
-        }
+
         // Slide X
         if (dist <= speed) {
             slideX.x = target.getCenterX() - pos.width / 2.0;
@@ -397,6 +390,7 @@ public abstract class NPC implements IEnemy {
                 this.pos = slideY;
                 return true;
             } else {
+                /* Do nothing */
             }
         }
 
@@ -474,7 +468,7 @@ public abstract class NPC implements IEnemy {
         this.lastMaxC = maxC;
     }
 
-    /// //////////////////GETTERS////////////////////////
+    // //////////////////GETTERS////////////////////////
 
     @Override
     public int getLastMinR() {
@@ -637,6 +631,4 @@ public abstract class NPC implements IEnemy {
     }
 
     // ABSTRACT METHODS
-
-    public abstract void attack(Rectangle2D.Double target);
 }

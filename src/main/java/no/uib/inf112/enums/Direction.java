@@ -10,7 +10,8 @@ public enum Direction {
     SOUTH(0, 1),
     SOUTH_EAST(1, 1);
 
-    final int dx, dy;
+    final int dx;
+    final int dy;
     public final double radians;
 
     Direction(int dx, int dy) {

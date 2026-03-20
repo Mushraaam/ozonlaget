@@ -1,6 +1,7 @@
 package no.uib.inf112.core;
 
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import no.uib.inf112.map.Map;
 import no.uib.inf112.utility.Camera;
@@ -15,7 +16,7 @@ public class Main {
         IMap map = new Map(camera);
         GameDrawer view = new GameDrawer(map, camera);
         JFrame frame = new JFrame("Ozonlaget");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         new Controller(map, view);
         frame.setContentPane(view);

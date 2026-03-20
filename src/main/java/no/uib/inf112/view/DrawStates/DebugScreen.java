@@ -1,23 +1,15 @@
-package no.uib.inf112.view.DrawStates;
+package no.uib.inf112.view.drawstates;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
-import java.util.Map;
-
 import no.uib.inf112.interfaces.*;
-import no.uib.inf112.utility.PerfTracker;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 
 public class DebugScreen implements IDrawer {
 
     private IMap map;
     private IGrid grid;
-    private long lastFrameNs = System.nanoTime();
-    private double frameMs = 0.0;
-    private double fps = 0.0;
-    private double smoothedMs = 0;
 
     public DebugScreen(IMap map) {
         this.map = map;
@@ -26,7 +18,7 @@ public class DebugScreen implements IDrawer {
 
     @Override
     public void draw(Graphics2D graphic) {
-        
+
         // Draw spawn zones
         drawSpawnZones(graphic);
 
@@ -48,10 +40,10 @@ public class DebugScreen implements IDrawer {
             }
         }
 
-        //Draw item hitboxes
+        // Draw item hitboxes
         graphic.setColor(Color.PINK);
-        for(ICollectable item : this.map.getActiveItems()){
-            if(isVisible(graphic, item.getHitbox())){
+        for (ICollectable item : this.map.getActiveItems()) {
+            if (isVisible(graphic, item.getHitbox())) {
                 graphic.fill(item.getHitbox());
             }
         }
@@ -60,10 +52,10 @@ public class DebugScreen implements IDrawer {
         graphic.setColor(Color.RED);
         graphic.setStroke(new java.awt.BasicStroke(2f));
 
-
         for (IEnemy enemy : this.map.getEnemies()) {
             List<ICell> path = enemy.getCurrentPath();
-            if (path == null || path.size() < 2) return;
+            if (path == null || path.size() < 2)
+                return;
 
             Rectangle viewBounds = graphic.getClipBounds();
 
@@ -79,45 +71,23 @@ public class DebugScreen implements IDrawer {
                     double cy = currentBounds.getCenterY();
                     int dotRadius = 3;
 
-                    graphic.fillOval((int)(cx - dotRadius), (int)(cy - dotRadius), dotRadius * 2, dotRadius * 2);
+                    graphic.fillOval((int) (cx - dotRadius), (int) (cy - dotRadius), dotRadius * 2, dotRadius * 2);
 
                     if (i < path.size() - 1) {
                         ICell next = path.get(i + 1);
                         Rectangle2D.Double nextBounds = next.getBounds();
 
                         graphic.drawLine(
-                                (int)cx, (int)cy,
-                                (int)nextBounds.getCenterX(), (int)nextBounds.getCenterY()
-                        );
+                                (int) cx, (int) cy,
+                                (int) nextBounds.getCenterX(), (int) nextBounds.getCenterY());
                     }
                 }
             }
-
-        //DRAW STATS
-        PerfTracker.tick(true); // Increment FPS
-        AffineTransform old = graphic.getTransform();
-        graphic.setTransform(new AffineTransform());
-        graphic.setFont(new Font("Monospaced", Font.BOLD, 14));
-        int x = 20;
-        int y = 30;
-        graphic.setColor(Color.WHITE);
-        graphic.drawString(String.format("FPS: %3.0f | UPS: %3.0f", PerfTracker.fps, PerfTracker.ups), x, y);
-        y += 20;
-        graphic.drawString(String.format("npc count: %d", map.getEnemyCount()), x, y);
-        y += 20;
-        graphic.drawString("--- TASK BREAKDOWN ---", x, y);
-        for (Map.Entry<String, Double> entry : PerfTracker.taskMs.entrySet()) {
-            y += 20;
-            double time = entry.getValue();
-            graphic.drawString(String.format("%-15s: %6.2f ms", entry.getKey(), time), x, y);
         }
-        graphic.setTransform(old);
-
     }
-}
 
     private void drawSpawnZones(Graphics2D graphic) {
-        for (SpawnPoint point : this.map.getSpawnPoints()){
+        for (SpawnPoint point : this.map.getSpawnPoints()) {
             graphic.setColor(Color.GREEN);
             graphic.fill(point.bounds());
         }

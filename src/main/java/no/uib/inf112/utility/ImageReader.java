@@ -8,6 +8,10 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 public final class ImageReader {
+    private ImageReader() {
+        /* This utility class should not be instantiated */
+    }
+
 
     /**
      * @param url relative filepath
@@ -23,7 +27,6 @@ public final class ImageReader {
             }
             return ImageIO.read(in);
         } catch (IOException ex) {
-            ex.printStackTrace();
             System.out.printf("Error reading resource: %s%n", url);
             return null;
         }

@@ -35,7 +35,6 @@ public class SoundHandler {
     private Clip currentMusic;
     private Clip currentBuffMusic;
 
-    // TODO: Write documentation for public methods
     public SoundHandler() {
         loadMusic();
         loadEnemySounds();
@@ -86,7 +85,7 @@ public class SoundHandler {
             try {
                 this.clips.add(AudioSystem.getClip());
             } catch (LineUnavailableException e) {
-                e.printStackTrace();
+                throw new IllegalStateException("Could not load clip");
             }
         }
     }
@@ -106,7 +105,7 @@ public class SoundHandler {
         try {
             clip.open(stream);
         } catch (LineUnavailableException | IOException e) {
-            e.printStackTrace();
+            throw new IllegalAccessError("Could not access stream");
         }
         clip.start();
         increment();
@@ -115,16 +114,12 @@ public class SoundHandler {
 
     private void loadEnemySounds() {
         this.enemySounds = new HashMap<>();
-
-        // Ghoul
-        // HashMap<EnemyAction, AudioInputStream> ghoulSounds = new HashMap<>();
-        // for (EnemyAction action : EnemyAction.values()){
-        // int i = action.index();
-        // ghoulSounds.put(action, String.format("some/url/%s",
-        // i)));
-        // }
     }
 
+    /**
+     * Plays music based on given gamestate
+     * @param state
+     */
     public void playMusic(GameState state) {
         if (this.currentMusic != null) {
             this.currentMusic.stop();
@@ -133,7 +128,6 @@ public class SoundHandler {
 
         String path = this.gameMusic.get(state);
         if (path == null) {
-            System.out.println("No music found");
             return;
         }
 
@@ -144,10 +138,13 @@ public class SoundHandler {
         }
     }
 
+    /**
+     * Plays a gunshot sound based on gun type
+     * @param type
+     */
     public void playGunShot(GunType type) {
         String path = this.gunSounds.get(type);
         if (path == null) {
-            System.out.println("No gunshot found");
             return;
         }
 
@@ -157,6 +154,10 @@ public class SoundHandler {
         }
     }
 
+    /**
+     * Plays music/sound based on given buff type
+     * @param type
+     */
     public void playBuffMusic(BuffType type) {
         if (this.currentMusic != null){ this.currentMusic.stop();}
         if (this.currentBuffMusic != null) {
@@ -165,6 +166,9 @@ public class SoundHandler {
         this.currentBuffMusic = playClip(SoundReader.loadSound(this.buffMusic.get(type)));
     }
 
+    /**
+     * Resumes music after pause
+     */
     public void playBuffSound(BuffType type) {
         String path = this.buffSounds.get(type);
         if (path == null) {
@@ -183,6 +187,10 @@ public class SoundHandler {
         this.currentMusic.start();
     }
 
+    /**
+     * Plays damaged/death sound (1: damaged, 2: dead)
+     * @param index
+     */
     public void playPlayerDamageSound(int index){
         playClip(SoundReader.loadSound(this.damageSounds.get(index)));
     }

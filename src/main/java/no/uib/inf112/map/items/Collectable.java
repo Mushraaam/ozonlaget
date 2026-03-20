@@ -20,7 +20,7 @@ public abstract class Collectable implements ICollectable {
 
     protected boolean isCollected;
 
-    public Collectable(Rectangle2D.Double hitbox, CollectableType type, IMap map) {
+    protected Collectable(Rectangle2D.Double hitbox, CollectableType type, IMap map) {
         this.hitbox = hitbox;
         this.type = type;
         this.map = map;
@@ -77,13 +77,4 @@ public abstract class Collectable implements ICollectable {
     public BuffType getBuffType(){
         return this.type.buffType();
     }
-
-
-    /**
-     * Abstract, to be implemented by each item.
-     */
-    @Override
-    public abstract void affectPlayer();
-
-
 }
