@@ -8,13 +8,14 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
+import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.utility.ImageHandler;
 
 public class GameUI implements IDrawer {
 
-    private IPlayer player;
     private ImageHandler handler;
     private BufferedImage uiBar;
+    private IMap map;
 
     private static final double UI_HEIGHT = Config.getInt("uiSize");
     private static final int GUN_WIDTH = Config.getInt("uiGunWidth");
@@ -35,14 +36,14 @@ public class GameUI implements IDrawer {
     private static final Color HP_TEXT_COLOR = Color.BLACK;
 
     public GameUI(IMap map, ImageHandler handler) {
-        this.player = map.getPlayer();
+        this.map = map;
         this.handler = handler;
         this.uiBar = handler.uiBar();
     }
 
     @Override
     public void draw(Graphics2D graphic) {
-
+        IViewablePlayer player = (IViewablePlayer) this.map.getPlayer();
         Rectangle2D bounds = graphic.getClipBounds().getBounds2D();
         double x1 = bounds.getMinX();
         double width = bounds.getMaxX() - x1;
@@ -53,20 +54,20 @@ public class GameUI implements IDrawer {
         drawImage(graphic, uiBar, new Rectangle2D.Double(x1, y1, width, UI_HEIGHT));
 
         // Gun
-        drawImage(graphic, this.handler.getGunImage(this.player.gunType()),
+        drawImage(graphic, this.handler.getGunImage(player.gunType()),
                 new Rectangle2D.Double(x1 + 330, y1 + 40, GUN_WIDTH, GUN_HEIGHT));
 
         // Ammunition
         graphic.setColor(AMMO_COLOR);
-        int currentAmmo = this.player.currentAmmunition();
-        int maxAmmo = this.player.maxAmmunition();
+        int currentAmmo = player.currentAmmunition();
+        int maxAmmo = player.maxAmmunition();
 
         graphic.setFont(AMMO_FONT);
         graphic.drawString(String.format("%s/%s", currentAmmo, maxAmmo), (int) x1 + 100, (int) y1 + 98);
 
         
         // Buff
-        int buffTimer = this.player.buffCountDown();
+        int buffTimer = player.buffCountDown();
         graphic.drawString(String.format("%s", buffTimer), (int) x1 + 610, (int) y1 + 98);
 
 
@@ -76,7 +77,7 @@ public class GameUI implements IDrawer {
     }
 
     private void drawHealthBar(Graphics2D g, int x1, int y1) {
-
+        IViewablePlayer player = (IViewablePlayer) this.map.getPlayer();
         int maxHp = player.getMaxHP();
         int currentHP = player.getCurrentHP();
 
@@ -107,7 +108,7 @@ public class GameUI implements IDrawer {
         int armor = player.getArmor();
         if(armor > 0 && currentHP > 0 ){
             g.setColor(Color.blue);
-            g.setStroke(new BasicStroke(armor+2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            g.setStroke(new BasicStroke((float)armor+2, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g.drawRoundRect(x1 + 3, y1 + 3, innerWidth, HP_BAR_HEIGHT - 3 * 2, 8, 8);
         }
 

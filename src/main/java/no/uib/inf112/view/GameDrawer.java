@@ -46,7 +46,7 @@ public class GameDrawer extends JPanel {
         this.gameScreen = new GameScreen(this.map, this.handler, this.camera);
         this.mainMenu = new MainMenu(this.handler);
         this.debugScreen = new DebugScreen(this.map);
-        this.rainbowBuffOverlay = new RainbowBuffOverlay(this.map.getPlayer());
+        this.rainbowBuffOverlay = new RainbowBuffOverlay(this.map);
         this.helpScreen = new HelpMenu(handler);
         this.gameOverOverlay = new DeathOverlay(handler);
 

@@ -13,18 +13,18 @@ public class GameScreen implements IDrawer {
 
     private IMap map;
     private IGrid tiles;
-    private IViewablePlayer player;
     private ImageHandler handler;
     private Camera camera;
     private static final Rectangle2D.Double MAPDIMENSION = new Rectangle2D.Double(0, 0, Config.getInt("mapHeight"),
             Config.getInt("mapWidth"));
     private GameUI ui;
+    private DarknessOverlay darkness;
 
     public GameScreen(IMap map, ImageHandler handler, Camera camera) {
 
         this.map = map;
         this.ui = new GameUI(this.map, handler);
-        this.player = (IViewablePlayer) map.getPlayer();
+        this.darkness = new DarknessOverlay(this.map);
         this.handler = handler;
         this.tiles = map.getTiles();
         this.camera = camera;
@@ -43,7 +43,12 @@ public class GameScreen implements IDrawer {
         drawGunShots(graphic);
         drawActiveItems(graphic);
         drawPlayer(graphic);
+        drawDarkness(graphic);
         this.ui.draw(graphic);
+    }
+
+    private void drawDarkness(Graphics2D graphic) {
+        this.darkness.draw(graphic);
     }
 
     private void drawProjectiles(Graphics2D graphic) {
@@ -99,7 +104,8 @@ public class GameScreen implements IDrawer {
     /* Sentrerer kamera på player, holder seg innenfor bounds */
     private void centerCamera(Graphics2D graphic) {
 
-        Rectangle2D.Double playerHitbox = player.getHitbox();
+
+        Rectangle2D.Double playerHitbox = this.map.getPlayer().getHitbox();
         Rectangle2D.Double mapBounds = map.getBounds();
 
         double screenWidth = graphic.getClipBounds().getWidth();
@@ -115,6 +121,8 @@ public class GameScreen implements IDrawer {
     }
 
     private void drawPlayer(Graphics2D graphic) {
+        IViewablePlayer player = (IViewablePlayer) this.map.getPlayer();
+
         BufferedImage feet = handler.getPlayerFeetSprite(player.getAnimationIndex());
         BufferedImage body = handler.getPlayerBodySprite(player.getAnimationIndex());
 
