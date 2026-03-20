@@ -313,6 +313,7 @@ public class ImageHandler {
                 ImageReader.fetchImage("/no/uib/inf112/map/items/shotgunAmmo.png"));
 
 
+
     }
 
     public BufferedImage getCollectableImage(CollectableType type) {

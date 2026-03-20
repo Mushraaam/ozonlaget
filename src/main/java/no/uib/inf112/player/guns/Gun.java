@@ -54,7 +54,7 @@ public abstract class Gun implements IGun {
     @Override
     public int damage(BuffType type) {
 
-        if (type == BuffType.RAINBOW) {
+        if (type == BuffType.RAINBOW || type == BuffType.DAMAGE) {
             return this.damage * 2;
         }
 

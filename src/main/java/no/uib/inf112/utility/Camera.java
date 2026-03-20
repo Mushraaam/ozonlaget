@@ -12,9 +12,17 @@ public class Camera {
     private double translateY;
     private static final int UI_HEIGHT = Config.getInt("uiSize");
 
+    private int shakeFrames = 0;
+    private double shakeMagnitude = 0;
+
     public Camera(double translateX, double translateY) {
         this.translateX = translateX;
         this.translateY = translateY;
+    }
+
+    public void startShake(int frames, double magnitude) {
+        this.shakeFrames = frames;
+        this.shakeMagnitude = magnitude;
     }
 
     public void update(Rectangle2D.Double playerHitbox, double screenWidth, double screenHeight,
@@ -36,9 +44,16 @@ public class Camera {
     }
 
     public void apply(Graphics2D g) {
-        g.translate(translateX, translateY);
-    }
+        double currentOffsetX = 0;
+        double currentOffsetY = 0;
 
+        if (this.shakeFrames > 0) {
+            currentOffsetX = (Math.random() * 2 - 1) * this.shakeMagnitude;
+            currentOffsetY = (Math.random() * 2 - 1) * this.shakeMagnitude;
+            this.shakeFrames--;
+        }
+        g.translate(this.translateX + currentOffsetX, this.translateY + currentOffsetY);
+    }
     public Point2D.Double screenToWorld(double screenX, double screenY) {
         return new Point2D.Double(screenX - translateX, screenY - translateY);
     }

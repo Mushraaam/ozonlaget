@@ -122,6 +122,9 @@ public class ItemSpawnPoint {
             case POWERUP_RAINBOW -> {
                 return new RainbowBuff(hitBox, type, map);
             }
+            case POWERUP_DAMAGE -> {
+                return new DamageBuff(hitBox, type, map);
+            }
             default -> throw new IllegalArgumentException("Unknown Item Type");
         }
     }

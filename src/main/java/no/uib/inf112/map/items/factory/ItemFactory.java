@@ -70,14 +70,14 @@ public class ItemFactory {
         if (this.counter % RAINBOW_RATE == 0){
             this.itemSpawnPoint.spawnItem(CollectableType.POWERUP_RAINBOW);
         }
+        if (this.counter % DAMAGE_RATE == 0){
+            this.itemSpawnPoint.spawnItem(CollectableType.POWERUP_DAMAGE);
         /*
 
         if (this.counter % SPEED_RATE == 0){
             this.itemSpawnPoint.spawnItem(CollectableType.POWERUP_SPEED);
         }
 
-        if (this.counter % DAMAGE_RATE == 0){
-            this.itemSpawnPoint.spawnItem(CollectableType.POWERUP_DAMAGE);
         }*/
-    }
+    }}
 }

@@ -392,12 +392,16 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             case DEAGLE -> {
                 shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map);
                 this.map.addShot(shot);
-            }
+                if(buffType == BuffType.DAMAGE){
+                map.getCamera().startShake(5,8);
+            }}
 
             case MP5 -> {
                 shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map);
                 this.map.addShot(shot);
-            }
+                if(buffType == BuffType.DAMAGE){
+                map.getCamera().startShake(2,5);
+            }}
 
             case SHOTGUN -> {
                 for (int i = 0; i < 10; i++) {
@@ -408,6 +412,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
                         hit.enemy().takeDamage(this.currentGun.damage(this.buffType));
                     }
                 }
+                if(buffType == BuffType.DAMAGE){
+                map.getCamera().startShake(8,10);}
                 return true;
             }
 
