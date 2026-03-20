@@ -7,7 +7,6 @@ import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.levels.Level1;
-import no.uib.inf112.map.levels.Level2;
 import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
@@ -45,6 +44,7 @@ public class Map implements IMap {
     private ArrayList<ICollectable> activeItems;
     private ArrayList<Rectangle2D.Double> itemSpawnPoints;
     private ItemFactory itemFactory;
+    private int totalDroppedLoot = 0;
 
 
     public Map(Camera camera) {
@@ -104,6 +104,21 @@ public class Map implements IMap {
 
     public ArrayList<IEnemy> getEnemies() {
         return new ArrayList<>(enemies);
+    }
+
+    @Override
+    public int getTotalDroppedLoot(){
+        return this.totalDroppedLoot;
+    }
+
+    @Override
+    public void increaseDroppedLoot(){
+        totalDroppedLoot++;
+    }
+
+    @Override
+    public void decreaseDroppedLoot(){
+        totalDroppedLoot = Math.max(totalDroppedLoot-1, 0);
     }
 
     @Override

@@ -4,7 +4,6 @@ import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.player.Player;
 
 import java.awt.geom.Rectangle2D;
@@ -17,6 +16,7 @@ public abstract class Collectable implements ICollectable {
     protected Player player;
     protected int amount;
     protected BuffType buffType;
+    protected boolean wasDroppedLoot = false;
 
     protected boolean isCollected;
 
@@ -29,6 +29,12 @@ public abstract class Collectable implements ICollectable {
 
         this.player = (Player) map.getPlayer();
         this.isCollected = false;
+    }
+
+
+    @Override
+    public void isItemDroppedLoot(boolean b){
+        this.wasDroppedLoot = b;
     }
 
     @Override
@@ -66,6 +72,9 @@ public abstract class Collectable implements ICollectable {
         this.isCollected = true;
 
         this.map.removeActiveItem(this);
+        if(wasDroppedLoot){
+            map.decreaseDroppedLoot();
+        }
         affectPlayer();
 
     }
@@ -77,4 +86,5 @@ public abstract class Collectable implements ICollectable {
     public BuffType getBuffType(){
         return this.type.buffType();
     }
+
 }

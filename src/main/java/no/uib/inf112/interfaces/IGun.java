@@ -1,6 +1,7 @@
 package no.uib.inf112.interfaces;
 
 import no.uib.inf112.enums.BuffType;
+import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.GunType;
 
 public interface IGun {
@@ -30,6 +31,10 @@ public interface IGun {
      * @return angle of cone - lower is more accurate
      */
     public double accuracy();
+
+    void increaseAmmo(int byAmount);
+
+    CollectableType getAmmoType();
 
     /**
      * @return how far this gun shoots

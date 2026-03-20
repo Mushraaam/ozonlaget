@@ -305,6 +305,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
     }
 
+    public HashMap<GunType, IGun> getOwnedGuns(){
+        return this.guns;
+    }
+
     @Override
     public int currentAmmunition() {
         return this.currentGun.currentAmmunition();

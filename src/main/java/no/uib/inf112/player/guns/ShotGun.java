@@ -1,5 +1,6 @@
 package no.uib.inf112.player.guns;
 
+import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.GunType;
 
 public class ShotGun extends Gun{
@@ -15,6 +16,6 @@ public class ShotGun extends Gun{
         setAccuracy(0.5);
         setRange(200);
         setDamage(30);
-    }
+        setAmmoType(CollectableType.AMMO_SHOTGUN);
     
-}
+}}

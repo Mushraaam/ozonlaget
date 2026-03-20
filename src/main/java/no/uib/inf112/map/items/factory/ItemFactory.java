@@ -26,12 +26,12 @@ public class ItemFactory {
     private HashMap<CollectableType, Integer> dropTable = new HashMap<>();
 
     public void setDropTable() {
-        dropTable.put(CollectableType.HEALTH, 10);
-        dropTable.put(CollectableType.ARMOR, 10);
-        dropTable.put(CollectableType.AMMO_PISTOL, 35);
-        dropTable.put(CollectableType.AMMO_RIFLE, 15);
-        dropTable.put(CollectableType.AMMO_SHOTGUN, 15);
-        dropTable.put(CollectableType.NONE, 70);
+        dropTable.put(CollectableType.HEALTH, 3);
+        dropTable.put(CollectableType.ARMOR, 2);
+        dropTable.put(CollectableType.AMMO_PISTOL, 10);
+        dropTable.put(CollectableType.AMMO_RIFLE, 10);
+        dropTable.put(CollectableType.AMMO_SHOTGUN, 10);
+        dropTable.put(CollectableType.NONE, 65);
     }
 
     public ItemFactory(IMap map){
@@ -50,14 +50,11 @@ public class ItemFactory {
         for (HashMap.Entry<CollectableType, Integer> item : dropTable.entrySet()) {
             roll -= item.getValue();
             if (roll <= 0 && item.getKey() != CollectableType.NONE) {
-                dropItem(item.getKey(), targetLocation);
+                this.itemSpawnPoint.dropLoot(item.getKey(), targetLocation);
+                System.out.printf("rolled: " +item.getKey());
                 break;
             }
         }
-    }
-
-    public void dropItem(CollectableType itemType, Rectangle2D.Double targetLocation){
-        this.itemSpawnPoint.dropLoot(itemType, targetLocation);
     }
 
     public void increment(){

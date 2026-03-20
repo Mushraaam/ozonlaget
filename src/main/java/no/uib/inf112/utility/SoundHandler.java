@@ -64,6 +64,7 @@ public class SoundHandler {
         this.buffSounds = new HashMap<>();
         this.buffSounds.put(BuffType.ARMOR, "/no/uib/inf112/sound/buffs/armorSound.wav");
         this.buffSounds.put(BuffType.HEALTH, "/no/uib/inf112/sound/buffs/hpSound.wav");
+        this.buffSounds.put(BuffType.AMMO, "/no/uib/inf112/sound/buffs/ammoPickupSound.wav");
     }
 
     private void loadGunSounds() {

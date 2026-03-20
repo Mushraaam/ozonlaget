@@ -8,10 +8,7 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.map.items.ArmorBox;
-import no.uib.inf112.map.items.Collectable;
-import no.uib.inf112.map.items.HealthBox;
-import no.uib.inf112.map.items.RainbowBuff;
+import no.uib.inf112.map.items.*;
 
 public class ItemSpawnPoint {
     private IMap map;
@@ -20,7 +17,7 @@ public class ItemSpawnPoint {
     private Map<Rectangle2D.Double, ICollectable> spawnPoints;
 
     private Map<CollectableType, Integer> maxLimits;
-    int MAX_DROPPED_LOOT = 10, totalDroppedLoot =0;
+    int MAX_DROPPED_LOOT = 10;
 
     public ItemSpawnPoint(IMap map, List<Rectangle2D.Double> predefinedSpots) {
         this.map = map;
@@ -33,8 +30,11 @@ public class ItemSpawnPoint {
         }
 
         this.maxLimits = new EnumMap<>(CollectableType.class);
+        this.maxLimits.put(CollectableType.AMMO_SHOTGUN, Config.getInt("ammoShotgunCap"));
+        this.maxLimits.put(CollectableType.AMMO_RIFLE, Config.getInt("ammoRifleCap"));
+        this.maxLimits.put(CollectableType.AMMO_PISTOL, Config.getInt("ammoPistolCap"));
         this.maxLimits.put(CollectableType.HEALTH, Config.getInt("healthBoxCap"));
-        this.maxLimits.put(CollectableType.ARMOR, Config.getInt("armor"));
+        this.maxLimits.put(CollectableType.ARMOR, Config.getInt("armorCap"));
         this.maxLimits.put(CollectableType.POWERUP_SPEED, Config.getInt("powerup_SpeedCap"));
         this.maxLimits.put(CollectableType.POWERUP_DAMAGE, Config.getInt("powerup_DamageCap"));
         this.maxLimits.put(CollectableType.POWERUP_RAINBOW, Config.getInt("powerup_RainbowCap"));
@@ -42,18 +42,16 @@ public class ItemSpawnPoint {
     }
 
     public void dropLoot(CollectableType itemType, Rectangle2D.Double targetLocation){
-        if(totalDroppedLoot >= this.MAX_DROPPED_LOOT){
+        if(map.getTotalDroppedLoot() >= this.MAX_DROPPED_LOOT){
             System.out.println("too many dropped items");
             return;
         }
         ICollectable newItem = createItem(itemType, targetLocation);
         this.map.addToActiveItems(newItem);
-        totalDroppedLoot++;
+        newItem.isItemDroppedLoot(true);
+        map.increaseDroppedLoot();
     }
 
-    public void decreaseDroppedLoot(){
-        totalDroppedLoot--;
-    }
 
     public void spawnItem(CollectableType type) {
         refreshNodes();
@@ -114,6 +112,9 @@ public class ItemSpawnPoint {
         switch (type) {
             case HEALTH -> {
                 return new HealthBox(hitBox, type, map);
+            }
+            case AMMO_PISTOL,AMMO_RIFLE,AMMO_SHOTGUN -> {
+                return new Ammo(hitBox, type, map);
             }
             case ARMOR -> {
                 return new ArmorBox(hitBox, type, map);

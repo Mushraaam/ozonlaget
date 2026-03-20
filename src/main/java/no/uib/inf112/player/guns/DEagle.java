@@ -1,5 +1,6 @@
 package no.uib.inf112.player.guns;
 
+import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.GunType;
 
 public class DEagle extends Gun {
@@ -15,5 +16,6 @@ public class DEagle extends Gun {
         setAccuracy(0.1);
         setRange(550);
         setDamage(50);
+        setAmmoType(CollectableType.AMMO_PISTOL);
     }
 }

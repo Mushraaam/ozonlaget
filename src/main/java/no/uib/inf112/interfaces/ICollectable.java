@@ -8,6 +8,8 @@ import java.awt.geom.Rectangle2D;
 public interface ICollectable {
 
 
+    void isItemDroppedLoot(boolean b);
+
     Rectangle2D.Double getHitbox();
 
     CollectableType getType();
