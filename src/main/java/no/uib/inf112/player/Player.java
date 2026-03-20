@@ -393,14 +393,14 @@ public class Player implements IControllablePlayer, IViewablePlayer {
                 shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map);
                 this.map.addShot(shot);
                 if(buffType == BuffType.DAMAGE){
-                map.getCamera().startShake(5,8);
+                map.getCamera().startShake(8,8);
             }}
 
             case MP5 -> {
                 shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map);
                 this.map.addShot(shot);
                 if(buffType == BuffType.DAMAGE){
-                map.getCamera().startShake(2,5);
+                map.getCamera().startShake(4,6);
             }}
 
             case SHOTGUN -> {
@@ -413,7 +413,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
                     }
                 }
                 if(buffType == BuffType.DAMAGE){
-                map.getCamera().startShake(8,10);}
+                map.getCamera().startShake(12,15);}
                 return true;
             }
 

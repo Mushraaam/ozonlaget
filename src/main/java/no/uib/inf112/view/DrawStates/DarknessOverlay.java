@@ -12,13 +12,18 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.map.items.DamageBuff;
 
 public class DarknessOverlay implements IDrawer {
 
     private static final float LIGHT_RADIUS = 600f;
-    private static final Color INNER_COLOR = new Color(0, 0, 0, 255); 
+    private static final Color INNER_COLOR_DEFAULT = new Color(0, 0, 0, 255);
+    private static final Color INNER_COLOR_DAMAGE = new Color(0, 0, 0, 255);
+
+    private static final Color INNER_COLOR = new Color(0, 0, 0, 255);
     private static final Color OUTER_COLOR = new Color(0, 0, 0, 0);
 
     private final IMap map;
@@ -60,7 +65,8 @@ public class DarknessOverlay implements IDrawer {
         overlayGraphics.fillRect(0, 0, width, height);
 
         overlayGraphics.setComposite(AlphaComposite.SrcOver);
-        overlayGraphics.setColor(new Color(0, 0, 0, 220));
+        int redness = map.getPlayer().buffType() == BuffType.DAMAGE ? map.getPlayer().buffCountDown()*4 : 0;
+        overlayGraphics.setColor(new Color(redness, 0, 0, 220));
         overlayGraphics.fillRect(0, 0, width, height);
 
         drawLightGlow(
