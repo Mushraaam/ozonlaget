@@ -108,26 +108,27 @@ public class Level1 implements ILevel {
 
         ArrayList<Rectangle2D.Double> itemSpawnPoints = new ArrayList<>();
 
-        double size = Config.getInt("collectableSize");
+        double width = Config.getInt("collectableSizeW");
+       double height = Config.getInt("collectableSizeH");
 
         //Outside
-        itemSpawnPoints.add(new Rectangle2D.Double(1020, 120, size, size)); //North by the water
-        itemSpawnPoints.add(new Rectangle2D.Double(1170, 780, size, size)); //North of spawn on path
-        itemSpawnPoints.add(new Rectangle2D.Double(2460, 2450, size, size)); // SE by house 7
-        itemSpawnPoints.add(new Rectangle2D.Double(190, 2450, size, size)); //SW by pond
+        itemSpawnPoints.add(new Rectangle2D.Double(1020, 120, width, height)); //North by the water
+        itemSpawnPoints.add(new Rectangle2D.Double(1170, 780, width, height)); //North of spawn on path
+        itemSpawnPoints.add(new Rectangle2D.Double(2460, 2450, width, height)); // SE by house 7
+        itemSpawnPoints.add(new Rectangle2D.Double(190, 2450, width, height)); //SW by pond
 
 
         //Inside houses
-        itemSpawnPoints.add(new Rectangle2D.Double(2290, 2270, size, size)); // NE house 7
-        itemSpawnPoints.add(new Rectangle2D.Double(900, 1760, size, size));  // W room house 6
-        itemSpawnPoints.add(new Rectangle2D.Double(1100, 2170, size, size));// Entrance house 6
-        itemSpawnPoints.add(new Rectangle2D.Double(2170, 1700, size, size)); // South in house 5
-        itemSpawnPoints.add(new Rectangle2D.Double(2170, 1060, size, size)); // North in house 5
-        itemSpawnPoints.add(new Rectangle2D.Double(1620, 800, size, size)); // NW room house 4
-        itemSpawnPoints.add(new Rectangle2D.Double(700, 940, size, size)); // East in house 3
-        itemSpawnPoints.add(new Rectangle2D.Double(480, 940, size, size)); // West in house 3
-        itemSpawnPoints.add(new Rectangle2D.Double(1780, 220, size, size)); // West in house 2
-        itemSpawnPoints.add(new Rectangle2D.Double(2180, 60, size, size)); // NE in house 2
+        itemSpawnPoints.add(new Rectangle2D.Double(2290, 2270, width, height)); // NE house 7
+        itemSpawnPoints.add(new Rectangle2D.Double(900, 1760, width, height));  // W room house 6
+        itemSpawnPoints.add(new Rectangle2D.Double(1100, 2170, width, height));// Entrance house 6
+        itemSpawnPoints.add(new Rectangle2D.Double(2170, 1700, width, height)); // South in house 5
+        itemSpawnPoints.add(new Rectangle2D.Double(2170, 1060, width, height)); // North in house 5
+        itemSpawnPoints.add(new Rectangle2D.Double(1620, 800, width, height)); // NW room house 4
+        itemSpawnPoints.add(new Rectangle2D.Double(700, 940, width, height)); // East in house 3
+        itemSpawnPoints.add(new Rectangle2D.Double(480, 940, width, height)); // West in house 3
+        itemSpawnPoints.add(new Rectangle2D.Double(1780, 220, width, height)); // West in house 2
+        itemSpawnPoints.add(new Rectangle2D.Double(2180, 60, width, height)); // NE in house 2
 
 
         this.map.setItemSpawnPoints(itemSpawnPoints);
