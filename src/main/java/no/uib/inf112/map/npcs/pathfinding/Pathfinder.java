@@ -134,9 +134,8 @@ public class Pathfinder {
             if (to.occupiedBy(enemy)) {
                 i++;
             }
-            trafficPenalty = OCCUPIED_WEIGHT * (to.occupiedCount(enemy.size()) - i) * enemy.size().footprint();
+            trafficPenalty = (double)OCCUPIED_WEIGHT * (to.occupiedCount(enemy.size()) - i) * enemy.size().footprint();
         }
-        // double trafficPenalty = enemyCount * OCCUPIED_WEIGHT;
 
         return cost + trafficPenalty;
     }
