@@ -8,11 +8,12 @@ import java.util.ArrayList;
 
 
 import no.uib.inf112.interfaces.IDrawer;
+import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 
 public class RainbowBuffOverlay implements IDrawer {
 
-    private IPlayer player;
+    private IMap map;
 
 private static final int ALPHA = 120;
 
@@ -29,17 +30,23 @@ private static final ArrayList<Color> colors = new ArrayList<>(List.of(
     new Color(0, 255, 128, ALPHA)     // turquoise
 ));
 
-    public RainbowBuffOverlay(IPlayer player) {
-        this.player = player;
+    public RainbowBuffOverlay(IMap map) {
+        this.map = map;
+        //
     }
 
     @Override
     public void draw(Graphics2D graphic) {
+        IPlayer player = this.map.getPlayer();
         int index = player.buffCountDown() % 10;
+
+
 
         Rectangle2D bounds = graphic.getClipBounds();
         graphic.setColor(colors.get(index));
         graphic.fill(bounds);
+
+
     }
 
 }

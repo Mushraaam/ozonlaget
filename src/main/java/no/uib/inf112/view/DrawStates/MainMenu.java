@@ -114,8 +114,8 @@ public class MainMenu implements IDrawer{
         startButton.setRect(
             startButtonX + MARGIN_LEFT,
             startButtonY + MARGIN_TOP,
-            BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
-            BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM
+            (double)BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
+            (double)BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM
         );
     }
 
@@ -151,8 +151,8 @@ public class MainMenu implements IDrawer{
         settingsButton.setRect(
             settingsButtonX + MARGIN_LEFT - 2,
             settingsButtonY + MARGIN_TOP - 3,
-            BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT + 3,
-            BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 3
+            (double)BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT + 3,
+            (double)BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 3
         );
     }
 
@@ -166,7 +166,7 @@ public class MainMenu implements IDrawer{
 
         if (!helpAnimationStarted) {
             helpButtonX = targetX;
-            helpButtonY = bounds.height + BUTTON_HEIGHT;
+            helpButtonY = (double)bounds.height + BUTTON_HEIGHT;
             helpAnimationStarted = true;
         }
 
@@ -188,8 +188,8 @@ public class MainMenu implements IDrawer{
         helpButton.setRect(
             helpButtonX + MARGIN_LEFT,
             helpButtonY + MARGIN_TOP - 2,
-            BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
-            BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 2
+            (double)BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
+            (double)BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 2
         );
     }
 
