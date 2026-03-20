@@ -95,6 +95,21 @@ Beskriv brukerhistoriene for kravene dere jobber med.
     - Implementere hitboxer for knappene.
     - Implementere museklikk for interaksjon med knappene.
     - Koble knappene til riktig funksjonalitet (bytte GameState).
+    
+#### Brukerhistorie 5:
+    Historie:
+    - Bruker vil oppleve en utfordrende overlevelsesmodus der fiendene føles smarte og aktivt jakter på karakteren.
+    
+    Akseptansekriterie:
+    - Fiender kan oppdage og navigere mot brukeren, uavhengig av hvor på kartet brukeren gjemmer seg.
+    - Fiender patruljerer (wandering) området dynamisk når de ikke har oppdaget brukeren.
+    - Brukeren kan ikke stå stille på ett sted uten å bli funnet over tid (ingen 100% trygge soner).
+    - Nivået har en tydelig og oppnåelig vinnerbetingelse.
+
+    Konkrete arbeidsoppgave(r):
+    - Implementere en tydelig vinnerbetingelse for nivået.
+    - Implementere patruljeringslogikk (wandering) for fiender som ikke har et mål.
+    - Implementere pathfinding (A*-algoritme) og forfølgelseslogikk slik at fiender effektivt kan navigere rundt hindringer for å ta brukeren.
 
 ### Akseptansekriterier
 Definer hva som må være oppfylt for at funksjonaliteten skal være ferdig, Husk at akseptansekriterier ofte skrives mer eller mindre som tester.
