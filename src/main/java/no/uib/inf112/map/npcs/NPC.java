@@ -256,6 +256,12 @@ public abstract class NPC implements IEnemy {
                 break;
             }
         }
+        //Recalculate route if wandering but unable to move
+        if (!this.moving && !this.aggroed) {
+            this.wanderGoal = null;
+            this.currentPath.clear();
+            wander();
+        }
     }
 
     private void setDeathAnimationIndex() {
