@@ -19,6 +19,7 @@ public enum StaticObjectType {
     DARK_DRAWER_LONG,
     PLANT_ONE,
     PLANT_TWO,
+    GREY_TV,
 
     //water
     WATER
