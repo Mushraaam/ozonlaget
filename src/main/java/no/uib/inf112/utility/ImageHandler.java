@@ -172,9 +172,9 @@ public class ImageHandler {
 
         for (int i = 0; i < PLAYER_SPRITE_COUNT; i++) {
             BufferedImage body = ImageReader
-                    .fetchImage(String.format("/no/uib/inf112/player/player_move%s.png", i + 1));
+                    .fetchImage(String.format("/no/uib/inf112/player/handgun/player_move%s.png", i + 1));
             BufferedImage feet = ImageReader
-                    .fetchImage(String.format("/no/uib/inf112/player/player_feet%s.png", i + 1));
+                    .fetchImage(String.format("/no/uib/inf112/player/handgun/player_feet%s.png", i + 1));
             this.playerBodySprites.add(body);
             this.playerFeetSprites.add(feet);
         }
