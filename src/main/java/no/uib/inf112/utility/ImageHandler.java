@@ -233,6 +233,9 @@ public class ImageHandler {
         this.staticObjects.put(StaticObjectType.BEIGE_BIG_BED,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_bigbed.png"),
                         Config.getInt("bigBedWidth"), Config.getInt("bigBedHeight")));
+        this.staticObjects.put(StaticObjectType.BEIGE_SMALL_BED,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_smallbed.png"),
+                        Config.getInt("smallBedWidth"), Config.getInt("smallBedHeight")));
         this.staticObjects.put(StaticObjectType.DARK_DRAWER_SMALL,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darksmalldrawer.png"),
                         Config.getInt("smallDrawerWidth"), Config.getInt("smallDrawerHeight")));

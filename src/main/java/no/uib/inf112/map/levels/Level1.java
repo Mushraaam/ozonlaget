@@ -110,11 +110,8 @@ public class Level1 implements ILevel {
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(700, 1450, (double)1510 - 700, (double)1820 - 1450)));
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1790, 2185, (double)2430 - 1790, (double)2485 - 2185)));
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(2100, 880, 400, (double)1770 - 880)));
-
-
     }
-
-
+    
    private void generateItemSpawnPoints() {
         if (this.map == null) {
             throw new IllegalStateException("Map cannot be null");
@@ -204,10 +201,10 @@ public class Level1 implements ILevel {
         this.staticObjects.add(new DarkSmallDrawer( // Small drawer
                 new Rectangle2D.Double(1695, 15, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
         this.staticObjects.add(new DarkLongDrawer( // long drawer
-                new Rectangle2D.Double(1950d, 90, LONGDRAWERWIDTH, LONGDRAWERHEIGHT)));
+                new Rectangle2D.Double(1950, 90, LONGDRAWERWIDTH, LONGDRAWERHEIGHT)));
         // this.staticObjects.add(new PlantOne( // plant one
         //         new Rectangle2D.Double(1885, 200, PLANTWIDTH, PLANTHEIGHT)));
-        
+
         // /////////
         // house 3
         this.floors.add(new WoodFloor(new Rectangle2D.Double(410, 705, 350, (double)1170 - 700)));
