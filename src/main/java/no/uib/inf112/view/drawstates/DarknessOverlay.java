@@ -15,7 +15,6 @@ import java.awt.image.BufferedImage;
 import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.map.items.DamageBuff;
 
 public class DarknessOverlay implements IDrawer {
 

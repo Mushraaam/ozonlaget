@@ -1,14 +1,13 @@
 package no.uib.inf112.map.items.factory;
 
 import java.awt.geom.Rectangle2D;
-import java.lang.reflect.Array;
 import java.util.*;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.map.items.*;
+import no.uib.inf112.map.items.buffs.*;
 
 public class ItemSpawnPoint {
     private IMap map;
@@ -124,6 +123,9 @@ public class ItemSpawnPoint {
             }
             case POWERUP_DAMAGE -> {
                 return new DamageBuff(hitBox, type, map);
+            }
+            case POWERUP_SPEED -> {
+                return new SpeedBuff(hitBox, type, map);
             }
             default -> throw new IllegalArgumentException("Unknown Item Type");
         }

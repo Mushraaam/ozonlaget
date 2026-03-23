@@ -1,10 +1,10 @@
-package no.uib.inf112.map.items;
+package no.uib.inf112.map.items.buffs;
 
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.GunType;
 import no.uib.inf112.interfaces.IGun;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.player.guns.Gun;
+import no.uib.inf112.map.items.Collectable;
 
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;

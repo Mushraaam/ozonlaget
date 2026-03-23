@@ -19,7 +19,7 @@ import no.uib.inf112.records.ShotDestination;
 import no.uib.inf112.utility.SoundHandler;
 
 public class Player implements IControllablePlayer, IViewablePlayer {
-    private static final int PLAYER_MOVE_SPEED = Config.getInt("playerMoveSpeed");
+    private int playerSpeed = Config.getInt("playerMoveSpeed");
     private static final int ANIMATION_COUNT = 20;
     private static final int MAX_HP = 100;
     private int currentHP;
@@ -63,6 +63,11 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         // buffs
         this.buffType = BuffType.NONE;
         this.buffCounter = 0;
+    }
+
+    @Override
+    public void setPlayerSpeed(int amount){
+        this.playerSpeed = amount;
     }
 
     public void pressMove(Direction dir) {
@@ -220,35 +225,35 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
         switch (dir) {
             case NORTH:
-                deltaY = -PLAYER_MOVE_SPEED;
+                deltaY = -playerSpeed;
                 break;
             case SOUTH:
-                deltaY = PLAYER_MOVE_SPEED;
+                deltaY = playerSpeed;
                 break;
             case EAST:
-                deltaX = PLAYER_MOVE_SPEED;
+                deltaX = playerSpeed;
                 break;
             case WEST:
-                deltaX = -PLAYER_MOVE_SPEED;
+                deltaX = -playerSpeed;
                 break;
             case NORTH_EAST: {
-                deltaX = PLAYER_MOVE_SPEED;
-                deltaY = -PLAYER_MOVE_SPEED;
+                deltaX = playerSpeed;
+                deltaY = -playerSpeed;
                 break;
             }
             case NORTH_WEST: {
-                deltaX = -PLAYER_MOVE_SPEED;
-                deltaY = -PLAYER_MOVE_SPEED;
+                deltaX = -playerSpeed;
+                deltaY = -playerSpeed;
                 break;
             }
             case SOUTH_EAST: {
-                deltaX = PLAYER_MOVE_SPEED;
-                deltaY = PLAYER_MOVE_SPEED;
+                deltaX = playerSpeed;
+                deltaY = playerSpeed;
                 break;
             }
             case SOUTH_WEST: {
-                deltaX = -PLAYER_MOVE_SPEED;
-                deltaY = PLAYER_MOVE_SPEED;
+                deltaX = -playerSpeed;
+                deltaY = playerSpeed;
                 break;
             }
 

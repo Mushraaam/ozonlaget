@@ -8,7 +8,7 @@ import no.uib.inf112.interfaces.IGunShot;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.interfaces.IPuddle;
-import no.uib.inf112.map.items.RainbowBuff;
+import no.uib.inf112.map.items.buffs.RainbowBuff;
 import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;

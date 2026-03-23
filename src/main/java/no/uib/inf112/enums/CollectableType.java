@@ -6,7 +6,7 @@ public enum CollectableType {
     AMMO_SHOTGUN(10, BuffType.AMMO),
     HEALTH(35, BuffType.HEALTH),
     ARMOR(10, BuffType.ARMOR),
-    POWERUP_SPEED(12, BuffType.SPEED),
+    POWERUP_SPEED(30, BuffType.SPEED),
     POWERUP_DAMAGE(30, BuffType.DAMAGE),
     POWERUP_RAINBOW(40, BuffType.RAINBOW),
     NONE(0, BuffType.NONE );

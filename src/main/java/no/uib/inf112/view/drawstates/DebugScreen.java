@@ -48,6 +48,14 @@ public class DebugScreen implements IDrawer {
             }
         }
 
+        // Draw player location
+        Rectangle2D.Double playerLoc = map.getPlayer().getHitbox();
+        Font font = graphic.getFont();
+        graphic.setFont(new Font(font.getName(), font.getStyle(), 10));
+        graphic.setColor(Color.white);
+        graphic.drawString("x: "+playerLoc.x + "   y: "+ playerLoc.y, (int) playerLoc.getX(), (int) playerLoc.getY()-20);
+
+
         // Draw enemy paths
         graphic.setColor(Color.RED);
         graphic.setStroke(new java.awt.BasicStroke(2f));
