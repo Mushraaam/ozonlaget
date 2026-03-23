@@ -46,8 +46,8 @@ public class Level1 implements ILevel {
     private static final int SMALLDRAWERHEIGHT = Config.getInt("smallDrawerHeight");
     private static final int LONGDRAWERWIDTH = Config.getInt("longDrawerWidth");
     private static final int LONGDRAWERHEIGHT = Config.getInt("longDrawerHeight");
-    private static final int PLANTWIDTH = Config.getInt("plantWidth");
-    private static final int PLANTHEIGHT = Config.getInt("plantHeight");
+    //private static final int PLANTWIDTH = Config.getInt("plantWidth");
+    //private static final int PLANTHEIGHT = Config.getInt("plantHeight");
     
     // Water
     private static final int WATER_HEIGHT = Config.getInt("waterHeight");
@@ -111,7 +111,7 @@ public class Level1 implements ILevel {
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1790, 2185, (double)2430 - 1790, (double)2485 - 2185)));
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(2100, 880, 400, (double)1770 - 880)));
     }
-    
+
    private void generateItemSpawnPoints() {
         if (this.map == null) {
             throw new IllegalStateException("Map cannot be null");
@@ -202,9 +202,6 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(1695, 15, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
         this.staticObjects.add(new DarkLongDrawer( // long drawer
                 new Rectangle2D.Double(1950, 90, LONGDRAWERWIDTH, LONGDRAWERHEIGHT)));
-        // this.staticObjects.add(new PlantOne( // plant one
-        //         new Rectangle2D.Double(1885, 200, PLANTWIDTH, PLANTHEIGHT)));
-
         // /////////
         // house 3
         this.floors.add(new WoodFloor(new Rectangle2D.Double(410, 705, 350, (double)1170 - 700)));
