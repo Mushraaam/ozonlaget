@@ -251,6 +251,9 @@ public class ImageHandler {
         this.staticObjects.put(StaticObjectType.PLANT_TWO,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/plant_2.png"),
                         Config.getInt("plantWidth"), Config.getInt("plantHeight")));
+        this.staticObjects.put(StaticObjectType.BEIGE_CHAIR_WOOD,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_woodchair.png"),
+                        Config.getInt("woodChairWidth"), Config.getInt("woodChairHeight")));
     }
 
     // / /////////// START ENEMY LOGIC //////////////

@@ -46,8 +46,7 @@ public class Level1 implements ILevel {
     private static final int SMALLDRAWERHEIGHT = Config.getInt("smallDrawerHeight");
     private static final int LONGDRAWERWIDTH = Config.getInt("longDrawerWidth");
     private static final int LONGDRAWERHEIGHT = Config.getInt("longDrawerHeight");
-    //private static final int PLANTWIDTH = Config.getInt("plantWidth");
-    //private static final int PLANTHEIGHT = Config.getInt("plantHeight");
+
     
     // Water
     private static final int WATER_HEIGHT = Config.getInt("waterHeight");
