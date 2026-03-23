@@ -230,6 +230,9 @@ public class ImageHandler {
         this.staticObjects.put(StaticObjectType.DARK_TABLE_SQUARE,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentablesquare.png"),
                         Config.getInt("tableWidth"), Config.getInt("tableHeight")));
+        this.staticObjects.put(StaticObjectType.DARK_TABLE_SMALL,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darksmallwoodentable.png"),
+                        Config.getInt("smallTableWidth"), Config.getInt("smallTableHeight")));
         this.staticObjects.put(StaticObjectType.WATER,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/water/water.png"),
                         Config.getInt("waterWidth"), Config.getInt("waterHeight")));
