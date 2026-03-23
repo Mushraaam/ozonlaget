@@ -16,6 +16,7 @@ import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.BeigeBigBed;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
+import no.uib.inf112.terrain.furniture.DarkSmallDrawer;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;
 import no.uib.inf112.terrain.furniture.DarkWoodenTableSquare;
 import no.uib.inf112.terrain.walls.WoodWall;
@@ -36,6 +37,12 @@ public class Level1 implements ILevel {
     private static final int MAPWIDTH = Config.getInt("mapWidth");
     private static final int MAPHEIGHT = Config.getInt("mapHeight");
 
+    // Furniture
+    private static final int BIGBEDWIDTH = Config.getInt("bigBedWidth");
+    private static final int BIGBEDHEIGHT = Config.getInt("bigBedHeight");
+    private static final int SMALLDRAWERWIDTH = Config.getInt("smallDrawerWidth");
+    private static final int SMALLDRAWERHEIGHT = Config.getInt("smallDrawerHeight");
+    
     // Water
     private static final int WATER_HEIGHT = Config.getInt("waterHeight");
     private static final int WATER_WIDTH = Config.getInt("waterWidth");
@@ -186,7 +193,8 @@ public class Level1 implements ILevel {
         // /////////
 
         //furniture
-        this.staticObjects.add(new BeigeBigBed(new Rectangle2D.Double(1695, 165, Config.getInt("bigBedWidth"), Config.getInt("bigBedHeight"))));
+        this.staticObjects.add(new BeigeBigBed(new Rectangle2D.Double(1695, 165, BIGBEDWIDTH, BIGBEDHEIGHT)));
+        this.staticObjects.add(new DarkSmallDrawer(new Rectangle2D.Double(1695, 15, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
 
 
         // /////////
@@ -242,11 +250,6 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(535, 695, 15, 40), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // 3nd room right top door wall
                 new Rectangle2D.Double(609, 695, 15, 40), StaticObjectType.WOODEN_WALL));
-        // /////////
-
-        // furniture
-        this.staticObjects.add(new DarkWoodenTable(new Rectangle2D.Double(130, 1300, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
-        this.staticObjects.add(new BeigeCouch(new Rectangle2D.Double(130, 1200, Config.getInt("couchWidth"), Config.getInt("couchHeight"))));
         // /////////
 
         // /////////

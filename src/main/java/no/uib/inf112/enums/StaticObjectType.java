@@ -11,6 +11,7 @@ public enum StaticObjectType {
     DARK_TABLE_SQUARE,
     BEIGE_COUCH_DOWN,
     BEIGE_BIG_BED,
+    DARK_DRAWER_SMALL,
 
     //water
     WATER
