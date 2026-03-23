@@ -16,10 +16,12 @@ import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.BeigeBigBed;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
+import no.uib.inf112.terrain.furniture.BeigeWoodChairDown;
+import no.uib.inf112.terrain.furniture.BeigeWoodChairUp;
 import no.uib.inf112.terrain.furniture.DarkLongDrawer;
 import no.uib.inf112.terrain.furniture.DarkSmallDrawer;
-import no.uib.inf112.terrain.furniture.DarkWoodenTable;
-import no.uib.inf112.terrain.furniture.DarkWoodenTableSquare;
+import no.uib.inf112.terrain.furniture.DarkWoodenTableSmall;
+import no.uib.inf112.terrain.furniture.GreyTv;
 import no.uib.inf112.terrain.furniture.PlantOne;
 import no.uib.inf112.terrain.walls.WoodWall;
 import no.uib.inf112.terrain.water.Water;
@@ -46,6 +48,21 @@ public class Level1 implements ILevel {
     private static final int SMALLDRAWERHEIGHT = Config.getInt("smallDrawerHeight");
     private static final int LONGDRAWERWIDTH = Config.getInt("longDrawerWidth");
     private static final int LONGDRAWERHEIGHT = Config.getInt("longDrawerHeight");
+    private static final int BIGCOUCHWIDTH = Config.getInt("couchWidth");
+    private static final int BIGCOUCHHEIGHT = Config.getInt("couchHeight");
+    private static final int GREYTVWIDTH = Config.getInt("tvWidth");
+    private static final int GREYTVHEIGHT = Config.getInt("tvHeight");
+    private static final int SMALLTABLEWIDTH = Config.getInt("smallTableWidth");
+    private static final int SMALLTABLEHEIGHT = Config.getInt("smallTableHeight");
+    private static final int PLANTONEWIDTH = Config.getInt("plantWidth");
+    private static final int PLANTONEHEIGHT = Config.getInt("plantHeight");
+    private static final int CHAIRWIDTH = Config.getInt("woodChairWidth");
+    private static final int CHAIRHEIGHT = Config.getInt("woodChairHeight");
+  //private static final int SQUARETABLEWIDTH = Config.getInt("tableWidth");
+  //private static final int SQUARETABLEHEIGHT = Config.getInt("tableHeight");
+
+
+
 
     
     // Water
@@ -201,6 +218,21 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(1695, 15, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
         this.staticObjects.add(new DarkLongDrawer( // long drawer
                 new Rectangle2D.Double(1950, 90, LONGDRAWERWIDTH, LONGDRAWERHEIGHT)));
+        this.staticObjects.add(new BeigeCouch( // big couch
+                new Rectangle2D.Double(2365, 110, BIGCOUCHWIDTH, BIGCOUCHHEIGHT)));
+        this.staticObjects.add(new GreyTv( // TV
+                new Rectangle2D.Double(2390, 215, GREYTVWIDTH, GREYTVHEIGHT)));
+        this.staticObjects.add(new DarkWoodenTableSmall( // Small Table left
+                new Rectangle2D.Double(1865, 215, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        this.staticObjects.add(new PlantOne( // Plant
+                new Rectangle2D.Double(1865, 215, PLANTONEWIDTH, PLANTONEHEIGHT)));
+        this.staticObjects.add(new DarkWoodenTableSmall( // right table
+                new Rectangle2D.Double(2260, 70, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        this.staticObjects.add(new BeigeWoodChairDown( // chair facing Down
+                new Rectangle2D.Double(2260, 15, CHAIRWIDTH, CHAIRHEIGHT)));
+        this.staticObjects.add(new BeigeWoodChairUp( // chair facing Up
+                new Rectangle2D.Double(2260, 130, CHAIRWIDTH, CHAIRHEIGHT)));
+        
         // /////////
         // house 3
         this.floors.add(new WoodFloor(new Rectangle2D.Double(410, 705, 350, (double)1170 - 700)));

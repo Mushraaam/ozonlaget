@@ -6,11 +6,11 @@ import java.awt.geom.Rectangle2D.Double;
 import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.interfaces.IStaticDrawableObject;
 
-public class BeigeWoodChair implements IStaticDrawableObject {
+public class BeigeWoodChairDown implements IStaticDrawableObject {
 
     private Rectangle2D.Double bounds;
 
-    public BeigeWoodChair(Rectangle2D.Double bounds) {
+    public BeigeWoodChairDown(Rectangle2D.Double bounds) {
         this.bounds = bounds;
     }
 
@@ -26,7 +26,7 @@ public class BeigeWoodChair implements IStaticDrawableObject {
 
     @Override
     public StaticObjectType getType() {
-        return StaticObjectType.BEIGE_CHAIR_WOOD;
+        return StaticObjectType.BEIGE_CHAIR_WOOD_DOWN;
     }
 
 }
