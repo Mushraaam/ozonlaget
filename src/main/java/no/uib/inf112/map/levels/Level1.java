@@ -20,6 +20,7 @@ import no.uib.inf112.terrain.furniture.DarkLongDrawer;
 import no.uib.inf112.terrain.furniture.DarkSmallDrawer;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;
 import no.uib.inf112.terrain.furniture.DarkWoodenTableSquare;
+import no.uib.inf112.terrain.furniture.PlantOne;
 import no.uib.inf112.terrain.walls.WoodWall;
 import no.uib.inf112.terrain.water.Water;
 
@@ -45,6 +46,8 @@ public class Level1 implements ILevel {
     private static final int SMALLDRAWERHEIGHT = Config.getInt("smallDrawerHeight");
     private static final int LONGDRAWERWIDTH = Config.getInt("longDrawerWidth");
     private static final int LONGDRAWERHEIGHT = Config.getInt("longDrawerHeight");
+    private static final int PLANTWIDTH = Config.getInt("plantWidth");
+    private static final int PLANTHEIGHT = Config.getInt("plantHeight");
     
     // Water
     private static final int WATER_HEIGHT = Config.getInt("waterHeight");
@@ -202,6 +205,8 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(1695, 15, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
         this.staticObjects.add(new DarkLongDrawer( // long drawer
                 new Rectangle2D.Double(1950d, 90, LONGDRAWERWIDTH, LONGDRAWERHEIGHT)));
+        // this.staticObjects.add(new PlantOne( // plant one
+        //         new Rectangle2D.Double(1885, 200, PLANTWIDTH, PLANTHEIGHT)));
         
         // /////////
         // house 3

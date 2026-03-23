@@ -236,9 +236,15 @@ public class ImageHandler {
         this.staticObjects.put(StaticObjectType.DARK_DRAWER_SMALL,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darksmalldrawer.png"),
                         Config.getInt("smallDrawerWidth"), Config.getInt("smallDrawerHeight")));
-         this.staticObjects.put(StaticObjectType.DARK_DRAWER_LONG,
+        this.staticObjects.put(StaticObjectType.DARK_DRAWER_LONG,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darklongdrawer.png"),
                         Config.getInt("longDrawerWidth"), Config.getInt("longDrawerHeight")));
+        this.staticObjects.put(StaticObjectType.PLANT_ONE,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/plant_1.png"),
+                        Config.getInt("plantWidth"), Config.getInt("plantHeight")));
+        this.staticObjects.put(StaticObjectType.PLANT_TWO,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/plant_2.png"),
+                        Config.getInt("plantWidth"), Config.getInt("plantHeight")));
     }
 
     // / /////////// START ENEMY LOGIC //////////////
