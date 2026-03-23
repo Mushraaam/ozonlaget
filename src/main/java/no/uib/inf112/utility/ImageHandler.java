@@ -230,7 +230,9 @@ public class ImageHandler {
         this.staticObjects.put(StaticObjectType.WATER,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/water/water.png"),
                         Config.getInt("waterWidth"), Config.getInt("waterHeight")));
-
+        this.staticObjects.put(StaticObjectType.BEIGE_BIG_BED,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_bigbed.png"),
+                        Config.getInt("bigBedWidth"), Config.getInt("bigBedHeight")));
     }
 
     // / /////////// START ENEMY LOGIC //////////////

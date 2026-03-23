@@ -14,6 +14,7 @@ import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.WoodFloor;
+import no.uib.inf112.terrain.furniture.BeigeBigBed;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;
 import no.uib.inf112.terrain.furniture.DarkWoodenTableSquare;
@@ -154,11 +155,6 @@ public class Level1 implements ILevel {
         staticObjects.add(new WoodWall( // Bottom right 
                 new Rectangle2D.Double(360, 505, 200, 15), StaticObjectType.WOODEN_WALL));
 
-        //furniture
-        staticObjects.add(new DarkWoodenTableSquare(
-                new Rectangle2D.Double(200, 200, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
-        // /////////
-
         // /////////
         // house 2
         this.floors.add(new WoodFloor(new Rectangle2D.Double(1710, 20, (double)2480 - 1710, 260)));
@@ -189,13 +185,16 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(1950, 15, 15, 74), StaticObjectType.WOODEN_WALL));
         // /////////
 
+        //furniture
+        this.staticObjects.add(new BeigeBigBed(new Rectangle2D.Double(1695, 165, Config.getInt("bigBedWidth"), Config.getInt("bigBedHeight"))));
+
 
         // /////////
         // house 3
         this.floors.add(new WoodFloor(new Rectangle2D.Double(410, 705, 350, (double)1170 - 700)));
 
         // exterior walls
-         staticObjects.add(new WoodWall( // Top left
+        staticObjects.add(new WoodWall( // Top left
                 new Rectangle2D.Double(400, 680, 150, 15), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Top right
                 new Rectangle2D.Double(610, 680, 150, 15), StaticObjectType.WOODEN_WALL));
@@ -235,7 +234,7 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(415, 845, 135, 15), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // right 3rd room wall
                 new Rectangle2D.Double(609, 845, 135, 15), StaticObjectType.WOODEN_WALL));
-         staticObjects.add(new WoodWall( // 3nd room left bottom door wall
+        staticObjects.add(new WoodWall( // 3nd room left bottom door wall
                 new Rectangle2D.Double(535, 805, 15, 40), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // 3nd room right bottom door wall
                 new Rectangle2D.Double(609, 805, 15, 40), StaticObjectType.WOODEN_WALL));
@@ -483,11 +482,6 @@ public class Level1 implements ILevel {
         this.staticObjects.add(new Water(new Rectangle2D.Double(740, 2400, WATER_WIDTH, WATER_HEIGHT)));
 
         // vegetation
-
-
-
-        
-
 
     }
 
