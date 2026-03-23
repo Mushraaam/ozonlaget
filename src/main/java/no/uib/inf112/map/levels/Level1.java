@@ -16,6 +16,7 @@ import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.BeigeBigBed;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
+import no.uib.inf112.terrain.furniture.DarkLongDrawer;
 import no.uib.inf112.terrain.furniture.DarkSmallDrawer;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;
 import no.uib.inf112.terrain.furniture.DarkWoodenTableSquare;
@@ -42,6 +43,8 @@ public class Level1 implements ILevel {
     private static final int BIGBEDHEIGHT = Config.getInt("bigBedHeight");
     private static final int SMALLDRAWERWIDTH = Config.getInt("smallDrawerWidth");
     private static final int SMALLDRAWERHEIGHT = Config.getInt("smallDrawerHeight");
+    private static final int LONGDRAWERWIDTH = Config.getInt("longDrawerWidth");
+    private static final int LONGDRAWERHEIGHT = Config.getInt("longDrawerHeight");
     
     // Water
     private static final int WATER_HEIGHT = Config.getInt("waterHeight");
@@ -193,10 +196,13 @@ public class Level1 implements ILevel {
         // /////////
 
         //furniture
-        this.staticObjects.add(new BeigeBigBed(new Rectangle2D.Double(1695, 165, BIGBEDWIDTH, BIGBEDHEIGHT)));
-        this.staticObjects.add(new DarkSmallDrawer(new Rectangle2D.Double(1695, 15, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
-
-
+        this.staticObjects.add(new BeigeBigBed( // Big bed
+                new Rectangle2D.Double(1695, 165, BIGBEDWIDTH, BIGBEDHEIGHT)));
+        this.staticObjects.add(new DarkSmallDrawer( // Small drawer
+                new Rectangle2D.Double(1695, 15, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
+        this.staticObjects.add(new DarkLongDrawer( // long drawer
+                new Rectangle2D.Double(1950d, 90, LONGDRAWERWIDTH, LONGDRAWERHEIGHT)));
+        
         // /////////
         // house 3
         this.floors.add(new WoodFloor(new Rectangle2D.Double(410, 705, 350, (double)1170 - 700)));
