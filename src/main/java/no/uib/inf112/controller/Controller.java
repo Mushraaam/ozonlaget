@@ -196,7 +196,6 @@ public class Controller
 
         this.repaintTimer.start();
         applyTimers(map.getGameState());
-        soundHandler.playMusic(map.getGameState());
     }
 
     private void setListeners() {
@@ -320,6 +319,7 @@ public class Controller
             }
         }
     }
+    
 
     private void gameOverPressEvent(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -327,7 +327,6 @@ public class Controller
             case KeyEvent.VK_R -> {
                 this.map.setLevel(1);
                 this.map.resetMap();
-                this.map.setGameState(GameState.MAIN_MENU);
                 initiateMap();
             }
 
@@ -432,7 +431,6 @@ public class Controller
     }
 
     private void changeState(GameState state) {
-        soundHandler.playMusic(state);
         map.setGameState(state);
         applyTimers(state);
     }

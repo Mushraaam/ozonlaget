@@ -65,7 +65,7 @@ public interface IDrawer {
                 } else {
                     ICell cell = grid.getCell(row, col);
                     PathType type = cell.pathType();
-                    graphics.setColor(Color.BLACK);
+                    graphics.setColor(Color.DARK_GRAY);
                     if (type == PathType.UNBLOCKED) {
                         graphics.draw(cell.getBounds());
                     } else if (type == PathType.BLOCKED) {
