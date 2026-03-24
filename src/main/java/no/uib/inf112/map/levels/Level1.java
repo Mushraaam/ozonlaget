@@ -305,6 +305,10 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(470, 1140, REDCHAIRWIDTH, REDCHAIRHEIGHT)));
         staticObjects.add(new RedChairLeft( // red chair right
                 new Rectangle2D.Double(645, 800, REDCHAIRWIDTH, REDCHAIRHEIGHT)));
+        this.staticObjects.add(new BeigeCouch( // big couch
+                new Rectangle2D.Double(420, 695, BIGCOUCHWIDTH, BIGCOUCHHEIGHT)));
+        this.staticObjects.add(new GreyTv( // TV
+                new Rectangle2D.Double(445, 795, GREYTVWIDTH, GREYTVHEIGHT)));
         // /////////
         // house 4
         this.floors.add(new WoodFloor(new Rectangle2D.Double(1480, 680, (double)1915 - 1480, (double)1205 - 680)));
