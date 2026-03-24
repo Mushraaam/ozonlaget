@@ -168,13 +168,6 @@ public class Level1 implements ILevel {
 
         ////////INVENTORY ITEMS
 
-        //Outside houses
-        inventoryItemSpawnPoints.add(new Rectangle2D.Double(25, 40, width, height)); //NW of helipad
-        inventoryItemSpawnPoints.add(new Rectangle2D.Double(2455, 820, width, height)); //NE of House 5
-        inventoryItemSpawnPoints.add(new Rectangle2D.Double(1145, 40, width, height)); //By north pon
-        inventoryItemSpawnPoints.add(new Rectangle2D.Double(905, 1880, width, height)); //W of house 6
-
-
         //Inside houses
         inventoryItemSpawnPoints.add(new Rectangle2D.Double(735, 1500, width, height)); //first one is dedicated key spawn. NW house 6
         inventoryItemSpawnPoints.add(new Rectangle2D.Double(1400, 1630, width, height)); //House 6 East
@@ -183,6 +176,13 @@ public class Level1 implements ILevel {
         inventoryItemSpawnPoints.add(new Rectangle2D.Double(1750, 840, width, height)); //House 4 NE
         inventoryItemSpawnPoints.add(new Rectangle2D.Double(465, 920, width, height)); //House 3 NW
         inventoryItemSpawnPoints.add(new Rectangle2D.Double(2405, 60, width, height)); //House 2 NE
+        //Outside houses
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(25, 40, width, height)); //NW of helipad
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(2455, 820, width, height)); //NE of House 5
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(1145, 40, width, height)); //By north pon
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(905, 1880, width, height)); //W of house 6
+
+
 
 
         this.map.setItemSpawnPoints(buffSpawnPoints, inventoryItemSpawnPoints);
