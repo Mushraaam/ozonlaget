@@ -1,5 +1,6 @@
 package no.uib.inf112.map.levels;
 
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -17,13 +18,17 @@ import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.BeigeBigBed;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
+import no.uib.inf112.terrain.furniture.BeigeSmallBed;
 import no.uib.inf112.terrain.furniture.BeigeWoodChairDown;
 import no.uib.inf112.terrain.furniture.BeigeWoodChairUp;
 import no.uib.inf112.terrain.furniture.DarkLongDrawer;
 import no.uib.inf112.terrain.furniture.DarkSmallDrawer;
+import no.uib.inf112.terrain.furniture.DarkSmallDrawerUp;
 import no.uib.inf112.terrain.furniture.DarkWoodenTableSmall;
 import no.uib.inf112.terrain.furniture.GreyTv;
 import no.uib.inf112.terrain.furniture.PlantOne;
+import no.uib.inf112.terrain.furniture.RedChairLeft;
+import no.uib.inf112.terrain.furniture.RedChairRight;
 import no.uib.inf112.terrain.walls.WoodWall;
 import no.uib.inf112.terrain.water.Water;
 
@@ -59,10 +64,13 @@ public class Level1 implements ILevel {
     private static final int PLANTONEHEIGHT = Config.getInt("plantHeight");
     private static final int CHAIRWIDTH = Config.getInt("woodChairWidth");
     private static final int CHAIRHEIGHT = Config.getInt("woodChairHeight");
-    //private static final int SQUARETABLEWIDTH = Config.getInt("tableWidth");
-    //private static final int SQUARETABLEHEIGHT = Config.getInt("tableHeight");
-
-
+  //private static final int SQUARETABLEWIDTH = Config.getInt("tableWidth");
+  //private static final int SQUARETABLEHEIGHT = Config.getInt("tableHeight");
+    private static final int SMALLBEDWIDTH = Config.getInt("smallBedWidth");
+    private static final int SMALLBEDHEIGHT = Config.getInt("smallBedHeight");
+    private static final int REDCHAIRWIDTH = Config.getInt("redChairWidth");
+    private static final int REDCHAIRHEIGHT = Config.getInt("redChairHeight");
+    
     // Water
     private static final int WATER_HEIGHT = Config.getInt("waterHeight");
     private static final int WATER_WIDTH = Config.getInt("waterWidth");
@@ -315,7 +323,39 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(609, 695, 15, 40), StaticObjectType.WOODEN_WALL));
         // /////////
 
+        //furniture
+        this.staticObjects.add(new BeigeSmallBed( // Small bed left
+                new Rectangle2D.Double(415, 1015, SMALLBEDWIDTH, SMALLBEDHEIGHT)));
+        this.staticObjects.add(new BeigeSmallBed( // Small bed right
+                new Rectangle2D.Double(695, 695, SMALLBEDWIDTH, SMALLBEDHEIGHT)));
+        this.staticObjects.add(new DarkWoodenTableSmall( // small table left
+                new Rectangle2D.Double(415, 1135, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        this.staticObjects.add(new DarkWoodenTableSmall( // small table right
+                new Rectangle2D.Double(695, 795, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        this.staticObjects.add(new DarkWoodenTableSmall( // small table mid
+                new Rectangle2D.Double(415, 860, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        this.staticObjects.add(new RedChairRight( // red chair left
+                new Rectangle2D.Double(470, 1140, REDCHAIRWIDTH, REDCHAIRHEIGHT)));
+        this.staticObjects.add(new RedChairLeft( // red chair right
+                new Rectangle2D.Double(645, 800, REDCHAIRWIDTH, REDCHAIRHEIGHT)));
+        this.staticObjects.add(new BeigeCouch( // big couch
+                new Rectangle2D.Double(415, 695, BIGCOUCHWIDTH, BIGCOUCHHEIGHT)));
+        this.staticObjects.add(new GreyTv( // TV
+                new Rectangle2D.Double(440, 795, GREYTVWIDTH, GREYTVHEIGHT)));
+        this.staticObjects.add(new DarkWoodenTableSmall( // small table living room
+                new Rectangle2D.Double(680, 1075, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        this.staticObjects.add(new BeigeWoodChairDown( // living room chair facing Down
+                new Rectangle2D.Double(680, 1020, CHAIRWIDTH, CHAIRHEIGHT)));
+        this.staticObjects.add(new BeigeWoodChairUp( // living room chair facing Up
+                new Rectangle2D.Double(680, 1130, CHAIRWIDTH, CHAIRHEIGHT)));
+        this.staticObjects.add(new DarkSmallDrawer( // Small drawer right
+                new Rectangle2D.Double(645, 850, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
+        this.staticObjects.add(new DarkSmallDrawerUp( // Small drawer left
+                new Rectangle2D.Double(415, 950, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
+        this.staticObjects.add(new PlantOne( // Plant
+                new Rectangle2D.Double(415, 855, PLANTONEWIDTH, PLANTONEHEIGHT)));
         // /////////
+
         // house 4
         this.floors.add(new WoodFloor(new Rectangle2D.Double(1480, 680, (double) 1915 - 1480, (double) 1205 - 680)));
         // exterior walls

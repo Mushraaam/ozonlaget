@@ -245,6 +245,9 @@ public class ImageHandler {
         this.staticObjects.put(StaticObjectType.DARK_DRAWER_SMALL,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darksmalldrawer.png"),
                         Config.getInt("smallDrawerWidth"), Config.getInt("smallDrawerHeight")));
+        this.staticObjects.put(StaticObjectType.DARK_DRAWER_SMALL_UP,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darksmalldrawerup.png"),
+                        Config.getInt("smallDrawerWidth"), Config.getInt("smallDrawerHeight")));
         this.staticObjects.put(StaticObjectType.DARK_DRAWER_LONG,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darklongdrawer.png"),
                         Config.getInt("longDrawerWidth"), Config.getInt("longDrawerHeight")));
@@ -263,6 +266,12 @@ public class ImageHandler {
         this.staticObjects.put(StaticObjectType.GREY_TV,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/grey_tv.png"),
                         Config.getInt("tvWidth"), Config.getInt("tvHeight")));
+        this.staticObjects.put(StaticObjectType.RED_CHAIR_LEFT,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/red_chairleft.png"),
+                        Config.getInt("redChairWidth"), Config.getInt("redChairHeight")));
+        this.staticObjects.put(StaticObjectType.RED_CHAIR_RIGHT,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/red_chairright.png"),
+                        Config.getInt("redChairWidth"), Config.getInt("redChairHeight")));
     }
 
     // / /////////// START ENEMY LOGIC //////////////
