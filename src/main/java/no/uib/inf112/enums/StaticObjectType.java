@@ -19,6 +19,7 @@ public enum StaticObjectType {
     BEIGE_BIG_BED,
     BEIGE_SMALL_BED,
     DARK_DRAWER_SMALL,
+    DARK_DRAWER_SMALL_UP,
     DARK_DRAWER_LONG,
     PLANT_ONE,
     PLANT_TWO,

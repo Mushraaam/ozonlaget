@@ -22,6 +22,7 @@ import no.uib.inf112.terrain.furniture.BeigeWoodChairDown;
 import no.uib.inf112.terrain.furniture.BeigeWoodChairUp;
 import no.uib.inf112.terrain.furniture.DarkLongDrawer;
 import no.uib.inf112.terrain.furniture.DarkSmallDrawer;
+import no.uib.inf112.terrain.furniture.DarkSmallDrawerUp;
 import no.uib.inf112.terrain.furniture.DarkWoodenTableSmall;
 import no.uib.inf112.terrain.furniture.GreyTv;
 import no.uib.inf112.terrain.furniture.PlantOne;
@@ -309,6 +310,16 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(420, 695, BIGCOUCHWIDTH, BIGCOUCHHEIGHT)));
         this.staticObjects.add(new GreyTv( // TV
                 new Rectangle2D.Double(445, 795, GREYTVWIDTH, GREYTVHEIGHT)));
+        this.staticObjects.add(new DarkWoodenTableSmall( // small table living room
+                new Rectangle2D.Double(680, 1075, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        this.staticObjects.add(new BeigeWoodChairDown( // living room chair facing Down
+                new Rectangle2D.Double(680, 1020, CHAIRWIDTH, CHAIRHEIGHT)));
+        this.staticObjects.add(new BeigeWoodChairUp( // living room chair facing Up
+                new Rectangle2D.Double(680, 1130, CHAIRWIDTH, CHAIRHEIGHT)));
+         this.staticObjects.add(new DarkSmallDrawer( // Small drawer left
+                new Rectangle2D.Double(645, 850, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
+        this.staticObjects.add(new DarkSmallDrawerUp( // Small drawer right
+                new Rectangle2D.Double(415, 950, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
         // /////////
         // house 4
         this.floors.add(new WoodFloor(new Rectangle2D.Double(1480, 680, (double)1915 - 1480, (double)1205 - 680)));

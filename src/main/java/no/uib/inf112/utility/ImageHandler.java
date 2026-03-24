@@ -245,6 +245,9 @@ public class ImageHandler {
         this.staticObjects.put(StaticObjectType.DARK_DRAWER_SMALL,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darksmalldrawer.png"),
                         Config.getInt("smallDrawerWidth"), Config.getInt("smallDrawerHeight")));
+        this.staticObjects.put(StaticObjectType.DARK_DRAWER_SMALL_UP,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darksmalldrawerup.png"),
+                        Config.getInt("smallDrawerWidth"), Config.getInt("smallDrawerHeight")));
         this.staticObjects.put(StaticObjectType.DARK_DRAWER_LONG,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darklongdrawer.png"),
                         Config.getInt("longDrawerWidth"), Config.getInt("longDrawerHeight")));
