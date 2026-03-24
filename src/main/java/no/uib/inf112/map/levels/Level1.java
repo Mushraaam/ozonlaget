@@ -294,33 +294,38 @@ public class Level1 implements ILevel {
         // /////////
 
         //furniture
-        staticObjects.add(new BeigeSmallBed( // Small bed left
+        this.staticObjects.add(new BeigeSmallBed( // Small bed left
                 new Rectangle2D.Double(415, 1015, SMALLBEDWIDTH, SMALLBEDHEIGHT)));
-        staticObjects.add(new BeigeSmallBed( // Small bed right
+        this.staticObjects.add(new BeigeSmallBed( // Small bed right
                 new Rectangle2D.Double(695, 695, SMALLBEDWIDTH, SMALLBEDHEIGHT)));
-        staticObjects.add(new DarkWoodenTableSmall( // small table left
+        this.staticObjects.add(new DarkWoodenTableSmall( // small table left
                 new Rectangle2D.Double(415, 1135, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
-        staticObjects.add(new DarkWoodenTableSmall( // small table right
+        this.staticObjects.add(new DarkWoodenTableSmall( // small table right
                 new Rectangle2D.Double(695, 795, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
-        staticObjects.add(new RedChairRight( // red chair left
+        this.staticObjects.add(new DarkWoodenTableSmall( // small table mid
+                new Rectangle2D.Double(415, 860, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        this.staticObjects.add(new RedChairRight( // red chair left
                 new Rectangle2D.Double(470, 1140, REDCHAIRWIDTH, REDCHAIRHEIGHT)));
-        staticObjects.add(new RedChairLeft( // red chair right
+        this.staticObjects.add(new RedChairLeft( // red chair right
                 new Rectangle2D.Double(645, 800, REDCHAIRWIDTH, REDCHAIRHEIGHT)));
         this.staticObjects.add(new BeigeCouch( // big couch
-                new Rectangle2D.Double(420, 695, BIGCOUCHWIDTH, BIGCOUCHHEIGHT)));
+                new Rectangle2D.Double(415, 695, BIGCOUCHWIDTH, BIGCOUCHHEIGHT)));
         this.staticObjects.add(new GreyTv( // TV
-                new Rectangle2D.Double(445, 795, GREYTVWIDTH, GREYTVHEIGHT)));
+                new Rectangle2D.Double(440, 795, GREYTVWIDTH, GREYTVHEIGHT)));
         this.staticObjects.add(new DarkWoodenTableSmall( // small table living room
                 new Rectangle2D.Double(680, 1075, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
         this.staticObjects.add(new BeigeWoodChairDown( // living room chair facing Down
                 new Rectangle2D.Double(680, 1020, CHAIRWIDTH, CHAIRHEIGHT)));
         this.staticObjects.add(new BeigeWoodChairUp( // living room chair facing Up
                 new Rectangle2D.Double(680, 1130, CHAIRWIDTH, CHAIRHEIGHT)));
-         this.staticObjects.add(new DarkSmallDrawer( // Small drawer left
+        this.staticObjects.add(new DarkSmallDrawer( // Small drawer right
                 new Rectangle2D.Double(645, 850, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
-        this.staticObjects.add(new DarkSmallDrawerUp( // Small drawer right
+        this.staticObjects.add(new DarkSmallDrawerUp( // Small drawer left
                 new Rectangle2D.Double(415, 950, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
+        this.staticObjects.add(new PlantOne( // Plant
+                new Rectangle2D.Double(415, 855, PLANTONEWIDTH, PLANTONEHEIGHT)));
         // /////////
+
         // house 4
         this.floors.add(new WoodFloor(new Rectangle2D.Double(1480, 680, (double)1915 - 1480, (double)1205 - 680)));
         // exterior walls
