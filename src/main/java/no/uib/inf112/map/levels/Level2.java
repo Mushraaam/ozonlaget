@@ -95,6 +95,7 @@ public class Level2 implements ILevel {
         }
 
         ArrayList<Rectangle2D.Double> itemSpawnPoints = new ArrayList<>();
+        ArrayList<Rectangle2D.Double> inventoryItemSpawnPoints = new ArrayList<>();
 
         double size = Config.getInt("collectableSize");
 
@@ -104,7 +105,7 @@ public class Level2 implements ILevel {
         itemSpawnPoints.add(new Rectangle2D.Double(1300, 1200, size, size));
         itemSpawnPoints.add(new Rectangle2D.Double(1100, 1200, size, size));
 
-        this.map.setItemSpawnPoints(itemSpawnPoints);
+        this.map.setItemSpawnPoints(itemSpawnPoints, inventoryItemSpawnPoints);
     }
 
     private void generateStaticObjects() {

@@ -1,14 +1,14 @@
 package no.uib.inf112.map.items.factory;
 
 import java.awt.geom.Rectangle2D;
-import java.lang.reflect.Array;
 import java.util.*;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.map.items.*;
+import no.uib.inf112.map.items.buffs.*;
+import no.uib.inf112.map.items.collectable_obj.InventoryItem;
 
 public class ItemSpawnPoint {
     private IMap map;
@@ -17,15 +17,17 @@ public class ItemSpawnPoint {
     private Map<Rectangle2D.Double, ICollectable> spawnPoints;
 
     private Map<CollectableType, Integer> maxLimits;
+
+    private Map<CollectableType, Integer> totalInventoryItemsOnMap;
     int MAX_DROPPED_LOOT = 10;
 
-    public ItemSpawnPoint(IMap map, List<Rectangle2D.Double> predefinedSpots) {
+    public ItemSpawnPoint(IMap map, List<Rectangle2D.Double> preDeterminedSpots) {
         this.map = map;
         this.random = new Random();
 
 
-        this.spawnPoints = new HashMap<>();
-        for (Rectangle2D.Double spot : predefinedSpots) {
+        this.spawnPoints = new LinkedHashMap<>();
+        for (Rectangle2D.Double spot : preDeterminedSpots) {
             this.spawnPoints.put(spot, null);
         }
 
@@ -39,7 +41,14 @@ public class ItemSpawnPoint {
         this.maxLimits.put(CollectableType.POWERUP_DAMAGE, Config.getInt("powerup_DamageCap"));
         this.maxLimits.put(CollectableType.POWERUP_RAINBOW, Config.getInt("powerup_RainbowCap"));
 
+
+        //Inventory items
+        this.totalInventoryItemsOnMap = new EnumMap<>(CollectableType.class);
+        this.totalInventoryItemsOnMap.put(CollectableType.GATEKEY, 1);
+        this.totalInventoryItemsOnMap.put(CollectableType.GASCAN, 6);
+
     }
+
 
     public void dropLoot(CollectableType itemType, Rectangle2D.Double targetLocation){
         if(map.getTotalDroppedLoot() >= this.MAX_DROPPED_LOOT){
@@ -53,7 +62,7 @@ public class ItemSpawnPoint {
     }
 
 
-    public void spawnItem(CollectableType type) {
+    public void spawnBuffItem(CollectableType type) {
         refreshNodes();
 
         if (getCurrentCount(type) >= maxLimits.getOrDefault(type, 0)) {
@@ -83,6 +92,37 @@ public class ItemSpawnPoint {
         this.spawnPoints.put(chosenSpot, newItem);
 
         System.out.println("spawned item");
+    }
+
+    public void spawnInventoryItems() {
+        List<Rectangle2D.Double> allSpots = new ArrayList<>(spawnPoints.keySet());
+
+
+        // key gets first spot for consistency
+        Rectangle2D.Double gateKeySpot = allSpots.getFirst();
+        ICollectable gateKey = createItem(CollectableType.GATEKEY, gateKeySpot);
+        this.map.addToActiveItems(gateKey);
+        this.spawnPoints.put(gateKeySpot, gateKey);
+
+        allSpots.removeFirst(); //exclude key spot
+
+        Collections.shuffle(allSpots, this.random);
+
+        int gasCansToSpawn = totalInventoryItemsOnMap.getOrDefault(CollectableType.GASCAN, 0);
+
+        for (int i = 0; i < gasCansToSpawn; i++) {
+            if (allSpots.isEmpty()) {
+                System.out.println("no more spots for gascans");
+                break;
+            }
+            Rectangle2D.Double spot = allSpots.removeFirst();
+
+            ICollectable gasCan = createItem(CollectableType.GASCAN, spot);
+            this.map.addToActiveItems(gasCan);
+            this.spawnPoints.put(spot, gasCan);
+        }
+
+        System.out.println("Spawned all inventory items!");
     }
 
     /**
@@ -125,6 +165,12 @@ public class ItemSpawnPoint {
             case POWERUP_DAMAGE -> {
                 return new DamageBuff(hitBox, type, map);
             }
+            case POWERUP_SPEED -> {
+                return new SpeedBuff(hitBox, type, map);
+            }
+            case GATEKEY, GASCAN -> {
+                return new InventoryItem(hitBox, type, map);}
+
             default -> throw new IllegalArgumentException("Unknown Item Type");
         }
     }

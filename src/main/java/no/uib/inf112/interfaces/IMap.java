@@ -223,9 +223,13 @@ public interface IMap {
 
     void removeActiveItem(ICollectable item);
 
-    void setItemSpawnPoints(ArrayList<Rectangle2D.Double> itemSpawnPoints);
+    void setItemSpawnPoints(ArrayList<Rectangle2D.Double> buffItemSpawnPoints, ArrayList<Rectangle2D.Double> itemSpawnPoints);
 
-    List<Rectangle2D.Double> getItemSpawnPoints();
+    List<Rectangle2D.Double> getBuffItemSpawnpoint();
+
+    List<Rectangle2D.Double> getInventoryItemSpawnpoint();
 
     ItemFactory getItemFactory();
+
+    void setPlayer(IPlayer player);
 }

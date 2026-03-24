@@ -85,5 +85,11 @@ public interface IPlayer {
      */
     public boolean isAlive();
 
+
+    /**
+     * adust speed of the player
+     * @param amount
+     */
+    public void setPlayerSpeed(int amount);
 }
 

@@ -229,18 +229,29 @@ public class TestMap implements IMap {
     }
 
     @Override
-    public void setItemSpawnPoints(ArrayList<Double> itemSpawnPoints) {
-        /*  */
+    public void setItemSpawnPoints(ArrayList<Double> buffItemSpawnPoints, ArrayList<Double> itemSpawnPoints) {
+
+    }
+
+
+    @Override
+    public List<Double> getBuffItemSpawnpoint() {
+        return List.of();
     }
 
     @Override
-    public List<Double> getItemSpawnPoints() {
+    public List<Double> getInventoryItemSpawnpoint() {
         return List.of();
     }
 
     @Override
     public ItemFactory getItemFactory() {
         return null;
+    }
+
+    @Override
+    public void setPlayer(IPlayer player) {
+
     }
 
     @Override

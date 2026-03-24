@@ -2,6 +2,7 @@ package no.uib.inf112.map.levels;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.interfaces.IFloor;
@@ -58,13 +59,10 @@ public class Level1 implements ILevel {
     private static final int PLANTONEHEIGHT = Config.getInt("plantHeight");
     private static final int CHAIRWIDTH = Config.getInt("woodChairWidth");
     private static final int CHAIRHEIGHT = Config.getInt("woodChairHeight");
-  //private static final int SQUARETABLEWIDTH = Config.getInt("tableWidth");
-  //private static final int SQUARETABLEHEIGHT = Config.getInt("tableHeight");
+    //private static final int SQUARETABLEWIDTH = Config.getInt("tableWidth");
+    //private static final int SQUARETABLEHEIGHT = Config.getInt("tableHeight");
 
 
-
-
-    
     // Water
     private static final int WATER_HEIGHT = Config.getInt("waterHeight");
     private static final int WATER_WIDTH = Config.getInt("waterWidth");
@@ -91,13 +89,20 @@ public class Level1 implements ILevel {
         this.bounds = new Rectangle2D.Double(MAPX, MAPY, MAPWIDTH, MAPHEIGHT);
         this.player = new Player(new Rectangle2D.Double(START_X, START_Y, PLAYERWIDTH, PLAYERHEIGHT), this.bounds,
                 map);
+        this.map.setPlayer(this.player);
+
 
         generateStaticObjects();
         generateSpawnPoints();
         generateItemSpawnPoints();
-
         this.factory = new Factory(this.map);
         this.itemFactory = new ItemFactory(this.map);
+
+        while (true) {
+            if (player != null){
+                this.itemFactory.spawnInventoryItems();
+                break;}
+        }
     }
 
     public Factory getFactory() {
@@ -120,45 +125,67 @@ public class Level1 implements ILevel {
 
         //Currently this covers all houses
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(100, 100, 450, 400)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(410, 705, 350, (double)1170 - 700)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1710, 20, (double)2480 - 1710, 260)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1480, 680, (double)1915 - 1480, (double)1205 - 680)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(700, 1450, (double)1510 - 700, (double)1820 - 1450)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1790, 2185, (double)2430 - 1790, (double)2485 - 2185)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(2100, 880, 400, (double)1770 - 880)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(410, 705, 350, (double) 1170 - 700)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1710, 20, (double) 2480 - 1710, 260)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1480, 680, (double) 1915 - 1480, (double) 1205 - 680)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(700, 1450, (double) 1510 - 700, (double) 1820 - 1450)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1790, 2185, (double) 2430 - 1790, (double) 2485 - 2185)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(2100, 880, 400, (double) 1770 - 880)));
     }
 
-   private void generateItemSpawnPoints() {
+    private void generateItemSpawnPoints() {
         if (this.map == null) {
             throw new IllegalStateException("Map cannot be null");
         }
 
-        ArrayList<Rectangle2D.Double> itemSpawnPoints = new ArrayList<>();
+        ArrayList<Rectangle2D.Double> buffSpawnPoints = new ArrayList<>();
+
+
+        ArrayList<Rectangle2D.Double> inventoryItemSpawnPoints = new ArrayList<>();
 
         double width = Config.getInt("collectableSizeW");
-       double height = Config.getInt("collectableSizeH");
+        double height = Config.getInt("collectableSizeH");
 
+
+        ///////BUFFS
         //Outside
-        itemSpawnPoints.add(new Rectangle2D.Double(1120, 90, width, height)); //North by the water
-        itemSpawnPoints.add(new Rectangle2D.Double(1060, 820, width, height)); //North of spawn on path
-        itemSpawnPoints.add(new Rectangle2D.Double(2460, 2450, width, height)); // SE by house 7
-        itemSpawnPoints.add(new Rectangle2D.Double(175, 2452, width, height)); //SW by pond
-
+        buffSpawnPoints.add(new Rectangle2D.Double(1120, 90, width, height)); //North by the water
+        buffSpawnPoints.add(new Rectangle2D.Double(1060, 820, width, height)); //North of spawn on path
+        buffSpawnPoints.add(new Rectangle2D.Double(2460, 2450, width, height)); // SE by house 7
+        buffSpawnPoints.add(new Rectangle2D.Double(175, 2452, width, height)); //SW by pond
 
         //Inside houses
-        itemSpawnPoints.add(new Rectangle2D.Double(2290, 2270, width, height)); // NE house 7
-        itemSpawnPoints.add(new Rectangle2D.Double(710, 1580, width, height));  // W room house 6
-        itemSpawnPoints.add(new Rectangle2D.Double(1070, 2125, width, height));// Entrance house 6
-        itemSpawnPoints.add(new Rectangle2D.Double(2170, 1700, width, height)); // South in house 5
-        itemSpawnPoints.add(new Rectangle2D.Double(2150, 960, width, height)); // North in house 5
-        itemSpawnPoints.add(new Rectangle2D.Double(1500, 850, width, height)); // NW room house 4
-        itemSpawnPoints.add(new Rectangle2D.Double(660, 940, width, height)); // East in house 3
-        itemSpawnPoints.add(new Rectangle2D.Double(440, 740, width, height)); // NW in house 3
-        itemSpawnPoints.add(new Rectangle2D.Double(1780, 220, width, height)); // West in house 2
-        itemSpawnPoints.add(new Rectangle2D.Double(1975, 22, width, height)); // NE in house 2
+        buffSpawnPoints.add(new Rectangle2D.Double(2290, 2270, width, height)); // NE house 7
+        buffSpawnPoints.add(new Rectangle2D.Double(710, 1580, width, height));  // W room house 6
+        buffSpawnPoints.add(new Rectangle2D.Double(1070, 2125, width, height));// Entrance house 6
+        buffSpawnPoints.add(new Rectangle2D.Double(2170, 1700, width, height)); // South in house 5
+        buffSpawnPoints.add(new Rectangle2D.Double(2150, 960, width, height)); // North in house 5
+        buffSpawnPoints.add(new Rectangle2D.Double(1500, 850, width, height)); // NW room house 4
+        buffSpawnPoints.add(new Rectangle2D.Double(660, 940, width, height)); // East in house 3
+        buffSpawnPoints.add(new Rectangle2D.Double(440, 740, width, height)); // NW in house 3
+        buffSpawnPoints.add(new Rectangle2D.Double(1780, 220, width, height)); // West in house 2
+        buffSpawnPoints.add(new Rectangle2D.Double(1975, 22, width, height)); // NE in house 2
+
+        ////////INVENTORY ITEMS
+
+        //Inside houses
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(735, 1500, width, height)); //first one is dedicated key spawn. NW house 6
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(1400, 1630, width, height)); //House 6 East
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(2145, 2430, width, height)); //House 7 South
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(2365, 950, width, height)); //House 5 NE
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(1750, 840, width, height)); //House 4 NE
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(465, 920, width, height)); //House 3 NW
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(2405, 60, width, height)); //House 2 NE
+        //Outside houses
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(25, 40, width, height)); //NW of helipad
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(2455, 820, width, height)); //NE of House 5
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(1145, 40, width, height)); //By north pon
+        inventoryItemSpawnPoints.add(new Rectangle2D.Double(905, 1880, width, height)); //W of house 6
 
 
-        this.map.setItemSpawnPoints(itemSpawnPoints);
+
+
+        this.map.setItemSpawnPoints(buffSpawnPoints, inventoryItemSpawnPoints);
     }
 
     private void generateStaticObjects() {
@@ -183,7 +210,7 @@ public class Level1 implements ILevel {
 
         // /////////
         // house 2
-        this.floors.add(new WoodFloor(new Rectangle2D.Double(1710, 20, (double)2480 - 1710, 260)));
+        this.floors.add(new WoodFloor(new Rectangle2D.Double(1710, 20, (double) 2480 - 1710, 260)));
 
         // exterior walls
         staticObjects.add(new WoodWall( // Top 
@@ -232,10 +259,10 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(2260, 15, CHAIRWIDTH, CHAIRHEIGHT)));
         this.staticObjects.add(new BeigeWoodChairUp( // chair facing Up
                 new Rectangle2D.Double(2260, 130, CHAIRWIDTH, CHAIRHEIGHT)));
-        
+
         // /////////
         // house 3
-        this.floors.add(new WoodFloor(new Rectangle2D.Double(410, 705, 350, (double)1170 - 700)));
+        this.floors.add(new WoodFloor(new Rectangle2D.Double(410, 705, 350, (double) 1170 - 700)));
 
         // exterior walls
         staticObjects.add(new WoodWall( // Top left
@@ -290,7 +317,7 @@ public class Level1 implements ILevel {
 
         // /////////
         // house 4
-        this.floors.add(new WoodFloor(new Rectangle2D.Double(1480, 680, (double)1915 - 1480, (double)1205 - 680)));
+        this.floors.add(new WoodFloor(new Rectangle2D.Double(1480, 680, (double) 1915 - 1480, (double) 1205 - 680)));
         // exterior walls
         staticObjects.add(new WoodWall( // Top 
                 new Rectangle2D.Double(1480, 680, 440, 15), StaticObjectType.LONG_WOODEN_WALL));
@@ -303,7 +330,7 @@ public class Level1 implements ILevel {
         staticObjects.add(new WoodWall( // Bottom right 
                 new Rectangle2D.Double(1690, 1225, 230, 15), StaticObjectType.WOODEN_WALL));
         // /////////
-        
+
         //interior walls
         staticObjects.add(new WoodWall( // Top long
                 new Rectangle2D.Double(1495, 900, 300, 15), StaticObjectType.WOODEN_WALL));
@@ -321,7 +348,7 @@ public class Level1 implements ILevel {
 
         // /////////
         // house 5 
-        this.floors.add(new WoodFloor(new Rectangle2D.Double(2100, 880, 400, (double)1770 - 880)));
+        this.floors.add(new WoodFloor(new Rectangle2D.Double(2100, 880, 400, (double) 1770 - 880)));
         // exterior walls
         staticObjects.add(new WoodWall( // Top 
                 new Rectangle2D.Double(2080, 880, 400, 15), StaticObjectType.LONG_WOODEN_WALL));
@@ -349,8 +376,8 @@ public class Level1 implements ILevel {
 
         // /////////
         //house 6
-        this.floors.add(new WoodFloor(new Rectangle2D.Double(700, 1450, (double)1510 - 700, (double)1820 - 1450)));
-        this.floors.add(new WoodFloor(new Rectangle2D.Double(970, 1820, (double)1510 - 1240, (double)2260 - 1820)));
+        this.floors.add(new WoodFloor(new Rectangle2D.Double(700, 1450, (double) 1510 - 700, (double) 1820 - 1450)));
+        this.floors.add(new WoodFloor(new Rectangle2D.Double(970, 1820, (double) 1510 - 1240, (double) 2260 - 1820)));
 
         // exterior walls
         // ---top rectangle
@@ -401,7 +428,7 @@ public class Level1 implements ILevel {
 
         // /////////
         // house 7
-        this.floors.add(new WoodFloor(new Rectangle2D.Double(1790, 2185, (double)2430 - 1790, (double)2485 - 2185)));
+        this.floors.add(new WoodFloor(new Rectangle2D.Double(1790, 2185, (double) 2430 - 1790, (double) 2485 - 2185)));
         // exterior walls
         staticObjects.add(new WoodWall( // Top 
                 new Rectangle2D.Double(1757.5, 2160, 682.5, 15), StaticObjectType.LONG_WOODEN_WALL));

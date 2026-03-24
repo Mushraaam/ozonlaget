@@ -44,7 +44,8 @@ public class Map implements IMap {
 
     // items
     private ArrayList<ICollectable> activeItems;
-    private ArrayList<Rectangle2D.Double> itemSpawnPoints;
+    private ArrayList<Rectangle2D.Double> buffItemSpawnpoint;
+    private ArrayList<Rectangle2D.Double> inventoryItemSpawnpoint;
     private ItemFactory itemFactory;
     private int totalDroppedLoot = 0;
 
@@ -90,7 +91,7 @@ public class Map implements IMap {
 
         this.activeItems = new ArrayList<>();
         this.spawnPoints = new ArrayList<>();
-        this.itemSpawnPoints = new ArrayList<>();
+        this.buffItemSpawnpoint = new ArrayList<>();
 
         switch (level) {
             case 1 -> {
@@ -110,7 +111,7 @@ public class Map implements IMap {
         this.floors = this.level.getFloor();
         this.levelNumber = this.level.levelNumber();
         this.debug = false;
-        this.staticObjects = this.level.getStaticObjects();
+        this.staticObjects = this.level.getStaticObjects();;
     }
 
     @Override
@@ -321,18 +322,29 @@ public class Map implements IMap {
     }
 
     @Override
-    public void setItemSpawnPoints(ArrayList<Rectangle2D.Double> itemSpawnPoints) {
-        this.itemSpawnPoints = itemSpawnPoints;
+    public void setItemSpawnPoints(ArrayList<Rectangle2D.Double> buffItemSpawnPoints, ArrayList<Rectangle2D.Double> itemSpawnPoints) {
+        this.buffItemSpawnpoint = buffItemSpawnPoints;
+        this.inventoryItemSpawnpoint = itemSpawnPoints;
     }
 
     @Override
-    public List<Rectangle2D.Double> getItemSpawnPoints() {
-        return itemSpawnPoints;
+    public List<Rectangle2D.Double> getBuffItemSpawnpoint() {
+        return buffItemSpawnpoint;
+    }
+
+    @Override
+    public List<Rectangle2D.Double> getInventoryItemSpawnpoint() {
+        return inventoryItemSpawnpoint;
     }
 
     @Override
     public ItemFactory getItemFactory() {
         return this.itemFactory;
+    }
+
+    @Override
+    public void setPlayer(IPlayer player) {
+        this.player = player;
     }
 
 }
