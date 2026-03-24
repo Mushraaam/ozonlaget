@@ -25,6 +25,8 @@ import no.uib.inf112.terrain.furniture.DarkSmallDrawer;
 import no.uib.inf112.terrain.furniture.DarkWoodenTableSmall;
 import no.uib.inf112.terrain.furniture.GreyTv;
 import no.uib.inf112.terrain.furniture.PlantOne;
+import no.uib.inf112.terrain.furniture.RedChairLeft;
+import no.uib.inf112.terrain.furniture.RedChairRight;
 import no.uib.inf112.terrain.walls.WoodWall;
 import no.uib.inf112.terrain.water.Water;
 
@@ -64,6 +66,8 @@ public class Level1 implements ILevel {
   //private static final int SQUARETABLEHEIGHT = Config.getInt("tableHeight");
     private static final int SMALLBEDWIDTH = Config.getInt("smallBedWidth");
     private static final int SMALLBEDHEIGHT = Config.getInt("smallBedHeight");
+    private static final int REDCHAIRWIDTH = Config.getInt("redChairWidth");
+    private static final int REDCHAIRHEIGHT = Config.getInt("redChairHeight");
     
     // Water
     private static final int WATER_HEIGHT = Config.getInt("waterHeight");
@@ -293,6 +297,14 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(415, 1015, SMALLBEDWIDTH, SMALLBEDHEIGHT)));
         staticObjects.add(new BeigeSmallBed( // Small bed right
                 new Rectangle2D.Double(695, 695, SMALLBEDWIDTH, SMALLBEDHEIGHT)));
+        staticObjects.add(new DarkWoodenTableSmall( // small table left
+                new Rectangle2D.Double(415, 1135, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        staticObjects.add(new DarkWoodenTableSmall( // small table right
+                new Rectangle2D.Double(695, 795, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        staticObjects.add(new RedChairRight( // red chair left
+                new Rectangle2D.Double(470, 1140, REDCHAIRWIDTH, REDCHAIRHEIGHT)));
+        staticObjects.add(new RedChairLeft( // red chair right
+                new Rectangle2D.Double(645, 800, REDCHAIRWIDTH, REDCHAIRHEIGHT)));
         // /////////
         // house 4
         this.floors.add(new WoodFloor(new Rectangle2D.Double(1480, 680, (double)1915 - 1480, (double)1205 - 680)));
