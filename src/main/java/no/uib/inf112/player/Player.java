@@ -360,7 +360,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }else if (overHalf && this.currentHP < 50){
             this.map.getSoundHandler().playPlayerDamageSound(0);
         }
-        if (this.currentHP == 0){
+        if (this.currentHP == 0 && this.map.getGameState() != GameState.GAME_OVER){
             this.map.setGameState(GameState.GAME_OVER);
         }
         if(armor > 0){

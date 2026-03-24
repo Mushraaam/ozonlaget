@@ -98,10 +98,23 @@ public abstract class NPC implements IEnemy {
             return;
         }
 
-        ICell cell = nearbyCells.get(this.random.nextInt(nearbyCells.size()));
-        if (isLegal(cell.getBounds())) {
+        //try to find a legal wandering goal
+        for (int attempts = 0; attempts < 20; attempts++) {
+            ICell cell = nearbyCells.get(this.random.nextInt(nearbyCells.size()));
+
+            if (cell.equals(current)) {
+                continue;
+            }
+
+            if (!map.getPathfinder().canEnter(cell, size)) {
+                continue;
+            }
+
             this.wanderGoal = cell;
+            return;
         }
+
+        this.wanderGoal = null;
     }
 
     @Override
@@ -256,6 +269,16 @@ public abstract class NPC implements IEnemy {
                 break;
             }
         }
+        // Recalculate route if wandering but unable to move
+        if (!this.moving && !this.aggroed) {
+            this.wanderGoal = null;
+            this.currentPath.clear();
+            this.pathIndex = 0;
+            this.lastStart = null;
+            this.lastGoal = null;
+            wander();
+        }
+
     }
 
     private void setDeathAnimationIndex() {

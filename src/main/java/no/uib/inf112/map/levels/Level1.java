@@ -14,9 +14,15 @@ import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.WoodFloor;
+import no.uib.inf112.terrain.furniture.BeigeBigBed;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
-import no.uib.inf112.terrain.furniture.DarkWoodenTable;
-import no.uib.inf112.terrain.furniture.DarkWoodenTableSquare;
+import no.uib.inf112.terrain.furniture.BeigeWoodChairDown;
+import no.uib.inf112.terrain.furniture.BeigeWoodChairUp;
+import no.uib.inf112.terrain.furniture.DarkLongDrawer;
+import no.uib.inf112.terrain.furniture.DarkSmallDrawer;
+import no.uib.inf112.terrain.furniture.DarkWoodenTableSmall;
+import no.uib.inf112.terrain.furniture.GreyTv;
+import no.uib.inf112.terrain.furniture.PlantOne;
 import no.uib.inf112.terrain.walls.WoodWall;
 import no.uib.inf112.terrain.water.Water;
 
@@ -35,6 +41,30 @@ public class Level1 implements ILevel {
     private static final int MAPWIDTH = Config.getInt("mapWidth");
     private static final int MAPHEIGHT = Config.getInt("mapHeight");
 
+    // Furniture
+    private static final int BIGBEDWIDTH = Config.getInt("bigBedWidth");
+    private static final int BIGBEDHEIGHT = Config.getInt("bigBedHeight");
+    private static final int SMALLDRAWERWIDTH = Config.getInt("smallDrawerWidth");
+    private static final int SMALLDRAWERHEIGHT = Config.getInt("smallDrawerHeight");
+    private static final int LONGDRAWERWIDTH = Config.getInt("longDrawerWidth");
+    private static final int LONGDRAWERHEIGHT = Config.getInt("longDrawerHeight");
+    private static final int BIGCOUCHWIDTH = Config.getInt("couchWidth");
+    private static final int BIGCOUCHHEIGHT = Config.getInt("couchHeight");
+    private static final int GREYTVWIDTH = Config.getInt("tvWidth");
+    private static final int GREYTVHEIGHT = Config.getInt("tvHeight");
+    private static final int SMALLTABLEWIDTH = Config.getInt("smallTableWidth");
+    private static final int SMALLTABLEHEIGHT = Config.getInt("smallTableHeight");
+    private static final int PLANTONEWIDTH = Config.getInt("plantWidth");
+    private static final int PLANTONEHEIGHT = Config.getInt("plantHeight");
+    private static final int CHAIRWIDTH = Config.getInt("woodChairWidth");
+    private static final int CHAIRHEIGHT = Config.getInt("woodChairHeight");
+  //private static final int SQUARETABLEWIDTH = Config.getInt("tableWidth");
+  //private static final int SQUARETABLEHEIGHT = Config.getInt("tableHeight");
+
+
+
+
+    
     // Water
     private static final int WATER_HEIGHT = Config.getInt("waterHeight");
     private static final int WATER_WIDTH = Config.getInt("waterWidth");
@@ -96,10 +126,7 @@ public class Level1 implements ILevel {
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(700, 1450, (double)1510 - 700, (double)1820 - 1450)));
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(1790, 2185, (double)2430 - 1790, (double)2485 - 2185)));
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(2100, 880, 400, (double)1770 - 880)));
-
-
     }
-
 
    private void generateItemSpawnPoints() {
         if (this.map == null) {
@@ -112,23 +139,23 @@ public class Level1 implements ILevel {
        double height = Config.getInt("collectableSizeH");
 
         //Outside
-        itemSpawnPoints.add(new Rectangle2D.Double(1020, 120, width, height)); //North by the water
-        itemSpawnPoints.add(new Rectangle2D.Double(1170, 780, width, height)); //North of spawn on path
+        itemSpawnPoints.add(new Rectangle2D.Double(1120, 90, width, height)); //North by the water
+        itemSpawnPoints.add(new Rectangle2D.Double(1060, 820, width, height)); //North of spawn on path
         itemSpawnPoints.add(new Rectangle2D.Double(2460, 2450, width, height)); // SE by house 7
-        itemSpawnPoints.add(new Rectangle2D.Double(190, 2450, width, height)); //SW by pond
+        itemSpawnPoints.add(new Rectangle2D.Double(175, 2452, width, height)); //SW by pond
 
 
         //Inside houses
         itemSpawnPoints.add(new Rectangle2D.Double(2290, 2270, width, height)); // NE house 7
-        itemSpawnPoints.add(new Rectangle2D.Double(900, 1760, width, height));  // W room house 6
-        itemSpawnPoints.add(new Rectangle2D.Double(1100, 2170, width, height));// Entrance house 6
+        itemSpawnPoints.add(new Rectangle2D.Double(710, 1580, width, height));  // W room house 6
+        itemSpawnPoints.add(new Rectangle2D.Double(1070, 2125, width, height));// Entrance house 6
         itemSpawnPoints.add(new Rectangle2D.Double(2170, 1700, width, height)); // South in house 5
-        itemSpawnPoints.add(new Rectangle2D.Double(2170, 1060, width, height)); // North in house 5
-        itemSpawnPoints.add(new Rectangle2D.Double(1620, 800, width, height)); // NW room house 4
-        itemSpawnPoints.add(new Rectangle2D.Double(700, 940, width, height)); // East in house 3
-        itemSpawnPoints.add(new Rectangle2D.Double(480, 940, width, height)); // West in house 3
+        itemSpawnPoints.add(new Rectangle2D.Double(2150, 960, width, height)); // North in house 5
+        itemSpawnPoints.add(new Rectangle2D.Double(1500, 850, width, height)); // NW room house 4
+        itemSpawnPoints.add(new Rectangle2D.Double(660, 940, width, height)); // East in house 3
+        itemSpawnPoints.add(new Rectangle2D.Double(440, 740, width, height)); // NW in house 3
         itemSpawnPoints.add(new Rectangle2D.Double(1780, 220, width, height)); // West in house 2
-        itemSpawnPoints.add(new Rectangle2D.Double(2180, 60, width, height)); // NE in house 2
+        itemSpawnPoints.add(new Rectangle2D.Double(1975, 22, width, height)); // NE in house 2
 
 
         this.map.setItemSpawnPoints(itemSpawnPoints);
@@ -153,11 +180,6 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(80, 505, 200, 15), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Bottom right 
                 new Rectangle2D.Double(360, 505, 200, 15), StaticObjectType.WOODEN_WALL));
-
-        //furniture
-        staticObjects.add(new DarkWoodenTableSquare(
-                new Rectangle2D.Double(200, 200, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
-        // /////////
 
         // /////////
         // house 2
@@ -189,13 +211,34 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(1950, 15, 15, 74), StaticObjectType.WOODEN_WALL));
         // /////////
 
-
+        //furniture
+        this.staticObjects.add(new BeigeBigBed( // Big bed
+                new Rectangle2D.Double(1695, 165, BIGBEDWIDTH, BIGBEDHEIGHT)));
+        this.staticObjects.add(new DarkSmallDrawer( // Small drawer
+                new Rectangle2D.Double(1695, 15, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
+        this.staticObjects.add(new DarkLongDrawer( // long drawer
+                new Rectangle2D.Double(1950, 90, LONGDRAWERWIDTH, LONGDRAWERHEIGHT)));
+        this.staticObjects.add(new BeigeCouch( // big couch
+                new Rectangle2D.Double(2365, 110, BIGCOUCHWIDTH, BIGCOUCHHEIGHT)));
+        this.staticObjects.add(new GreyTv( // TV
+                new Rectangle2D.Double(2390, 215, GREYTVWIDTH, GREYTVHEIGHT)));
+        this.staticObjects.add(new DarkWoodenTableSmall( // Small Table left
+                new Rectangle2D.Double(1865, 215, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        this.staticObjects.add(new PlantOne( // Plant
+                new Rectangle2D.Double(1865, 215, PLANTONEWIDTH, PLANTONEHEIGHT)));
+        this.staticObjects.add(new DarkWoodenTableSmall( // right table
+                new Rectangle2D.Double(2260, 70, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
+        this.staticObjects.add(new BeigeWoodChairDown( // chair facing Down
+                new Rectangle2D.Double(2260, 15, CHAIRWIDTH, CHAIRHEIGHT)));
+        this.staticObjects.add(new BeigeWoodChairUp( // chair facing Up
+                new Rectangle2D.Double(2260, 130, CHAIRWIDTH, CHAIRHEIGHT)));
+        
         // /////////
         // house 3
         this.floors.add(new WoodFloor(new Rectangle2D.Double(410, 705, 350, (double)1170 - 700)));
 
         // exterior walls
-         staticObjects.add(new WoodWall( // Top left
+        staticObjects.add(new WoodWall( // Top left
                 new Rectangle2D.Double(400, 680, 150, 15), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // Top right
                 new Rectangle2D.Double(610, 680, 150, 15), StaticObjectType.WOODEN_WALL));
@@ -235,7 +278,7 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(415, 845, 135, 15), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // right 3rd room wall
                 new Rectangle2D.Double(609, 845, 135, 15), StaticObjectType.WOODEN_WALL));
-         staticObjects.add(new WoodWall( // 3nd room left bottom door wall
+        staticObjects.add(new WoodWall( // 3nd room left bottom door wall
                 new Rectangle2D.Double(535, 805, 15, 40), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // 3nd room right bottom door wall
                 new Rectangle2D.Double(609, 805, 15, 40), StaticObjectType.WOODEN_WALL));
@@ -243,11 +286,6 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(535, 695, 15, 40), StaticObjectType.WOODEN_WALL));
         staticObjects.add(new WoodWall( // 3nd room right top door wall
                 new Rectangle2D.Double(609, 695, 15, 40), StaticObjectType.WOODEN_WALL));
-        // /////////
-
-        // furniture
-        this.staticObjects.add(new DarkWoodenTable(new Rectangle2D.Double(130, 1300, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
-        this.staticObjects.add(new BeigeCouch(new Rectangle2D.Double(130, 1200, Config.getInt("couchWidth"), Config.getInt("couchHeight"))));
         // /////////
 
         // /////////
@@ -483,11 +521,6 @@ public class Level1 implements ILevel {
         this.staticObjects.add(new Water(new Rectangle2D.Double(740, 2400, WATER_WIDTH, WATER_HEIGHT)));
 
         // vegetation
-
-
-
-        
-
 
     }
 

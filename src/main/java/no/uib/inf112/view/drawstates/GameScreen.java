@@ -39,11 +39,13 @@ public class GameScreen implements IDrawer {
         drawPuddles(graphic);
         drawProjectiles(graphic);
         drawStaticObjects(graphic);
+        drawWalls(graphic);
         drawEnemies(graphic);
         drawGunShots(graphic);
         drawActiveItems(graphic);
         drawPlayer(graphic);
         drawDarkness(graphic);
+
         this.ui.draw(graphic);
     }
 
@@ -76,8 +78,7 @@ public class GameScreen implements IDrawer {
         }
     }
 
-
-    private void drawStaticObjects(Graphics2D graphic) {
+    private void drawWalls(Graphics2D graphic){
         for (IStaticObject o : map.getStaticObjects()) {
 
             // Optimize later
@@ -93,7 +94,24 @@ public class GameScreen implements IDrawer {
                     IWall wall = (IWall) obj;
                     BufferedImage image = handler.getWallImage(wall.getType(), wall.getWallDirection());
                     drawImage(graphic, image, wall.getBounds());
-                } else {
+                } 
+            }
+        }
+    }
+
+    private void drawStaticObjects(Graphics2D graphic) {
+        for (IStaticObject o : map.getStaticObjects()) {
+
+            // Optimize later
+            if (!(o instanceof IStaticDrawableObject)) {
+                throw new IllegalArgumentException("Object should be instance of IStaticDrawableObject");
+            }
+
+            if (isVisible(graphic, o.getBounds())) {
+
+                IStaticDrawableObject obj = (IStaticDrawableObject) o;
+
+                if (!obj.isWall()) {
                     BufferedImage image = handler.getStaticObjectImage(obj.getType());
                     drawImage(graphic, image, obj.getBounds());
                 }

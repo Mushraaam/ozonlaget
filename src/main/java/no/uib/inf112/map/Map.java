@@ -50,22 +50,25 @@ public class Map implements IMap {
 
     public Map() {
         this.camera = new Camera(0, 0);
+        this.soundHandler = new SoundHandler();
 
         setLevel(1);
         resetMap();
 
         gatherOccupiedCells();
 
-        this.soundHandler = new SoundHandler();
-
     }
 
     @Override
     public void resetMap() {
 
-        this.camera.update(player.getHitbox(), Config.getInt("screenWidth"), Config.getInt("screenHeight"), this.bounds);
-        this.gameState = GameState.MAIN_MENU;
+        this.camera.update(player.getHitbox(), Config.getInt("screenWidth"), Config.getInt("screenHeight"),
+                this.bounds);
 
+        //Avoid music starting twice when restarting from gameover
+        if (this.gameState != GameState.MAIN_MENU) {
+            setGameState(GameState.MAIN_MENU);
+        }
         // lists
         this.enemies = new ArrayList<>();
         this.gunShots = new ArrayList<>();
@@ -108,7 +111,6 @@ public class Map implements IMap {
         this.levelNumber = this.level.levelNumber();
         this.debug = false;
         this.staticObjects = this.level.getStaticObjects();
-
     }
 
     @Override
@@ -133,18 +135,18 @@ public class Map implements IMap {
     }
 
     @Override
-    public int getTotalDroppedLoot(){
+    public int getTotalDroppedLoot() {
         return this.totalDroppedLoot;
     }
 
     @Override
-    public void increaseDroppedLoot(){
+    public void increaseDroppedLoot() {
         totalDroppedLoot++;
     }
 
     @Override
-    public void decreaseDroppedLoot(){
-        totalDroppedLoot = Math.max(totalDroppedLoot-1, 0);
+    public void decreaseDroppedLoot() {
+        totalDroppedLoot = Math.max(totalDroppedLoot - 1, 0);
     }
 
     @Override
@@ -165,6 +167,7 @@ public class Map implements IMap {
     @Override
     public void setGameState(GameState state) {
         this.gameState = state;
+        this.soundHandler.playMusic(state);
     }
 
     @Override

@@ -172,9 +172,9 @@ public class ImageHandler {
 
         for (int i = 0; i < PLAYER_SPRITE_COUNT; i++) {
             BufferedImage body = ImageReader
-                    .fetchImage(String.format("/no/uib/inf112/player/player_move%s.png", i + 1));
+                    .fetchImage(String.format("/no/uib/inf112/player/handgun/player_move%s.png", i + 1));
             BufferedImage feet = ImageReader
-                    .fetchImage(String.format("/no/uib/inf112/player/player_feet%s.png", i + 1));
+                    .fetchImage(String.format("/no/uib/inf112/player/handgun/player_feet%s.png", i + 1));
             this.playerBodySprites.add(body);
             this.playerFeetSprites.add(feet);
         }
@@ -221,16 +221,48 @@ public class ImageHandler {
         this.staticObjects.put(StaticObjectType.BEIGE_COUCH_DOWN,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_couch.png"),
                         Config.getInt("couchWidth"), Config.getInt("couchHeight")));
+        this.staticObjects.put(StaticObjectType.BEIGE_COUCH_SMALL,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_smallcouch.png"),
+                        Config.getInt("couchSmallWidth"), Config.getInt("couchSmallHeight")));
         this.staticObjects.put(StaticObjectType.DARK_TABLE_ROUNDED,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentable.png"),
                         Config.getInt("tableWidth"), Config.getInt("tableHeight")));
         this.staticObjects.put(StaticObjectType.DARK_TABLE_SQUARE,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darkwoodentablesquare.png"),
                         Config.getInt("tableWidth"), Config.getInt("tableHeight")));
+        this.staticObjects.put(StaticObjectType.DARK_TABLE_SMALL,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darksmallwoodentable.png"),
+                        Config.getInt("smallTableWidth"), Config.getInt("smallTableHeight")));
         this.staticObjects.put(StaticObjectType.WATER,
                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/water/water.png"),
                         Config.getInt("waterWidth"), Config.getInt("waterHeight")));
-
+        this.staticObjects.put(StaticObjectType.BEIGE_BIG_BED,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_bigbed.png"),
+                        Config.getInt("bigBedWidth"), Config.getInt("bigBedHeight")));
+        this.staticObjects.put(StaticObjectType.BEIGE_SMALL_BED,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_smallbed.png"),
+                        Config.getInt("smallBedWidth"), Config.getInt("smallBedHeight")));
+        this.staticObjects.put(StaticObjectType.DARK_DRAWER_SMALL,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darksmalldrawer.png"),
+                        Config.getInt("smallDrawerWidth"), Config.getInt("smallDrawerHeight")));
+        this.staticObjects.put(StaticObjectType.DARK_DRAWER_LONG,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/darklongdrawer.png"),
+                        Config.getInt("longDrawerWidth"), Config.getInt("longDrawerHeight")));
+        this.staticObjects.put(StaticObjectType.PLANT_ONE,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/plant_1.png"),
+                        Config.getInt("plantWidth"), Config.getInt("plantHeight")));
+        this.staticObjects.put(StaticObjectType.PLANT_TWO,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/plant_2.png"),
+                        Config.getInt("plantWidth"), Config.getInt("plantHeight")));
+        this.staticObjects.put(StaticObjectType.BEIGE_CHAIR_WOOD_DOWN,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_woodchairdown.png"),
+                        Config.getInt("woodChairWidth"), Config.getInt("woodChairHeight")));
+        this.staticObjects.put(StaticObjectType.BEIGE_CHAIR_WOOD_UP,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/beige_woodchairup.png"),
+                        Config.getInt("woodChairWidth"), Config.getInt("woodChairHeight")));
+        this.staticObjects.put(StaticObjectType.GREY_TV,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/grey_tv.png"),
+                        Config.getInt("tvWidth"), Config.getInt("tvHeight")));
     }
 
     // / /////////// START ENEMY LOGIC //////////////
