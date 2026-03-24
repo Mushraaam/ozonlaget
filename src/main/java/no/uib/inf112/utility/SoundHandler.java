@@ -57,12 +57,13 @@ public class SoundHandler {
     private void loadBuffMusic() {
         this.buffMusic = new HashMap<>();
         this.buffMusic.put(BuffType.RAINBOW, "/no/uib/inf112/sound/buffs/rainbowBuff.wav");
-        // this.buffMusic.put(BuffType.DAMAGE, "/no/uib/inf112/sound/buffs/damageBuff.wav");
+        // this.buffMusic.put(BuffType.DAMAGE,
+        // "/no/uib/inf112/sound/buffs/damageBuff.wav");
         this.buffMusic.put(BuffType.DAMAGE, "/no/uib/inf112/sound/buffs/rollwav.wav");
 
     }
 
-    private void loadBuffSounds(){
+    private void loadBuffSounds() {
         this.buffSounds = new HashMap<>();
         this.buffSounds.put(BuffType.ARMOR, "/no/uib/inf112/sound/buffs/armorSound.wav");
         this.buffSounds.put(BuffType.HEALTH, "/no/uib/inf112/sound/buffs/hpSound.wav");
@@ -123,9 +124,17 @@ public class SoundHandler {
 
     /**
      * Plays music based on given gamestate
+     * 
      * @param state
      */
     public void playMusic(GameState state) {
+
+        // stop other music when transitioning to new state
+        if (this.currentBuffMusic != null && this.currentBuffMusic.isActive()) {
+            this.currentBuffMusic.stop();
+            this.currentBuffMusic.close();
+        }
+
         if (this.currentMusic != null) {
             this.currentMusic.stop();
             this.currentMusic.close();
@@ -145,6 +154,7 @@ public class SoundHandler {
 
     /**
      * Plays a gunshot sound based on gun type
+     * 
      * @param type
      */
     public void playGunShot(GunType type) {
@@ -161,10 +171,13 @@ public class SoundHandler {
 
     /**
      * Plays music/sound based on given buff type
+     * 
      * @param type
      */
     public void playBuffMusic(BuffType type) {
-        if (this.currentMusic != null){ this.currentMusic.stop();}
+        if (this.currentMusic != null) {
+            this.currentMusic.stop();
+        }
         if (this.currentBuffMusic != null) {
             this.currentBuffMusic.stop();
         }
@@ -194,9 +207,10 @@ public class SoundHandler {
 
     /**
      * Plays damaged/death sound (1: damaged, 2: dead)
+     * 
      * @param index
      */
-    public void playPlayerDamageSound(int index){
+    public void playPlayerDamageSound(int index) {
         playClip(SoundReader.loadSound(this.damageSounds.get(index)));
     }
 }

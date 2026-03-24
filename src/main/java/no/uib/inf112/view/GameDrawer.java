@@ -2,13 +2,13 @@ package no.uib.inf112.view;
 
 import javax.swing.JPanel;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import no.uib.inf112.config.Config;
+import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IMap;
@@ -65,6 +65,7 @@ public class GameDrawer extends JPanel {
         switch (gameState) {
             case ACTIVE_GAME -> {
                 this.gameScreen.draw(g2);
+                checkBuffs(this.map.getPlayer().buffType(), g2);
             }
             case MAIN_MENU -> {
                 this.mainMenu.draw(g2);
@@ -82,23 +83,27 @@ public class GameDrawer extends JPanel {
             }
         }
 
-        if (map.debugMode() && gameState == GameState.ACTIVE_GAME){
+        if (map.debugMode() && gameState == GameState.ACTIVE_GAME) {
             this.debugScreen.draw(g2);
         }
-
-        IPlayer player = this.map.getPlayer();
-        switch (player.buffType()){
-
-            case NONE -> {/* Do nothing if none */}
-
-            case RAINBOW -> {this.rainbowBuffOverlay.draw(g2);}
-
-            default -> {/* Do nothing is the default */}
-        }
-
     }
 
-    //Getter for Controller
+    private void checkBuffs(BuffType type, Graphics2D g3) {
+        switch (type) {
+
+            case NONE -> {
+                /* Do nothing if none */}
+
+            case RAINBOW -> {
+                this.rainbowBuffOverlay.draw(g3);
+            }
+
+            default -> {
+                /* Do nothing is the default */}
+        }
+    }
+
+    // Getter for Controller
     public MainMenu getMainMenu() {
         return (MainMenu) this.mainMenu;
     }
