@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 
 public class InventoryItem extends Collectable {
 
-    protected InventoryItem(Rectangle2D.Double hitbox, CollectableType type, IMap map) {
+    public InventoryItem(Rectangle2D.Double hitbox, CollectableType type, IMap map) {
         super(hitbox, type, map);
     }
 

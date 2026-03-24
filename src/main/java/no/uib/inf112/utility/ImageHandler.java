@@ -327,22 +327,36 @@ public class ImageHandler {
 
     // /////////////////// COLLECTABLES LOGIC //////////////////////
     private void loadCollectables() {
+        int buffW = 60;
+        int buffH = 47;
+        //BUFFS
         this.collectables.put(CollectableType.HEALTH,
-                ImageReader.fetchImage("/no/uib/inf112/map/items/healthBox.png"));
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/healthBox.png"), buffW, buffH));
         this.collectables.put(CollectableType.ARMOR,
-                ImageReader.fetchImage("/no/uib/inf112/map/items/armorBox.png"));
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/armorBox.png"), buffW, buffH));
         this.collectables.put(CollectableType.POWERUP_RAINBOW,
-                ImageReader.fetchImage("/no/uib/inf112/map/items/canaryBoost.png"));
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/canaryBoost.png"), buffW, buffH));
         this.collectables.put(CollectableType.POWERUP_SPEED,
-                ImageReader.fetchImage("/no/uib/inf112/map/items/speedBoost.png"));
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/speedBoost.png"), buffW, buffH));
         this.collectables.put(CollectableType.POWERUP_DAMAGE,
-                ImageReader.fetchImage("/no/uib/inf112/map/items/damageBoost.png"));
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/damageBoost.png"), buffW, buffH));
         this.collectables.put(CollectableType.AMMO_PISTOL,
-                ImageReader.fetchImage("/no/uib/inf112/map/items/pistolAmmo.png"));
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/pistolAmmo.png"), buffW, buffH));
         this.collectables.put(CollectableType.AMMO_RIFLE,
-                ImageReader.fetchImage("/no/uib/inf112/map/items/rifleAmmo.png"));
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/rifleAmmo.png"), buffW, buffH));
         this.collectables.put(CollectableType.AMMO_SHOTGUN,
-                ImageReader.fetchImage("/no/uib/inf112/map/items/shotgunAmmo.png"));
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/shotgunAmmo.png"), buffW, buffH));
+
+        //INVENTORY SPECIFIC ITEMS
+
+        this.collectables.put(CollectableType.GATEKEY,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/gateKey.png"), 60, 53));
+        this.collectables.put(CollectableType.CHOPPERKEY,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/chopperKey.png"), 50, 34));
+        this.collectables.put(CollectableType.GASCAN,
+                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/gasCan.png"), 30, 62));
+
+
 
 
 

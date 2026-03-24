@@ -159,7 +159,13 @@ public class GameScreen implements IDrawer {
         for (ICollectable item : map.getActiveItems()) {
             if (isVisible(graphic, item.getHitbox())) {
                 BufferedImage image = handler.getCollectableImage(item.getType());
-                drawImage(graphic, image, item.getHitbox());
+                double centerX = item.getHitbox().getCenterX();
+                double centerY = item.getHitbox().getCenterY();
+                int imgW = image.getWidth();
+                int imgH = image.getHeight();
+                int drawX = (int) (centerX - (imgW / 2.0));
+                int drawY = (int) (centerY - (imgH / 2.0));
+                graphic.drawImage(image, drawX, drawY, imgW, imgH, null);
             }
         }
     }

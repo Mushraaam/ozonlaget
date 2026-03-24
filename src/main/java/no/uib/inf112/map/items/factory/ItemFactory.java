@@ -2,17 +2,15 @@ package no.uib.inf112.map.items.factory;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.CollectableType;
-import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.map.items.Collectable;
-import org.w3c.dom.css.Rect;
 
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Random;
 
 public class ItemFactory {
-    private ItemSpawnPoint itemSpawnPoint;
+    private ItemSpawnPoint buffItemSpawnPoint;
+    private ItemSpawnPoint inventoryItemSpawnPoint;
     private int counter;
 
     private static final int HEALTH_RATE = Config.getInt("healthBox");
@@ -35,7 +33,8 @@ public class ItemFactory {
     }
 
     public ItemFactory(IMap map){
-        this.itemSpawnPoint = new ItemSpawnPoint(map, map.getItemSpawnPoints());
+        this.buffItemSpawnPoint = new ItemSpawnPoint(map, map.getBuffItemSpawnpoint());
+        this.inventoryItemSpawnPoint = new ItemSpawnPoint(map, map.getInventoryItemSpawnpoint());
         this.counter = 0;
         setDropTable();
     }
@@ -50,7 +49,7 @@ public class ItemFactory {
         for (HashMap.Entry<CollectableType, Integer> item : dropTable.entrySet()) {
             roll -= item.getValue();
             if (roll <= 0 && item.getKey() != CollectableType.NONE) {
-                this.itemSpawnPoint.dropLoot(item.getKey(), targetLocation);
+                this.buffItemSpawnPoint.dropLoot(item.getKey(), targetLocation);
                 System.out.printf("rolled: " +item.getKey());
                 break;
             }
@@ -61,21 +60,27 @@ public class ItemFactory {
         this.counter = (this.counter + 1) % 100000;
 
         if (this.counter % HEALTH_RATE == 0){
-            this.itemSpawnPoint.spawnItem(CollectableType.HEALTH);
+            this.buffItemSpawnPoint.spawnBuffItem(CollectableType.HEALTH);
         }
 
         if (this.counter % ARMOR_RATE == 0){
-            this.itemSpawnPoint.spawnItem(CollectableType.ARMOR);
+            this.buffItemSpawnPoint.spawnBuffItem(CollectableType.ARMOR);
         }
         if (this.counter % RAINBOW_RATE == 0){
-            this.itemSpawnPoint.spawnItem(CollectableType.POWERUP_RAINBOW);
+            this.buffItemSpawnPoint.spawnBuffItem(CollectableType.POWERUP_RAINBOW);
         }
         if (this.counter % DAMAGE_RATE == 0){
-            this.itemSpawnPoint.spawnItem(CollectableType.POWERUP_DAMAGE);
+            this.buffItemSpawnPoint.spawnBuffItem(CollectableType.POWERUP_DAMAGE);
 
         if (this.counter % SPEED_RATE == 0){
-            this.itemSpawnPoint.spawnItem(CollectableType.POWERUP_SPEED);
+            this.buffItemSpawnPoint.spawnBuffItem(CollectableType.POWERUP_SPEED);
         }
         }
+    }
+
+    public void spawnInventoryItems(
+
+    ) {
+        this.inventoryItemSpawnPoint.spawnInventoryItems();
     }
 }
