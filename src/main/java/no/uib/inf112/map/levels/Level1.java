@@ -1,5 +1,6 @@
 package no.uib.inf112.map.levels;
 
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import no.uib.inf112.config.Config;
@@ -16,6 +17,7 @@ import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.BeigeBigBed;
 import no.uib.inf112.terrain.furniture.BeigeCouch;
+import no.uib.inf112.terrain.furniture.BeigeSmallBed;
 import no.uib.inf112.terrain.furniture.BeigeWoodChairDown;
 import no.uib.inf112.terrain.furniture.BeigeWoodChairUp;
 import no.uib.inf112.terrain.furniture.DarkLongDrawer;
@@ -60,10 +62,8 @@ public class Level1 implements ILevel {
     private static final int CHAIRHEIGHT = Config.getInt("woodChairHeight");
   //private static final int SQUARETABLEWIDTH = Config.getInt("tableWidth");
   //private static final int SQUARETABLEHEIGHT = Config.getInt("tableHeight");
-
-
-
-
+    private static final int SMALLBEDWIDTH = Config.getInt("smallBedWidth");
+    private static final int SMALLBEDHEIGHT = Config.getInt("smallBedHeight");
     
     // Water
     private static final int WATER_HEIGHT = Config.getInt("waterHeight");
@@ -288,6 +288,11 @@ public class Level1 implements ILevel {
                 new Rectangle2D.Double(609, 695, 15, 40), StaticObjectType.WOODEN_WALL));
         // /////////
 
+        //furniture
+        staticObjects.add(new BeigeSmallBed( // Small bed left
+                new Rectangle2D.Double(415, 1015, SMALLBEDWIDTH, SMALLBEDHEIGHT)));
+        staticObjects.add(new BeigeSmallBed( // Small bed right
+                new Rectangle2D.Double(695, 695, SMALLBEDWIDTH, SMALLBEDHEIGHT)));
         // /////////
         // house 4
         this.floors.add(new WoodFloor(new Rectangle2D.Double(1480, 680, (double)1915 - 1480, (double)1205 - 680)));
