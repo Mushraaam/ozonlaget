@@ -39,6 +39,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     private BuffType buffType;
     private int buffCounter;
+    private HashMap<ICollectable, Integer> inventory = new HashMap<>();
 
 
 
@@ -68,6 +69,23 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public void setPlayerSpeed(int amount){
         this.playerSpeed = amount;
+    }
+
+    /**
+     * Check how many of a given item is in the inventory
+     * @param item
+     * @return an int of how many of this item the player holds.
+     */
+    public int getAmountInInventory(CollectableType item){
+        return inventory.getOrDefault(item, 0);
+    }
+
+    /**
+     * Adds a collectable to the player's inventory.
+     * @param item
+     */
+    public void addToInventory(ICollectable item){
+        inventory.put(item, inventory.getOrDefault(item, 0)+1);
     }
 
     public void pressMove(Direction dir) {

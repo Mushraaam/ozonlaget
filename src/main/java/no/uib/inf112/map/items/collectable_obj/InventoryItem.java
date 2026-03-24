@@ -6,14 +6,16 @@ import no.uib.inf112.map.items.Collectable;
 
 import java.awt.geom.Rectangle2D;
 
-public class Key extends Collectable {
+public class InventoryItem extends Collectable {
 
-    protected Key(Rectangle2D.Double hitbox, CollectableType type, IMap map) {
+    protected InventoryItem(Rectangle2D.Double hitbox, CollectableType type, IMap map) {
         super(hitbox, type, map);
     }
 
     @Override
     public void affectPlayer(
     ) {
+        player.addToInventory(this);
     }
+
 }

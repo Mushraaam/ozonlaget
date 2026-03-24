@@ -2,6 +2,7 @@ package no.uib.inf112.map.items;
 
 import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.CollectableType;
+import no.uib.inf112.enums.InvItemType;
 import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.player.Player;
@@ -85,6 +86,14 @@ public abstract class Collectable implements ICollectable {
     @Override
     public BuffType getBuffType(){
         return this.type.buffType();
+    }
+
+    /**
+     * Returns which item type this item contains, if it can be placed in an inventory, it returns something else than NONE.
+     */
+    @Override
+    public InvItemType getInventoryItemType(){
+        return this.type.inventoryItemType();
     }
 
 }
