@@ -21,6 +21,7 @@ public class ItemFactory {
     private static final int SPEED_RATE = Config.getInt("powerup_Speed");
     private static final int DAMAGE_RATE = Config.getInt("powerup_Damage");
     private static final int RAINBOW_RATE = Config.getInt("powerup_Rainbow");
+    private static final Random RANDOM = new Random();
 
 
     private HashMap<CollectableType, Integer> dropTable = new HashMap<>();
@@ -45,8 +46,7 @@ public class ItemFactory {
         for(int weight : dropTable.values()){
             totweight+=weight;
         }
-        Random random = new Random();
-        int roll = random.nextInt(totweight)+1;
+        int roll = RANDOM.nextInt(totweight)+1;
         for (HashMap.Entry<CollectableType, Integer> item : dropTable.entrySet()) {
             roll -= item.getValue();
             if (roll <= 0 && item.getKey() != CollectableType.NONE) {
