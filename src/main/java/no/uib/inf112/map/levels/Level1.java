@@ -209,23 +209,10 @@ public class Level1 implements ILevel {
                 // /////////
                 // house 1
                 this.floors.add(new RockRoad(new Rectangle2D.Double(100, 100, 450, 410)));
-                this.vehicles.add(new Helicopter(this.map, new Rectangle2D.Double(
+                this.vehicles.add(new Helicopter(new Rectangle2D.Double(
                                 120, 120, 420, 325
 
                 )));
-
-                // exterior walls
-                // staticObjects.add(new WoodWall( // Top
-                // new Rectangle2D.Double(80, 80, 480, 15), StaticObjectType.LONG_WOODEN_WALL));
-                // staticObjects.add(new WoodWall( // Left
-                // new Rectangle2D.Double(80, 90, 15, 415), StaticObjectType.LONG_WOODEN_WALL));
-                // staticObjects.add(new WoodWall( // Right
-                // new Rectangle2D.Double(545, 90, 15, 415),
-                // StaticObjectType.LONG_WOODEN_WALL));
-                // staticObjects.add(new WoodWall( // Bottom left
-                // new Rectangle2D.Double(80, 505, 200, 15), StaticObjectType.WOODEN_WALL));
-                // staticObjects.add(new WoodWall( // Bottom right
-                // new Rectangle2D.Double(360, 505, 200, 15), StaticObjectType.WOODEN_WALL));
 
                 // /////////
                 // house 2

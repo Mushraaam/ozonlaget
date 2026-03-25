@@ -8,16 +8,14 @@ import no.uib.inf112.interfaces.IVehicle;
 public class Helicopter implements IVehicle {
 
     private static final int ANIMATION_COUNT = 7;
-    private static final int EXPAND_LIMIT = 60;
+    private static final int EXPAND_LIMIT = 80;
     private static final double SPEED = 6;
-    private IMap map;
     private Rectangle2D.Double bounds;
 
     private int index;
     private int expansion;
 
-    public Helicopter(IMap map, Rectangle2D.Double bounds) {
-        this.map = map;
+    public Helicopter(Rectangle2D.Double bounds) {
         this.bounds = bounds;
         this.index = 0;
 
