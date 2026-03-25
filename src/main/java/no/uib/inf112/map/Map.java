@@ -121,12 +121,7 @@ public class Map implements IMap {
 
     @Override
     public IVehicle getHelicopter(){
-        for(IVehicle vehicle : this.level.getVehicles()){
-            if( vehicle.getClass() == Helicopter.class){
-                return vehicle;
-            }
-        }
-        return null;
+        return this.vehicles.get(0);
     }
 
     @Override

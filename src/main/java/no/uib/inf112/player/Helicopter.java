@@ -2,7 +2,6 @@ package no.uib.inf112.player;
 
 import java.awt.geom.Rectangle2D;
 
-import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IVehicle;
 
 public class Helicopter implements IVehicle {

@@ -123,6 +123,11 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     }
 
     private void checkWinningCondition(){
+
+        if (map.getGameState() != GameState.ACTIVE_GAME){
+            return;
+        }
+
         if(map.getHelicopter().isFuelFull()){
             //got enough fuel
             if(inventory.getAmountInInventory(CollectableType.CHOPPERKEY) != 0){
@@ -154,6 +159,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void movePlayer(Direction dir) {
+        if (map.getGameState() != GameState.ACTIVE_GAME){
+            return;
+        }
+
         Rectangle2D.Double proposedMove = possibleMove(dir);
         if (legalMove(proposedMove)) {
             this.hitbox = proposedMove;
