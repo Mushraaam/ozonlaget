@@ -201,10 +201,10 @@ public abstract class NPC implements IEnemy {
     public void move(IGrid grid) {
 
         if (this.map.getGameState() != GameState.ACTIVE_GAME){
-            this.moving = true;
+            this.moving = false;
             return;
         }
-        
+
         this.moving = false;
         // Continue ongoing attacks
 
