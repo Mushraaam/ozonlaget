@@ -273,7 +273,7 @@ public abstract class NPC implements IEnemy {
         // Recalculate route if wandering but unable to move
         if (!this.moving && !this.aggroed) {
             this.wanderGoal = null;
-            this.currentPath.clear();
+            this.currentPath = new ArrayList<>();
             this.pathIndex = 0;
             this.lastStart = null;
             this.lastGoal = null;
