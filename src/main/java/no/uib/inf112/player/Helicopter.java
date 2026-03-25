@@ -7,6 +7,8 @@ import no.uib.inf112.interfaces.IVehicle;
 
 public class Helicopter implements IVehicle {
 
+    private int GAS_NEEDED = 6;
+    private int gasDeposited = 0;
     private static final int ANIMATION_COUNT = 7;
     private static final int EXPAND_LIMIT = 60;
     private static final double SPEED = 6;
@@ -20,7 +22,15 @@ public class Helicopter implements IVehicle {
         this.map = map;
         this.bounds = bounds;
         this.index = 0;
+    }
+    @Override
+    public boolean isFuelFull(){
+        return this.gasDeposited >= GAS_NEEDED;
+    }
 
+    @Override
+    public void depositGas(){
+        gasDeposited++;
     }
 
     public int getIndex() {

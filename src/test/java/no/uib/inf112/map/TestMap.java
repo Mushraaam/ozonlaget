@@ -104,6 +104,11 @@ public class TestMap implements IMap {
     }
 
     @Override
+    public IVehicle getHelicopter() {
+        return null;
+    }
+
+    @Override
     public IGrid getTiles() {
         throw new UnsupportedOperationException("Unimplemented method 'getTiles'");
     }

@@ -13,6 +13,7 @@ import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
+import no.uib.inf112.player.Helicopter;
 import no.uib.inf112.utility.Camera;
 import no.uib.inf112.utility.SoundHandler;
 
@@ -116,6 +117,16 @@ public class Map implements IMap {
         this.debug = false;
         this.staticObjects = this.level.getStaticObjects();
         this.vehicles = this.level.getVehicles();
+    }
+
+    @Override
+    public IVehicle getHelicopter(){
+        for(IVehicle vehicle : this.level.getVehicles()){
+            if( vehicle.getClass() == Helicopter.class){
+                return vehicle;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -350,6 +361,7 @@ public class Map implements IMap {
     public void setPlayer(IPlayer player) {
         this.player = player;
     }
+
 
     @Override
     public ArrayList<IVehicle> getVehicles() {

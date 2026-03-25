@@ -122,6 +122,22 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
     }
 
+    private void checkWinningCondition(){
+        if(map.getHelicopter().isFuelFull()){
+            //got enough fuel
+            if(inventory.getAmountInInventory(CollectableType.CHOPPERKEY) != 0){
+                map.setGameState(GameState.VICTORY);
+                //yey
+            }
+        }
+
+        //if we need more fuel
+        while(!map.getHelicopter().isFuelFull() && inventory.getAmountInInventory(CollectableType.GASCAN) > 0){
+            inventory.useItemFromInventory(CollectableType.GASCAN);
+            map.getHelicopter().depositGas();
+        }
+    }
+
 
     public void aimAtWorldPosition(double worldX, double worldY) {
         double playerCenterX = this.hitbox.getCenterX();
@@ -245,6 +261,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         //Check vehicle collision
         for (IVehicle vehicle : this.map.getVehicles()){
             if (proposedMove.intersects(vehicle.getBounds())){
+                checkWinningCondition();
                 return false;
             }
         }
