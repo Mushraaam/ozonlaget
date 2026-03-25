@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Inventory {
-    private boolean visible = true;
+    private boolean visible = false;
     private HashMap<CollectableType, Integer> inventory;
 
     public Inventory(IPlayer player, IMap map){
