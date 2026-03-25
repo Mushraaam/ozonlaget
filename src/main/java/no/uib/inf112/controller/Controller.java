@@ -320,6 +320,10 @@ public class Controller
             case KeyEvent.VK_P -> {
                 flipDebug();
             }
+
+            case KeyEvent.VK_B -> {
+                player.openCloseInventory();
+            }
             case KeyEvent.VK_O -> {
                 map.addToActiveItems(new RainbowBuff(player.getHitbox(), CollectableType.POWERUP_RAINBOW, map)); // spawns
                                                                                                                  // rainbow

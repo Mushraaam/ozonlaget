@@ -29,7 +29,9 @@ public interface IControllablePlayer extends IPlayer{
      */
     public void incrementAnimationIndex();
 
-  
+
+    void openCloseInventory();
+
     public void pressMove(Direction north);
 
     public void releaseMove(Direction north);
