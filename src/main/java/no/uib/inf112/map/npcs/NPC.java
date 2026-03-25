@@ -3,6 +3,7 @@ package no.uib.inf112.map.npcs;
 import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
+import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
@@ -198,6 +199,12 @@ public abstract class NPC implements IEnemy {
 
     @Override
     public void move(IGrid grid) {
+
+        if (this.map.getGameState() != GameState.ACTIVE_GAME){
+            this.moving = true;
+            return;
+        }
+        
         this.moving = false;
         // Continue ongoing attacks
 

@@ -42,8 +42,6 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     private Inventory inventory;
 
-
-
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IMap map) {
         this.hitbox = hitbox;
         this.bounds = bounds;
@@ -69,35 +67,37 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     }
 
     @Override
-    public void setPlayerSpeed(int amount){
+    public void setPlayerSpeed(int amount) {
         this.playerSpeed = amount;
     }
 
     /**
      * Check how many of a given item is in the inventory
+     * 
      * @param item
      * @return an int of how many of this item the player holds.
      */
     @Override
-    public int getAmountInInventory(CollectableType item){
+    public int getAmountInInventory(CollectableType item) {
         return inventory.getAmountInInventory(item);
     }
 
     /**
      * Adds a collectable to the player's inventory.
+     * 
      * @param item
      */
-    public void addToInventory(CollectableType item){
+    public void addToInventory(CollectableType item) {
         inventory.addToInventory(item);
     }
 
     @Override
-    public void openCloseInventory(){
+    public void openCloseInventory() {
         inventory.toggleVisible();
     }
 
     @Override
-    public Inventory getInventory(){
+    public Inventory getInventory() {
         return inventory;
     }
 
@@ -113,7 +113,6 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         return dirHandler.isMoving();
     }
 
-
     public void updateMovement() {
         Direction dir = dirHandler.getDirection();
         if (dir != null) {
@@ -122,27 +121,26 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
     }
 
-    private void checkWinningCondition(){
+    private void checkWinningCondition() {
 
-        if (map.getGameState() != GameState.ACTIVE_GAME){
+        if (map.getGameState() != GameState.ACTIVE_GAME) {
             return;
         }
 
-        if(map.getHelicopter().isFuelFull()){
-            //got enough fuel
-            if(inventory.getAmountInInventory(CollectableType.CHOPPERKEY) != 0){
+        if (map.getHelicopter().isFuelFull()) {
+            // got enough fuel
+            if (inventory.getAmountInInventory(CollectableType.CHOPPERKEY) != 0) {
                 map.setGameState(GameState.VICTORY);
-                //yey
+                // yey
             }
         }
 
-        //if we need more fuels
-        while(!map.getHelicopter().isFuelFull() && inventory.getAmountInInventory(CollectableType.GASCAN) > 0){
+        // if we need more fuels
+        while (!map.getHelicopter().isFuelFull() && inventory.getAmountInInventory(CollectableType.GASCAN) > 0) {
             inventory.useItemFromInventory(CollectableType.GASCAN);
             map.getHelicopter().depositGas();
         }
     }
-
 
     public void aimAtWorldPosition(double worldX, double worldY) {
         double playerCenterX = this.hitbox.getCenterX();
@@ -159,7 +157,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void movePlayer(Direction dir) {
-        if (map.getGameState() != GameState.ACTIVE_GAME){
+
+        if (map.getGameState() != GameState.ACTIVE_GAME) {
             return;
         }
 
@@ -172,10 +171,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         tryPickupItem();
     }
 
-    private void tryPickupItem(){
-        for(ICollectable item : map.getActiveItems()){
-            if(item.getHitbox().intersects(this.hitbox)){
-               item.pickUp();
+    private void tryPickupItem() {
+        for (ICollectable item : map.getActiveItems()) {
+            if (item.getHitbox().intersects(this.hitbox)) {
+                item.pickUp();
             }
         }
     }
@@ -251,8 +250,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
 
         for (IEnemy enemy : this.map.getEnemies()) {
-            if (!enemy.isAlive()){
-                continue; //we can walk over dead enemies
+            if (!enemy.isAlive()) {
+                continue; // we can walk over dead enemies
             }
 
             if (proposedMove.intersects(enemy.getHitbox())) {
@@ -267,9 +266,9 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             }
         }
 
-        //Check vehicle collision
-        for (IVehicle vehicle : this.map.getVehicles()){
-            if (proposedMove.intersects(vehicle.getBounds())){
+        // Check vehicle collision
+        for (IVehicle vehicle : this.map.getVehicles()) {
+            if (proposedMove.intersects(vehicle.getBounds())) {
                 checkWinningCondition();
                 return false;
             }
@@ -375,7 +374,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
     }
 
-    public HashMap<GunType, IGun> getOwnedGuns(){
+    public HashMap<GunType, IGun> getOwnedGuns() {
         return this.guns;
     }
 
@@ -411,10 +410,11 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void takeDamage(int damage) {
-        if (this.map.getGameState() != GameState.ACTIVE_GAME){
+        if (this.map.getGameState() != GameState.ACTIVE_GAME) {
             return;
         }
-        int newHP = (armor > 0) ? this.currentHP - damage/2 : this.currentHP - damage; //half damage if armor is active
+        int newHP = (armor > 0) ? this.currentHP - damage / 2 : this.currentHP - damage; // half damage if armor is
+                                                                                         // active
 
         boolean overHalf = this.currentHP >= 50;
         boolean notDead = this.currentHP > 0;
@@ -423,15 +423,15 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         } else {
             this.currentHP = newHP;
         }
-        if (notDead && this.currentHP == 0){
+        if (notDead && this.currentHP == 0) {
             this.map.getSoundHandler().playPlayerDamageSound(1);
-        }else if (overHalf && this.currentHP < 50){
+        } else if (overHalf && this.currentHP < 50) {
             this.map.getSoundHandler().playPlayerDamageSound(0);
         }
-        if (this.currentHP == 0 && this.map.getGameState() != GameState.GAME_OVER){
+        if (this.currentHP == 0 && this.map.getGameState() != GameState.GAME_OVER) {
             this.map.setGameState(GameState.GAME_OVER);
         }
-        if(armor > 0){
+        if (armor > 0) {
             armor--;
         }
     }
@@ -465,16 +465,18 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             case DEAGLE -> {
                 shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map);
                 this.map.addShot(shot);
-                if(buffType == BuffType.DAMAGE){
-                map.getCamera().startShake(8,8);
-            }}
+                if (buffType == BuffType.DAMAGE) {
+                    map.getCamera().startShake(8, 8);
+                }
+            }
 
             case MP5 -> {
                 shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map);
                 this.map.addShot(shot);
-                if(buffType == BuffType.DAMAGE){
-                map.getCamera().startShake(4,6);
-            }}
+                if (buffType == BuffType.DAMAGE) {
+                    map.getCamera().startShake(4, 6);
+                }
+            }
 
             case SHOTGUN -> {
                 for (int i = 0; i < 10; i++) {
@@ -485,14 +487,15 @@ public class Player implements IControllablePlayer, IViewablePlayer {
                         hit.enemy().takeDamage(this.currentGun.damage(this.buffType));
                     }
                 }
-                if(buffType == BuffType.DAMAGE){
-                map.getCamera().startShake(12,15);}
+                if (buffType == BuffType.DAMAGE) {
+                    map.getCamera().startShake(12, 15);
+                }
                 return true;
             }
 
             default -> {
                 shot = new PistolShot(x1, y1, hit.x(), hit.y(), this.map);
-                this.map.addShot(shot); //Should not happen
+                this.map.addShot(shot); // Should not happen
             }
         }
 
@@ -615,18 +618,17 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         return this.buffType;
     }
 
-
-    public void setBuffCounter(Collectable buff){
+    public void setBuffCounter(Collectable buff) {
         this.buffCounter = buff.getAmount();
         this.buffType = buff.getBuffType();
     }
 
-    public void increaseArmor(int amount){
+    public void increaseArmor(int amount) {
         this.armor += amount;
     }
 
     @Override
-    public int getArmor(){
+    public int getArmor() {
         return this.armor;
     }
 
@@ -648,7 +650,6 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             handler.resumeMusic();
         }
     }
-
 
     @Override
     public void reload() {
