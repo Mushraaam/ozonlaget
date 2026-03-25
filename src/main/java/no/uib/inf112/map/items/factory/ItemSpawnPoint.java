@@ -45,6 +45,7 @@ public class ItemSpawnPoint {
         //Inventory items
         this.totalInventoryItemsOnMap = new EnumMap<>(CollectableType.class);
         this.totalInventoryItemsOnMap.put(CollectableType.GATEKEY, 1);
+        this.totalInventoryItemsOnMap.put(CollectableType.CHOPPERKEY, 1);
         this.totalInventoryItemsOnMap.put(CollectableType.GASCAN, 6);
 
     }
@@ -103,10 +104,15 @@ public class ItemSpawnPoint {
         ICollectable gateKey = createItem(CollectableType.GATEKEY, gateKeySpot);
         this.map.addToActiveItems(gateKey);
         this.spawnPoints.put(gateKeySpot, gateKey);
-
         allSpots.removeFirst(); //exclude key spot
 
         Collections.shuffle(allSpots, this.random);
+
+        Rectangle2D.Double chopperKeySpot = allSpots.getFirst();
+        ICollectable chopperkey = createItem(CollectableType.CHOPPERKEY, chopperKeySpot);
+        this.map.addToActiveItems(chopperkey);
+        this.spawnPoints.put(chopperKeySpot, chopperkey);
+        allSpots.removeFirst(); //exclude key spot
 
         int gasCansToSpawn = totalInventoryItemsOnMap.getOrDefault(CollectableType.GASCAN, 0);
 
@@ -168,7 +174,7 @@ public class ItemSpawnPoint {
             case POWERUP_SPEED -> {
                 return new SpeedBuff(hitBox, type, map);
             }
-            case GATEKEY, GASCAN -> {
+            case GATEKEY, GASCAN, CHOPPERKEY -> {
                 return new InventoryItem(hitBox, type, map);}
 
             default -> throw new IllegalArgumentException("Unknown Item Type");

@@ -98,6 +98,8 @@ public interface IMap {
      */
     ArrayList<IEnemy> getEnemies();
 
+    IVehicle getHelicopter();
+
     /**
      * Refreshes occupied cells
      */
@@ -237,4 +239,5 @@ public interface IMap {
     ItemFactory getItemFactory();
 
     void setPlayer(IPlayer player);
+
 }

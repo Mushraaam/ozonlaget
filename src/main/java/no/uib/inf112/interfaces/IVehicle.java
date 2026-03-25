@@ -9,6 +9,10 @@ public interface IVehicle {
      */
     public Rectangle2D.Double getBounds();
 
+    boolean isFuelFull();
+
+    void depositGas();
+
     /**
      * @return index for vehicle animation
      */
