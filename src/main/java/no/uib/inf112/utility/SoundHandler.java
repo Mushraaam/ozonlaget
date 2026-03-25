@@ -57,8 +57,6 @@ public class SoundHandler {
     private void loadBuffMusic() {
         this.buffMusic = new HashMap<>();
         this.buffMusic.put(BuffType.RAINBOW, "/no/uib/inf112/sound/buffs/rainbowBuff.wav");
-        // this.buffMusic.put(BuffType.DAMAGE,
-        // "/no/uib/inf112/sound/buffs/damageBuff.wav");
         this.buffMusic.put(BuffType.DAMAGE, "/no/uib/inf112/sound/buffs/rollwav.wav");
         this.buffMusic.put(BuffType.SPEED, "/no/uib/inf112/sound/buffs/trolwav.wav");
 
@@ -83,7 +81,7 @@ public class SoundHandler {
         this.gameMusic = new HashMap<>();
         this.gameMusic.put(GameState.MAIN_MENU, "/no/uib/inf112/sound/music/mainMenuSong.wav");
         this.gameMusic.put(GameState.ACTIVE_GAME, "/no/uib/inf112/sound/music/activeGameSong.wav");
-        this.gameMusic.put(GameState.GAME_OVER, "/no/uib/inf112/sound/music/gameover.wav");
+        this.gameMusic.put(GameState.GAME_OVER, "/no/uib/inf112/sound/music/gameOverSong.wav");
     }
 
     private void loadClips() {
