@@ -12,7 +12,6 @@ public final class ImageReader {
         /* This utility class should not be instantiated */
     }
 
-
     /**
      * @param url relative filepath
      * @return BufferedImage

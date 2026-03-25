@@ -108,8 +108,8 @@ public class ImageHandler {
                 }
         }
 
-        //for now, only vehicle is helicopter 
-        public BufferedImage getVehicleImage(int index){
+        // for now, only vehicle is helicopter
+        public BufferedImage getVehicleImage(int index) {
                 return this.helicopter.get(index);
         }
 

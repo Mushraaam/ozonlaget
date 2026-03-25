@@ -28,21 +28,20 @@ public class DeathOverlay implements IDrawer {
             }
         }
 
-        //save old settings
+        // save old settings
         var oldComposite = graphic.getComposite();
         var oldTransform = graphic.getTransform();
 
-        
-        //transform coordinates to screen
+        // transform coordinates to screen
         graphic.setTransform(new java.awt.geom.AffineTransform());
         Rectangle2D bounds = graphic.getClipBounds();
-        
-        //set transparrency - should gradually become more solid
+
+        // set transparrency - should gradually become more solid
         graphic.setComposite(AlphaComposite.getInstance(
                 AlphaComposite.SRC_OVER,
                 this.alpha));
 
-        //draw image/background
+        // draw image/background
         int screenWidth = (int) bounds.getWidth();
         int imageHeight = 800;
         int x = 0;
@@ -57,7 +56,7 @@ public class DeathOverlay implements IDrawer {
                 imageHeight,
                 null);
 
-        //reset coordinates
+        // reset coordinates
         graphic.setComposite(oldComposite);
         graphic.setTransform(oldTransform);
     }

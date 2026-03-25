@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 import no.uib.inf112.map.Map;
-import no.uib.inf112.utility.Camera;
 import no.uib.inf112.controller.Controller;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.view.GameDrawer;

@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.utility.ImageHandler;
 
-public class MainMenu implements IDrawer{
+public class MainMenu implements IDrawer {
 
     private Rectangle2D.Double startButton;
     private Rectangle2D.Double settingsButton;
@@ -42,7 +42,7 @@ public class MainMenu implements IDrawer{
         this.helpButton = new Rectangle2D.Double();
     }
 
-    //use for later when going back to mainmenu
+    // use for later when going back to mainmenu
     public void resetAnimation() {
         startAnimationStarted = false;
         settingAnimationStarted = false;
@@ -72,7 +72,7 @@ public class MainMenu implements IDrawer{
         BufferedImage titleImage = handler.getMenuTitle();
 
         int width = 1100;
-        
+
         double aspectRatio = (double) titleImage.getHeight() / titleImage.getWidth();
         int height = (int) (width * aspectRatio);
 
@@ -103,20 +103,18 @@ public class MainMenu implements IDrawer{
         }
 
         graphic.drawImage(
-            startImage, 
-            (int) startButtonX, 
-            (int) startButtonY, 
-            BUTTON_WIDTH, 
-            BUTTON_HEIGHT,
-            null
-        );
+                startImage,
+                (int) startButtonX,
+                (int) startButtonY,
+                BUTTON_WIDTH,
+                BUTTON_HEIGHT,
+                null);
 
         startButton.setRect(
-            startButtonX + MARGIN_LEFT,
-            startButtonY + MARGIN_TOP,
-            (double)BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
-            (double)BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM
-        );
+                startButtonX + MARGIN_LEFT,
+                startButtonY + MARGIN_TOP,
+                (double) BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
+                (double) BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM);
     }
 
     private void drawSettingsButton(Graphics2D graphic) {
@@ -140,20 +138,18 @@ public class MainMenu implements IDrawer{
         }
 
         graphic.drawImage(
-            settingImage,
-            (int) settingsButtonX,
-            (int) settingsButtonY,
-            BUTTON_WIDTH,
-            BUTTON_HEIGHT,
-            null
-        );
+                settingImage,
+                (int) settingsButtonX,
+                (int) settingsButtonY,
+                BUTTON_WIDTH,
+                BUTTON_HEIGHT,
+                null);
 
         settingsButton.setRect(
-            settingsButtonX + MARGIN_LEFT - 2,
-            settingsButtonY + MARGIN_TOP - 3,
-            (double)BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT + 3,
-            (double)BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 3
-        );
+                settingsButtonX + MARGIN_LEFT - 2,
+                settingsButtonY + MARGIN_TOP - 3,
+                (double) BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT + 3,
+                (double) BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 3);
     }
 
     private void drawHelpButton(Graphics2D graphic) {
@@ -166,7 +162,7 @@ public class MainMenu implements IDrawer{
 
         if (!helpAnimationStarted) {
             helpButtonX = targetX;
-            helpButtonY = (double)bounds.height + BUTTON_HEIGHT;
+            helpButtonY = (double) bounds.height + BUTTON_HEIGHT;
             helpAnimationStarted = true;
         }
 
@@ -177,20 +173,18 @@ public class MainMenu implements IDrawer{
         }
 
         graphic.drawImage(
-            helpImage,
-            (int) helpButtonX,
-            (int) helpButtonY,
-            BUTTON_WIDTH,
-            BUTTON_HEIGHT,
-            null
-        );
+                helpImage,
+                (int) helpButtonX,
+                (int) helpButtonY,
+                BUTTON_WIDTH,
+                BUTTON_HEIGHT,
+                null);
 
         helpButton.setRect(
-            helpButtonX + MARGIN_LEFT,
-            helpButtonY + MARGIN_TOP - 2,
-            (double)BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
-            (double)BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 2
-        );
+                helpButtonX + MARGIN_LEFT,
+                helpButtonY + MARGIN_TOP - 2,
+                (double) BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
+                (double) BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 2);
     }
 
     public Rectangle2D.Double getStartButton() {
@@ -200,5 +194,5 @@ public class MainMenu implements IDrawer{
     public Rectangle2D.Double getHelpButton() {
         return helpButton;
     }
-    
+
 }

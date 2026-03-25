@@ -35,7 +35,7 @@ public class Camera {
 
         double minTranslateX = screenWidth - mapBounds.getWidth();
         double minTranslateY = screenHeight - mapBounds.getHeight() - UI_HEIGHT; // allow UI to go below grid
-        
+
         tx = Math.clamp(tx, minTranslateX, 0);
         ty = Math.clamp(ty, minTranslateY, 0);
 
@@ -54,6 +54,7 @@ public class Camera {
         }
         g.translate(this.translateX + currentOffsetX, this.translateY + currentOffsetY);
     }
+
     public Point2D.Double screenToWorld(double screenX, double screenY) {
         return new Point2D.Double(screenX - translateX, screenY - translateY);
     }

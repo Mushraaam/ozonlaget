@@ -20,13 +20,14 @@ public class Helicopter implements IVehicle {
         this.bounds = bounds;
         this.index = 0;
     }
+
     @Override
-    public boolean isFuelFull(){
+    public boolean isFuelFull() {
         return this.gasDeposited >= GAS_NEEDED;
     }
 
     @Override
-    public void depositGas(){
+    public void depositGas() {
         gasDeposited++;
     }
 
