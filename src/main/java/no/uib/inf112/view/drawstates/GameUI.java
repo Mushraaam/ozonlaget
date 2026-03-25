@@ -19,13 +19,13 @@ public class GameUI implements IDrawer {
     private static final int GUN_WIDTH = Config.getInt("uiGunWidth");
     private static final int GUN_HEIGHT = Config.getInt("uiGunHeight");
     private static final Font AMMO_FONT = new Font("Arial", Font.BOLD, 46);
-    private static final Color AMMO_COLOR = new Color(57, 255, 20); // neon green
+    private static final Color AMMO_COLOR = new Color(50, 201, 23); // neon green
     // healthBar
     private static final int HP_BAR_WIDTH = 350;
     private static final int HP_BAR_HEIGHT = 70;
     private static final Color HP_BACK = new Color(25, 25, 25, 180);
     private static final Color HP_BORDER = new Color(200, 200, 200, 180);
-    private static final Color GREEN = new Color(57, 255, 20);
+    private static final Color GREEN = new Color(50, 201, 23);
     private static final Color ORANGE = new Color(255, 215, 0);
     private static final Color RED = new Color(255, 70, 70);
     private static final Font HP_TEXT_FONT = new Font("Arial", Font.BOLD, 30);
