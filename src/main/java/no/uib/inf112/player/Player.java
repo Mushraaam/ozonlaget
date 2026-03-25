@@ -6,6 +6,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
+import com.badlogic.gdx.Game;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.controller.DirectionHandler;
 import no.uib.inf112.enums.*;
@@ -123,12 +124,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     }
 
     private void checkWinningCondition(){
-
-        if (map.getGameState() != GameState.ACTIVE_GAME){
-            return;
-        }
-
-        if(map.getHelicopter().isFuelFull()){
+        if(map.getHelicopter().isFuelFull() && map.getGameState() == GameState.ACTIVE_GAME){
             //got enough fuel
             if(inventory.getAmountInInventory(CollectableType.CHOPPERKEY) != 0){
                 map.setGameState(GameState.VICTORY);
