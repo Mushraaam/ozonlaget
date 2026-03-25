@@ -8,7 +8,7 @@ import no.uib.inf112.interfaces.IVehicle;
 public class Helicopter implements IVehicle {
 
     private static final int ANIMATION_COUNT = 7;
-    private static final int EXPAND_LIMIT = 40;
+    private static final int EXPAND_LIMIT = 60;
     private static final double SPEED = 6;
     private IMap map;
     private Rectangle2D.Double bounds;
@@ -38,13 +38,13 @@ public class Helicopter implements IVehicle {
     }
 
     private void expandBounds() {
-        this.bounds = new Rectangle2D.Double(
-                this.bounds.getX() - 0.05 * expansion,
-                this.bounds.getY() - 0.05 * expansion,
-                this.bounds.width + 0.1 * expansion,
-                this.bounds.height + 0.1 * expansion);
         if (this.expansion < EXPAND_LIMIT) {
             this.expansion++;
+            this.bounds = new Rectangle2D.Double(
+                    this.bounds.getX() - 0.05 * expansion,
+                    this.bounds.getY() - 0.05 * expansion,
+                    this.bounds.width + 0.1 * expansion,
+                    this.bounds.height + 0.1 * expansion);
         }
         if (this.expansion == EXPAND_LIMIT) {
             move();
@@ -54,11 +54,11 @@ public class Helicopter implements IVehicle {
 
     private void move() {
 
-            this.bounds = new Rectangle2D.Double(
-                    this.bounds.getX() + SPEED,
-                    this.bounds.getY(),
-                    this.bounds.getWidth(),
-                    this.bounds.getHeight());
+        this.bounds = new Rectangle2D.Double(
+                this.bounds.getX() + SPEED,
+                this.bounds.getY(),
+                this.bounds.getWidth(),
+                this.bounds.getHeight());
 
     }
 

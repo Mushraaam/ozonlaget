@@ -23,6 +23,7 @@ import no.uib.inf112.view.drawstates.GameScreen;
 import no.uib.inf112.view.drawstates.HelpMenu;
 import no.uib.inf112.view.drawstates.MainMenu;
 import no.uib.inf112.view.drawstates.RainbowBuffOverlay;
+import no.uib.inf112.view.drawstates.VictoryOverlay;
 
 public class GameDrawer extends JPanel {
 
@@ -32,10 +33,11 @@ public class GameDrawer extends JPanel {
     private IDrawer debugScreen;
     private IDrawer rainbowBuffOverlay;
     private IDrawer helpScreen;
+    private IDrawer gameOverOverlay;
+    private IDrawer victoryOverlay;
 
     private ImageHandler handler;
     private Camera camera;
-    private DeathOverlay gameOverOverlay;
 
     public GameDrawer(IMap map) {
         this.map = map;
@@ -49,6 +51,8 @@ public class GameDrawer extends JPanel {
         this.rainbowBuffOverlay = new RainbowBuffOverlay(map);
         this.helpScreen = new HelpMenu(handler);
         this.gameOverOverlay = new DeathOverlay(handler);
+        this.victoryOverlay = new VictoryOverlay();
+
 
         // Options
         this.setPreferredSize(new Dimension(Config.getInt("screenWidth"), Config.getInt("screenHeight")));
@@ -70,7 +74,7 @@ public class GameDrawer extends JPanel {
 
             case VICTORY ->{
                 this.gameScreen.draw(g2);
-                //TODO draw victory overlay
+                this.victoryOverlay.draw(g2);
             }
 
             case MAIN_MENU -> {

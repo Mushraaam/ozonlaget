@@ -269,6 +269,10 @@ public class Controller
                 gameOverPressEvent(e);
             }
 
+            case VICTORY -> {
+                victoryPressEvent(e);
+            }
+
             default -> {
                 /*  */
             }
@@ -326,7 +330,7 @@ public class Controller
                                                                                                                  // atm
             }
             case KeyEvent.VK_L -> {
-                //Set gamestate to victory - debug
+                // Set gamestate to victory - debug
                 this.map.setGameState(GameState.VICTORY);
             }
             default -> {
@@ -336,6 +340,21 @@ public class Controller
     }
 
     private void gameOverPressEvent(KeyEvent e) {
+        switch (e.getKeyCode()) {
+
+            case KeyEvent.VK_R -> {
+                this.map.setLevel(1);
+                this.map.resetMap();
+                initiateMap();
+            }
+
+            default -> {
+                /* Do nothing */
+            }
+        }
+    }
+
+    private void victoryPressEvent(KeyEvent e) {
         switch (e.getKeyCode()) {
 
             case KeyEvent.VK_R -> {
