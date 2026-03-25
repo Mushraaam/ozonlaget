@@ -78,7 +78,7 @@ public class GameScreen implements IDrawer {
         }
     }
 
-    private void drawWalls(Graphics2D graphic){
+    private void drawWalls(Graphics2D graphic) {
         for (IStaticObject o : map.getStaticObjects()) {
 
             // Optimize later
@@ -94,7 +94,7 @@ public class GameScreen implements IDrawer {
                     IWall wall = (IWall) obj;
                     BufferedImage image = handler.getWallImage(wall.getType(), wall.getWallDirection());
                     drawImage(graphic, image, wall.getBounds());
-                } 
+                }
             }
         }
     }
@@ -122,7 +122,6 @@ public class GameScreen implements IDrawer {
     /* Sentrerer kamera på player, holder seg innenfor bounds */
     private void centerCamera(Graphics2D graphic) {
 
-
         Rectangle2D.Double playerHitbox = this.map.getPlayer().getHitbox();
         Rectangle2D.Double mapBounds = map.getBounds();
 
@@ -148,8 +147,7 @@ public class GameScreen implements IDrawer {
                 player.getHitbox().getX() + player.getHitbox().getWidth() * 0.15,
                 player.getHitbox().getY() + player.getHitbox().getHeight() * 0.10,
                 player.getHitbox().getWidth() * 0.7,
-                player.getHitbox().getHeight() * 0.7
-        );
+                player.getHitbox().getHeight() * 0.7);
 
         drawRotated(graphic, feet, feetBounds, player.getFacingAngle());
         drawRotated(graphic, body, player.getHitbox(), player.getFacingAngle());
@@ -173,10 +171,16 @@ public class GameScreen implements IDrawer {
     private void drawEnemies(Graphics2D graphic) {
         for (IEnemy e : map.getEnemies()) {
             if (isVisible(graphic, e.getHitbox())) {
+
+                Rectangle2D.Double hitbox = e.getHitbox();
+
                 drawRotated(
                         graphic,
                         handler.getEnemySprites(e.getEnemyType(), e.currentAction(), e.getAnimationIndex()),
-                        e.getHitbox(),
+                        new Rectangle2D.Double(hitbox.getX() - 0.25 * hitbox.width,
+                                hitbox.getY() - 0.25 * hitbox.height,
+                                hitbox.width * 1.5,
+                                hitbox.height * 1.5),
                         e.getFacingAngle());
             }
         }
