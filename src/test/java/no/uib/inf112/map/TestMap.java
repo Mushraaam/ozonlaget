@@ -264,4 +264,10 @@ public class TestMap implements IMap {
         throw new UnsupportedOperationException("Unimplemented method 'setLevel'");
     }
 
+    @Override
+    public ArrayList<IVehicle> getVehicles() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getVehicles'");
+    }
+
 }

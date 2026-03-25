@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import no.uib.inf112.config.Config;
+import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.utility.ImageHandler;
 import no.uib.inf112.utility.Camera;
@@ -43,10 +44,22 @@ public class GameScreen implements IDrawer {
         drawEnemies(graphic);
         drawGunShots(graphic);
         drawActiveItems(graphic);
-        drawPlayer(graphic);
+        if (map.getGameState() == GameState.ACTIVE_GAME) {
+            drawPlayer(graphic); //player disappears if not playing
+        }
+        drawVehicles(graphic);
         drawDarkness(graphic);
 
         this.ui.draw(graphic);
+    }
+
+    private void drawVehicles(Graphics2D graphic) {
+        for (IVehicle vehicle : this.map.getVehicles()) {
+            // For now only vehicle is helicopter
+            if (isVisible(graphic, vehicle.getBounds())) {
+                drawImage(graphic, this.handler.getVehicleImage(vehicle.getIndex()), vehicle.getBounds());
+            }
+        }
     }
 
     private void drawDarkness(Graphics2D graphic) {

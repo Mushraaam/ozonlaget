@@ -21,4 +21,9 @@ public interface ILevel {
     public Factory getFactory();
 
     public ItemFactory getItemFactory();
+
+    /**
+     * @return list of all vehicles
+     */
+    public ArrayList<IVehicle> getVehicles();
 }

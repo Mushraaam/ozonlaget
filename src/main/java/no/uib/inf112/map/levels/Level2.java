@@ -9,6 +9,7 @@ import no.uib.inf112.interfaces.ILevel;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.interfaces.IVehicle;
 import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
@@ -16,7 +17,6 @@ import no.uib.inf112.player.Player;
 import no.uib.inf112.terrain.floor.RockRoad;
 import no.uib.inf112.terrain.furniture.DarkWoodenTable;
 import no.uib.inf112.terrain.walls.WoodWall;
-
 
 public class Level2 implements ILevel {
 
@@ -42,6 +42,7 @@ public class Level2 implements ILevel {
     private IMap map;
     private Factory factory;
     private ItemFactory itemFactory;
+    private ArrayList<IVehicle> vehicles;
 
     public Level2(IMap map) {
 
@@ -56,6 +57,7 @@ public class Level2 implements ILevel {
         this.bounds = new Rectangle2D.Double(MAPX, MAPY, MAPWIDTH, MAPHEIGHT);
         this.player = new Player(new Rectangle2D.Double(START_X, START_Y, PLAYERWIDTH, PLAYERHEIGHT), this.bounds,
                 map);
+        this.vehicles = new ArrayList<>();
 
         generateStaticObjects();
         generateSpawnPoints();
@@ -65,7 +67,7 @@ public class Level2 implements ILevel {
         this.itemFactory = new ItemFactory(this.map);
     }
 
-    public Factory getFactory(){
+    public Factory getFactory() {
         return this.factory;
     }
 
@@ -74,20 +76,21 @@ public class Level2 implements ILevel {
         return this.itemFactory;
     }
 
-
     // midlertidig løsning -> spawner implementeres senere
 
     private void generateSpawnPoints() {
 
-        if (this.map == null){
-                throw new IllegalStateException("Map cannot be null");
+        if (this.map == null) {
+            throw new IllegalStateException("Map cannot be null");
         }
-        //top left, top right, bot left, bot right
+        // top left, top right, bot left, bot right
         this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(10, 10, 150, 150)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double(50, (double)MAPHEIGHT - 150, 100, 100)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double((double)MAPWIDTH - 150, (double)MAPHEIGHT - 150, 100, 100)));
-        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double((double)MAPWIDTH - 150, 50, 100, 100)));
-}
+        this.map.addSpawnPoint(
+                new SpawnPoint(this.map, new Rectangle2D.Double(50, (double) MAPHEIGHT - 150, 100, 100)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map,
+                new Rectangle2D.Double((double) MAPWIDTH - 150, (double) MAPHEIGHT - 150, 100, 100)));
+        this.map.addSpawnPoint(new SpawnPoint(this.map, new Rectangle2D.Double((double) MAPWIDTH - 150, 50, 100, 100)));
+    }
 
     private void generateItemSpawnPoints() {
         if (this.map == null) {
@@ -98,7 +101,6 @@ public class Level2 implements ILevel {
         ArrayList<Rectangle2D.Double> inventoryItemSpawnPoints = new ArrayList<>();
 
         double size = Config.getInt("collectableSize");
-
 
         itemSpawnPoints.add(new Rectangle2D.Double(1300, 1000, size, size));
         itemSpawnPoints.add(new Rectangle2D.Double(1300, 1100, size, size));
@@ -111,8 +113,10 @@ public class Level2 implements ILevel {
     private void generateStaticObjects() {
 
         this.floors.add(new RockRoad(new Rectangle2D.Double(1100, 1100, 200, 300)));
-        this.staticObjects.add(new WoodWall(new Rectangle2D.Double(1000, 1000, 10, 100), StaticObjectType.LONG_WOODEN_WALL));
-        this.staticObjects.add(new DarkWoodenTable(new Rectangle2D.Double(1100, 1100, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
+        this.staticObjects
+                .add(new WoodWall(new Rectangle2D.Double(1000, 1000, 10, 100), StaticObjectType.LONG_WOODEN_WALL));
+        this.staticObjects.add(new DarkWoodenTable(
+                new Rectangle2D.Double(1100, 1100, Config.getInt("tableWidth"), Config.getInt("tableHeight"))));
 
     }
 
@@ -139,5 +143,10 @@ public class Level2 implements ILevel {
     @Override
     public int levelNumber() {
         return LEVELNUMBER;
+    }
+
+    @Override
+    public ArrayList<IVehicle> getVehicles() {
+        return this.vehicles;
     }
 }

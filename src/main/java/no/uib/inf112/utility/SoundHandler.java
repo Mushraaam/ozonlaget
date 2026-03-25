@@ -82,6 +82,7 @@ public class SoundHandler {
         this.gameMusic.put(GameState.MAIN_MENU, "/no/uib/inf112/sound/music/mainMenuSong.wav");
         this.gameMusic.put(GameState.ACTIVE_GAME, "/no/uib/inf112/sound/music/activeGameSong.wav");
         this.gameMusic.put(GameState.GAME_OVER, "/no/uib/inf112/sound/music/gameOverSong.wav");
+        this.gameMusic.put(GameState.VICTORY, "/no/uib/inf112/sound/music/victorySong.wav");
     }
 
     private void loadClips() {

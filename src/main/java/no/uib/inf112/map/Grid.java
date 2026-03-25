@@ -13,6 +13,7 @@ import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.interfaces.IVehicle;
 
 public class Grid implements IGrid {
 
@@ -48,6 +49,7 @@ public class Grid implements IGrid {
 
         this.cellGrid = makeGrid(this.rowCount, this.colCount, CELLWIDTH, CELLHEIGHT, FloorType.NONE);
         fillGrid(this.cellGrid, map.getStaticObjects());
+        fillGridWithVehicles(this.cellGrid, this.map.getVehicles());
 
         int[] levelsToCompute = { 1, 2, 3, 4 }; // supports up to size 8 (large atm).
         for (int r = 0; r < rowCount; r++) {
@@ -61,6 +63,46 @@ public class Grid implements IGrid {
             }
         }
 
+    }
+
+    private void fillGridWithVehicles(ArrayList<ArrayList<ICell>> grid, ArrayList<IVehicle> vehicles) {
+        // Sets illegal cells for all enemies
+        for (ArrayList<ICell> row : grid) {
+            for (ICell cell : row) {
+                for (IVehicle vehicle : vehicles) {
+                    if (cell.getBounds().intersects(vehicle.getBounds())) {
+                        cell.setPathType(PathType.BLOCKED);
+                    }
+                }
+            }
+        }
+
+        // Sets illegal cells for medium and large enemies
+        for (ArrayList<ICell> row : grid) {
+            for (ICell cell : row) {
+                if (cell.pathType() == PathType.BLOCKED) {
+                    for (ICell neighbour : getNeighbours(cell)) {
+                        if (neighbour.pathType() != PathType.BLOCKED) {
+                            neighbour.setPathType(PathType.BLOCKED_FOR_MEDIUM);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Sets illegal cells for large enemies
+        for (ArrayList<ICell> row : grid) {
+            for (ICell cell : row) {
+                if (cell.pathType() == PathType.BLOCKED_FOR_MEDIUM) {
+                    for (ICell neighbour : getNeighbours(cell)) {
+                        PathType type = neighbour.pathType();
+                        if (type != PathType.BLOCKED && type != PathType.BLOCKED_FOR_MEDIUM) {
+                            neighbour.setPathType(PathType.BLOCKED_FOR_LARGE);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

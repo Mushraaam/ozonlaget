@@ -8,6 +8,7 @@ import no.uib.inf112.interfaces.IGunShot;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.interfaces.IPuddle;
+import no.uib.inf112.interfaces.IVehicle;
 import no.uib.inf112.map.items.buffs.RainbowBuff;
 import no.uib.inf112.map.items.factory.ItemFactory;
 import no.uib.inf112.map.npcs.factory.Factory;
@@ -143,6 +144,14 @@ public class Controller
             for (IProjectile projectile : projectiles) {
                 projectile.move();
             }
+
+            if (this.map.getGameState() == GameState.VICTORY) {
+                ArrayList<IVehicle> vehicles = map.getVehicles();
+                for (IVehicle vehicle : vehicles) {
+                    vehicle.increment();
+                }
+            }
+
         });
 
         this.repaintTimer = new Timer(8, e -> {
@@ -308,18 +317,23 @@ public class Controller
                 flipDebug();
             }
             case KeyEvent.VK_O -> {
-                map.addToActiveItems(new RainbowBuff(player.getHitbox(), CollectableType.POWERUP_RAINBOW, map)); //spawns rainbow item ontop of player atm
+                map.addToActiveItems(new RainbowBuff(player.getHitbox(), CollectableType.POWERUP_RAINBOW, map)); // spawns
+                                                                                                                 // rainbow
+                                                                                                                 // item
+                                                                                                                 // ontop
+                                                                                                                 // of
+                                                                                                                 // player
+                                                                                                                 // atm
             }
             case KeyEvent.VK_L -> {
-                // place puddle on player
-                this.map.addAOEPuddle(new AcidPuddle(this.player.getHitbox(), this.map));
+                //Set gamestate to victory - debug
+                this.map.setGameState(GameState.VICTORY);
             }
             default -> {
                 /* Do nothing */
             }
         }
     }
-    
 
     private void gameOverPressEvent(KeyEvent e) {
         switch (e.getKeyCode()) {

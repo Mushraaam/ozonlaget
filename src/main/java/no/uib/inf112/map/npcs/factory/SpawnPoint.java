@@ -10,6 +10,7 @@ import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.interfaces.IVehicle;
 import no.uib.inf112.map.npcs.Ghoul;
 
 public class SpawnPoint {
@@ -22,7 +23,8 @@ public class SpawnPoint {
     private static final int LARGE = Config.getInt("largeEnemy");
 
     /* Ensures no zombies spawn in view of / near player */
-    private static final double SAFE_ZONE = Math.ceil(Math.hypot(Config.getInt("screenWidth"), Config.getInt("screenHeight")) / 2);
+    private static final double SAFE_ZONE = Math
+            .ceil(Math.hypot(Config.getInt("screenWidth"), Config.getInt("screenHeight")) / 2);
 
     public SpawnPoint(IMap map, Rectangle2D.Double bounds) {
         this.map = map;
@@ -30,7 +32,7 @@ public class SpawnPoint {
         this.random = new Random();
     }
 
-    public Rectangle2D.Double bounds(){
+    public Rectangle2D.Double bounds() {
         return this.bounds;
     }
 
@@ -98,6 +100,14 @@ public class SpawnPoint {
                 return false;
             }
         }
+
+        // Check vehicle collision
+        for (IVehicle vehicle : this.map.getVehicles()) {
+            if (hitBox.intersects(vehicle.getBounds())) {
+                return false;
+            }
+        }
+
         return true;
     }
 

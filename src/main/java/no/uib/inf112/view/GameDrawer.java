@@ -67,6 +67,12 @@ public class GameDrawer extends JPanel {
                 this.gameScreen.draw(g2);
                 checkBuffs(this.map.getPlayer().buffType(), g2);
             }
+
+            case VICTORY ->{
+                this.gameScreen.draw(g2);
+                //TODO draw victory overlay
+            }
+
             case MAIN_MENU -> {
                 this.mainMenu.draw(g2);
             }

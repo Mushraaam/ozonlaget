@@ -217,6 +217,11 @@ public interface IMap {
      */
     public void setLevel(int level);
 
+    /**
+     * @return list of all vehicles
+     */
+    public ArrayList<IVehicle> getVehicles();
+
     ArrayList<ICollectable> getActiveItems();
 
     void addToActiveItems(ICollectable item);

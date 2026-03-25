@@ -49,6 +49,8 @@ public class Map implements IMap {
     private ItemFactory itemFactory;
     private int totalDroppedLoot = 0;
 
+    private ArrayList<IVehicle> vehicles;
+
     public Map() {
         this.camera = new Camera(0, 0);
         this.soundHandler = new SoundHandler();
@@ -89,6 +91,7 @@ public class Map implements IMap {
     @Override
     public void setLevel(int level) {
 
+        this.vehicles = new ArrayList<>();
         this.activeItems = new ArrayList<>();
         this.spawnPoints = new ArrayList<>();
         this.buffItemSpawnpoint = new ArrayList<>();
@@ -111,7 +114,8 @@ public class Map implements IMap {
         this.floors = this.level.getFloor();
         this.levelNumber = this.level.levelNumber();
         this.debug = false;
-        this.staticObjects = this.level.getStaticObjects();;
+        this.staticObjects = this.level.getStaticObjects();
+        this.vehicles = this.level.getVehicles();
     }
 
     @Override
@@ -345,6 +349,11 @@ public class Map implements IMap {
     @Override
     public void setPlayer(IPlayer player) {
         this.player = player;
+    }
+
+    @Override
+    public ArrayList<IVehicle> getVehicles() {
+        return this.vehicles;
     }
 
 }

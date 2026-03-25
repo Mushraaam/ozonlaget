@@ -9,6 +9,7 @@ import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.interfaces.IVehicle;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
@@ -471,6 +472,13 @@ public abstract class NPC implements IEnemy {
 
             Rectangle2D enemyCore = new Rectangle2D.Double(coreX, coreY, coreW, coreH);
             if (movementHitbox.intersects(enemyCore)) {
+                return false;
+            }
+        }
+
+        //Check vehicle collision
+        for (IVehicle vehicle : this.map.getVehicles()){
+            if (candidate.intersects(vehicle.getBounds())){
                 return false;
             }
         }

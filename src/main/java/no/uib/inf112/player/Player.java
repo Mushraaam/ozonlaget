@@ -228,6 +228,13 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             }
         }
 
+        //Check vehicle collision
+        for (IVehicle vehicle : this.map.getVehicles()){
+            if (proposedMove.intersects(vehicle.getBounds())){
+                return false;
+            }
+        }
+
         return true;
     }
 
