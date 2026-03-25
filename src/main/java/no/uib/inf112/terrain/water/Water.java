@@ -18,7 +18,7 @@ public class Water implements IStaticDrawableObject {
                 || this.bounds.getHeight() != Config.getInt("waterHeight")) {
             throw new IllegalArgumentException("Height/Width must be consistent with config height/width");
         }
-        
+
     }
 
     @Override

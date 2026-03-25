@@ -64,8 +64,8 @@ public class DarknessOverlay implements IDrawer {
         overlayGraphics.fillRect(0, 0, width, height);
 
         overlayGraphics.setComposite(AlphaComposite.SrcOver);
-        int redness = map.getPlayer().buffType() == BuffType.DAMAGE ? map.getPlayer().buffCountDown()*4 : 0;
-        int greenness = map.getPlayer().buffType() == BuffType.SPEED ? map.getPlayer().buffCountDown()*4 : 0;
+        int redness = map.getPlayer().buffType() == BuffType.DAMAGE ? map.getPlayer().buffCountDown() * 4 : 0;
+        int greenness = map.getPlayer().buffType() == BuffType.SPEED ? map.getPlayer().buffCountDown() * 4 : 0;
         overlayGraphics.setColor(new Color(redness, greenness, 0, 220));
         overlayGraphics.fillRect(0, 0, width, height);
 

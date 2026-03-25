@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.utility.ImageHandler;
 
@@ -14,7 +13,7 @@ public class HelpMenu implements IDrawer {
 
     private ImageHandler handler;
 
-    public HelpMenu(ImageHandler handler){
+    public HelpMenu(ImageHandler handler) {
         this.handler = handler;
     }
 

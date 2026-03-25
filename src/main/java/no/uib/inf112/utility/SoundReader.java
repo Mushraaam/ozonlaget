@@ -8,13 +8,12 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 public final class SoundReader {
-    
+
     private SoundReader() {
         /* This utility class should not be instantiated */
     }
 
-    
-    static AudioInputStream loadSound(String url){
+    static AudioInputStream loadSound(String url) {
 
         URL path = SoundReader.class.getResource(url);
         try {

@@ -28,5 +28,5 @@ public class DarkWoodenTableSmall implements IStaticDrawableObject {
     public StaticObjectType getType() {
         return StaticObjectType.DARK_TABLE_SMALL;
     }
-    
+
 }

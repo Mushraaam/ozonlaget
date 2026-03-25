@@ -271,8 +271,7 @@ public class TestMap implements IMap {
 
     @Override
     public ArrayList<IVehicle> getVehicles() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getVehicles'");
+        return new ArrayList<>();
     }
 
 }

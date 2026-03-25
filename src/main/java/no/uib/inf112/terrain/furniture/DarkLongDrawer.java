@@ -9,7 +9,7 @@ import no.uib.inf112.interfaces.IStaticDrawableObject;
 public class DarkLongDrawer implements IStaticDrawableObject {
 
     private Rectangle2D.Double bounds;
-    
+
     public DarkLongDrawer(Rectangle2D.Double bounds) {
         this.bounds = bounds;
     }

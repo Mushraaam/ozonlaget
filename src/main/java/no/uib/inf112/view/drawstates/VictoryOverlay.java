@@ -34,6 +34,5 @@ public class VictoryOverlay implements IDrawer {
 
         graphic.setColor(Color.WHITE);
         graphic.drawString(text, xText, yText);
-
     }
 }
