@@ -15,7 +15,7 @@ public class InventoryItem extends Collectable {
     @Override
     public void affectPlayer(
     ) {
-        player.addToInventory(this);
+        player.addToInventory(this.type);
     }
 
 }

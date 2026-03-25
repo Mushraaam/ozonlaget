@@ -39,7 +39,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     private BuffType buffType;
     private int buffCounter;
-    private HashMap<ICollectable, Integer> inventory = new HashMap<>();
+
+    private Inventory inventory;
 
 
 
@@ -64,6 +65,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         // buffs
         this.buffType = BuffType.NONE;
         this.buffCounter = 0;
+        this.inventory = new Inventory(this, map);
     }
 
     @Override
@@ -76,16 +78,27 @@ public class Player implements IControllablePlayer, IViewablePlayer {
      * @param item
      * @return an int of how many of this item the player holds.
      */
+    @Override
     public int getAmountInInventory(CollectableType item){
-        return inventory.getOrDefault(item, 0);
+        return inventory.getAmountInInventory(item);
     }
 
     /**
      * Adds a collectable to the player's inventory.
      * @param item
      */
-    public void addToInventory(ICollectable item){
-        inventory.put(item, inventory.getOrDefault(item, 0)+1);
+    public void addToInventory(CollectableType item){
+        inventory.addToInventory(item);
+    }
+
+    @Override
+    public void openCloseInventory(){
+        inventory.toggleVisible();
+    }
+
+    @Override
+    public Inventory getInventory(){
+        return inventory;
     }
 
     public void pressMove(Direction dir) {
@@ -99,6 +112,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     public boolean isMoving() {
         return dirHandler.isMoving();
     }
+
 
     public void updateMovement() {
         Direction dir = dirHandler.getDirection();

@@ -1,8 +1,14 @@
 package no.uib.inf112.interfaces;
 
+import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.Direction;
+import no.uib.inf112.player.Inventory;
 
 public interface IViewablePlayer extends IPlayer {
+
+    int getAmountInInventory(CollectableType item);
+
+    Inventory getInventory();
 
     /**
      * @return current direction
