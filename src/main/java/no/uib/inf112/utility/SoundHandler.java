@@ -60,6 +60,7 @@ public class SoundHandler {
         // this.buffMusic.put(BuffType.DAMAGE,
         // "/no/uib/inf112/sound/buffs/damageBuff.wav");
         this.buffMusic.put(BuffType.DAMAGE, "/no/uib/inf112/sound/buffs/rollwav.wav");
+        this.buffMusic.put(BuffType.SPEED, "/no/uib/inf112/sound/buffs/trolwav.wav");
 
     }
 

@@ -594,6 +594,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         this.buffCounter--;
         if (this.buffCounter <= 0) {
             this.buffType = BuffType.NONE;
+            this.playerSpeed = Config.getInt("playerMoveSpeed");
             handler.resumeMusic();
         }
     }
