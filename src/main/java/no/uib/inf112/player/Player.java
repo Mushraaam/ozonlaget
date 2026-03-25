@@ -131,7 +131,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
             }
         }
 
-        //if we need more fuel
+        //if we need more fuels
         while(!map.getHelicopter().isFuelFull() && inventory.getAmountInInventory(CollectableType.GASCAN) > 0){
             inventory.useItemFromInventory(CollectableType.GASCAN);
             map.getHelicopter().depositGas();
