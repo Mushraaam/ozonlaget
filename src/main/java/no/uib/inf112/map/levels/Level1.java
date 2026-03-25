@@ -209,7 +209,7 @@ public class Level1 implements ILevel {
 
                 // /////////
                 // helicopter area
-                this.floors.add(new RockRoad(new Rectangle2D.Double(0, 0, 450, 410)));
+                this.floors.add(new RockRoad(new Rectangle2D.Double(0, 0, 545, 410)));
                 
                 //Fence
                 staticObjects.add(new BarbedFence( // Bottom Left 1
@@ -217,15 +217,15 @@ public class Level1 implements ILevel {
                 staticObjects.add(new BarbedFence( // Bottom Left 2
                                 new Rectangle2D.Double(132.5, 430, 132.5, 15), StaticObjectType.BARBED_FENCE));
                 staticObjects.add(new BarbedFence( // Bottom Right
-                                new Rectangle2D.Double(358, 430, 122, 15), StaticObjectType.BARBED_FENCE));
+                                new Rectangle2D.Double(358, 430, 202, 15), StaticObjectType.BARBED_FENCE));
                 staticObjects.add(new BarbedFence( // Right Top
-                                new Rectangle2D.Double(470, 0, 15, 217.5), StaticObjectType.BARBED_FENCE));
+                                new Rectangle2D.Double(550, 0, 15, 217.5), StaticObjectType.BARBED_FENCE));
                 staticObjects.add(new BarbedFence( // Right Bottom
-                                new Rectangle2D.Double(470, 217.5, 15, 217.5), StaticObjectType.BARBED_FENCE));
+                                new Rectangle2D.Double(550, 217.5, 15, 217.5), StaticObjectType.BARBED_FENCE));
                 
                 //helicopter
                 this.vehicles.add(new Helicopter(new Rectangle2D.Double(
-                                50, 0, 420, 325
+                                110, 0, 420, 325
 
                 )));
                 // /////////
