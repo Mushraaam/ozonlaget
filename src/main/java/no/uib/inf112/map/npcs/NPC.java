@@ -94,7 +94,7 @@ public abstract class NPC implements IEnemy {
             return;
         }
 
-        List<ICell> nearbyCells = this.grid.getNearbyCells(this.pos, 1000);
+        List<ICell> nearbyCells = this.grid.getNearbyCells(this.pos, 400);
         if (nearbyCells == null || nearbyCells.isEmpty()) {
             return;
         }

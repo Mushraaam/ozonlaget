@@ -385,6 +385,9 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void takeDamage(int damage) {
+        if (this.map.getGameState() != GameState.ACTIVE_GAME){
+            return;
+        }
         int newHP = (armor > 0) ? this.currentHP - damage/2 : this.currentHP - damage; //half damage if armor is active
 
         boolean overHalf = this.currentHP >= 50;
