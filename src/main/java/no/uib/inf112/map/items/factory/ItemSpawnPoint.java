@@ -53,7 +53,6 @@ public class ItemSpawnPoint {
 
     public void dropLoot(CollectableType itemType, Rectangle2D.Double targetLocation){
         if(map.getTotalDroppedLoot() >= this.MAX_DROPPED_LOOT){
-            System.out.println("too many dropped items");
             return;
         }
         ICollectable newItem = createItem(itemType, targetLocation);
@@ -67,7 +66,6 @@ public class ItemSpawnPoint {
         refreshNodes();
 
         if (getCurrentCount(type) >= maxLimits.getOrDefault(type, 0)) {
-            System.out.println("max lim reached");
             return; // Limit reached, abort!
         }
 
@@ -81,7 +79,6 @@ public class ItemSpawnPoint {
 
         // Wont spawn if there's no spots left on the map
         if (emptySpots.isEmpty()) {
-            System.out.println("no spots");
             return;
         }
 
@@ -91,8 +88,6 @@ public class ItemSpawnPoint {
         ICollectable newItem = createItem(type, chosenSpot);
         this.map.addToActiveItems(newItem);
         this.spawnPoints.put(chosenSpot, newItem);
-
-        System.out.println("spawned item");
     }
 
     public void spawnInventoryItems() {
@@ -118,7 +113,6 @@ public class ItemSpawnPoint {
 
         for (int i = 0; i < gasCansToSpawn; i++) {
             if (allSpots.isEmpty()) {
-                System.out.println("no more spots for gascans");
                 break;
             }
             Rectangle2D.Double spot = allSpots.removeFirst();
@@ -128,7 +122,6 @@ public class ItemSpawnPoint {
             this.spawnPoints.put(spot, gasCan);
         }
 
-        System.out.println("Spawned all inventory items!");
     }
 
     /**

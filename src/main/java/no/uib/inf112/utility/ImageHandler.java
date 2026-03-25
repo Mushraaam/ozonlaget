@@ -108,8 +108,8 @@ public class ImageHandler {
                 }
         }
 
-        //for now, only vehicle is helicopter 
-        public BufferedImage getVehicleImage(int index){
+        // for now, only vehicle is helicopter
+        public BufferedImage getVehicleImage(int index) {
                 return this.helicopter.get(index);
         }
 
@@ -233,8 +233,16 @@ public class ImageHandler {
                 longWoodenWalls.put(WallDirection.HORIZONTAL,
                                 ImageReader.fetchImage("/no/uib/inf112/walls/LongWall1_2.png"));
 
+                HashMap<WallDirection, BufferedImage> barbedFences = new HashMap<>();
+                //these are somehow flipped
+                barbedFences.put(WallDirection.VERTICAL,
+                        ImageReader.fetchImage("/no/uib/inf112/walls/barbedFenceHorizontal.png"));
+                barbedFences.put(WallDirection.HORIZONTAL,
+                        ImageReader.fetchImage("/no/uib/inf112/walls/barbedFenceVertical.png"));
+                
                 this.walls.put(StaticObjectType.WOODEN_WALL, shortWoodenWalls);
                 this.walls.put(StaticObjectType.LONG_WOODEN_WALL, longWoodenWalls);
+                this.walls.put(StaticObjectType.BARBED_FENCE, barbedFences);
 
         }
 

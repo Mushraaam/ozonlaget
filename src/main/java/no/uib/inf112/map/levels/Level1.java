@@ -32,6 +32,7 @@ import no.uib.inf112.terrain.furniture.GreyTv;
 import no.uib.inf112.terrain.furniture.PlantOne;
 import no.uib.inf112.terrain.furniture.RedChairLeft;
 import no.uib.inf112.terrain.furniture.RedChairRight;
+import no.uib.inf112.terrain.walls.BarbedFence;
 import no.uib.inf112.terrain.walls.WoodWall;
 import no.uib.inf112.terrain.water.Water;
 
@@ -194,7 +195,7 @@ public class Level1 implements ILevel {
                 inventoryItemSpawnPoints.add(new Rectangle2D.Double(465, 920, width, height)); // House 3 NW
                 inventoryItemSpawnPoints.add(new Rectangle2D.Double(2405, 60, width, height)); // House 2 NE
                 // Outside houses
-                inventoryItemSpawnPoints.add(new Rectangle2D.Double(25, 40, width, height)); // NW of helipad
+                //inventoryItemSpawnPoints.add(new Rectangle2D.Double(25, 40, width, height)); // NW of helipad
                 inventoryItemSpawnPoints.add(new Rectangle2D.Double(2455, 820, width, height)); // NE of House 5
                 inventoryItemSpawnPoints.add(new Rectangle2D.Double(1145, 40, width, height)); // By north pon
                 inventoryItemSpawnPoints.add(new Rectangle2D.Double(905, 1880, width, height)); // W of house 6
@@ -207,13 +208,28 @@ public class Level1 implements ILevel {
                 // start box testing
 
                 // /////////
-                // house 1
-                this.floors.add(new RockRoad(new Rectangle2D.Double(100, 100, 450, 410)));
+                // helicopter area
+                this.floors.add(new RockRoad(new Rectangle2D.Double(0, 0, 545, 410)));
+                
+                //Fence
+                staticObjects.add(new BarbedFence( // Bottom Left 1
+                                new Rectangle2D.Double(0, 430, 132.5, 15), StaticObjectType.BARBED_FENCE));
+                staticObjects.add(new BarbedFence( // Bottom Left 2
+                                new Rectangle2D.Double(132.5, 430, 132.5, 15), StaticObjectType.BARBED_FENCE));
+                staticObjects.add(new BarbedFence( // Bottom Right
+                                new Rectangle2D.Double(358, 430, 202, 15), StaticObjectType.BARBED_FENCE));
+                staticObjects.add(new BarbedFence( // Right Top
+                                new Rectangle2D.Double(550, 0, 15, 217.5), StaticObjectType.BARBED_FENCE));
+                staticObjects.add(new BarbedFence( // Right Bottom
+                                new Rectangle2D.Double(550, 217.5, 15, 217.5), StaticObjectType.BARBED_FENCE));
+                
+                //helicopter
                 this.vehicles.add(new Helicopter(new Rectangle2D.Double(
-                                120, 120, 420, 325
+                                110, 0, 420, 325
 
                 )));
-
+                // /////////
+                
                 // /////////
                 // house 2
                 this.floors.add(new WoodFloor(new Rectangle2D.Double(1710, 20, (double) 2480 - 1710, 260)));

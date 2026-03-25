@@ -53,7 +53,6 @@ public class GameDrawer extends JPanel {
         this.gameOverOverlay = new DeathOverlay(handler);
         this.victoryOverlay = new VictoryOverlay();
 
-
         // Options
         this.setPreferredSize(new Dimension(Config.getInt("screenWidth"), Config.getInt("screenHeight")));
         this.setBackground(Color.DARK_GRAY);
@@ -72,7 +71,7 @@ public class GameDrawer extends JPanel {
                 checkBuffs(this.map.getPlayer().buffType(), g2);
             }
 
-            case VICTORY ->{
+            case VICTORY -> {
                 this.gameScreen.draw(g2);
                 this.victoryOverlay.draw(g2);
             }

@@ -45,7 +45,7 @@ public class GameScreen implements IDrawer {
         drawGunShots(graphic);
         drawActiveItems(graphic);
         if (map.getGameState() == GameState.ACTIVE_GAME) {
-            drawPlayer(graphic); //player disappears if not playing
+            drawPlayer(graphic); // player disappears if not playing
         }
         drawVehicles(graphic);
         drawDarkness(graphic);
@@ -57,7 +57,14 @@ public class GameScreen implements IDrawer {
         for (IVehicle vehicle : this.map.getVehicles()) {
             // For now only vehicle is helicopter
             if (isVisible(graphic, vehicle.getBounds())) {
-                drawImage(graphic, this.handler.getVehicleImage(vehicle.getIndex()), vehicle.getBounds());
+
+                Rectangle2D.Double bounds = vehicle.getBounds();
+
+                drawImage(graphic, this.handler.getVehicleImage(vehicle.getIndex()),
+                        new Rectangle2D.Double(bounds.getX() - bounds.width * 0.25,
+                                bounds.getY() - bounds.height * 0.25,
+                                bounds.width * 1.5,
+                                bounds.height * 1.5));
             }
         }
     }

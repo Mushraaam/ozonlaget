@@ -28,5 +28,5 @@ public class DarkSmallDrawer implements IStaticDrawableObject {
     public StaticObjectType getType() {
         return StaticObjectType.DARK_DRAWER_SMALL;
     }
-    
+
 }

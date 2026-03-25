@@ -6,10 +6,10 @@ import java.awt.geom.Rectangle2D.Double;
 import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.interfaces.IStaticDrawableObject;
 
-public class PlantTwo implements IStaticDrawableObject{
+public class PlantTwo implements IStaticDrawableObject {
 
     private Rectangle2D.Double bounds;
-    
+
     public PlantTwo(Rectangle2D.Double bounds) {
         this.bounds = bounds;
     }

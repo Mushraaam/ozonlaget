@@ -28,5 +28,5 @@ public class BeigeSmallBed implements IStaticDrawableObject {
     public StaticObjectType getType() {
         return StaticObjectType.BEIGE_SMALL_BED;
     }
-    
+
 }

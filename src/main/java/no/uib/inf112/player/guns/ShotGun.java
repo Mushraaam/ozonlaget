@@ -3,13 +3,13 @@ package no.uib.inf112.player.guns;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.GunType;
 
-public class ShotGun extends Gun{
+public class ShotGun extends Gun {
 
     private static final int MAX_AMMO = 20;
     private static final GunType GUNTYPE = GunType.SHOTGUN;
 
     public ShotGun() {
-        super(35);
+        super(32);
         setMaxAmmo(MAX_AMMO);
         setCurrentAmmo(MAX_AMMO);
         setGunType(GUNTYPE);
@@ -17,5 +17,6 @@ public class ShotGun extends Gun{
         setRange(200);
         setDamage(30);
         setAmmoType(CollectableType.AMMO_SHOTGUN);
-    
-}}
+
+    }
+}

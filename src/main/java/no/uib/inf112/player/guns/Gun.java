@@ -62,17 +62,17 @@ public abstract class Gun implements IGun {
     }
 
     @Override
-    public void increaseAmmo(int byAmount){
-        int newAmmo = currentAmmunition+=byAmount;
+    public void increaseAmmo(int byAmount) {
+        int newAmmo = currentAmmunition += byAmount;
 
-        if(maxAmmo < newAmmo){
+        if (maxAmmo < newAmmo) {
             newAmmo = maxAmmo;
         }
         currentAmmunition = newAmmo;
     }
 
     @Override
-    public CollectableType getAmmoType(){
+    public CollectableType getAmmoType() {
         return this.ammoType;
     }
 

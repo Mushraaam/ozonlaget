@@ -50,7 +50,6 @@ public class ItemFactory {
             roll -= item.getValue();
             if (roll <= 0 && item.getKey() != CollectableType.NONE) {
                 this.buffItemSpawnPoint.dropLoot(item.getKey(), targetLocation);
-                System.out.printf("rolled: " +item.getKey());
                 break;
             }
         }

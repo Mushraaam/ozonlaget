@@ -19,18 +19,18 @@ public class GameUI implements IDrawer {
     private static final int GUN_WIDTH = Config.getInt("uiGunWidth");
     private static final int GUN_HEIGHT = Config.getInt("uiGunHeight");
     private static final Font AMMO_FONT = new Font("Arial", Font.BOLD, 46);
-    private static final Color AMMO_COLOR = new Color(57, 255, 20); // neon green
+    private static final Color AMMO_COLOR = new Color(50, 201, 23); // neon green
     // healthBar
     private static final int HP_BAR_WIDTH = 350;
     private static final int HP_BAR_HEIGHT = 70;
     private static final Color HP_BACK = new Color(25, 25, 25, 180);
     private static final Color HP_BORDER = new Color(200, 200, 200, 180);
-    private static final Color GREEN = new Color(57, 255, 20);
+    private static final Color GREEN = new Color(50, 201, 23);
     private static final Color ORANGE = new Color(255, 215, 0);
     private static final Color RED = new Color(255, 70, 70);
     private static final Font HP_TEXT_FONT = new Font("Arial", Font.BOLD, 30);
     private static final Color HP_TEXT_COLOR = Color.BLACK;
-    //inventory
+    // inventory
     private static final int INV_WIDTH = 80;
     private static final int SLOT_SIZE = 60;
     private static final Color INV_BG = new Color(0, 0, 0, 150);
@@ -38,7 +38,6 @@ public class GameUI implements IDrawer {
     private ImageHandler handler;
     private BufferedImage uiBar;
     private IMap map;
-
 
     public GameUI(IMap map, ImageHandler handler) {
         this.map = map;
@@ -70,11 +69,9 @@ public class GameUI implements IDrawer {
         graphic.setFont(AMMO_FONT);
         graphic.drawString(String.format("%s/%s", currentAmmo, maxAmmo), (int) x1 + 100, (int) y1 + 98);
 
-
         // Buff
         int buffTimer = player.buffCountDown();
         graphic.drawString(String.format("%s", buffTimer), (int) x1 + 610, (int) y1 + 98);
-
 
         // HealthBar
         drawHealthBar(graphic, (int) x1 + 755, (int) y1 + 45);
@@ -93,7 +90,7 @@ public class GameUI implements IDrawer {
         Rectangle2D bounds = g.getClipBounds().getBounds2D();
         int x = (int) bounds.getMaxX() - INV_WIDTH - 10;
         int y = (int) bounds.getMinY();
-        //bg
+        // bg
         g.setColor(INV_BG);
         g.fillRoundRect(x, y, INV_WIDTH, dynamicHeight, 15, 15);
 
@@ -109,6 +106,7 @@ public class GameUI implements IDrawer {
             currentY += SLOT_SIZE + 20;
         }
     }
+
     private void drawInventoryTooltip(Graphics2D g) {
         Rectangle2D bounds = g.getClipBounds().getBounds2D();
         int tooltipWidth = 100;
@@ -128,6 +126,7 @@ public class GameUI implements IDrawer {
 
         g.drawString(text, textX, textY);
     }
+
     private void drawSlot(Graphics2D g, int x, int y, CollectableType item, int count) {
         g.setColor(new Color(255, 255, 255, 40));
         g.fillRoundRect(x, y, SLOT_SIZE, SLOT_SIZE, 10, 10);
@@ -188,7 +187,7 @@ public class GameUI implements IDrawer {
         g.setColor(HP_BORDER);
         g.drawRoundRect(x1, y1, HP_BAR_WIDTH, HP_BAR_HEIGHT, 10, 10);
 
-        //armor
+        // armor
         int armor = player.getArmor();
         if (armor > 0 && currentHP > 0) {
             g.setColor(Color.blue);
