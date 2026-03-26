@@ -100,7 +100,7 @@ public abstract class NPC implements IEnemy {
             return;
         }
 
-        //try to find a legal wandering goal
+        // try to find a legal wandering goal
         for (int attempts = 0; attempts < 20; attempts++) {
             ICell cell = nearbyCells.get(this.random.nextInt(nearbyCells.size()));
 
@@ -200,13 +200,12 @@ public abstract class NPC implements IEnemy {
     @Override
     public void move(IGrid grid) {
 
-        if (this.map.getGameState() != GameState.ACTIVE_GAME){
+        if (this.map.getGameState() != GameState.ACTIVE_GAME) {
             this.moving = false;
             return;
         }
 
         this.moving = false;
-        // Continue ongoing attacks
 
         if (this.currentAction == EnemyAction.DEAD) {
             this.deathDelay--;
@@ -219,7 +218,8 @@ public abstract class NPC implements IEnemy {
             return;
 
         }
-
+        
+        // Continue ongoing attacks
         if (this.currentAction == EnemyAction.ATTACK) {
             this.moving = true;
             attack(this.attackTarget);
@@ -483,9 +483,9 @@ public abstract class NPC implements IEnemy {
             }
         }
 
-        //Check vehicle collision
-        for (IVehicle vehicle : this.map.getVehicles()){
-            if (candidate.intersects(vehicle.getBounds())){
+        // Check vehicle collision
+        for (IVehicle vehicle : this.map.getVehicles()) {
+            if (candidate.intersects(vehicle.getBounds())) {
                 return false;
             }
         }
