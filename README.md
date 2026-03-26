@@ -4,7 +4,7 @@
 * Lenke til [Gitlab](git.app.uib.no/inf112/26v/proj/ozonlaget)
 
 ## Om spillet
-Velkommen til Kurt-Mario in the Land of the Mushroom Princess – vårt hjertebarn av et 2D top-down overlevelsesspill, og et levende bevis på at nok kaffe kan konverteres til (stort sett) fungerende Java-kode.
+Velkommen til Kurt-Mario in the Land of the Mushroom Princess – vårt hjertebarn av et 2D top-down overlevelsesspill, og et levende bevis på at nok koffein kan konverteres til (stort sett) fungerende Java-kode.
 
 Konseptet er fryktelig enkelt: Du er fanget på et kart fullt av fiender. Målet ditt er å samle nok bensinkanner, finne en helikopternøkkel, og komme deg vekk før du blir zombiemat. Hvorfor Kurt-Mario roter rundt her inne for en sopp-prinsesse? Ikke tenk for mye på det, vi trengte bare et kult navn.
 

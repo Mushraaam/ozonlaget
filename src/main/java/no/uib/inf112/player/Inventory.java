@@ -1,8 +1,6 @@
 package no.uib.inf112.player;
 
 import no.uib.inf112.enums.CollectableType;
-import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IPlayer;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,8 +11,8 @@ public class Inventory {
     private boolean visible = false;
     private HashMap<CollectableType, Integer> inventory;
 
-    public Inventory(IPlayer player, IMap map) {
-        this.inventory = new HashMap<CollectableType, Integer>();
+    public Inventory() {
+        this.inventory = new HashMap<>();
     }
 
     public void toggleVisible() {

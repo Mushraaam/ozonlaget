@@ -63,7 +63,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         // buffs
         this.buffType = BuffType.NONE;
         this.buffCounter = 0;
-        this.inventory = new Inventory(this, map);
+        this.inventory = new Inventory();
     }
 
     @Override
