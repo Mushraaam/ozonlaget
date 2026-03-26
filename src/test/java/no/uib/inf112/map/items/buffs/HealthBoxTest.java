@@ -3,6 +3,7 @@ package no.uib.inf112.map.items.buffs;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.IMap;
 import no.uib.inf112.player.Player;
+import no.uib.inf112.utility.SoundHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.awt.geom.Rectangle2D;
@@ -13,13 +14,14 @@ public class HealthBoxTest {
     private IMap mockMap;
     private Player mockPlayer;
     private HealthBox healthBox;
+    private SoundHandler mockSoundHandler;
 
     @BeforeEach
     public void setup() {
         mockMap = mock(IMap.class);
         mockPlayer = mock(Player.class);
         when(mockMap.getPlayer()).thenReturn(mockPlayer);
-
+        mockSoundHandler = mock(SoundHandler.class);
         healthBox = new HealthBox(new Rectangle2D.Double(), CollectableType.HEALTH, mockMap);
     }
 
@@ -29,6 +31,7 @@ public class HealthBoxTest {
         when(mockPlayer.getCurrentHP()).thenReturn(50);
         when(mockPlayer.getMaxHP()).thenReturn(100);
 
+        when(mockMap.getSoundHandler()).thenReturn(mockSoundHandler);
         healthBox.affectPlayer();
 
         // make sure the player was healed by the correct amount
