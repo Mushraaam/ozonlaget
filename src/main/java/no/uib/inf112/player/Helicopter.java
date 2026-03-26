@@ -9,7 +9,7 @@ public class Helicopter implements IVehicle {
     private int GAS_NEEDED = 6;
     private int gasDeposited = 0;
     private static final int ANIMATION_COUNT = 7;
-    private static final int EXPAND_LIMIT = 80;
+    private static final int EXPAND_LIMIT = 60;
     private static final double SPEED = 6;
     private Rectangle2D.Double bounds;
 

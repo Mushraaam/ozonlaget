@@ -225,7 +225,7 @@ public class Level1 implements ILevel {
                 
                 //helicopter
                 this.vehicles.add(new Helicopter(new Rectangle2D.Double(
-                                110, 0, 420, 325
+                                150, 130, 210, 162.5
 
                 )));
                 // /////////

@@ -61,10 +61,10 @@ public class GameScreen implements IDrawer {
                 Rectangle2D.Double bounds = vehicle.getBounds();
 
                 drawImage(graphic, this.handler.getVehicleImage(vehicle.getIndex()),
-                        new Rectangle2D.Double(bounds.getX() - bounds.width * 0.25,
-                                bounds.getY() - bounds.height * 0.25,
-                                bounds.width * 1.5,
-                                bounds.height * 1.5));
+                        new Rectangle2D.Double(bounds.getX() - bounds.width * 0.5,
+                                bounds.getY() - bounds.height * 0.5,
+                                bounds.width * 2,
+                                bounds.height * 2));
             }
         }
     }
