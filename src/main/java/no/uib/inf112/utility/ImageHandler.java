@@ -321,6 +321,9 @@ public class ImageHandler {
                 this.staticObjects.put(StaticObjectType.GREY_TV,
                                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/grey_tv.png"),
                                                 Config.getInt("tvWidth"), Config.getInt("tvHeight")));
+                this.staticObjects.put(StaticObjectType.GREY_TV_LEFT,
+                                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/grey_tv_left.png"),
+                                                Config.getInt("tvWidth"), Config.getInt("tvHeight")));
                 this.staticObjects.put(StaticObjectType.RED_CHAIR_LEFT,
                                 ImageReader.resizeExact(
                                                 ImageReader.fetchImage("/no/uib/inf112/furniture/red_chairleft.png"),

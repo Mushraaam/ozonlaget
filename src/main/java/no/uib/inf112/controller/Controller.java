@@ -297,6 +297,21 @@ public class Controller
                 player.pressMove(Direction.EAST);
             }
 
+            // alternative movement
+            case KeyEvent.VK_UP-> {
+                player.pressMove(Direction.NORTH);
+            }
+            case KeyEvent.VK_DOWN -> {
+                player.pressMove(Direction.SOUTH);
+            }
+            case KeyEvent.VK_LEFT-> {
+                player.pressMove(Direction.WEST);
+            }
+            case KeyEvent.VK_RIGHT -> {
+                player.pressMove(Direction.EAST);
+            }
+
+            // weapons
             case KeyEvent.VK_1 -> {
                 this.player.setGunType(GunType.DEAGLE);
             }
@@ -307,6 +322,7 @@ public class Controller
                 this.player.setGunType(GunType.SHOTGUN);
             }
 
+            // debug
             case KeyEvent.VK_I -> {
                 if (this.map.debugMode()) {
                     this.player.takeDamage(10);
@@ -390,6 +406,7 @@ public class Controller
     // GAMESTATE BOUND KEY EVENTS FOR KEY RELEASED
     private void activeGameReleaseEvent(KeyEvent e) {
         switch (e.getKeyCode()) {
+            // movement
             case KeyEvent.VK_W -> {
                 player.releaseMove(Direction.NORTH);
             }
@@ -402,6 +419,21 @@ public class Controller
             case KeyEvent.VK_D -> {
                 player.releaseMove(Direction.EAST);
             }
+            
+            // alternative movement
+            case KeyEvent.VK_UP-> {
+                player.releaseMove(Direction.NORTH);
+            }
+            case KeyEvent.VK_DOWN -> {
+                player.releaseMove(Direction.SOUTH);
+            }
+            case KeyEvent.VK_LEFT-> {
+                player.releaseMove(Direction.WEST);
+            }
+            case KeyEvent.VK_RIGHT -> {
+                player.releaseMove(Direction.EAST);
+            }
+
             default -> {
                 /* Do nothing */
             }
