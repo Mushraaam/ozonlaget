@@ -13,7 +13,6 @@ import no.uib.inf112.map.npcs.NPC;
 import no.uib.inf112.map.npcs.factory.Factory;
 import no.uib.inf112.map.npcs.factory.SpawnPoint;
 import no.uib.inf112.map.npcs.pathfinding.Pathfinder;
-import no.uib.inf112.player.Helicopter;
 import no.uib.inf112.utility.Camera;
 import no.uib.inf112.utility.SoundHandler;
 
