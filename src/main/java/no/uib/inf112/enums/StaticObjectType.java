@@ -25,6 +25,7 @@ public enum StaticObjectType {
     PLANT_ONE,
     PLANT_TWO,
     GREY_TV,
+    GREY_TV_LEFT,
 
     //water
     WATER
