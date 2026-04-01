@@ -68,7 +68,7 @@ public class Map implements IMap {
         this.camera.update(player.getHitbox(), Config.getInt("screenWidth"), Config.getInt("screenHeight"),
                 this.bounds);
 
-        //Avoid music starting twice when restarting from gameover
+        // Avoid music starting twice when restarting from gameover
         if (this.gameState != GameState.MAIN_MENU) {
             setGameState(GameState.MAIN_MENU);
         }
@@ -119,7 +119,7 @@ public class Map implements IMap {
     }
 
     @Override
-    public IVehicle getHelicopter(){
+    public IVehicle getHelicopter() {
         return this.vehicles.get(0);
     }
 
@@ -176,8 +176,17 @@ public class Map implements IMap {
 
     @Override
     public void setGameState(GameState state) {
-        this.gameState = state;
-        this.soundHandler.playMusic(state);
+
+        //Check if we are just navigating between menues
+        if ((this.gameState == GameState.HELP || this.gameState == GameState.MAIN_MENU || this.gameState == GameState.SETTINGS) 
+                &&
+                (state == GameState.HELP || state == GameState.MAIN_MENU || state == GameState.SETTINGS)) {
+            this.gameState = state;
+        } else { //Otherwise also change music
+            this.gameState = state;
+            this.soundHandler.playMusic(state);
+        }
+
     }
 
     @Override
@@ -331,7 +340,8 @@ public class Map implements IMap {
     }
 
     @Override
-    public void setItemSpawnPoints(ArrayList<Rectangle2D.Double> buffItemSpawnPoints, ArrayList<Rectangle2D.Double> itemSpawnPoints) {
+    public void setItemSpawnPoints(ArrayList<Rectangle2D.Double> buffItemSpawnPoints,
+            ArrayList<Rectangle2D.Double> itemSpawnPoints) {
         this.buffItemSpawnpoint = buffItemSpawnPoints;
         this.inventoryItemSpawnpoint = itemSpawnPoints;
     }
@@ -355,7 +365,6 @@ public class Map implements IMap {
     public void setPlayer(IPlayer player) {
         this.player = player;
     }
-
 
     @Override
     public ArrayList<IVehicle> getVehicles() {

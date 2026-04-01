@@ -298,13 +298,13 @@ public class Controller
             }
 
             // alternative movement
-            case KeyEvent.VK_UP-> {
+            case KeyEvent.VK_UP -> {
                 player.pressMove(Direction.NORTH);
             }
             case KeyEvent.VK_DOWN -> {
                 player.pressMove(Direction.SOUTH);
             }
-            case KeyEvent.VK_LEFT-> {
+            case KeyEvent.VK_LEFT -> {
                 player.pressMove(Direction.WEST);
             }
             case KeyEvent.VK_RIGHT -> {
@@ -419,15 +419,15 @@ public class Controller
             case KeyEvent.VK_D -> {
                 player.releaseMove(Direction.EAST);
             }
-            
+
             // alternative movement
-            case KeyEvent.VK_UP-> {
+            case KeyEvent.VK_UP -> {
                 player.releaseMove(Direction.NORTH);
             }
             case KeyEvent.VK_DOWN -> {
                 player.releaseMove(Direction.SOUTH);
             }
-            case KeyEvent.VK_LEFT-> {
+            case KeyEvent.VK_LEFT -> {
                 player.releaseMove(Direction.WEST);
             }
             case KeyEvent.VK_RIGHT -> {
@@ -475,9 +475,26 @@ public class Controller
                 mainMenuMousePressEvent(e);
             }
 
+            case HELP -> {
+                helpMenuMousePressEvent(e);
+            }
+
             default -> {
                 /* nada */
             }
+        }
+    }
+
+    private void helpMenuMousePressEvent(MouseEvent e) {
+        if (!SwingUtilities.isLeftMouseButton(e)) {
+            return;
+        }
+
+        Point p = e.getPoint();
+        var backButton = view.getHelpMenu().getBackButton();
+        if (backButton != null && backButton.contains(p)) {
+            changeState(GameState.MAIN_MENU);
+            view.getMainMenu().resetAnimation();
         }
     }
 
@@ -496,6 +513,7 @@ public class Controller
         var helpButton = view.getMainMenu().getHelpButton();
         if (startButton != null && helpButton.contains(p)) {
             changeState(GameState.HELP);
+            view.getHelpMenu().resetAnimation();
         }
     }
 

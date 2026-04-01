@@ -112,8 +112,12 @@ public class GameDrawer extends JPanel {
         }
     }
 
-    // Getter for Controller
+    // Getters for Controller
     public MainMenu getMainMenu() {
         return (MainMenu) this.mainMenu;
+    }
+
+    public HelpMenu getHelpMenu(){
+        return (HelpMenu) this.helpScreen;
     }
 }

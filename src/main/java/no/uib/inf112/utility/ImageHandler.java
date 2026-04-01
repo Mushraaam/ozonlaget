@@ -55,6 +55,10 @@ public class ImageHandler {
         private BufferedImage settingsButton;
         private BufferedImage helpButton;
 
+        // Help Menu
+        private BufferedImage backButton;
+
+
         // Collectables
         private HashMap<CollectableType, BufferedImage> collectables;
 
@@ -83,8 +87,7 @@ public class ImageHandler {
 
                 this.gunUI = new HashMap<>();
                 loadGunUI();
-                this.uiBar = ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/UI/ui-bar.png"), 1200,
-                                Config.getInt("uiSize"));
+                this.uiBar = ImageReader.fetchImage("/no/uib/inf112/UI/ui-bar.png");
                 this.youDied = ImageReader.fetchImage("/no/uib/inf112/UI/youdied.png");
 
                 loadMenu();
@@ -234,12 +237,12 @@ public class ImageHandler {
                                 ImageReader.fetchImage("/no/uib/inf112/walls/LongWall1_2.png"));
 
                 HashMap<WallDirection, BufferedImage> barbedFences = new HashMap<>();
-                //these are somehow flipped
+                // these are somehow flipped
                 barbedFences.put(WallDirection.VERTICAL,
-                        ImageReader.fetchImage("/no/uib/inf112/walls/barbedFenceHorizontal.png"));
+                                ImageReader.fetchImage("/no/uib/inf112/walls/barbedFenceHorizontal.png"));
                 barbedFences.put(WallDirection.HORIZONTAL,
-                        ImageReader.fetchImage("/no/uib/inf112/walls/barbedFenceVertical.png"));
-                
+                                ImageReader.fetchImage("/no/uib/inf112/walls/barbedFenceVertical.png"));
+
                 this.walls.put(StaticObjectType.WOODEN_WALL, shortWoodenWalls);
                 this.walls.put(StaticObjectType.LONG_WOODEN_WALL, longWoodenWalls);
                 this.walls.put(StaticObjectType.BARBED_FENCE, barbedFences);
@@ -322,7 +325,8 @@ public class ImageHandler {
                                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/grey_tv.png"),
                                                 Config.getInt("tvWidth"), Config.getInt("tvHeight")));
                 this.staticObjects.put(StaticObjectType.GREY_TV_LEFT,
-                                ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/furniture/grey_tv_left.png"),
+                                ImageReader.resizeExact(
+                                                ImageReader.fetchImage("/no/uib/inf112/furniture/grey_tv_left.png"),
                                                 Config.getInt("tvWidth"), Config.getInt("tvHeight")));
                 this.staticObjects.put(StaticObjectType.RED_CHAIR_LEFT,
                                 ImageReader.resizeExact(
@@ -482,6 +486,7 @@ public class ImageHandler {
                 this.menuTitle = ImageReader.fetchImage("/no/uib/inf112/mainmenu/menu_title.png");
                 this.settingsButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/settings_button.png");
                 this.helpButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/help_button.png");
+                this.backButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/backButton.png");
         }
 
         public BufferedImage getFloor(FloorType type) {
@@ -516,7 +521,12 @@ public class ImageHandler {
                 return this.helpButton;
         }
 
+        public BufferedImage getbackButton() {
+                return this.backButton;
+        }
+
         public BufferedImage youDied() {
                 return this.youDied;
         }
+
 }
