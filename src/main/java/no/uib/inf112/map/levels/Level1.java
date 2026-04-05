@@ -412,8 +412,10 @@ public class Level1 implements ILevel {
                                 new Rectangle2D.Double(1495, 1090, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
                 staticObjects.add(new DarkWoodenTableSmall( // Small table top
                                 new Rectangle2D.Double(1495, 695, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
-                staticObjects.add(new PlantOne( // plant top
+                staticObjects.add(new PlantOne( // Plant top
                                 new Rectangle2D.Double(1495, 695, PLANTONEWIDTH, PLANTONEHEIGHT)));
+                staticObjects.add(new BeigeBigBed( // Big bed
+                                new Rectangle2D.Double(1550, 800, BIGBEDWIDTH, BIGBEDHEIGHT)));
 
                 // /////////
                 // house 5
