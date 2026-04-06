@@ -408,14 +408,19 @@ public class Level1 implements ILevel {
                 // /////////
 
                 // furniture
-                staticObjects.add(new DarkSmallDrawer( // Small Drawer bottom
+                this.staticObjects.add(new DarkSmallDrawer( // Small Drawer bottom
                                 new Rectangle2D.Double(1495, 1090, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
-                staticObjects.add(new DarkWoodenTableSmall( // Small table top
+                this.staticObjects.add(new DarkWoodenTableSmall( // Small table top
                                 new Rectangle2D.Double(1495, 695, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
-                staticObjects.add(new PlantOne( // Plant top
+                this.staticObjects.add(new PlantOne( // Plant top
                                 new Rectangle2D.Double(1495, 695, PLANTONEWIDTH, PLANTONEHEIGHT)));
-                staticObjects.add(new BeigeBigBed( // Big bed
+                this.staticObjects.add(new BeigeBigBed( // Big bed
                                 new Rectangle2D.Double(1550, 800, BIGBEDWIDTH, BIGBEDHEIGHT)));
+                this.staticObjects.add(new BeigeCouch( // big couch
+                                new Rectangle2D.Double(1665, 750, BIGCOUCHWIDTH, BIGCOUCHHEIGHT)));
+                this.staticObjects.add(new GreyTv( // TV
+                                new Rectangle2D.Double(1690, 850, GREYTVWIDTH, GREYTVHEIGHT)));
+                
 
                 // /////////
                 // house 5
