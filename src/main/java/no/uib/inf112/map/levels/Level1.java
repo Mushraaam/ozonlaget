@@ -416,7 +416,7 @@ public class Level1 implements ILevel {
                                 new Rectangle2D.Double(1550, 800, BIGBEDWIDTH, BIGBEDHEIGHT)));
                 this.staticObjects.add(new BeigeCouch( // big couch
                                 new Rectangle2D.Double(1665, 750, BIGCOUCHWIDTH, BIGCOUCHHEIGHT)));
-                this.staticObjects.add(new GreyTv( // TV
+                this.staticObjects.add(new GreyTv( // TV top
                                 new Rectangle2D.Double(1690, 850, GREYTVWIDTH, GREYTVHEIGHT)));
                 this.staticObjects.add(new DarkWoodenTableSmall( // Small table top right
                                 new Rectangle2D.Double(1855, 695, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
@@ -438,10 +438,8 @@ public class Level1 implements ILevel {
                                 new Rectangle2D.Double(1865, 1155, 40, 40)));
                 this.staticObjects.add(new RedChairLeft( // Red chair bot
                                 new Rectangle2D.Double(1805, 1155, REDCHAIRWIDTH, REDCHAIRHEIGHT)));
-                
-                
-
                 // /////////
+
                 // house 5
                 this.floors.add(new WoodFloor(new Rectangle2D.Double(2100, 880, 400, (double) 1770 - 880)));
                 // exterior walls
