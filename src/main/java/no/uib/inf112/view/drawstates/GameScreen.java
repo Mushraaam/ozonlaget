@@ -12,7 +12,7 @@ import no.uib.inf112.utility.Camera;
 
 public class GameScreen implements IDrawer {
 
-    private IMap map;
+    private IModel map;
     private IGrid tiles;
     private ImageHandler handler;
     private Camera camera;
@@ -21,7 +21,7 @@ public class GameScreen implements IDrawer {
     private GameUI ui;
     private DarknessOverlay darkness;
 
-    public GameScreen(IMap map, ImageHandler handler, Camera camera) {
+    public GameScreen(IModel map, ImageHandler handler, Camera camera) {
 
         this.map = map;
         this.ui = new GameUI(this.map, handler);

@@ -10,7 +10,7 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.controller.DirectionHandler;
 import no.uib.inf112.enums.*;
 import no.uib.inf112.interfaces.*;
-import no.uib.inf112.map.items.Collectable;
+import no.uib.inf112.model.items.Collectable;
 import no.uib.inf112.player.guns.DEagle;
 import no.uib.inf112.player.guns.MP5;
 import no.uib.inf112.player.guns.ShotGun;
@@ -31,7 +31,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private Direction currentDirection;
     private double aimAngle;
     private int animationIndex;
-    private IMap map;
+    private IModel map;
     private int armor = 0;
 
     private IGun currentGun;
@@ -42,7 +42,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     private Inventory inventory;
 
-    public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IMap map) {
+    public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IModel map) {
         this.hitbox = hitbox;
         this.bounds = bounds;
         this.dirHandler = new DirectionHandler();

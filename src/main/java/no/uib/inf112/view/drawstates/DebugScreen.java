@@ -4,14 +4,14 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 import no.uib.inf112.interfaces.*;
-import no.uib.inf112.map.npcs.factory.SpawnPoint;
+import no.uib.inf112.model.npcs.factory.SpawnPoint;
 
 public class DebugScreen implements IDrawer {
 
-    private IMap map;
+    private IModel map;
     private IGrid grid;
 
-    public DebugScreen(IMap map) {
+    public DebugScreen(IModel map) {
         this.map = map;
         this.grid = this.map.getGrid();
     }

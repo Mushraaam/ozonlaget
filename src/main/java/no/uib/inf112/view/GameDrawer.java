@@ -11,12 +11,9 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.IDrawer;
-import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IPlayer;
-import no.uib.inf112.player.Player;
+import no.uib.inf112.interfaces.IModel;
 import no.uib.inf112.utility.Camera;
 import no.uib.inf112.utility.ImageHandler;
-import no.uib.inf112.view.drawstates.DarknessOverlay;
 import no.uib.inf112.view.drawstates.DeathOverlay;
 import no.uib.inf112.view.drawstates.DebugScreen;
 import no.uib.inf112.view.drawstates.GameScreen;
@@ -27,7 +24,7 @@ import no.uib.inf112.view.drawstates.VictoryOverlay;
 
 public class GameDrawer extends JPanel {
 
-    private IMap map;
+    private IModel map;
     private IDrawer gameScreen;
     private IDrawer mainMenu;
     private IDrawer debugScreen;
@@ -39,7 +36,7 @@ public class GameDrawer extends JPanel {
     private ImageHandler handler;
     private Camera camera;
 
-    public GameDrawer(IMap map) {
+    public GameDrawer(IModel map) {
         this.map = map;
         this.handler = new ImageHandler();
         this.camera = map.getCamera();

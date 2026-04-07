@@ -7,12 +7,12 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 import no.uib.inf112.interfaces.IDrawer;
-import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.interfaces.IModel;
 import no.uib.inf112.interfaces.IPlayer;
 
 public class RainbowBuffOverlay implements IDrawer {
 
-    private IMap map;
+    private IModel map;
 
     private static final int ALPHA = 120;
 
@@ -29,7 +29,7 @@ public class RainbowBuffOverlay implements IDrawer {
             new Color(0, 255, 128, ALPHA) // turquoise
     ));
 
-    public RainbowBuffOverlay(IMap map) {
+    public RainbowBuffOverlay(IModel map) {
         this.map = map;
         //
     }

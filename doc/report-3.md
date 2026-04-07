@@ -4,41 +4,98 @@
 ## Team / Prosjekt
 
 ### Roller i teamet
-Hvordan fungerer rollene i teamet? Trenger dere å oppdatere hvem som er teamlead eller kundekontakt?
+
+    - Rein: TeamLead/HeadHoncho/GloriousLeaderOfTheRepublic
+        - Arbeidsfordeling/Samkjøring
+        - System-design
+        - Musikk/Lyd
+        - NPC design
+    
+    - Alexander:
+        - Algoritmeansvarlig
+        - Stifinning
+        - Pickup-items
+
+    - Johs:
+        - Resource manager
+        - Grand artist of sprites
+        - Accessibility
+
+    - Sander:
+        - Menyansvarlig
+        - Assistant level designer
+
+    - William:
+        - Character controls
+        - Bøllefrø (les: idemyldrer)
+        - Lead level designer
 
 ### Eventuelle nye roller
-Trenger dere andre roller? Skriv ned noen linjer om hva de ulike rollene faktisk innebærer for dere.
+
+    - Siden sist har vi sett oss nødt til å fordele noen nye roller, nemlig:
+        - Musikk/Lyd
+        - NPC design
+        - Pickup-items
+        - Lead level designer
+        - Assistant level designer
+
+    Disse er fordelt i punktet over
 
 ### Erfaringer med samarbeid og prosjektmetodikk
-Er det noen erfaringer enten teammessig eller mtp prosjektmetodikk som er verdt å nevne? Synes teamet at de valgene dere har tatt er gode? Hvis ikke, hva kan dere gjøre annerledes for å forbedre måten teamet fungerer på?
+    - Vi har jobbet mye med kanban, og har benyttet git-issue-boardet som en virituell tavle. Vi har brukt dette delvis med at folk har "plukket opp" arbeidsoppgaver og litt med at arbeidsoppgaver har blitt fordelt. Dette har funket veldig greit, slik at vi har oversikt over hva som må gjøres, hvem som gjør hva (slik at vi ikke jobber på samme ting), samt fungert veldig bra for planlegging og for å se "neste steg" i utviklingen.
 
 ### Gruppedynamikk
-Hvordan er gruppedynamikken? Er det uenigheter som bør løses?
+
+    - Vi har diskutert litt om proaktivitet innen det å være kreativ og å ta til seg arbeidsoppgaver som ligger utenfor komfortsonen. Vi jobber med å sørge for at alle er komfortable med det de holder på med, diskuterer kode og har en holdning der det er lov å gjøre egne kreative valg om man kommer på en god ide.
 
 ### Kommunikasjon i teamet
-Hvordan fungerer kommunikasjonen for dere?
+    - Vi har kommunisert bra, både med ukentlige møter samt på discord. 
 
 ### Retrospektiv
-Gjør et kort retrospektiv hvor dere vurderer hva dere har klart til nå, og hva som kan forbedres. Dette skal handle om prosjektstruktur, ikke kode. Dere kan selvsagt diskutere kode, men dette handler ikke om feilretting, men om hvordan man jobber og kommuniserer.
+    - Dette var ikke noe vi startet med i begynnelsen av prosjektet, men er nå inkorporert i fellesmøtene våre og gjøres helt i starten slik at vi har et utgangspunkt. Det har fungert bra, selv om vi er relativt nye på dette og ikke alltid har veldig mye input å komme med.
 
-### Bidrag til kodebasen
-Under vurdering vil det vektlegges at alle bidrar til kodebasen. Hvis det er stor forskjell i hvem som committer, må dere legge ved en kort forklaring for hvorfor det er sånn. Husk å committe alt. (Også designfiler)
+    - Ting som har blitt nevnt er som følger:
+        - Jobbet mer med tester fra starten av
+        - Benyttet kanban tidligere
+        - Mer effort med rapport-skriving
+        - Jevne ut antall commits
+        - #TODO
 
 ### Referat fra møter
 Referat fra møter siden forrige leveranse skal legges ved (mange av punktene over er typisk ting som havner i referat).
 
 ### Forbedringspunkter til neste sprint
-Bli enige om maks tre forbedringspunkter fra retrospektivet, som skal følges opp under neste sprint.
-
----
+    #TODO
+    ref retrospektiv
 
 ## Krav og spesifikasjon
 
 ### Status på krav
-Beskriv hvilke krav som er prioritert og hvor langt dere har kommet.
+
+Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill". 
+
+    - Vi har implementert en generisk NPC klasse og en fullt fungerende fiende.
+    - Vi har implementert skyting og at fiender dør når de har tatt nok skade
+        - 3 ulike våpen
+    - Vi har implementert at fiender "vandrer rundt tilfeldig" frem til de ser player
+    - Fiender angriper player og player tar skade og dør om HP <= 0
+    - Vi har implementert buffs, helse/skjold og ammunisjon pickup items
+    - Du kan nå utføre objektet i spillet og vinne med å fly avgårde i et helikopter
+    - Vi har nå musikk for mange ulike omstendigheter, samt skytelyder og en del andre lydeffekter
+    - Kartet er nå ferdig "møblert" med hus og inventar/terreng
+
 
 ### MVP-status
-Forklar om dere har nådd MVP og hvordan dere prioriterer videre funksjonalitet.
+    Vi har hele tiden jobbet med MVP konseptet i tankene der vi har de tre følgende "kjernefunksjonene":
+        - Model:
+            - Inneholder all "data", alle objekter og gamestates
+        - Controller:
+            - Oversetter input fra bruker til funksjonkall på objekter i Model
+            - Bruker timere til å gjøre automatiske funksjonkall på objekter i Model for å "få spillet til å gå"
+        - View:
+            - Henter ut objekter fra Model og tegner de
+            - Inkluderer en relativt komplisert debug-modus
+
 
 ### Brukerhistorier
 Beskriv brukerhistoriene for kravene dere jobber med.
@@ -111,48 +168,55 @@ Beskriv brukerhistoriene for kravene dere jobber med.
     - Implementere patruljeringslogikk (wandering) for fiender som ikke har et mål.
     - Implementere pathfinding (A*-algoritme) og forfølgelseslogikk slik at fiender effektivt kan navigere rundt hindringer for å ta brukeren.
 
-### Akseptansekriterier
-Definer hva som må være oppfylt for at funksjonaliteten skal være ferdig, Husk at akseptansekriterier ofte skrives mer eller mindre som tester.
-
-### Arbeidsoppgaver
-List opp konkrete utviklingsoppgaver som må gjøres for å implementere kravene.
-
 ### Planlagte oppgaver
-Dersom dere har oppgaver som dere skal til å starte med, hvor dere har oversikt over både brukerhistorie, akseptansekriterier og arbeidsoppgaver, kan dere ta med disse i innleveringen også.
+    - Istedenfor å liste opp alle punktene på tavla vår så kan vi heller nevne de viktigste punktene vi skal jobbe med fremover.
+    - Vi har nå et "ferdig spill" og nå er det en del finpuss og accessability options som må gjøres.
+
+        - Accessability options:
+            - ikke-blinkende rainbowBuff
+            - Ekstra stor font?
+
+        - Implementere større variasjon av fiender
+            - Alle skal implementere 1 fiende - dette gjøres ved bruk av den generiske NPC klassen
+        
+        - Testing
+            - #TODO
+            - Vi skal fordele test-områder
+
 
 ### Prioritering fremover
-Forklar hvordan dere prioriterer oppgavene videre.
-
-### Endringer i MVP-krav
-Har dere gjort justeringer på kravene som er med i MVP? Forklar i så fall hvorfor. Hvis det er gjort endringer i rekkefølge utfra hva som er gitt fra kunde, hvorfor er dette gjort?
+ 
+    - Prioritering fremover er omtrent lik planlagte oppgaver, der spesielt testing er viktig.
 
 ### Fremdrift siden forrige rapport
-Oppdater hvilke krav dere har prioritert, hvor langt dere har kommet og hva dere har gjort siden forrige gang.
+   - Vi har i utgangpunktet prioritert rammeverk for å få "bakgrunnslogikken" og system-designet til å funke. 
+    Som resultat var det lite synlig progresjon i starten, men tilsvarende stor progresjon senere i prosjektet.
+
+    Til forrige rapport hadde vi essensielt bare en animert player og en placeholder fiende med stifinning og kollisjon.
+    Nå har vi i essens et ferdig spill med skyting, skade, objekter og win/loss condition, samt buffs, kompliserte fiender med flere typer angrep, samt et detaljert kart med hus og møbler.
+
 
 ### Kjente bugs
-Husk å skrive hvilke bugs som finnes i de kravene dere har utført (dersom det finnes bugs).
 
-
-Kravlisten er lang, men det er ikke nødvendig å levere på alle kravene hvis det ikke er realistisk. Det er viktigere at de oppgavene som er utført holder høy kvalitet. Utførte oppgaver skal være ferdige.
-
----
+    - Det er en bug der fiender kan få en livelock mens de er i vandre-modus og står i veien for hverandre i en trang passasje. Dette kan føre til klogging av fiender, men er en relativt liten bug som for øyeblikket ikke er en prioritet. 
 
 ## Kode
 
 ### Refaktorering
-Har dere gjort eller burde dere gjøre noen store endringer / refaktoreringer?
+    - Vi har refaktorert Map og IMap til å bli Model og IModel for å ha en bedre navnekonvensjon iht MVP konseptet
 
 ### Arkitektur og designvalg
-Hvordan er arkitektur, designvalg etc? Er det lett/vanskelig å få ting til å henge sammen?
+
+    - Arkitekturen vår er veldig modulær og følger MVP konseptet. Vi har valgt å designe det slik fordi det fører til færre konflikter i git, gjør endringer i programmet lettere å utføre, samt at det gjør det lettere å utvide med flere ting senere. Vi har jobbet hard med å benytte oss av interfaces (vi har for øyeblikket 19stk), samt abstrakte klasser som NPC og GUN klassene som gjør det veldig lett å implementere flere slike klasser som oppfører seg relativt likt.
 
 ### Kodekvalitet
 Hvordan er det med kodekvalitet, kodestil osv? Fungerer det OK å utvide og vedlikeholde koden? Kan alle forstå / bruke alle deler av koden?
 
 ### Testing
-Hvordan ligger dere an med testing?
+    - Vi har skrevet en del tester, men her er det en jobb å gjøre og dette blir fokus fremover. Vi har ganske åpenbart ikke bedrevet test-drevet utvikling.
 
 ### Behov for hjelp eller ny kunnskap
-Er det noe dere trenger hjelp med eller må sette dere inn i til neste gang?
+    - Dette tror jeg vi har kontroll på, og vi diskuterer dette in-house dersom noen trenger hjelp.
 
 
 

@@ -8,17 +8,18 @@ import java.util.Map;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.IDrawer;
-import no.uib.inf112.interfaces.IMap;
-import no.uib.inf112.interfaces.IPlayer;
+import no.uib.inf112.interfaces.IModel;
 import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.utility.ImageHandler;
 
 public class GameUI implements IDrawer {
 
+    private static final String ARIAL = "Arial";
+
     private static final double UI_HEIGHT = Config.getInt("uiSize");
     private static final int GUN_WIDTH = Config.getInt("uiGunWidth");
     private static final int GUN_HEIGHT = Config.getInt("uiGunHeight");
-    private static final Font AMMO_FONT = new Font("Arial", Font.BOLD, 46);
+    private static final Font AMMO_FONT = new Font(ARIAL, Font.BOLD, 46);
     private static final Color AMMO_COLOR = new Color(50, 201, 23); // neon green
     // healthBar
     private static final int HP_BAR_WIDTH = 350;
@@ -28,18 +29,17 @@ public class GameUI implements IDrawer {
     private static final Color GREEN = new Color(50, 201, 23);
     private static final Color ORANGE = new Color(255, 215, 0);
     private static final Color RED = new Color(255, 70, 70);
-    private static final Font HP_TEXT_FONT = new Font("Arial", Font.BOLD, 30);
+    private static final Font HP_TEXT_FONT = new Font(ARIAL, Font.BOLD, 30);
     private static final Color HP_TEXT_COLOR = Color.BLACK;
     // inventory
     private static final int INV_WIDTH = 80;
     private static final int SLOT_SIZE = 60;
     private static final Color INV_BG = new Color(0, 0, 0, 150);
-    private static int INV_HEIGHT = 50;
     private ImageHandler handler;
     private BufferedImage uiBar;
-    private IMap map;
+    private IModel map;
 
-    public GameUI(IMap map, ImageHandler handler) {
+    public GameUI(IModel map, ImageHandler handler) {
         this.map = map;
         this.handler = handler;
         this.uiBar = handler.uiBar();
@@ -118,7 +118,7 @@ public class GameUI implements IDrawer {
         g.fillRoundRect(x, y - 5, tooltipWidth, tooltipHeight + 5, 10, 10);
 
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 12));
+        g.setFont(new Font(ARIAL, Font.BOLD, 12));
         String text = "(B)ackpack";
         FontMetrics metrics = g.getFontMetrics();
         int textX = x + (tooltipWidth - metrics.stringWidth(text)) / 2;
@@ -153,7 +153,7 @@ public class GameUI implements IDrawer {
         }
         if (count >= 0) {
             g.setColor(Color.WHITE);
-            g.setFont(new Font("Arial", Font.BOLD, 16));
+            g.setFont(new Font(ARIAL, Font.BOLD, 16));
             String text = String.valueOf(count);
             g.drawString(text, x + SLOT_SIZE - 20, y + SLOT_SIZE - 5);
         }

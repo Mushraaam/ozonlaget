@@ -7,7 +7,7 @@ import java.util.List;
 
 import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.enums.PathType;
-import no.uib.inf112.map.Cell;
+import no.uib.inf112.model.Cell;
 
 public interface IGrid extends Iterable<ICell> {
 

@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 
 import no.uib.inf112.enums.BuffType;
 import no.uib.inf112.interfaces.IDrawer;
-import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.interfaces.IModel;
 
 public class DarknessOverlay implements IDrawer {
 
@@ -25,11 +25,11 @@ public class DarknessOverlay implements IDrawer {
     private static final Color INNER_COLOR = new Color(0, 0, 0, 255);
     private static final Color OUTER_COLOR = new Color(0, 0, 0, 0);
 
-    private final IMap map;
+    private final IModel map;
     private BufferedImage overlay;
 
     /* https://www.youtube.com/watch?v=GMaterkzOSk */
-    public DarknessOverlay(IMap map) {
+    public DarknessOverlay(IModel map) {
         this.map = map;
     }
 

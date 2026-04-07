@@ -5,14 +5,14 @@ import no.uib.inf112.interfaces.IControllablePlayer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IGunShot;
-import no.uib.inf112.interfaces.IMap;
+import no.uib.inf112.interfaces.IModel;
 import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.interfaces.IPuddle;
 import no.uib.inf112.interfaces.IVehicle;
-import no.uib.inf112.map.items.buffs.RainbowBuff;
-import no.uib.inf112.map.items.factory.ItemFactory;
-import no.uib.inf112.map.npcs.factory.Factory;
-import no.uib.inf112.map.npcs.projectiles.puddles.AcidPuddle;
+import no.uib.inf112.model.items.buffs.RainbowBuff;
+import no.uib.inf112.model.items.factory.ItemFactory;
+import no.uib.inf112.model.npcs.factory.Factory;
+import no.uib.inf112.model.npcs.projectiles.puddles.AcidPuddle;
 import no.uib.inf112.view.GameDrawer;
 import no.uib.inf112.utility.SoundHandler;
 import no.uib.inf112.utility.Camera;
@@ -36,7 +36,7 @@ public class Controller
     private Timer tickTimer;
     private ItemFactory itemFactory;
 
-    private IMap map;
+    private IModel map;
     private IControllablePlayer player;
     private GameDrawer view;
     private Timer playerAnimationTimer;
@@ -69,7 +69,7 @@ public class Controller
      * and manages game loops using Swing Timers for movement, animation,
      * and pathfinding.
      */
-    public Controller(IMap map, GameDrawer view) {
+    public Controller(IModel map, GameDrawer view) {
         this.map = map;
         this.view = view;
 

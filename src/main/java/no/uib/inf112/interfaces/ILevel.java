@@ -3,8 +3,8 @@ package no.uib.inf112.interfaces;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.ArrayList;
 
-import no.uib.inf112.map.items.factory.ItemFactory;
-import no.uib.inf112.map.npcs.factory.Factory;
+import no.uib.inf112.model.items.factory.ItemFactory;
+import no.uib.inf112.model.npcs.factory.Factory;
 
 public interface ILevel {
     
