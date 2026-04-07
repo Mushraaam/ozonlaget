@@ -86,19 +86,37 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 
 
 ### MVP-status
-    Vi har hele tiden jobbet med MVP konseptet i tankene der vi har de tre følgende "kjernefunksjonene":
-        - Model:
-            - Inneholder all "data", alle objekter og gamestates
-        - Controller:
-            - Oversetter input fra bruker til funksjonkall på objekter i Model
-            - Bruker timere til å gjøre automatiske funksjonkall på objekter i Model for å "få spillet til å gå"
-        - View:
-            - Henter ut objekter fra Model og tegner de
-            - Inkluderer en relativt komplisert debug-modus
+
+    Startmeny: ferdig
+    Settings: ikke ferdig
+    Help-meny: delvis ferdig
+    Kan bevege player: ferdig
+    Player er animert: ferdig
+    Player kan skyte: ferdig
+    NPC med stifinning: ferdig
+    Fiendetyper: 1/5 ferdig
+    Fiender animert: 1/5 ferdig
+    Fiender oppsøker player og angriper: ferdig
+    Player tar skade og dør om han blir angrepet: ferdig
+    Fiender kan bli skutt og dør: ferdig
+    3 ulike våpen: ferdig
+    Lydeffekter: ferdig
+    Musikk: ferdig
+    Detaljert kart med hus og møbler: ferdig
+    Buffs:
+        - RainbowBuff: ferdig
+        - DamageBuff: ferdig
+        - SpeedBuff: ferdig
+    Pickup-items:
+        - Ammo: ferdig
+        - Helse/skjold: ferdig
+        - Nøkkel/Bensin: ferdig
+    Victory-condition:
+        - Plukke opp all bensin + nøkkel og fly avgårde i helikopter: ferdig
+    Kan restarte etter game-over eller victory: ferdig
 
 
 ### Brukerhistorier
-Beskriv brukerhistoriene for kravene dere jobber med.
 
 #### Brukerhistorie 1:
     Historie:
@@ -189,11 +207,23 @@ Beskriv brukerhistoriene for kravene dere jobber med.
     - Prioritering fremover er omtrent lik planlagte oppgaver, der spesielt testing er viktig.
 
 ### Fremdrift siden forrige rapport
-   - Vi har i utgangpunktet prioritert rammeverk for å få "bakgrunnslogikken" og system-designet til å funke. 
+    - Vi har i utgangpunktet prioritert rammeverk for å få "bakgrunnslogikken" og system-designet til å funke. 
     Som resultat var det lite synlig progresjon i starten, men tilsvarende stor progresjon senere i prosjektet.
 
     Til forrige rapport hadde vi essensielt bare en animert player og en placeholder fiende med stifinning og kollisjon.
-    Nå har vi i essens et ferdig spill med skyting, skade, objekter og win/loss condition, samt buffs, kompliserte fiender med flere typer angrep, samt et detaljert kart med hus og møbler.
+    Nå har vi i essens et ferdig spill med 
+        - skyting 
+        - skade 
+        - objekter/mål
+        - win/loss condition
+        - buffs med visuelle komponenter
+        - pickup-able items
+        - kompliserte fiender
+            - flere typer angrep
+            - relativt god stifinning
+        - detaljert kart med hus og møbler.
+        - lydeffekter
+        - musikk
 
 
 ### Kjente bugs
@@ -208,6 +238,16 @@ Beskriv brukerhistoriene for kravene dere jobber med.
 ### Arkitektur og designvalg
 
     - Arkitekturen vår er veldig modulær og følger MVP konseptet. Vi har valgt å designe det slik fordi det fører til færre konflikter i git, gjør endringer i programmet lettere å utføre, samt at det gjør det lettere å utvide med flere ting senere. Vi har jobbet hard med å benytte oss av interfaces (vi har for øyeblikket 19stk), samt abstrakte klasser som NPC og GUN klassene som gjør det veldig lett å implementere flere slike klasser som oppfører seg relativt likt.
+
+    Vi har hele tiden jobbet med MVP konseptet i tankene der vi har de tre følgende "kjernefunksjonene":
+        - Model:
+            - Inneholder all "data", alle objekter og gamestates
+        - Controller:
+            - Oversetter input fra bruker til funksjonskall på objekter i Model
+            - Bruker timere til å gjøre automatiske funksjonkall på objekter i Model for å "få spillet til å gå"
+        - View:
+            - Henter ut objekter fra Model og tegner de
+            - Inkluderer en relativt komplisert debug-modus
 
 ### Kodekvalitet
 Hvordan er det med kodekvalitet, kodestil osv? Fungerer det OK å utvide og vedlikeholde koden? Kan alle forstå / bruke alle deler av koden?

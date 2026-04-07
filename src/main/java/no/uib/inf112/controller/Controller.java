@@ -12,7 +12,6 @@ import no.uib.inf112.interfaces.IVehicle;
 import no.uib.inf112.model.items.buffs.RainbowBuff;
 import no.uib.inf112.model.items.factory.ItemFactory;
 import no.uib.inf112.model.npcs.factory.Factory;
-import no.uib.inf112.model.npcs.projectiles.puddles.AcidPuddle;
 import no.uib.inf112.view.GameDrawer;
 import no.uib.inf112.utility.SoundHandler;
 import no.uib.inf112.utility.Camera;
