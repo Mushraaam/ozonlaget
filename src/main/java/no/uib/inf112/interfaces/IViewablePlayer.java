@@ -2,6 +2,7 @@ package no.uib.inf112.interfaces;
 
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.Direction;
+import no.uib.inf112.enums.GunType;
 import no.uib.inf112.player.Inventory;
 
 public interface IViewablePlayer extends IPlayer {
@@ -9,6 +10,8 @@ public interface IViewablePlayer extends IPlayer {
     int getAmountInInventory(CollectableType item);
 
     Inventory getInventory();
+
+    GunType gunType();
 
     /**
      * @return current direction
@@ -24,4 +27,6 @@ public interface IViewablePlayer extends IPlayer {
      * @return angle that player should be drawn at
      */
     public double getFacingAngle();
+
+    
 }
