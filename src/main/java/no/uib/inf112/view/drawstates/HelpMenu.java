@@ -42,10 +42,37 @@ public class HelpMenu implements IDrawer {
     public void draw(Graphics2D graphic) {
         drawBackground(graphic);
         drawHelpText(graphic);
+        drawControls(graphic);
         drawItemHelp(graphic);
         drawBackButton(graphic);
         drawFartButton(graphic);
 
+    }
+
+    private void drawControls(Graphics2D graphic) {
+
+        BufferedImage wasd = handler.getWASD();
+        BufferedImage mouse = handler.getMouseImage();
+        BufferedImage numbers = handler.getNumbersImage();
+
+        graphic.setColor(Color.DARK_GRAY);
+        Rectangle2D.Double background = new Rectangle.Double(10, 370, 900, 300);
+        graphic.fill(background);
+        graphic.setColor(Color.WHITE);
+        graphic.draw(background);
+
+        //Draw images
+        drawImage(graphic, wasd, new Rectangle.Double(15, 375, 500, 200));
+        drawImage(graphic, mouse, new Rectangle.Double(515, 375, 150, 200));
+        drawImage(graphic, numbers, new Rectangle2D.Double(665, 375, 200, 200));
+
+        //Draw text
+        Font font = graphic.getFont();
+        graphic.setFont(new Font(font.getName(), font.getStyle(), 30));
+        graphic.drawString("Move", 230, 600);
+        graphic.drawString("Shoot", 530, 600);
+        graphic.drawString("Change weapons", 660, 600);
+        
     }
 
     private void drawItemHelp(Graphics2D graphic) {
@@ -117,6 +144,7 @@ public class HelpMenu implements IDrawer {
 
     public void resetAnimation() {
         this.helpAnimationStarted = false;
+        this.fartAnimationStarted = false;
     }
 
     private void drawBackButton(Graphics2D graphic) {
