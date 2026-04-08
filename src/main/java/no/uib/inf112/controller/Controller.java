@@ -153,7 +153,7 @@ public class Controller
 
         });
 
-        this.repaintTimer = new Timer(8, e -> {
+        this.repaintTimer = new Timer(12, e -> {
             if (this.drawRunning) {
                 return;
             }

@@ -218,7 +218,11 @@ public class SoundHandler {
         playClip(SoundReader.loadSound(this.damageSounds.get(index)));
     }
 
+    /**
+     * Plays a fart. Creates a new thread to handle pause/resume of backgroundmusic.
+     */
     public void playFart() {
+        
         if (!this.threadsafe.get()) {
             return;
         }
