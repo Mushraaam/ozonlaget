@@ -1,6 +1,7 @@
 package no.uib.inf112.utility;
 
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,8 +10,8 @@ import no.uib.inf112.enums.*;
 
 public class ImageHandler {
 
-        private ArrayList<BufferedImage> playerBodySprites;
-        private ArrayList<BufferedImage> playerFeetSprites;
+        private HashMap<GunType, ArrayList<BufferedImage>> playerBodySprites;
+        private HashMap<GunType, ArrayList<BufferedImage>> playerFeetSprites;
 
         // PlayerSprite (put into hashmap layer?)
         private static final int PLAYER_SPRITE_COUNT = 20;
@@ -64,9 +65,9 @@ public class ImageHandler {
         private HashMap<CollectableType, BufferedImage> collectables;
 
         public ImageHandler() {
-                this.playerBodySprites = new ArrayList<>();
-                this.playerFeetSprites = new ArrayList<>();
-                loadPlayerSprite();
+                this.playerBodySprites = new HashMap<>();
+                this.playerFeetSprites = new HashMap<>();
+                loadPlayerSprites();
 
                 this.walls = new HashMap<>();
                 loadWalls();
@@ -196,26 +197,37 @@ public class ImageHandler {
         }
 
         // ////////////////////// PLAYER METHODS //////////////////////////////////
-        private void loadPlayerSprite() {
+        private void loadPlayerSprites() {
+                loadPlayerSprite(GunType.DEAGLE, "handgun");
+                loadPlayerSprite(GunType.MP5, "rifle");
+                loadPlayerSprite(GunType.SHOTGUN, "shotgun");
+        }
+
+        private void loadPlayerSprite(GunType gunType, String folder) {
+                ArrayList<BufferedImage> playerbodySprites = new ArrayList<>();
+                ArrayList<BufferedImage> playerfeetSprites = new ArrayList<>();
 
                 for (int i = 0; i < PLAYER_SPRITE_COUNT; i++) {
-                        BufferedImage body = ImageReader
-                                        .fetchImage(String.format("/no/uib/inf112/player/handgun/player_move%s.png",
-                                                        i + 1));
-                        BufferedImage feet = ImageReader
-                                        .fetchImage(String.format("/no/uib/inf112/player/handgun/player_feet%s.png",
-                                                        i + 1));
-                        this.playerBodySprites.add(body);
-                        this.playerFeetSprites.add(feet);
+                        BufferedImage bodySprite = ImageReader.fetchImage(String.format("/no/uib/inf112/player/%s/player_move%s.png", folder, i + 1));
+                        
+                        BufferedImage feetSprite = ImageReader.fetchImage(String.format("/no/uib/inf112/player/handgun/player_feet%s.png", i + 1));
+
+                        playerbodySprites.add(bodySprite);
+                        playerfeetSprites.add(feetSprite);
+
                 }
+                
+                this.playerBodySprites.put(gunType, playerbodySprites);
+                this.playerFeetSprites.put(gunType, playerfeetSprites);
+                
         }
 
-        public BufferedImage getPlayerBodySprite(int index) {
-                return this.playerBodySprites.get(index);
+        public BufferedImage getPlayerBodySprite(GunType gunType, int index) {
+                return this.playerBodySprites.get(gunType).get(index);
         }
 
-        public BufferedImage getPlayerFeetSprite(int index) {
-                return this.playerFeetSprites.get(index);
+        public BufferedImage getPlayerFeetSprite(GunType gunType, int index) {
+                return this.playerFeetSprites.get(gunType).get(index);
         }
 
         // ////////////////////////////// END PLAYER METHODS //////////////////////////
