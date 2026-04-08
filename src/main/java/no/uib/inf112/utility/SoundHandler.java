@@ -3,6 +3,7 @@ package no.uib.inf112.utility;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -17,6 +18,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 
 public class SoundHandler {
+
+    private AtomicBoolean threadsafe = new AtomicBoolean(true);
 
     private HashMap<GameState, String> gameMusic;
     private HashMap<GunType, String> gunSounds;
@@ -215,7 +218,33 @@ public class SoundHandler {
         playClip(SoundReader.loadSound(this.damageSounds.get(index)));
     }
 
-    public void playFart(){
-        playClip(SoundReader.loadSound(this.fart));
+    public void playFart() {
+        if (!this.threadsafe.get()) {
+            return;
+        }
+
+        Thread thread = new Thread(() -> {
+            try {
+                this.threadsafe.set(false);
+                this.currentMusic.stop();
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                playClip(SoundReader.loadSound(this.fart));
+                try {
+                    Thread.sleep(3100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                this.currentMusic.start();
+            } finally {
+                this.threadsafe.set(true);
+            }
+        });
+        thread.start();
+
     }
 }
