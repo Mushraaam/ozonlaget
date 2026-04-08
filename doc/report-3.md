@@ -87,22 +87,37 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 
 ### MVP-status
 
+##### Meny:
+
     Startmeny: ferdig
     Settings: ikke ferdig
     Help-meny: delvis ferdig
+##### Player
     Kan bevege player: ferdig
     Player er animert: ferdig
     Player kan skyte: ferdig
+    Player tar skade og kan dø: ferdig
+    3 ulike våpen: ferdig
+
+##### Fiender
     NPC med stifinning: ferdig
     Fiendetyper: 1/5 ferdig
     Fiender animert: 1/5 ferdig
     Fiender oppsøker player og angriper: ferdig
-    Player tar skade og dør om han blir angrepet: ferdig
     Fiender kan bli skutt og dør: ferdig
-    3 ulike våpen: ferdig
+
+##### Lyd
     Lydeffekter: ferdig
     Musikk: ferdig
-    Detaljert kart med hus og møbler: ferdig
+
+##### Kart
+    
+    Vegger: ferdig
+    Møbler: ferdig
+    Terreng/gulv: ferdig
+
+##### Items
+
     Buffs:
         - RainbowBuff: ferdig
         - DamageBuff: ferdig
@@ -111,8 +126,12 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
         - Ammo: ferdig
         - Helse/skjold: ferdig
         - Nøkkel/Bensin: ferdig
-    Victory-condition:
-        - Plukke opp all bensin + nøkkel og fly avgårde i helikopter: ferdig
+
+##### Victory-condition og objektiver
+    Implementere bensinkanner/helikopternøkkel: ferdig
+    Implementere helikopter: ferdig
+    Animere helikopter: ferdig
+    Victory-condition (levere nøkkel og bensin til helikopter og fly avgårde): ferdig
     Kan restarte etter game-over eller victory: ferdig
 
 
@@ -186,6 +205,17 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     - Implementere patruljeringslogikk (wandering) for fiender som ikke har et mål.
     - Implementere pathfinding (A*-algoritme) og forfølgelseslogikk slik at fiender effektivt kan navigere rundt hindringer for å ta brukeren.
 
+#### Brukerhistorie 6:
+    Historie:
+        - Bruker er sensitiv for blinkende lys og vil ha en mulighet for å unngå dette
+    
+    Akseptansekriterie:
+        - Bruker har mulighet for å skru av blinkende lys
+
+    Konkrete arbeidsoppgave(r):
+        - Legge til en knapp i settings for å skru av blinkende lys
+    
+
 ### Planlagte oppgaver
     - Istedenfor å liste opp alle punktene på tavla vår så kan vi heller nevne de viktigste punktene vi skal jobbe med fremover.
     - Vi har nå et "ferdig spill" og nå er det en del finpuss og accessability options som må gjøres.
@@ -204,7 +234,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 
 ### Prioritering fremover
  
-    - Prioritering fremover er omtrent lik planlagte oppgaver, der spesielt testing er viktig.
+    - Testing skal prioriteres fremover, samt få implementert alt i MVP
 
 ### Fremdrift siden forrige rapport
     - Vi har i utgangpunktet prioritert rammeverk for å få "bakgrunnslogikken" og system-designet til å funke. 
