@@ -233,13 +233,13 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 ## Kode
 
 ### Refaktorering
-    - Vi har refaktorert Map og IMap til å bli Model og IModel for å ha en bedre navnekonvensjon iht MVP konseptet
+    - Vi har refaktorert Map og IMap til å bli Model og IModel for å ha en bedre navnekonvensjon iht MVC konseptet
 
 ### Arkitektur og designvalg
 
-    - Arkitekturen vår er veldig modulær og følger MVP konseptet. Vi har valgt å designe det slik fordi det fører til færre konflikter i git, gjør endringer i programmet lettere å utføre, samt at det gjør det lettere å utvide med flere ting senere. Vi har jobbet hard med å benytte oss av interfaces (vi har for øyeblikket 19stk), samt abstrakte klasser som NPC og GUN klassene som gjør det veldig lett å implementere flere slike klasser som oppfører seg relativt likt.
+    - Arkitekturen vår er veldig modulær og følger MVC konseptet. Vi har valgt å designe det slik fordi det fører til færre konflikter i git, gjør endringer i programmet lettere å utføre, samt at det gjør det lettere å utvide med flere ting senere. Vi har jobbet hard med å benytte oss av interfaces (vi har for øyeblikket 19stk), samt abstrakte klasser som NPC og GUN klassene som gjør det veldig lett å implementere flere slike klasser som oppfører seg relativt likt.
 
-    Vi har hele tiden jobbet med MVP konseptet i tankene der vi har de tre følgende "kjernefunksjonene":
+    Vi har hele tiden jobbet med MVC konseptet i tankene der vi har de tre følgende "kjernefunksjonene":
         - Model:
             - Inneholder all "data", alle objekter og gamestates
         - Controller:
