@@ -42,6 +42,15 @@ public class GameDrawer extends JPanel {
         this.camera = map.getCamera();
 
         // Screens
+        setScreens();
+
+        // Options
+        this.setPreferredSize(new Dimension(Config.getInt("screenWidth"), Config.getInt("screenHeight")));
+        this.setBackground(Color.DARK_GRAY);
+
+    }
+
+    public void setScreens() {
         this.gameScreen = new GameScreen(this.map, this.handler, this.camera);
         this.mainMenu = new MainMenu(this.handler);
         this.debugScreen = new DebugScreen(this.map);
@@ -49,11 +58,6 @@ public class GameDrawer extends JPanel {
         this.helpScreen = new HelpMenu(handler);
         this.gameOverOverlay = new DeathOverlay(handler);
         this.victoryOverlay = new VictoryOverlay();
-
-        // Options
-        this.setPreferredSize(new Dimension(Config.getInt("screenWidth"), Config.getInt("screenHeight")));
-        this.setBackground(Color.DARK_GRAY);
-
     }
 
     @Override

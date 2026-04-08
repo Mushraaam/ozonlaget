@@ -19,8 +19,6 @@ import javax.sound.sampled.LineUnavailableException;
 
 public class SoundHandler {
 
-    private AtomicBoolean threadsafe = new AtomicBoolean(true);
-
     private HashMap<GameState, String> gameMusic;
     private HashMap<GunType, String> gunSounds;
     private HashMap<BuffType, String> buffMusic;
@@ -38,8 +36,11 @@ public class SoundHandler {
     private Clip currentMusic;
     private Clip currentBuffMusic;
 
+    // Dont worry about it
+    private AtomicBoolean threadsafe = new AtomicBoolean(true);
     private ArrayList<String> farts;
     private int fartIndex;
+    private Clip fartClip;
 
     public SoundHandler() {
         loadMusic();
@@ -145,6 +146,10 @@ public class SoundHandler {
      */
     public void playMusic(GameState state) {
 
+        if (state == GameState.ACTIVE_GAME && this.fartClip != null && this.fartClip.isActive()){
+            this.fartClip.stop();
+        }
+
         // stop other music when transitioning to new state
         if (this.currentBuffMusic != null && this.currentBuffMusic.isActive()) {
             this.currentBuffMusic.stop();
@@ -241,12 +246,22 @@ public class SoundHandler {
 
         int pause;
 
-        switch (this.fartIndex){
-            case 0 -> {pause = 3100;}
-            case 1 -> {pause = 1500;}
-            case 2 -> {pause = 12100;}
-            case 3 -> {pause = 33100;}
-            default -> {pause = 0;}
+        switch (this.fartIndex) {
+            case 0 -> {
+                pause = 3100;
+            }
+            case 1 -> {
+                pause = 1500;
+            }
+            case 2 -> {
+                pause = 12100;
+            }
+            case 3 -> {
+                pause = 33100;
+            }
+            default -> {
+                pause = 0;
+            }
         }
 
         Thread thread = new Thread(() -> {
@@ -255,13 +270,11 @@ public class SoundHandler {
                 this.currentMusic.stop();
 
                 try {
+
                     Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                playClip(SoundReader.loadSound(this.farts.get(this.fartIndex)));
-                try {
+                    this.fartClip = playClip(SoundReader.loadSound(this.farts.get(this.fartIndex)));
                     Thread.sleep(pause);
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -272,7 +285,5 @@ public class SoundHandler {
             }
         });
         thread.start();
-        
-
     }
 }

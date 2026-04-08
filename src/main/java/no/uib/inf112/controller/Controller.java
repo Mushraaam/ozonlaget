@@ -364,6 +364,7 @@ public class Controller
             case KeyEvent.VK_R -> {
                 this.map.setLevel(1);
                 this.map.resetMap();
+                this.view.setScreens();
                 initiateMap();
             }
 
