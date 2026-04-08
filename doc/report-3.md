@@ -92,7 +92,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     Startmeny: ferdig
     Settings: ikke ferdig
     Help-meny: ferdig
-    
+
 ##### Player
     Kan bevege player: ferdig
     Player er animert: ferdig
@@ -102,8 +102,8 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 
 ##### Fiender
     NPC med stifinning: ferdig
-    Fiendetyper: 1/5 ferdig
-    Fiender animert: 1/5 ferdig
+    Fiendetyper: 1/5 - delvis ferdig
+    Fiender animert: 1/5 - delvis ferdig
     Fiender oppsøker player og angriper: ferdig
     Fiender kan bli skutt og dør: ferdig
 
@@ -234,7 +234,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 
 
 ### Prioritering fremover
- 
+
     - Testing skal prioriteres fremover, samt få implementert alt i MVP
 
 ### Fremdrift siden forrige rapport

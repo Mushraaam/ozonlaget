@@ -178,15 +178,26 @@ public class Model implements IModel {
     public void setGameState(GameState state) {
 
         //Check if we are just navigating between menues
-        if ((this.gameState == GameState.HELP || this.gameState == GameState.MAIN_MENU || this.gameState == GameState.SETTINGS) 
-                &&
-                (state == GameState.HELP || state == GameState.MAIN_MENU || state == GameState.SETTINGS)) {
+        if (navigatingMenus(state)) {
             this.gameState = state;
         } else { //Otherwise also change music
             this.gameState = state;
             this.soundHandler.playMusic(state);
         }
 
+    }
+
+    private boolean navigatingMenus(GameState state){
+        boolean fromAMenu = (
+            this.gameState == GameState.HELP || 
+            this.gameState == GameState.MAIN_MENU || 
+            this.gameState == GameState.SETTINGS);
+        boolean toAMenu = (
+            state == GameState.HELP || 
+            state == GameState.MAIN_MENU || 
+            state == GameState.SETTINGS);
+            
+        return fromAMenu && toAMenu;
     }
 
     @Override

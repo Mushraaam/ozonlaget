@@ -47,7 +47,6 @@ public class HelpMenu implements IDrawer {
         drawHelicopter(graphic);
         drawBackButton(graphic);
         drawFartButton(graphic);
-
     }
 
     private void drawHelicopter(Graphics2D graphic) {
@@ -142,9 +141,9 @@ public class HelpMenu implements IDrawer {
         graphic.drawString("You are stranded in a village.", 30, 100);
         graphic.drawString("There are monsters all around you", 30, 130);
         graphic.drawString("There is a helicopter nearby:", 30, 160);
-        graphic.drawString("- Deliver 6 cans of fuel", 35, 190);
-        graphic.drawString("- Pick up the keycard", 35, 220);
-        graphic.drawString("- Fly awayyyyy", 35, 250);
+        graphic.drawString("- Deliver 6 cans of fuel", 40, 190);
+        graphic.drawString("- Pick up the keycard", 40, 220);
+        graphic.drawString("- Fly awayyyyy", 40, 250);
 
         graphic.drawString("And most importantly...", 30, 280);
         graphic.setFont(new Font(font.getName(), font.getStyle(), 40));
