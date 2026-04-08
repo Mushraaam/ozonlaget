@@ -34,6 +34,7 @@ public class SoundHandler {
 
     private Clip currentMusic;
     private Clip currentBuffMusic;
+    private String fart = "/no/uib/inf112/sound/playersounds/fart.wav";
 
     public SoundHandler() {
         loadMusic();
@@ -212,5 +213,9 @@ public class SoundHandler {
      */
     public void playPlayerDamageSound(int index) {
         playClip(SoundReader.loadSound(this.damageSounds.get(index)));
+    }
+
+    public void playFart(){
+        playClip(SoundReader.loadSound(this.fart));
     }
 }

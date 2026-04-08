@@ -494,6 +494,11 @@ public class Controller
         if (backButton != null && backButton.contains(p)) {
             changeState(GameState.MAIN_MENU);
             view.getMainMenu().resetAnimation();
+            return;
+        }
+        var fartButton = view.getHelpMenu().getFartButton();
+        if (fartButton != null && fartButton.contains(p)) {
+            this.soundHandler.playFart();
         }
     }
 

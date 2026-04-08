@@ -57,6 +57,7 @@ public class ImageHandler {
 
         // Help Menu
         private BufferedImage backButton;
+        private BufferedImage fartButton;
 
 
         // Collectables
@@ -487,6 +488,7 @@ public class ImageHandler {
                 this.settingsButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/settings_button.png");
                 this.helpButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/help_button.png");
                 this.backButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/backButton.png");
+                this.fartButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/fartButton.png");
         }
 
         public BufferedImage getFloor(FloorType type) {
@@ -524,9 +526,13 @@ public class ImageHandler {
         public BufferedImage getbackButton() {
                 return this.backButton;
         }
-
+        public BufferedImage getfartButton() {
+            return this.fartButton;
+        }
         public BufferedImage youDied() {
                 return this.youDied;
         }
+
+
 
 }

@@ -15,6 +15,7 @@ public class HelpMenu implements IDrawer {
 
     private ImageHandler handler;
     private boolean helpAnimationStarted = false;
+    private boolean fartAnimationStarted = false;
 
     private static final int BUTTON_WIDTH = 320;
     private static final int BUTTON_HEIGHT = 150;
@@ -22,15 +23,19 @@ public class HelpMenu implements IDrawer {
     private static final int MARGIN_LEFT = 85;
     private static final int MARGIN_RIGHT = 85;
     private static final int MARGIN_TOP = 55;
-    private static final int MARGIN_BOTTOM = 60;  
-    
+    private static final int MARGIN_BOTTOM = 60;
+
     private double backButtonX;
     private double backButtonY;
     private Rectangle2D.Double backButton;
+    private Rectangle2D.Double fartButton;
+    private double fartButtonX;
+    private double fartButtonY;
 
     public HelpMenu(ImageHandler handler) {
         this.handler = handler;
         this.backButton = new Rectangle2D.Double();
+        this.fartButton = new Rectangle2D.Double();
     }
 
     @Override
@@ -39,35 +44,33 @@ public class HelpMenu implements IDrawer {
         drawHelpText(graphic);
         drawItemHelp(graphic);
         drawBackButton(graphic);
-
+        drawFartButton(graphic);
 
     }
 
-
-
     private void drawItemHelp(Graphics2D graphic) {
-        //Fetch all images
+        // Fetch all images
         BufferedImage rainbowBuff = handler.getCollectableImage(CollectableType.POWERUP_RAINBOW);
         BufferedImage speedBuff = handler.getCollectableImage(CollectableType.POWERUP_SPEED);
         BufferedImage damageBuff = handler.getCollectableImage(CollectableType.POWERUP_DAMAGE);
         BufferedImage gasoline = handler.getCollectableImage(CollectableType.GASCAN);
         BufferedImage keycard = handler.getCollectableImage(CollectableType.CHOPPERKEY);
 
-        //Draw background
+        // Draw background
         graphic.setColor(Color.DARK_GRAY);
         Rectangle2D.Double background = new Rectangle.Double(960, 10, 230, 680);
         graphic.fill(background);
         graphic.setColor(Color.WHITE);
         graphic.draw(background);
 
-        //Draw images
+        // Draw images
         drawImage(graphic, rainbowBuff, new Rectangle2D.Double(1000, 30, 150, 120));
         drawImage(graphic, speedBuff, new Rectangle2D.Double(1000, 180, 150, 120));
         drawImage(graphic, damageBuff, new Rectangle2D.Double(1000, 330, 150, 120));
         drawImage(graphic, gasoline, new Rectangle2D.Double(1040, 480, 60, 80));
         drawImage(graphic, keycard, new Rectangle2D.Double(1030, 600, 85, 60));
 
-        //Draw text
+        // Draw text
         Font font = graphic.getFont();
         graphic.setFont(new Font(font.getName(), font.getStyle(), 15));
         graphic.drawString("Double damage, infinite ammo.", 970, 165);
@@ -79,9 +82,9 @@ public class HelpMenu implements IDrawer {
     }
 
     private void drawHelpText(Graphics2D graphic) {
-        Font font = graphic.getFont();
 
-        Rectangle2D.Double textBackground = new Rectangle.Double(20, 10, 325, 350);
+        Font font = graphic.getFont();
+        Rectangle2D.Double textBackground = new Rectangle.Double(10, 10, 335, 350);
         graphic.setColor(Color.DARK_GRAY);
         graphic.fill(textBackground);
         graphic.setColor(Color.WHITE);
@@ -102,7 +105,6 @@ public class HelpMenu implements IDrawer {
         graphic.setFont(new Font(font.getName(), font.getStyle(), 40));
         graphic.setColor(Color.RED);
         graphic.drawString("DON'T DIE", 30, 330);
-
 
     }
 
@@ -152,8 +154,46 @@ public class HelpMenu implements IDrawer {
                 (double) BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 2);
     }
 
-    public Rectangle2D.Double getBackButton(){
+    public Rectangle2D.Double getBackButton() {
         return this.backButton;
     }
 
+    private void drawFartButton(Graphics2D graphic) {
+        Rectangle bounds = graphic.getClipBounds();
+
+        BufferedImage helpImage = handler.getfartButton();
+
+        double targetX = 920;
+        double targetY = (bounds.height / 1.2);
+
+        if (!fartAnimationStarted) {
+            fartButtonX = targetX;
+            fartButtonY = -BUTTON_HEIGHT;
+            fartAnimationStarted = true;
+        }
+
+        fartButtonY += (targetY - fartButtonY) * 0.05;
+
+        if (Math.abs(targetY - fartButtonY) < 0.5) {
+            fartButtonY = targetY;
+        }
+
+        graphic.drawImage(
+                helpImage,
+                (int) fartButtonX,
+                (int) fartButtonY,
+                BUTTON_WIDTH,
+                BUTTON_HEIGHT,
+                null);
+
+        fartButton.setRect(
+                fartButtonX + MARGIN_LEFT,
+                fartButtonY + MARGIN_TOP - 2,
+                (double) BUTTON_WIDTH - MARGIN_LEFT - MARGIN_RIGHT,
+                (double) BUTTON_HEIGHT - MARGIN_TOP - MARGIN_BOTTOM - 2);
+    }
+
+    public Rectangle2D.Double getFartButton() {
+        return this.fartButton;
+    }
 }
