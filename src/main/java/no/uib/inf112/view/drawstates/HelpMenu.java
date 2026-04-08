@@ -44,8 +44,26 @@ public class HelpMenu implements IDrawer {
         drawHelpText(graphic);
         drawControls(graphic);
         drawItemHelp(graphic);
+        drawHelicopter(graphic);
         drawBackButton(graphic);
         drawFartButton(graphic);
+
+    }
+
+    private void drawHelicopter(Graphics2D graphic) {
+        BufferedImage helicopter = handler.getVehicleImage(0);
+
+        graphic.setColor(Color.DARK_GRAY);
+        Rectangle2D.Double background = new Rectangle.Double(355, 10, 595, 350);
+        graphic.fill(background);
+        graphic.setColor(Color.WHITE);
+        graphic.draw(background);
+
+        drawImage(graphic, helicopter, background);
+
+        Font font = graphic.getFont();
+        graphic.setFont(new Font(font.getName(), font.getStyle(), 20));
+        graphic.drawString("Helicopter (we drew this ourselves, believe it or not)", 365, 330);
 
     }
 
@@ -56,7 +74,7 @@ public class HelpMenu implements IDrawer {
         BufferedImage numbers = handler.getNumbersImage();
 
         graphic.setColor(Color.DARK_GRAY);
-        Rectangle2D.Double background = new Rectangle.Double(10, 370, 900, 300);
+        Rectangle2D.Double background = new Rectangle.Double(10, 370, 940, 320);
         graphic.fill(background);
         graphic.setColor(Color.WHITE);
         graphic.draw(background);

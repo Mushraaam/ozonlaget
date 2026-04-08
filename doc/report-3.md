@@ -91,7 +91,8 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 
     Startmeny: ferdig
     Settings: ikke ferdig
-    Help-meny: delvis ferdig
+    Help-meny: ferdig
+    
 ##### Player
     Kan bevege player: ferdig
     Player er animert: ferdig
