@@ -37,7 +37,9 @@ public class SoundHandler {
 
     private Clip currentMusic;
     private Clip currentBuffMusic;
-    private String fart = "/no/uib/inf112/sound/playersounds/fart.wav";
+
+    private ArrayList<String> farts;
+    private int fartIndex;
 
     public SoundHandler() {
         loadMusic();
@@ -46,6 +48,7 @@ public class SoundHandler {
         loadBuffMusic();
         loadDamageSounds();
         loadBuffSounds();
+        loadFarts();
 
         // Clips
         this.counter = 0;
@@ -87,6 +90,15 @@ public class SoundHandler {
         this.gameMusic.put(GameState.ACTIVE_GAME, "/no/uib/inf112/sound/music/activeGameSong.wav");
         this.gameMusic.put(GameState.GAME_OVER, "/no/uib/inf112/sound/music/gameOverSong.wav");
         this.gameMusic.put(GameState.VICTORY, "/no/uib/inf112/sound/music/victorySong.wav");
+    }
+
+    private void loadFarts() {
+        this.fartIndex = 0;
+        this.farts = new ArrayList<>();
+        this.farts.add("/no/uib/inf112/sound/playersounds/fart1.wav");
+        this.farts.add("/no/uib/inf112/sound/playersounds/fart2.wav");
+        this.farts.add("/no/uib/inf112/sound/playersounds/fart3.wav");
+        this.farts.add("/no/uib/inf112/sound/playersounds/fart4.wav");
     }
 
     private void loadClips() {
@@ -222,9 +234,19 @@ public class SoundHandler {
      * Plays a fart. Creates a new thread to handle pause/resume of backgroundmusic.
      */
     public void playFart() {
-        
+
         if (!this.threadsafe.get()) {
             return;
+        }
+
+        int pause;
+
+        switch (this.fartIndex){
+            case 0 -> {pause = 3100;}
+            case 1 -> {pause = 1500;}
+            case 2 -> {pause = 12100;}
+            case 3 -> {pause = 33100;}
+            default -> {pause = 0;}
         }
 
         Thread thread = new Thread(() -> {
@@ -237,18 +259,20 @@ public class SoundHandler {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                playClip(SoundReader.loadSound(this.fart));
+                playClip(SoundReader.loadSound(this.farts.get(this.fartIndex)));
                 try {
-                    Thread.sleep(3100);
+                    Thread.sleep(pause);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 this.currentMusic.start();
             } finally {
+                this.fartIndex = (this.fartIndex + 1) % this.farts.size();
                 this.threadsafe.set(true);
             }
         });
         thread.start();
+        
 
     }
 }

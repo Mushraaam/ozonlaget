@@ -50,7 +50,7 @@ public class HelpMenu implements IDrawer {
     }
 
     private void drawHelicopter(Graphics2D graphic) {
-        BufferedImage helicopter = handler.getVehicleImage(0);
+        BufferedImage helicopter = handler.getVehicleImage(1);
 
         graphic.setColor(Color.DARK_GRAY);
         Rectangle2D.Double background = new Rectangle.Double(355, 10, 595, 350);
@@ -62,7 +62,7 @@ public class HelpMenu implements IDrawer {
 
         Font font = graphic.getFont();
         graphic.setFont(new Font(font.getName(), font.getStyle(), 20));
-        graphic.drawString("Helicopter (we drew this ourselves, believe it or not)", 365, 330);
+        graphic.drawString("Helicopter (we drew this ourselves, believe it or not)", 410, 330);
 
     }
 
@@ -117,12 +117,11 @@ public class HelpMenu implements IDrawer {
         // Draw text
         Font font = graphic.getFont();
         graphic.setFont(new Font(font.getName(), font.getStyle(), 15));
-        graphic.drawString("Double damage, infinite ammo.", 970, 165);
-        graphic.drawString("Superspeed.", 1030, 315);
-        graphic.drawString("Double damage.", 1020, 465);
+        graphic.drawString("Double damage, infinite ammo", 970, 165);
+        graphic.drawString("Superspeed", 1030, 315);
+        graphic.drawString("Double damage", 1020, 465);
         graphic.drawString("Gasoline", 1040, 580);
         graphic.drawString("Keycard", 1040, 680);
-
     }
 
     private void drawHelpText(Graphics2D graphic) {

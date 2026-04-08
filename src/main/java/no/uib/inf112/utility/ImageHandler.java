@@ -495,7 +495,7 @@ public class ImageHandler {
 
         }
 
-        // MAIN MENY LOGIC
+        // MENY LOGIC
         private void loadMenu() {
                 this.menuBackground = ImageReader.fetchImage("/no/uib/inf112/mainmenu/menu_background.png");
                 this.startButton = ImageReader.fetchImage("/no/uib/inf112/mainmenu/start_button.png");
