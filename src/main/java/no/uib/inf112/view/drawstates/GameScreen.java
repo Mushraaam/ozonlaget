@@ -160,8 +160,8 @@ public class GameScreen implements IDrawer {
     private void drawPlayer(Graphics2D graphic) {
         IViewablePlayer player = (IViewablePlayer) this.map.getPlayer();
 
-        BufferedImage feet = handler.getPlayerFeetSprite(player.getAnimationIndex());
-        BufferedImage body = handler.getPlayerBodySprite(player.getAnimationIndex());
+        BufferedImage feet = handler.getPlayerFeetSprite(player.gunType(), player.getAnimationIndex());
+        BufferedImage body = handler.getPlayerBodySprite(player.gunType(), player.getAnimationIndex());
 
         Rectangle2D.Double feetBounds = new Rectangle2D.Double(
                 player.getHitbox().getX() + player.getHitbox().getWidth() * 0.15,
