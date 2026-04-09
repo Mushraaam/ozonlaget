@@ -55,8 +55,7 @@ public abstract class NPC implements IEnemy {
     private int aggroRange;
     private ICell wanderGoal;
 
-    // Dying
-    private int deathDelay;
+
 
     // Protected variables
     protected boolean aggroed;
@@ -67,6 +66,8 @@ public abstract class NPC implements IEnemy {
     protected boolean hasRangedAmmo;
     protected int range = 0;
     protected Rectangle2D.Double pos;
+    // Dying
+    protected int deathDelay;
 
     protected NPC(Rectangle2D.Double pos, IModel map, int health) {
         this.pos = pos;
@@ -290,7 +291,7 @@ public abstract class NPC implements IEnemy {
 
     }
 
-    private void setDeathAnimationIndex() {
+    protected void setDeathAnimationIndex() {
         if (this.deathDelay > 190) {
             this.animationIndex = 0;
         } else if (this.deathDelay > 180) {

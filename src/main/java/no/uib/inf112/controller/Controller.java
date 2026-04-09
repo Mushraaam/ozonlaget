@@ -82,7 +82,7 @@ public class Controller
         this.drawRunning = false;
 
         // TIMERS
-        this.playerAnimationTimer = new Timer(50, (ActionEvent e) -> {
+        this.playerAnimationTimer = new Timer(120, (ActionEvent e) -> {
             if (player.isMoving()) {
                 this.player.incrementAnimationIndex();
             }
