@@ -166,10 +166,11 @@ public class GameUI implements IDrawer {
 
         g.setFont(OBJECTIVE_TEXT_FONT);
 
-        drawObjectiveLine(g, x + 15, y + 50, gasDone, String.format("Gas cans: %d/6", Math.min(gasCollected, 6)));
-        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT, chopperkeyDone, String.format("Chopper key: %d/1", Math.min(chopperkeyCollected, 1)));
-        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 2, gatekeyDone, String.format("Gate key: %d/1", Math.min(gatekeyCollected, 1)));
-        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 3, allDone, allDone ? "Ready to escape!" : "find all required items to escape!");
+        drawObjectiveLine(g, x + 15, y + 50, allDone, allDone ? "Ready to escape!" : "find all required items to escape!");
+        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT, gasDone, String.format("Gas cans: %d/6", Math.min(gasCollected, 6)));
+        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 2, chopperkeyDone, String.format("Chopper key: %d/1", Math.min(chopperkeyCollected, 1)));
+        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 3, gatekeyDone, String.format("Gate key: %d/1", Math.min(gatekeyCollected, 1)));
+        
     }
 
     private void drawObjectiveLine(Graphics2D g, int x, int y, boolean completed, String text) {
