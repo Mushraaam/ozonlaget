@@ -294,7 +294,10 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
             - Inkluderer en relativt komplisert debug-modus
 
 ### Kodekvalitet
-Hvordan er det med kodekvalitet, kodestil osv? Fungerer det OK å utvide og vedlikeholde koden? Kan alle forstå / bruke alle deler av koden?
+    - Koden har gjennomgående god struktur og konsistent stil 
+    - Vi bruker MVC og meningsfulle navn på metoder og variabler
+    - God dokumentasjon og kommentarer der det er nødvendig 
+    - Jevnlige code reviews og diskusjoner i teamet - Koden er lett å forstå, vedlikeholde og utvide
 
 ### Testing
     - Vi har skrevet en del tester, men her er det en jobb å gjøre og dette blir fokus fremover. Vi har ganske åpenbart ikke bedrevet test-drevet utvikling.
