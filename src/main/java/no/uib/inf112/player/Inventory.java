@@ -11,6 +11,8 @@ public class Inventory {
     private boolean visible = false;
     private HashMap<CollectableType, Integer> inventory;
 
+    private int collectedGasCans = 0;
+
     public Inventory() {
         this.inventory = new HashMap<>();
     }
@@ -47,6 +49,9 @@ public class Inventory {
      */
     public void addToInventory(CollectableType item) {
         inventory.put(item, inventory.getOrDefault(item, 0) + 1);
+        if (item == CollectableType.GASCAN) {
+            collectedGasCans++;
+        }
     }
 
     public boolean useItemFromInventory(CollectableType item) {
@@ -60,5 +65,9 @@ public class Inventory {
             inventory.remove(item);
         }
         return true;
+    }
+
+    public int getCollectedGasCans() {
+        return collectedGasCans;
     }
 }

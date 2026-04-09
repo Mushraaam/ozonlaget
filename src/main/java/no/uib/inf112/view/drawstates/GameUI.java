@@ -143,7 +143,7 @@ public class GameUI implements IDrawer {
         IViewablePlayer player = (IViewablePlayer) map.getPlayer();
         Rectangle2D bounds = g.getClipBounds().getBounds2D();
 
-        int gasCollected = player.getAmountInInventory(CollectableType.GASCAN);
+        int gasCollected = player.getInventory().getCollectedGasCans();
         int chopperkeyCollected = player.getAmountInInventory(CollectableType.CHOPPERKEY);
         int gatekeyCollected = player.getAmountInInventory(CollectableType.GATEKEY);
 
