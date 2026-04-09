@@ -9,16 +9,16 @@ import no.uib.inf112.interfaces.IDoor;
 
 
 
-public class barbedDoor implements IDoor {
+public class BarbedDoor implements IDoor {
 
     private Rectangle2D.Double bounds;
     private WallDirection dir;
     private StaticObjectType type;
     private boolean isOpen;
 
-    public barbedDoor(Rectangle2D.Double bounds, StaticObjectType type) {
+    public BarbedDoor(Rectangle2D.Double bounds, StaticObjectType type) {
         this.bounds = bounds;
-        this.dir = calculateDirection(this.bounds);
+        this.dir = calculateDirection(bounds);
         this.type = type;
         this.isOpen = false;
     }

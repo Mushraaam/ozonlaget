@@ -17,6 +17,7 @@ import no.uib.inf112.model.npcs.factory.Factory;
 import no.uib.inf112.model.npcs.factory.SpawnPoint;
 import no.uib.inf112.player.Helicopter;
 import no.uib.inf112.player.Player;
+import no.uib.inf112.terrain.doors.BarbedDoor;
 import no.uib.inf112.terrain.floor.RockRoad;
 import no.uib.inf112.terrain.floor.WoodFloor;
 import no.uib.inf112.terrain.furniture.BeigeBigBed;
@@ -37,6 +38,7 @@ import no.uib.inf112.terrain.furniture.PlantTwo;
 import no.uib.inf112.terrain.furniture.RedChairLeft;
 import no.uib.inf112.terrain.furniture.RedChairRight;
 import no.uib.inf112.terrain.walls.BarbedFence;
+import no.uib.inf112.terrain.doors.BarbedDoor;
 import no.uib.inf112.terrain.walls.WoodWall;
 import no.uib.inf112.terrain.water.Water;
 
@@ -227,6 +229,10 @@ public class Level1 implements ILevel {
                 staticObjects.add(new BarbedFence( // Right Bottom
                                 new Rectangle2D.Double(550, 217.5, 15, 217.5), StaticObjectType.BARBED_FENCE));
                 
+                // Door
+                staticObjects.add(new BarbedDoor( // Bottom Left 2
+                                new Rectangle2D.Double(265, 430, 132.5, 15), StaticObjectType.BARBED_DOOR));
+
                 //helicopter
                 this.vehicles.add(new Helicopter(new Rectangle2D.Double(
                                 150, 130, 210, 162.5
