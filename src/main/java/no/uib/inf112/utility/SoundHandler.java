@@ -119,7 +119,7 @@ public class SoundHandler {
 
     private Clip playClip(AudioInputStream stream) {
         Clip clip = this.clips.get(this.counter);
-        while (clip.isActive() || clip == this.currentMusic) {
+        while (clip.isActive() || clip == this.currentMusic || clip == this.fartClip) {
             increment();
             clip = this.clips.get(this.counter);
         }
@@ -130,8 +130,8 @@ public class SoundHandler {
         } catch (LineUnavailableException | IOException e) {
             throw new IllegalAccessError("Could not access stream");
         }
-        clip.start();
         increment();
+        clip.start();
         return clip;
     }
 
