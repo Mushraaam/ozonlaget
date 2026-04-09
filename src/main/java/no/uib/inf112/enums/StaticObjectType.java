@@ -8,7 +8,7 @@ public enum StaticObjectType {
     BARBED_FENCE,
 
     // Doors
-    BARBEDDOOR,
+    BARBED_DOOR,
     //Furniture
     DARK_TABLE_ROUNDED,
     DARK_TABLE_SQUARE,
