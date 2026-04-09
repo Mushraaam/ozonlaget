@@ -42,6 +42,9 @@
     - Basic inventory
     - Tegne helikopter
     - Object items
+    - Player animasjon og funksjon er ferdig med 3 våpen
+    - NPC fiender er ferdig mangler bare flere typer fiender
+    - Lydeffekt og musikk
 
 ## Work in progress:
     - Implementere 4 nye fiender (Alle har har en fiende hver)

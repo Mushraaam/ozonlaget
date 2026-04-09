@@ -108,7 +108,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     Musikk: ferdig
 
 ##### Kart
-    
+
     Vegger: ferdig
     Møbler: ferdig
     Terreng/gulv: ferdig
