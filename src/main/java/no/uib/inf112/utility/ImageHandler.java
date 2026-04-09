@@ -19,6 +19,9 @@ public class ImageHandler {
         // Ghoul sprite
         private static final int GHOUL_ANIMATION_COUNT = 8;
 
+        //Sprinter sprite
+        private static final int SPRINTER_ANIMATION_COUNT = 8;
+
         // Wall images
         private HashMap<StaticObjectType, HashMap<WallDirection, BufferedImage>> walls;
 
@@ -360,7 +363,9 @@ public class ImageHandler {
 
         private void loadEnemies() {
 
-                // Ghoul Walk
+                ////////////
+                // GHOUL
+                // Walk
                 ArrayList<BufferedImage> ghoulWalk = new ArrayList<>();
                 for (int i = 0; i < GHOUL_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/ghoul/Walk/walk_00%s.png", i);
@@ -369,7 +374,7 @@ public class ImageHandler {
                 }
                 this.walkingEnemies.put(EnemyType.GHOUL, ghoulWalk);
 
-                // Ghoul melee
+                // Melee
                 ArrayList<BufferedImage> ghoulMelee = new ArrayList<>();
                 for (int i = 0; i < GHOUL_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/ghoul/Attack/Attack_00%s.png", i);
@@ -378,7 +383,7 @@ public class ImageHandler {
                 }
                 this.attackingEnemies.put(EnemyType.GHOUL, ghoulMelee);
 
-                // Ghoul ranged
+                // Ranged
                 ArrayList<BufferedImage> ghoulRanged = new ArrayList<>();
                 for (int i = 0; i < GHOUL_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/ghoul/rangedGhoul/Attack2_00%s.png", i);
@@ -387,7 +392,7 @@ public class ImageHandler {
                 }
                 this.rangedAttackingEnemies.put(EnemyType.GHOUL, ghoulRanged);
 
-                // Ghoul death
+                // Death
                 ArrayList<BufferedImage> ghoulDeath = new ArrayList<>();
                 for (int i = 0; i < 6; i++) { // ghoul death has 6 images
                         String path = String.format("/no/uib/inf112/npcs/ghoul/Death/death_00%s.png", i);
@@ -395,6 +400,37 @@ public class ImageHandler {
                         ghoulDeath.add(rawImage);
                 }
                 this.dyingEnemies.put(EnemyType.GHOUL, ghoulDeath);
+                ////////////
+                
+                ////////////
+                // SPRINTER
+                // Walk
+                ArrayList<BufferedImage> sprinterWalk = new ArrayList<>();
+                for (int i = 0; i < SPRINTER_ANIMATION_COUNT; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/sprinter/Walk/walk_00%s.png", i);
+                        BufferedImage rawImage = ImageReader.fetchImage(path);
+                        sprinterWalk.add(rawImage);
+                }
+                this.walkingEnemies.put(EnemyType.SPRINTER, sprinterWalk);
+
+                // Melee
+                ArrayList<BufferedImage> sprinterMelee = new ArrayList<>();
+                for (int i = 0; i < 14; i++) { // sprinter melee has 14 images
+                        String path = String.format("/no/uib/inf112/npcs/sprinter/Attack/Attack_00%s.png", i);
+                        BufferedImage rawImage = ImageReader.fetchImage(path);
+                        sprinterMelee.add(rawImage);
+                }
+                this.attackingEnemies.put(EnemyType.SPRINTER, sprinterMelee);
+
+                // Death
+                ArrayList<BufferedImage> sprinterDeath = new ArrayList<>();
+                for (int i = 0; i < 10; i++) { // sprinter death has 10 images
+                        String path = String.format("/no/uib/inf112/npcs/sprinter/Death/Death_00%s.png", i);
+                        BufferedImage rawImage = ImageReader.fetchImage(path);
+                        sprinterDeath.add(rawImage);
+                }
+                this.dyingEnemies.put(EnemyType.SPRINTER, sprinterDeath);
+                ////////////
 
         }
 

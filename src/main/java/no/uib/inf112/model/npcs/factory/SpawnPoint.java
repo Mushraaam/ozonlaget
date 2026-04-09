@@ -12,6 +12,7 @@ import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IVehicle;
 import no.uib.inf112.model.npcs.Ghoul;
+import no.uib.inf112.model.npcs.Sprinter;
 
 public class SpawnPoint {
     private Rectangle2D.Double bounds;
@@ -65,6 +66,12 @@ public class SpawnPoint {
                         random.nextDouble(this.bounds.getMinY(), this.bounds.getMaxY() - MEDIUM),
                         MEDIUM, MEDIUM);
             }
+            case SPRINTER -> {
+                hitBox = new Rectangle2D.Double(
+                        random.nextDouble(this.bounds.getMinX(), this.bounds.getMaxX() - SMALL),
+                        random.nextDouble(this.bounds.getMinY(), this.bounds.getMaxY() - SMALL),
+                        SMALL, SMALL);
+            }
 
             default -> throw new IllegalArgumentException("Unknown EnemyType");
         }
@@ -80,6 +87,9 @@ public class SpawnPoint {
         switch (type) {
             case GHOUL -> {
                 this.map.addEnemy(new Ghoul(hitBox, map));
+            }
+            case SPRINTER -> {
+                this.map.addEnemy(new Sprinter(hitBox, map));
             }
 
             default -> throw new IllegalArgumentException("Unknown EnemyType");
