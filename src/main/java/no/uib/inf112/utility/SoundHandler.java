@@ -240,7 +240,7 @@ public class SoundHandler {
      */
     public void playFart() {
 
-        if (!this.threadsafe.get()) {
+        if (!this.threadsafe.compareAndSet(true, false)) {
             return;
         }
 
@@ -248,13 +248,13 @@ public class SoundHandler {
 
         switch (this.fartIndex) {
             case 0 -> {
-                pause = 3100;
+                pause = 1500;
             }
             case 1 -> {
                 pause = 1500;
             }
             case 2 -> {
-                pause = 12100;
+                pause = 10100;
             }
             case 3 -> {
                 pause = 33100;
@@ -266,7 +266,6 @@ public class SoundHandler {
 
         Thread thread = new Thread(() -> {
             try {
-                this.threadsafe.set(false);
                 this.currentMusic.stop();
 
                 try {
