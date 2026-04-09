@@ -7,8 +7,6 @@ import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.enums.WallDirection;
 import no.uib.inf112.interfaces.IDoor;
 
-
-
 public class BarbedDoor implements IDoor {
 
     private Rectangle2D.Double bounds;

@@ -16,6 +16,7 @@ import no.uib.inf112.player.guns.MP5;
 import no.uib.inf112.player.guns.ShotGun;
 import no.uib.inf112.player.guns.gunshots.PistolShot;
 import no.uib.inf112.records.ShotDestination;
+import no.uib.inf112.terrain.doors.BarbedDoor;
 import no.uib.inf112.utility.SoundHandler;
 
 public class Player implements IControllablePlayer, IViewablePlayer {
@@ -257,7 +258,12 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
         // Check for wall collisions
         for (IStaticObject o : this.map.getStaticObjects()) {
-            if (proposedMove.intersects(o.getBounds())) {
+            if(o instanceof BarbedDoor && (inventory.getAmountInInventory(CollectableType.GATEKEY) == 1)){
+                BarbedDoor barbedDoor = (BarbedDoor) o;
+                barbedDoor.openDoor();
+                
+            }
+            else if (proposedMove.intersects(o.getBounds())) {
                 return false;
             }
         }
