@@ -548,9 +548,9 @@ public class Level1 implements ILevel {
                 staticObjects.add(new WoodWall( // Right
                                 new Rectangle2D.Double(1225, 1825, 15, 455), StaticObjectType.LONG_WOODEN_WALL));
                 staticObjects.add(new WoodWall( // Bottom Left
-                                new Rectangle2D.Double(960, 2265, 110, 15), StaticObjectType.WOODEN_WALL));
+                                new Rectangle2D.Double(960, 2265, 100, 15), StaticObjectType.WOODEN_WALL));
                 staticObjects.add(new WoodWall( // Bottom Right
-                                new Rectangle2D.Double(1130, 2265, 110, 15), StaticObjectType.WOODEN_WALL));
+                                new Rectangle2D.Double(1140, 2265, 100, 15), StaticObjectType.WOODEN_WALL));
 
                 // interior walls
 

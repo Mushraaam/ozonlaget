@@ -169,7 +169,7 @@ public class GameUI implements IDrawer {
         drawObjectiveLine(g, x + 15, y + 50, allDone, allDone ? "Ready to escape!" : "Find all required items to escape!");
         drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT, gasDone, String.format("Gas cans: %d/6", Math.min(gasCollected, 6)));
         drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 2, chopperKeycardDone, String.format("Chopper keycard: %d/1", Math.min(chopperKeycardCollected, 1)));
-        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 3, gatekeyDone, String.format("Gate key: %d/1", Math.min(gatekeyCollected, 1)));
+        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 3, gatekeyDone, gatekeyDone ? "Gate is now open" : String.format("Gate key: %d/1", Math.min(gatekeyCollected, 1)));
         
     }
 
