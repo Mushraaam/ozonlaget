@@ -161,20 +161,20 @@ public class GameUI implements IDrawer {
         g.fillRoundRect(x, y, OBJECTIVE_WIDTH, height, 15, 15);
 
         g.setFont(OBJECTIVE_TITLE_FONT);
-        g.setColor(allDone ? OBJECTIVE_COMPLETE : OBJECTIVE_INCOMPLETE);
+        g.setColor(Color.WHITE);
         g.drawString("Objectives", x + 15, y + 22);
 
         g.setFont(OBJECTIVE_TEXT_FONT);
 
-        drawObjectiveLine(g, x + 15, y + 48, gasDone, String.format("Gas cans: %d/6", Math.min(gasCollected, 6)));
-        drawObjectiveLine(g, x + 15, y + 48 + OBJECTIVE_LINE_HEIGHT, chopperkeyDone, String.format("Chopper key: %d/1", Math.min(chopperkeyCollected, 1)));
-        drawObjectiveLine(g, x + 15, y + 48 + OBJECTIVE_LINE_HEIGHT * 2, gatekeyDone, String.format("Gate key: %d/1", Math.min(gatekeyCollected, 1)));
-        drawObjectiveLine(g, x + 15, y + 48 + OBJECTIVE_LINE_HEIGHT * 3, allDone, allDone ? "Ready to escape!" : "find all required items to escape!");
+        drawObjectiveLine(g, x + 15, y + 50, gasDone, String.format("Gas cans: %d/6", Math.min(gasCollected, 6)));
+        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT, chopperkeyDone, String.format("Chopper key: %d/1", Math.min(chopperkeyCollected, 1)));
+        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 2, gatekeyDone, String.format("Gate key: %d/1", Math.min(gatekeyCollected, 1)));
+        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 3, allDone, allDone ? "Ready to escape!" : "find all required items to escape!");
     }
 
     private void drawObjectiveLine(Graphics2D g, int x, int y, boolean completed, String text) {
         g.setColor(completed ? OBJECTIVE_COMPLETE : OBJECTIVE_INCOMPLETE);
-        String prefix = completed ? "✓ " : "✗ ";
+        String prefix = completed ? "[X] " : "[  ] ";
         g.drawString(prefix + text, x, y);
         
     }
