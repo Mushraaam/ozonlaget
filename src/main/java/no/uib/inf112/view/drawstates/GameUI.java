@@ -101,7 +101,7 @@ public class GameUI implements IDrawer {
 
         Rectangle2D bounds = g.getClipBounds().getBounds2D();
         int x = (int) bounds.getMaxX() - INV_WIDTH - 10;
-        int y = (int) bounds.getMinY() + 170;
+        int y = (int) bounds.getMinY() + 120;
         // bg
         g.setColor(INV_BG);
         g.fillRoundRect(x, y, INV_WIDTH, dynamicHeight, 15, 15);
@@ -125,7 +125,7 @@ public class GameUI implements IDrawer {
         int tooltipHeight = 30;
 
         int x = (int) bounds.getMaxX() - tooltipWidth - 10;
-        int y = (int) bounds.getMinY() + 170;
+        int y = (int) bounds.getMinY() + 120;
         g.setColor(INV_BG);
         g.fillRoundRect(x, y - 5, tooltipWidth, tooltipHeight + 5, 10, 10);
 
