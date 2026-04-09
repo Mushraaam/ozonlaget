@@ -41,7 +41,6 @@
         - Oppleve at spillfiguren(e) er behagelig å kontrollere
         - Finne masse eastereggs
 
-    
 **A4: Ha installert nødvendige verktøy, kompilert og kjørt prosjektet og eksperimentert litt.**
 
     - Jepp. Denne er i mål.

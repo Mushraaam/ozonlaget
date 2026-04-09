@@ -49,7 +49,6 @@ public abstract class NPC implements IEnemy {
     private int health;
 
     // Wander
-    private boolean aggroed;
     private IGrid grid;
     private Random random;
     private int wanderDelay;
@@ -60,6 +59,7 @@ public abstract class NPC implements IEnemy {
     private int deathDelay;
 
     // Protected variables
+    protected boolean aggroed;
     protected IModel map;
     protected IPlayer player;
     protected Rectangle2D.Double attackTarget;
@@ -313,7 +313,6 @@ public abstract class NPC implements IEnemy {
         }
     }
 
-    protected abstract void rangedAttack(Double attackTarget2);
 
     private void unStuck(boolean moveX, boolean moveY) {
         ICell myCell = this.getStandingCell();
@@ -670,4 +669,7 @@ public abstract class NPC implements IEnemy {
     }
 
     // ABSTRACT METHODS
+
+    protected abstract void rangedAttack(Double attackTarget2);
+
 }

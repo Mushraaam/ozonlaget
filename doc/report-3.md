@@ -59,16 +59,12 @@
         - Benyttet kanban tidligere
         - Mer effort med rapport-skriving
         - Jevne ut antall commits
-        - #TODO
 
 ### Referat fra møter
 Referat fra møter siden forrige leveranse skal legges ved (mange av punktene over er typisk ting som havner i referat).
 
 ### Forbedringspunkter til neste sprint
-    #TODO
     ref retrospektiv
-
-## Krav og spesifikasjon
 
 ### Status på krav
 
@@ -228,9 +224,26 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
         - Implementere større variasjon av fiender
             - Alle skal implementere 1 fiende - dette gjøres ved bruk av den generiske NPC klassen
         
-        - Testing
-            - #TODO
-            - Vi skal fordele test-områder
+        - Testing:
+            - Rein
+                - Model
+                - Grid
+            - Alexander
+                - Pathfinding
+                - Items/Buffs
+            - William
+                - Movement
+                - Collision
+            - Sander
+                - Controller
+                - NPC minus stiffing og movement
+            - Johs
+                - Factory
+                - Projectiles
+                - Levels
+        Testing utvides etter behov
+
+            
 
 
 ### Prioritering fremover
