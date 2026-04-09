@@ -125,7 +125,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private void checkWinningCondition(){
         if(map.getHelicopter().isFuelFull() && map.getGameState() == GameState.ACTIVE_GAME){
             //got enough fuel
-            if(inventory.getAmountInInventory(CollectableType.CHOPPERKEY) != 0){
+            if(inventory.getAmountInInventory(CollectableType.CHOPPER_KEYCARD) != 0){
                 map.setGameState(GameState.VICTORY);
                 // yey
             }
@@ -258,7 +258,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
         // Check for wall collisions
         for (IStaticObject o : this.map.getStaticObjects()) {
-            if(o instanceof BarbedDoor && (inventory.getAmountInInventory(CollectableType.GATEKEY) == 1)){
+            if(o instanceof BarbedDoor && (inventory.getAmountInInventory(CollectableType.GATE_KEY) == 1)){
                 BarbedDoor barbedDoor = (BarbedDoor) o;
                 barbedDoor.openDoor();
                 

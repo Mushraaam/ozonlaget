@@ -455,10 +455,10 @@ public class ImageHandler {
 
                 // INVENTORY SPECIFIC ITEMS
 
-                this.collectables.put(CollectableType.GATEKEY,
+                this.collectables.put(CollectableType.GATE_KEY,
                                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/gateKey.png"),
                                                 60, 53));
-                this.collectables.put(CollectableType.CHOPPERKEY,
+                this.collectables.put(CollectableType.CHOPPER_KEYCARD,
                                 ImageReader.resizeExact(
                                                 ImageReader.fetchImage("/no/uib/inf112/map/items/chopperKey.png"), 50,
                                                 34));

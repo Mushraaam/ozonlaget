@@ -50,7 +50,7 @@ public class InventoryTest {
         assertEquals(2, inventory.getAmountInInventory(CollectableType.GASCAN));
 
         // make sure other items are still 0
-        assertEquals(0, inventory.getAmountInInventory(CollectableType.GATEKEY));
+        assertEquals(0, inventory.getAmountInInventory(CollectableType.GATE_KEY));
     }
 
     @Test
@@ -69,25 +69,25 @@ public class InventoryTest {
     @Test
     public void testUseItemFromInventoryRemovesLastItem() {
         // give player one gatekey
-        inventory.addToInventory(CollectableType.GATEKEY);
+        inventory.addToInventory(CollectableType.GATE_KEY);
 
         // Use it
-        boolean success = inventory.useItemFromInventory(CollectableType.GATEKEY);
+        boolean success = inventory.useItemFromInventory(CollectableType.GATE_KEY);
 
         assertTrue(success, "Using item should return true when player has it");
-        assertEquals(0, inventory.getAmountInInventory(CollectableType.GATEKEY), "Count should drop to 0");
+        assertEquals(0, inventory.getAmountInInventory(CollectableType.GATE_KEY), "Count should drop to 0");
 
         // make sure it was actually removed from the HashMap, key and value
-        assertFalse(inventory.getItems().stream().anyMatch(entry -> entry.getKey() == CollectableType.GATEKEY),
+        assertFalse(inventory.getItems().stream().anyMatch(entry -> entry.getKey() == CollectableType.GATE_KEY),
                 "Key should be completely removed from the map when count hits 0");
     }
 
     @Test
     public void testUseItemFromInventoryFailsIfItemNotOwned() {
-        boolean success = inventory.useItemFromInventory(CollectableType.CHOPPERKEY);
+        boolean success = inventory.useItemFromInventory(CollectableType.CHOPPER_KEYCARD);
 
         assertFalse(success, "Using an item the player doesn't have should return false");
-        assertEquals(0, inventory.getAmountInInventory(CollectableType.CHOPPERKEY));
+        assertEquals(0, inventory.getAmountInInventory(CollectableType.CHOPPER_KEYCARD));
     }
 
     @Test

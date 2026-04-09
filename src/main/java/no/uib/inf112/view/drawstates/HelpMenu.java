@@ -98,7 +98,7 @@ public class HelpMenu implements IDrawer {
         BufferedImage speedBuff = handler.getCollectableImage(CollectableType.POWERUP_SPEED);
         BufferedImage damageBuff = handler.getCollectableImage(CollectableType.POWERUP_DAMAGE);
         BufferedImage gasoline = handler.getCollectableImage(CollectableType.GASCAN);
-        BufferedImage keycard = handler.getCollectableImage(CollectableType.CHOPPERKEY);
+        BufferedImage keycard = handler.getCollectableImage(CollectableType.CHOPPER_KEYCARD);
 
         // Draw background
         graphic.setColor(Color.DARK_GRAY);

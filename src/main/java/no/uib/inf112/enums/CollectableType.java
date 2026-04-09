@@ -13,8 +13,8 @@ public enum CollectableType {
 
 
     //INVENTORY ITEMS
-    GATEKEY(InvItemType.GATEKEY),
-    CHOPPERKEY(InvItemType.CHOPPERKEY),
+    GATE_KEY(InvItemType.GATE_KEY),
+    CHOPPER_KEYCARD(InvItemType.CHOPPER_KEYCARD),
     GASCAN(InvItemType.GASCAN),
 
     //nuffin

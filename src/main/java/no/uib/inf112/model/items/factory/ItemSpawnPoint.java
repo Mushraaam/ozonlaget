@@ -44,8 +44,8 @@ public class ItemSpawnPoint {
 
         //Inventory items
         this.totalInventoryItemsOnMap = new EnumMap<>(CollectableType.class);
-        this.totalInventoryItemsOnMap.put(CollectableType.GATEKEY, 1);
-        this.totalInventoryItemsOnMap.put(CollectableType.CHOPPERKEY, 1);
+        this.totalInventoryItemsOnMap.put(CollectableType.GATE_KEY, 1);
+        this.totalInventoryItemsOnMap.put(CollectableType.CHOPPER_KEYCARD, 1);
         this.totalInventoryItemsOnMap.put(CollectableType.GASCAN, 6);
 
     }
@@ -96,17 +96,17 @@ public class ItemSpawnPoint {
 
         // key gets first spot for consistency
         Rectangle2D.Double gateKeySpot = allSpots.getFirst();
-        ICollectable gateKey = createItem(CollectableType.GATEKEY, gateKeySpot);
+        ICollectable gateKey = createItem(CollectableType.GATE_KEY, gateKeySpot);
         this.map.addToActiveItems(gateKey);
         this.spawnPoints.put(gateKeySpot, gateKey);
         allSpots.removeFirst(); //exclude key spot
 
         Collections.shuffle(allSpots, this.random);
 
-        Rectangle2D.Double chopperKeySpot = allSpots.getFirst();
-        ICollectable chopperkey = createItem(CollectableType.CHOPPERKEY, chopperKeySpot);
-        this.map.addToActiveItems(chopperkey);
-        this.spawnPoints.put(chopperKeySpot, chopperkey);
+        Rectangle2D.Double chopperKeycardSpot = allSpots.getFirst();
+        ICollectable chopperKeycard = createItem(CollectableType.CHOPPER_KEYCARD, chopperKeycardSpot);
+        this.map.addToActiveItems(chopperKeycard);
+        this.spawnPoints.put(chopperKeycardSpot, chopperKeycard);
         allSpots.removeFirst(); //exclude key spot
 
         int gasCansToSpawn = totalInventoryItemsOnMap.getOrDefault(CollectableType.GASCAN, 0);
@@ -167,7 +167,7 @@ public class ItemSpawnPoint {
             case POWERUP_SPEED -> {
                 return new SpeedBuff(hitBox, type, map);
             }
-            case GATEKEY, GASCAN, CHOPPERKEY -> {
+            case GATE_KEY, GASCAN, CHOPPER_KEYCARD -> {
                 return new InventoryItem(hitBox, type, map);}
 
             default -> throw new IllegalArgumentException("Unknown Item Type");

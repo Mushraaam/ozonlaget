@@ -2,7 +2,7 @@ package no.uib.inf112.enums;
 
 public enum InvItemType {
     NONE,
-    GATEKEY,
-    CHOPPERKEY,
+    GATE_KEY,
+    CHOPPER_KEYCARD,
     GASCAN;
 }

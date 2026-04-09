@@ -144,14 +144,14 @@ public class GameUI implements IDrawer {
         Rectangle2D bounds = g.getClipBounds().getBounds2D();
 
         int gasCollected = player.getInventory().getCollectedGasCans();
-        int chopperkeyCollected = player.getAmountInInventory(CollectableType.CHOPPERKEY);
-        int gatekeyCollected = player.getAmountInInventory(CollectableType.GATEKEY);
+        int chopperKeycardCollected = player.getAmountInInventory(CollectableType.CHOPPER_KEYCARD);
+        int gatekeyCollected = player.getAmountInInventory(CollectableType.GATE_KEY);
 
         boolean gasDone = gasCollected >= 6;
-        boolean chopperkeyDone = chopperkeyCollected >= 1;
+        boolean chopperKeycardDone = chopperKeycardCollected >= 1;
         boolean gatekeyDone = gatekeyCollected >= 1;
 
-        boolean allDone = gasDone && chopperkeyDone && gatekeyDone;
+        boolean allDone = gasDone && chopperKeycardDone && gatekeyDone;
 
         int x = (int) bounds.getMaxX() - OBJECTIVE_WIDTH - 10;
         int y = (int) bounds.getMinY();
@@ -166,9 +166,9 @@ public class GameUI implements IDrawer {
 
         g.setFont(OBJECTIVE_TEXT_FONT);
 
-        drawObjectiveLine(g, x + 15, y + 50, allDone, allDone ? "Ready to escape!" : "find all required items to escape!");
+        drawObjectiveLine(g, x + 15, y + 50, allDone, allDone ? "Ready to escape!" : "Find all required items to escape!");
         drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT, gasDone, String.format("Gas cans: %d/6", Math.min(gasCollected, 6)));
-        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 2, chopperkeyDone, String.format("Chopper key: %d/1", Math.min(chopperkeyCollected, 1)));
+        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 2, chopperKeycardDone, String.format("Chopper keycard: %d/1", Math.min(chopperKeycardCollected, 1)));
         drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 3, gatekeyDone, String.format("Gate key: %d/1", Math.min(gatekeyCollected, 1)));
         
     }
