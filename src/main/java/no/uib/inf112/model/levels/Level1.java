@@ -38,7 +38,6 @@ import no.uib.inf112.terrain.furniture.PlantTwo;
 import no.uib.inf112.terrain.furniture.RedChairLeft;
 import no.uib.inf112.terrain.furniture.RedChairRight;
 import no.uib.inf112.terrain.walls.BarbedFence;
-import no.uib.inf112.terrain.doors.BarbedDoor;
 import no.uib.inf112.terrain.walls.WoodWall;
 import no.uib.inf112.terrain.water.Water;
 
