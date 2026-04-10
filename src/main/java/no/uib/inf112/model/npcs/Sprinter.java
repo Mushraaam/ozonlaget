@@ -64,4 +64,31 @@ public class Sprinter extends NPC {
         return;
     }
 
+    @Override
+    protected void setDeathAnimationIndex() {
+        if (super.deathDelay > 190) {
+            super.animationIndex = 0;
+        } else if (super.deathDelay > 187.5) {
+            super.animationIndex = 1;
+        } else if (super.deathDelay > 185) {
+            super.animationIndex = 2;
+        } else if (super.deathDelay > 182.5) {
+            super.animationIndex = 3;
+        } else if (super.deathDelay > 180) {
+            super.animationIndex = 4;
+        } else if (super.deathDelay > 172.5) {
+            super.animationIndex = 5;
+        } else if (super.deathDelay > 165) {
+            super.animationIndex = 6;
+        } else if (super.deathDelay > 157.5) {
+            super.animationIndex = 7;
+        } else if (super.deathDelay > 150) {
+            super.animationIndex = 8;
+        } else {
+            super.animationIndex = 9;
+        }
+        
+    }
+
+
 }
