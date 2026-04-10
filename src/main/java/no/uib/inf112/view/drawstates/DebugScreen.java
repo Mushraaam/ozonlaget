@@ -20,7 +20,7 @@ public class DebugScreen implements IDrawer {
     public void draw(Graphics2D graphic) {
 
         // Draw spawn zones
-        drawSpawnZones(graphic);
+        // drawSpawnZones(graphic); //Disable when spawn zone covers entire map
 
         // Draw grid cells
         graphic.setStroke(new BasicStroke(1));
