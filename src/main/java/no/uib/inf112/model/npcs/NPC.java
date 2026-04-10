@@ -579,6 +579,7 @@ public abstract class NPC implements IEnemy {
         if (this.health <= 0) {
             this.currentAction = EnemyAction.DEAD;
             this.animationIndex = 0;
+            player.increaseKillCount();
         }
     }
 
