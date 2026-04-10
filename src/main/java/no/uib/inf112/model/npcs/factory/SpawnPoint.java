@@ -25,7 +25,7 @@ public class SpawnPoint {
 
     /* Ensures no zombies spawn in view of / near player */
     private static final double SAFE_ZONE = Math
-            .ceil(Math.hypot(Config.getInt("screenWidth"), Config.getInt("screenHeight")) / 2);
+            .ceil(Math.hypot(Config.getInt("screenWidth"), Config.getInt("screenHeight")) * 0.7);
 
     public SpawnPoint(IModel map, Rectangle2D.Double bounds) {
         this.map = map;
@@ -38,14 +38,15 @@ public class SpawnPoint {
     }
 
     public boolean spawnEnemy(EnemyType type) {
+
         IPlayer player = map.getPlayer();
         if (player == null) {
-            return false;
+        return false;
         }
 
-        if (distance(this.bounds, player.getHitbox()) <= SAFE_ZONE) {
-            return false;
-        }
+        // if (distance(this.bounds, player.getHitbox()) <= SAFE_ZONE) {
+        // return false;
+        // }
 
         // try to spawn 10 times, break if failed 10 times or success
         for (int i = 0; i < 10; i++) {
@@ -74,6 +75,14 @@ public class SpawnPoint {
             }
 
             default -> throw new IllegalArgumentException("Unknown EnemyType");
+        }
+
+        IPlayer player = map.getPlayer();
+        if (player == null) {
+            return false;
+        }
+        if (distance(hitBox, player.getHitbox()) <= SAFE_ZONE) {
+            return false;
         }
 
         if (isLegal(hitBox)) {
