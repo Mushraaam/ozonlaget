@@ -25,6 +25,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private static final int MAX_HP = 100;
     private int currentHP;
 
+
+
+    private int killCount = 0;
+
     private final DirectionHandler dirHandler;
 
     private Rectangle2D.Double hitbox;
@@ -71,6 +75,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     public void setPlayerSpeed(int amount) {
         this.playerSpeed = amount;
     }
+
+
 
     /**
      * Check how many of a given item is in the inventory
@@ -661,5 +667,14 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public boolean isAlive() {
         return this.currentHP > 0;
+    }
+
+    @Override
+    public int getKillCount() {
+        return killCount;
+    }
+    @Override
+    public void increaseKillCount() {
+        this.killCount++;
     }
 }

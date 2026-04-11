@@ -91,5 +91,9 @@ public interface IPlayer {
      * @param amount
      */
     public void setPlayerSpeed(int amount);
+
+    void increaseKillCount();
+
+    public int getKillCount();
 }
 

@@ -4,4 +4,5 @@ public enum EnemyType {
     ZOMBIE,
     GHOUL,
     SPRINTER,
+    MEGABOSS,
 }

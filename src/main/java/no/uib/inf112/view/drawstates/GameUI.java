@@ -3,6 +3,7 @@ package no.uib.inf112.view.drawstates;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Map;
 
 import no.uib.inf112.config.Config;
@@ -47,11 +48,15 @@ public class GameUI implements IDrawer {
     private static final int OBJECTIVE_WIDTH = 300;
     private static final int OBJECTIVE_LINE_HEIGHT = 22;
 
+    //killcount
+    private BufferedImage killCountIcon;
+
 
     public GameUI(IModel map, ImageHandler handler) {
         this.map = map;
         this.handler = handler;
         this.uiBar = handler.uiBar();
+        this.killCountIcon = handler.getKillCountIcon();
     }
 
     @Override
@@ -88,6 +93,7 @@ public class GameUI implements IDrawer {
         drawObjectivesTab(graphic);
 
         drawPlayerInventory(graphic);
+        drawKillCountWindow(graphic);
     }
 
     private void drawPlayerInventory(Graphics2D g) {
@@ -117,6 +123,55 @@ public class GameUI implements IDrawer {
             // mv the next slot down
             currentY += SLOT_SIZE + 20;
         }
+    }
+
+
+    private void drawKillCountWindow(Graphics2D g) {
+        updateKillNotifications();
+
+        Rectangle2D b = g.getClipBounds().getBounds2D();
+        int x = (int) b.getMinX() + 10;
+        int y = (int) b.getMinY() + 10;
+        int w = 140;
+        int h = 45;
+
+        g.setColor(INV_BG);
+        g.fillRoundRect(x, y, w, h, 20, 20);
+        if (killCountIcon != null) {
+            g.drawImage(killCountIcon, x + 5, y + 5, h - 10, h - 10, null);
+        }
+        drawCenteredString(g, String.valueOf(map.getPlayer().getKillCount()),
+                x + h, y, w - h, h);
+        for (KillNotify n : activeNotifications) {
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, n.alpha));
+
+            g.setColor(Color.RED);
+            g.setFont(new Font("Impact", Font.PLAIN, 18));
+
+            int notifyX = x + w + 2 + (int) n.x; // Anchor + Width + Padding + Physics X
+            int notifyY = y + h + (int) n.y; // Anchor + Center Y + Physics Y
+
+            g.drawString("+1", notifyX, notifyY);
+        }
+
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+    }
+
+    /**
+     * Boilerplate helper to draw centered text within a specific bounding box
+     */
+    private void drawCenteredString(Graphics2D g, String text, int x, int y, int w, int h) {
+        g.setColor(new Color(150, 0, 0));
+        g.setFont(new Font("Serif", Font.BOLD, 22));
+
+        FontMetrics fm = g.getFontMetrics();
+        int tx = x + (w - fm.stringWidth(text)) / 2;
+        int ty = y + ((h - fm.getHeight()) / 2) + fm.getAscent();
+        g.setColor(Color.BLACK);
+        g.drawString(text, tx + 1, ty + 1);
+
+        g.setColor(new Color(180, 0, 0));
+        g.drawString(text, tx, ty);
     }
 
     private void drawInventoryTooltip(Graphics2D g) {
@@ -170,14 +225,14 @@ public class GameUI implements IDrawer {
         drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT, gasDone, String.format("Gas cans: %d/6", Math.min(gasCollected, 6)));
         drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 2, chopperKeycardDone, String.format("Chopper keycard: %d/1", Math.min(chopperKeycardCollected, 1)));
         drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 3, gatekeyDone, gatekeyDone ? "Gate is now open" : String.format("Gate key: %d/1", Math.min(gatekeyCollected, 1)));
-        
+
     }
 
     private void drawObjectiveLine(Graphics2D g, int x, int y, boolean completed, String text) {
         g.setColor(completed ? OBJECTIVE_COMPLETE : OBJECTIVE_INCOMPLETE);
         String prefix = completed ? "[X] " : "[  ] ";
         g.drawString(prefix + text, x, y);
-        
+
     }
 
     private void drawSlot(Graphics2D g, int x, int y, CollectableType item, int count) {
@@ -254,4 +309,44 @@ public class GameUI implements IDrawer {
         g.drawString(hpText, x1 + 110, y1 + 45);
 
     }
+
+    private ArrayList<KillNotify> activeNotifications = new ArrayList<>();
+    private int lastKillCount = -1;
+
+    private void updateKillNotifications() {
+        int currentKills = map.getPlayer().getKillCount();
+        if (lastKillCount == -1) {
+            lastKillCount = currentKills;
+        }
+        // If kills increased, add a new +1
+        if (currentKills > lastKillCount) {
+            activeNotifications.add(new KillNotify(activeNotifications.size()));
+            lastKillCount = currentKills;
+        }
+
+        // Remove finished animations
+        activeNotifications.removeIf(n -> !n.update());
+    }
+
+    private static class KillNotify {
+        float x, y, vx, vy;
+        float alpha = 1.0f;
+
+        KillNotify(int activeCount) {
+            float pressure = 1.0f + (activeCount * 0.5f);
+            this.vx = 0.2f + (float) (Math.random() * pressure);
+            // upward thrust
+            this.vy = -0.2f - (pressure);
+        }
+
+        boolean update() {
+            x += vx;      // Sideways spread
+            y += vy;      // Vertical ascent
+            vx *= 0.95f;
+            alpha -= 0.015f;
+            return alpha > 0;
+        }
+    }
 }
+
+

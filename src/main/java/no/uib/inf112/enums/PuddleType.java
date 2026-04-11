@@ -1,5 +1,7 @@
 package no.uib.inf112.enums;
 
 public enum PuddleType {
-    ACID
+    ACID,
+    EXPLOSION,
+    BOSS_FIREBALL;
 }

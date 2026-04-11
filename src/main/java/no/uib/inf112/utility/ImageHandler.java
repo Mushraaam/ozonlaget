@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.badlogic.gdx.Preferences;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.*;
 
@@ -33,6 +34,7 @@ public class ImageHandler {
         private HashMap<EnemyType, ArrayList<BufferedImage>> attackingEnemies;
         private HashMap<EnemyType, ArrayList<BufferedImage>> rangedAttackingEnemies;
         private HashMap<EnemyType, ArrayList<BufferedImage>> dyingEnemies;
+        private HashMap<EnemyType, ArrayList<BufferedImage>>  longRangedAttackingEnemies;
 
         // Helicopter
         private ArrayList<BufferedImage> helicopter;
@@ -51,6 +53,7 @@ public class ImageHandler {
         private HashMap<GunType, BufferedImage> gunUI;
         private BufferedImage uiBar;
         private BufferedImage youDied;
+        private BufferedImage killCountIcon;
 
         // Main Menu
         private BufferedImage menuBackground;
@@ -70,7 +73,9 @@ public class ImageHandler {
         // Collectables
         private HashMap<CollectableType, BufferedImage> collectables;
 
+
         public ImageHandler() {
+                this.longRangedAttackingEnemies = new HashMap<>();
                 this.playerBodySprites = new HashMap<>();
                 this.playerFeetSprites = new HashMap<>();
                 loadPlayerSprites();
@@ -97,6 +102,8 @@ public class ImageHandler {
                 loadGunUI();
                 this.uiBar = ImageReader.fetchImage("/no/uib/inf112/UI/ui-bar.png");
                 this.youDied = ImageReader.fetchImage("/no/uib/inf112/UI/youdied.png");
+                this.killCountIcon = ImageReader.fetchImage("/no/uib/inf112/UI/killcountIcon.png");
+
 
                 loadMenu();
 
@@ -138,6 +145,26 @@ public class ImageHandler {
                 this.puddles.put(PuddleType.ACID, acidPuddles);
                 this.projectiles.put(PuddleType.ACID,
                                 ImageReader.fetchImage("/no/uib/inf112/npcs/ghoul/projectile/projectile.png"));
+
+                // MEGABOSS FIREBALL
+                ArrayList<BufferedImage> fireSpellFrames = new ArrayList<>();
+                for (int i = 0; i < 8; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/megaboss/projectile/Fire Spell_Frame_%s.png", i);
+                        fireSpellFrames.add(ImageReader.fetchImage(path));
+                }
+
+                // MEGABOSS EXPLOSION
+                ArrayList<BufferedImage> bossExplosion = new ArrayList<>();
+                for (int i = 0; i < 8; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/megaboss/projectile/Explosion_%s.png", i);
+                        bossExplosion.add(ImageReader.fetchImage(path));
+                }
+
+                this.puddles.put(PuddleType.EXPLOSION, bossExplosion);
+                this.projectiles.put(PuddleType.BOSS_FIREBALL, fireSpellFrames.get(0));
+                //Didnt realize we only use 1 image for proj, its fine i guess, not an AAA title.
+
+
         }
 
         public BufferedImage getProjectile(PuddleType type) {
@@ -432,6 +459,50 @@ public class ImageHandler {
                 this.dyingEnemies.put(EnemyType.SPRINTER, sprinterDeath);
                 ////////////
 
+                ////////////
+                // MEGABOSS
+                int BOSS_ANIMATION_COUNT = 8;
+
+                // Walk
+                ArrayList<BufferedImage> bossWalk = new ArrayList<>();
+                for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/megaboss/Walk/Walk_%s.png", i);
+                        bossWalk.add(ImageReader.fetchImage(path));
+                }
+                this.walkingEnemies.put(EnemyType.MEGABOSS, bossWalk);
+
+                // Melee (Attack 1)
+                ArrayList<BufferedImage> bossMelee = new ArrayList<>();
+                for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/megaboss/Attack1/attack1_%s.png", i);
+                        bossMelee.add(ImageReader.fetchImage(path));
+                }
+                this.attackingEnemies.put(EnemyType.MEGABOSS, bossMelee);
+
+                // Medium Ranged (Attack 2)
+                ArrayList<BufferedImage> bossMediumRanged = new ArrayList<>();
+                for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/megaboss/Attack2/Attack2_%s.png", i);
+                        bossMediumRanged.add(ImageReader.fetchImage(path));
+                }
+                this.rangedAttackingEnemies.put(EnemyType.MEGABOSS, bossMediumRanged);
+
+                // Long Ranged (Attack 4)
+                ArrayList<BufferedImage> bossLongRanged = new ArrayList<>();
+                for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/megaboss/Attack4/Attack4_%s.png", i);
+                        bossLongRanged.add(ImageReader.fetchImage(path));
+                }
+                this.longRangedAttackingEnemies.put(EnemyType.MEGABOSS, bossLongRanged);
+
+                // Death
+                ArrayList<BufferedImage> bossDeath = new ArrayList<>();
+                for (int i = 0; i < 14; i++) { // Boss death has 14 images
+                        String path = String.format("/no/uib/inf112/npcs/megaboss/Death/Death_%s.png", i);
+                        bossDeath.add(ImageReader.fetchImage(path));
+                }
+                this.dyingEnemies.put(EnemyType.MEGABOSS, bossDeath);
+                ////////////
         }
 
         public BufferedImage getEnemySprites(EnemyType type, EnemyAction action, int index) {
@@ -587,6 +658,9 @@ public class ImageHandler {
         }
         public BufferedImage youDied() {
                 return this.youDied;
+        }
+        public BufferedImage getKillCountIcon() {
+                return this.killCountIcon;
         }
         public BufferedImage getWASD(){
                 return this.wasdImage;
