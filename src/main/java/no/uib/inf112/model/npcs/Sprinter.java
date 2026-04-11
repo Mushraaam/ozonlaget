@@ -87,8 +87,5 @@ public class Sprinter extends NPC {
         } else {
             super.animationIndex = 9;
         }
-        
     }
-
-
 }

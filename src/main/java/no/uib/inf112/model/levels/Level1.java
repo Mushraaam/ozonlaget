@@ -212,7 +212,7 @@ public class Level1 implements ILevel {
                 staticObjects.add(new BarbedFence( // Bottom Left 1
                                 new Rectangle2D.Double(0, 430, 132.5, 15), StaticObjectType.BARBED_FENCE));
                 staticObjects.add(new BarbedFence( // Bottom Left 2
-                                new Rectangle2D.Double(132.5, 430, 132.5, 15), StaticObjectType.BARBED_FENCE));
+                                new Rectangle2D.Double(102.5, 430, 162.5, 15), StaticObjectType.BARBED_FENCE));
                 staticObjects.add(new BarbedFence( // Bottom Right
                                 new Rectangle2D.Double(358, 430, 202, 15), StaticObjectType.BARBED_FENCE));
                 staticObjects.add(new BarbedFence( // Right Top
@@ -222,7 +222,7 @@ public class Level1 implements ILevel {
                 
                 // Door
                 staticObjects.add(new BarbedDoor( // Bottom Left 2
-                                new Rectangle2D.Double(265, 430, 132.5, 15), StaticObjectType.BARBED_DOOR));
+                                new Rectangle2D.Double(265, 430, 97.5, 15), StaticObjectType.BARBED_DOOR));
 
                 //helicopter
                 this.vehicles.add(new Helicopter(new Rectangle2D.Double(

@@ -289,11 +289,15 @@ public class ImageHandler {
                 barbedFences.put(WallDirection.HORIZONTAL,
                                 ImageReader.fetchImage("/no/uib/inf112/walls/barbedFenceVertical.png"));
 
+                HashMap<WallDirection, BufferedImage> gateWall = new HashMap<>();
+                gateWall.put(WallDirection.HORIZONTAL, ImageReader.fetchImage("/no/uib/inf112/walls/GateWallHorizontal.png"));
+                gateWall.put(WallDirection.VERTICAL, ImageReader.fetchImage("/no/uib/inf112/walls/GateWallVertical.png"));
+                        
                 this.walls.put(StaticObjectType.WOODEN_WALL, shortWoodenWalls);
                 this.walls.put(StaticObjectType.LONG_WOODEN_WALL, longWoodenWalls);
                 this.walls.put(StaticObjectType.BARBED_FENCE, barbedFences);
                 //TODO fix correct door
-                this.walls.put(StaticObjectType.BARBED_DOOR, barbedFences);
+                this.walls.put(StaticObjectType.BARBED_DOOR, gateWall);
 
         }
 
