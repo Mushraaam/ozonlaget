@@ -142,21 +142,10 @@ public class Level1 implements ILevel {
                 }
 
                 //Covers entire map - attempt at less clogging in houses
-                this.map.addSpawnPoint(new SpawnPoint(map, bounds));
-
-                // Currently this covers all houses
-                // this.map.addSpawnPoint(
-                //                 new SpawnPoint(this.map, new Rectangle2D.Double(410, 705, 350, (double) 1170 - 700)));
-                // this.map.addSpawnPoint(
-                //                 new SpawnPoint(this.map, new Rectangle2D.Double(1710, 20, (double) 2480 - 1710, 260)));
-                // this.map.addSpawnPoint(new SpawnPoint(this.map,
-                //                 new Rectangle2D.Double(1480, 680, (double) 1915 - 1480, (double) 1205 - 680)));
-                // this.map.addSpawnPoint(new SpawnPoint(this.map,
-                //                 new Rectangle2D.Double(700, 1450, (double) 1510 - 700, (double) 1820 - 1450)));
-                // this.map.addSpawnPoint(new SpawnPoint(this.map,
-                //                 new Rectangle2D.Double(1790, 2185, (double) 2430 - 1790, (double) 2485 - 2185)));
-                // this.map.addSpawnPoint(
-                //                 new SpawnPoint(this.map, new Rectangle2D.Double(2100, 880, 400, (double) 1770 - 880)));
+                //Should now not include helicopter bay
+                this.map.addSpawnPoint(new SpawnPoint(map, new Rectangle2D.Double(550, 0, this.bounds.width - 550, this.bounds.height)));
+                this.map.addSpawnPoint(new SpawnPoint(map, new Rectangle2D.Double(0, 415, this.bounds.width, this.bounds.height - 415)));
+                
         }
 
         private void generateItemSpawnPoints() {
