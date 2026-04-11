@@ -106,11 +106,7 @@ public abstract class NPC implements IEnemy {
         for (int attempts = 0; attempts < 20; attempts++) {
             ICell cell = nearbyCells.get(this.random.nextInt(nearbyCells.size()));
 
-            if (cell.equals(current)) {
-                continue;
-            }
-
-            if (!map.getPathfinder().canEnter(cell, size)) {
+            if (cell.equals(current) || !map.getPathfinder().canEnter(cell, size)) {
                 continue;
             }
 
