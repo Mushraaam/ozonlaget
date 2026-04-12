@@ -8,15 +8,19 @@ import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.interfaces.IModel;
 
 public class Factory {
+
+    private static final int ENEMY_CAP = Config.getInt("enemyCap");
     private ArrayList<SpawnPoint> spawnPoints;
     private Random random;
     private int counter;
+    private IModel model;
 
     private static final int GHOUL_INTENSITY = Config.getInt("ghoulIntensity");
     private static final int SPRINTER_INTENSITY = Config.getInt("sprinterIntensity");
 
-    public Factory(IModel map){
-        this.spawnPoints = map.getSpawnPoints();
+    public Factory(IModel model){
+        this.model = model;
+        this.spawnPoints = model.getSpawnPoints();
         this.counter = 0;
         this.random = new Random();
     }
@@ -25,6 +29,10 @@ public class Factory {
      * Increments counter - spawns enemy when counter reaches threshold
      */
     public void increment(){
+
+        if (this.model.getEnemies().size() >= ENEMY_CAP){
+            return;
+        }
         this.counter =(this.counter + 1) % 100000;
         
         if (this.counter % GHOUL_INTENSITY == 0){
