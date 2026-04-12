@@ -479,9 +479,27 @@ public class Controller
                 helpMenuMousePressEvent(e);
             }
 
+            case SETTINGS -> {
+                settingButtonMousePressEvent(e);
+            }
+
             default -> {
                 /* nada */
             }
+        }
+    }
+
+    private void settingButtonMousePressEvent(MouseEvent e) {
+        if (!SwingUtilities.isLeftMouseButton(e)) {
+            return;
+        }
+
+        Point p = e.getPoint();
+        var backButton = view.getSettingMenu().getBackButton();
+        if (backButton != null && backButton.contains(p)) {
+            changeState(GameState.MAIN_MENU);
+            view.getMainMenu().resetAnimation();
+            return;
         }
     }
 
@@ -524,7 +542,7 @@ public class Controller
         var settingButton = view.getMainMenu().getSettingButton();
         if (startButton != null && settingButton.contains(p)) {
             changeState(GameState.SETTINGS);
-            return;
+            view.getSettingMenu().resetAnimation();
         }
     }
 
