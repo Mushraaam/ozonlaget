@@ -111,8 +111,9 @@ public class GameDrawer extends JPanel {
                 /* Do nothing if none */}
 
             case RAINBOW -> {
-                
-                this.rainbowBuffOverlay.draw(g3);
+                if (getSettingMenu().isRainbowEnable()) {
+                    this.rainbowBuffOverlay.draw(g3);
+                }
             }
 
             default -> {

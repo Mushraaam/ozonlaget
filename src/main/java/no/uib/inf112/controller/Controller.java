@@ -501,6 +501,12 @@ public class Controller
             view.getMainMenu().resetAnimation();
             return;
         }
+
+        var rainbowToggle = view.getSettingMenu().getRainbowToggle();
+        if (rainbowToggle != null && rainbowToggle.contains(p)) {
+            view.getSettingMenu().toggleRainbow();
+            view.repaint();
+        }
     }
 
     private void helpMenuMousePressEvent(MouseEvent e) {
@@ -534,13 +540,13 @@ public class Controller
             return;
         }
         var helpButton = view.getMainMenu().getHelpButton();
-        if (startButton != null && helpButton.contains(p)) {
+        if (helpButton != null && helpButton.contains(p)) {
             changeState(GameState.HELP);
             view.getHelpMenu().resetAnimation();
         }
 
         var settingButton = view.getMainMenu().getSettingButton();
-        if (startButton != null && settingButton.contains(p)) {
+        if (settingButton != null && settingButton.contains(p)) {
             changeState(GameState.SETTINGS);
             view.getSettingMenu().resetAnimation();
         }
