@@ -492,7 +492,9 @@ public class Player implements IControllablePlayer, IViewablePlayer {
                     spread = (Math.random() * 2 - 1) * inaccuracy;
                     hit = raycastShot(x1, y1, baseAngle + spread, range);
                     if (hit.enemy() != null) {
-                        hit.enemy().takeDamage(this.currentGun.damage(this.buffType));
+                        if (hit.enemy().takeDamage(this.currentGun.damage(this.buffType))){
+                            increaseKillCount();
+                        }
                     }
                 }
                 if (buffType == BuffType.DAMAGE) {
@@ -508,7 +510,9 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
 
         if (hit.enemy() != null) {
-            hit.enemy().takeDamage(this.currentGun.damage(this.buffType));
+            if (hit.enemy().takeDamage(this.currentGun.damage(this.buffType))){
+                increaseKillCount();
+            }
         }
         return true;
     }

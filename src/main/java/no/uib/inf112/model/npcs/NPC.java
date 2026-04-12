@@ -444,7 +444,7 @@ public abstract class NPC implements IEnemy {
 
     }
 
-    private boolean isLegal(Rectangle2D.Double candidate) {
+    protected boolean isLegal(Rectangle2D.Double candidate) {
         double padding = 6.0;
         Rectangle2D.Double movementHitbox = new Rectangle2D.Double(
                 candidate.x + padding,
@@ -571,7 +571,7 @@ public abstract class NPC implements IEnemy {
     }
 
     @Override
-    public void takeDamage(int damage) {
+    public boolean takeDamage(int damage) {
         this.health -= damage;
         if (this.health < 0) {
             this.health = 0;
@@ -579,8 +579,9 @@ public abstract class NPC implements IEnemy {
         if (this.health <= 0) {
             this.currentAction = EnemyAction.DEAD;
             this.animationIndex = 0;
-            player.increaseKillCount();
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -673,5 +674,4 @@ public abstract class NPC implements IEnemy {
     // ABSTRACT METHODS
 
     protected abstract void rangedAttack(Double attackTarget2);
-
 }

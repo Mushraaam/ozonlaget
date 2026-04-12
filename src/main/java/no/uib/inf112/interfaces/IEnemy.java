@@ -87,8 +87,9 @@ public interface IEnemy extends IMovingDrawableObject {
     /**
      * Deals damage to enemy
      * @param damage
+     * @return true if this was the killshot
      */
-    public void takeDamage(int damage);
+    public boolean takeDamage(int damage);
 
     /**
      * @return type of current action

@@ -28,5 +28,7 @@ public interface IViewablePlayer extends IPlayer {
      */
     public double getFacingAngle();
 
-    
+
+    @Override
+    int getKillCount();
 }

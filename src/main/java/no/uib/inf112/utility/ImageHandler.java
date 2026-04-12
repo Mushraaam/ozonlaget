@@ -1,11 +1,10 @@
 package no.uib.inf112.utility;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.badlogic.gdx.Preferences;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.*;
 
@@ -467,7 +466,7 @@ public class ImageHandler {
                 ArrayList<BufferedImage> bossWalk = new ArrayList<>();
                 for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/megaboss/Walk/Walk_%s.png", i);
-                        bossWalk.add(ImageReader.fetchImage(path));
+                        bossWalk.add(totateNeg90(ImageReader.fetchImage(path)));
                 }
                 this.walkingEnemies.put(EnemyType.MEGABOSS, bossWalk);
 
@@ -475,7 +474,7 @@ public class ImageHandler {
                 ArrayList<BufferedImage> bossMelee = new ArrayList<>();
                 for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/megaboss/Attack1/attack1_%s.png", i);
-                        bossMelee.add(ImageReader.fetchImage(path));
+                        bossMelee.add(totateNeg90(ImageReader.fetchImage(path)));
                 }
                 this.attackingEnemies.put(EnemyType.MEGABOSS, bossMelee);
 
@@ -483,7 +482,7 @@ public class ImageHandler {
                 ArrayList<BufferedImage> bossMediumRanged = new ArrayList<>();
                 for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/megaboss/Attack2/Attack2_%s.png", i);
-                        bossMediumRanged.add(ImageReader.fetchImage(path));
+                        bossMediumRanged.add(totateNeg90(ImageReader.fetchImage(path)));
                 }
                 this.rangedAttackingEnemies.put(EnemyType.MEGABOSS, bossMediumRanged);
 
@@ -491,7 +490,7 @@ public class ImageHandler {
                 ArrayList<BufferedImage> bossLongRanged = new ArrayList<>();
                 for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/megaboss/Attack4/Attack4_%s.png", i);
-                        bossLongRanged.add(ImageReader.fetchImage(path));
+                        bossLongRanged.add(totateNeg90(ImageReader.fetchImage(path)));
                 }
                 this.longRangedAttackingEnemies.put(EnemyType.MEGABOSS, bossLongRanged);
 
@@ -499,7 +498,7 @@ public class ImageHandler {
                 ArrayList<BufferedImage> bossDeath = new ArrayList<>();
                 for (int i = 0; i < 14; i++) { // Boss death has 14 images
                         String path = String.format("/no/uib/inf112/npcs/megaboss/Death/Death_%s.png", i);
-                        bossDeath.add(ImageReader.fetchImage(path));
+                        bossDeath.add(totateNeg90(ImageReader.fetchImage(path)));
                 }
                 this.dyingEnemies.put(EnemyType.MEGABOSS, bossDeath);
                 ////////////
@@ -616,6 +615,22 @@ public class ImageHandler {
                 this.wasdImage = ImageReader.fetchImage("/no/uib/inf112/mainmenu/controls.png");
                 this.mouseImage = ImageReader.fetchImage("/no/uib/inf112/mainmenu/mouse.png");
                 this.numbersImage = ImageReader.fetchImage("/no/uib/inf112/mainmenu/numbers.png");
+        }
+
+
+        //some gippity code to rotate images instead of manually editing 60 .png sprites
+        public static BufferedImage totateNeg90(BufferedImage src) {
+                int w = src.getWidth();
+                int h = src.getHeight();
+                BufferedImage dest = new BufferedImage(w, h, src.getType());
+                Graphics2D g2 = dest.createGraphics();
+
+                // Rotate 180 degrees around the center of the image
+                g2.rotate(Math.toRadians(-90), w / 2.0, h / 2.0);
+
+                g2.drawImage(src, 0, 0, null);
+                g2.dispose();
+                return dest;
         }
 
         public BufferedImage getFloor(FloorType type) {

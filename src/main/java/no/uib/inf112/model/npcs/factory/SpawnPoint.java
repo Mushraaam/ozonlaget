@@ -12,6 +12,7 @@ import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
 import no.uib.inf112.interfaces.IVehicle;
 import no.uib.inf112.model.npcs.Ghoul;
+import no.uib.inf112.model.npcs.GigachadLV5;
 import no.uib.inf112.model.npcs.Sprinter;
 
 public class SpawnPoint {
@@ -74,6 +75,23 @@ public class SpawnPoint {
                         SMALL, SMALL);
             }
 
+            case MEGABOSS -> {
+                double centerX = 1080;
+                double centerY = 1080;
+                hitBox = new Rectangle2D.Double(centerX, centerY, LARGE, LARGE);
+
+                IPlayer player = map.getPlayer();
+                if (player != null) {
+                    double dx = centerX - player.getHitbox().getCenterX();
+                    double dy = centerY - player.getHitbox().getCenterY();
+                    double distToCenter = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distToCenter <= SAFE_ZONE) {
+                        return false;
+                    }
+                }
+            }
+
             default -> throw new IllegalArgumentException("Unknown EnemyType");
         }
 
@@ -99,6 +117,9 @@ public class SpawnPoint {
             }
             case SPRINTER -> {
                 this.map.addEnemy(new Sprinter(hitBox, map));
+            }
+            case MEGABOSS -> {
+                this.map.addEnemy(new GigachadLV5(hitBox, map));
             }
 
             default -> throw new IllegalArgumentException("Unknown EnemyType");

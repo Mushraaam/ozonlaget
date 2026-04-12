@@ -128,6 +128,9 @@ public class Pathfinder {
         int dy = from.row() - to.row();
         double cost = (dx != 0 && dy != 0) ? 1.4142 : 1.0;
 
+        if (enemy.size() == EnemySize.LARGE) { //boss is bulldozer
+            return cost;
+        }
         double trafficPenalty = 0;
         if (to.isOccupied(enemy.size())) {
             int i = 0;

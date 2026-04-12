@@ -4,13 +4,16 @@ import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
+import no.uib.inf112.interfaces.ICell;
+import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IModel;
+import no.uib.inf112.interfaces.IVehicle;
 
 import java.awt.geom.Rectangle2D;
 
 public class GigachadLV5 extends NPC {
 
-    private static final double SPEED = 2;
+    private static final double SPEED = Config.getInt("gigachadSpeed");
     private static final double ROTATION_SPEED = 0.08;
     private static final EnemySize SIZE = EnemySize.LARGE;
     private static final EnemyType ENEMY_TYPE = EnemyType.MEGABOSS;
@@ -31,8 +34,8 @@ public class GigachadLV5 extends NPC {
     private boolean isDoingMediumAttack;
     private boolean projectileFired;
 
-    public GigachadLV5(Rectangle2D.Double pos, IModel map, int health) {
-        super(pos, map, health);
+    public GigachadLV5(Rectangle2D.Double pos, IModel map) {
+        super(pos, map, Config.getInt("gigachadHP"));
 
         setSpeed(SPEED);
         setRotationSpeed(ROTATION_SPEED);
@@ -110,5 +113,52 @@ public class GigachadLV5 extends NPC {
             this.hasRangedAmmo = false;
             setAction(EnemyAction.WALK);
         }
+    }
+
+    @Override
+    protected boolean isLegal(Rectangle2D.Double candidate) {
+        double padding = 6.0;
+        Rectangle2D.Double movementHitbox = new Rectangle2D.Double(
+                candidate.x + padding,
+                candidate.y + padding,
+                candidate.width - (padding * 2),
+                candidate.height - (padding * 2));
+
+        // 1. Still stop if he hits the player
+        if (movementHitbox.intersects(this.player.getHitbox())) {
+            return false;
+        }
+
+        // 2. Still stop if he hits a wall (Pathfinder check)
+        ICell candidateCell = map.getGrid().getCellFromPos(candidate);
+        if (candidateCell == null || !map.getPathfinder().canEnter(candidateCell, SIZE)) {
+            return false;
+        }
+
+        // 3. TRAMPLE LOGIC: Check for other enemies
+        for (IEnemy enemy : map.getEnemies()) {
+            if (enemy == this || !enemy.isAlive()) {
+                continue;
+            }
+
+            if (movementHitbox.intersects(enemy.getHitbox())) {
+                // If the boss is moving through a smaller enemy, CRUSH THEM
+                if (enemy.size() != EnemySize.LARGE) {
+                    // Instantly kill the smaller enemy
+                    enemy.takeDamage(9999);
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        // 4. Still stop for vehicles
+        for (IVehicle vehicle : this.map.getVehicles()) {
+            if (candidate.intersects(vehicle.getBounds())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
