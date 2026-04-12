@@ -46,7 +46,7 @@ public class ImageHandler {
         private HashMap<PuddleType, ArrayList<BufferedImage>> puddles;
 
         // Projectiles
-        private HashMap<PuddleType, BufferedImage> projectiles;
+        private HashMap<PuddleType, ArrayList<BufferedImage>> projectiles;
 
         // UI
         private HashMap<GunType, BufferedImage> gunUI;
@@ -142,36 +142,50 @@ public class ImageHandler {
                         acidPuddles.add(img);
                 }
                 this.puddles.put(PuddleType.ACID, acidPuddles);
-                this.projectiles.put(PuddleType.ACID,
-                                ImageReader.fetchImage("/no/uib/inf112/npcs/ghoul/projectile/projectile.png"));
+                ArrayList<BufferedImage> acidList = new ArrayList<>();
+                acidList.add(ImageReader.fetchImage("/path/to/acid.png"));
+                this.projectiles.put(PuddleType.ACID,acidList);
 
                 // MEGABOSS FIREBALL
                 ArrayList<BufferedImage> fireSpellFrames = new ArrayList<>();
                 for (int i = 0; i < 8; i++) {
                         String path = String.format("/no/uib/inf112/npcs/megaboss/projectile/Fire Spell_Frame_%s.png", i);
-                        fireSpellFrames.add(ImageReader.fetchImage(path));
+                        fireSpellFrames.add(rotateDeg(ImageReader.fetchImage(path),180));
                 }
 
                 // MEGABOSS EXPLOSION
                 ArrayList<BufferedImage> bossExplosion = new ArrayList<>();
-                for (int i = 0; i < 8; i++) {
-                        String path = String.format("/no/uib/inf112/npcs/megaboss/projectile/Explosion_%s.png", i);
+                for (int i = 0; i < 10; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/megaboss/projectile/image_%s.png", i);
                         bossExplosion.add(ImageReader.fetchImage(path));
                 }
 
                 this.puddles.put(PuddleType.EXPLOSION, bossExplosion);
-                this.projectiles.put(PuddleType.BOSS_FIREBALL, fireSpellFrames.get(0));
-                //Didnt realize we only use 1 image for proj, its fine i guess, not an AAA title.
+                this.projectiles.put(PuddleType.BOSS_FIREBALL, fireSpellFrames);
 
 
         }
 
-        public BufferedImage getProjectile(PuddleType type) {
-                return this.projectiles.get(type);
+        public BufferedImage getProjectile(PuddleType type, int tick) {
+                ArrayList<BufferedImage> frames = this.projectiles.get(type);
+                if (frames.size() == 1) {
+                        return frames.get(0);
+                }
+                int currentFrame = (tick / 4) % frames.size();
+
+                return frames.get(currentFrame);
         }
 
         public BufferedImage getPuddleImage(PuddleType type, int index, int lifetime) {
 
+
+                if (type == PuddleType.EXPLOSION) {
+                        int totalImages = this.puddles.get(type).size();
+                        int frame = (int) (((double) index / lifetime) * totalImages);
+                        frame = Math.min(frame, totalImages - 1);
+
+                        return this.puddles.get(type).get(frame);
+                }
                 int i = 0;
                 if (index > 20) {
                         i = 3;
@@ -470,7 +484,7 @@ public class ImageHandler {
                 ArrayList<BufferedImage> bossWalk = new ArrayList<>();
                 for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/megaboss/Walk/Walk_%s.png", i);
-                        bossWalk.add(totateNeg90(ImageReader.fetchImage(path)));
+                        bossWalk.add(rotateDeg(ImageReader.fetchImage(path), -90));
                 }
                 this.walkingEnemies.put(EnemyType.MEGABOSS, bossWalk);
 
@@ -478,7 +492,7 @@ public class ImageHandler {
                 ArrayList<BufferedImage> bossMelee = new ArrayList<>();
                 for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/megaboss/Attack1/attack1_%s.png", i);
-                        bossMelee.add(totateNeg90(ImageReader.fetchImage(path)));
+                        bossMelee.add(rotateDeg(ImageReader.fetchImage(path),-90 ));
                 }
                 this.attackingEnemies.put(EnemyType.MEGABOSS, bossMelee);
 
@@ -486,7 +500,7 @@ public class ImageHandler {
                 ArrayList<BufferedImage> bossMediumRanged = new ArrayList<>();
                 for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/megaboss/Attack2/Attack2_%s.png", i);
-                        bossMediumRanged.add(totateNeg90(ImageReader.fetchImage(path)));
+                        bossMediumRanged.add(rotateDeg(ImageReader.fetchImage(path), -90));
                 }
                 this.rangedAttackingEnemies.put(EnemyType.MEGABOSS, bossMediumRanged);
 
@@ -494,7 +508,7 @@ public class ImageHandler {
                 ArrayList<BufferedImage> bossLongRanged = new ArrayList<>();
                 for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/megaboss/Attack4/Attack4_%s.png", i);
-                        bossLongRanged.add(totateNeg90(ImageReader.fetchImage(path)));
+                        bossLongRanged.add(rotateDeg(ImageReader.fetchImage(path), -90));
                 }
                 this.longRangedAttackingEnemies.put(EnemyType.MEGABOSS, bossLongRanged);
 
@@ -502,7 +516,7 @@ public class ImageHandler {
                 ArrayList<BufferedImage> bossDeath = new ArrayList<>();
                 for (int i = 0; i < 14; i++) { // Boss death has 14 images
                         String path = String.format("/no/uib/inf112/npcs/megaboss/Death/Death_%s.png", i);
-                        bossDeath.add(totateNeg90(ImageReader.fetchImage(path)));
+                        bossDeath.add(rotateDeg(ImageReader.fetchImage(path), -90));
                 }
                 this.dyingEnemies.put(EnemyType.MEGABOSS, bossDeath);
                 ////////////
@@ -623,14 +637,14 @@ public class ImageHandler {
 
 
         //some gippity code to rotate images instead of manually editing 60 .png sprites
-        public static BufferedImage totateNeg90(BufferedImage src) {
+        public static BufferedImage rotateDeg(BufferedImage src, int deg) {
                 int w = src.getWidth();
                 int h = src.getHeight();
                 BufferedImage dest = new BufferedImage(w, h, src.getType());
                 Graphics2D g2 = dest.createGraphics();
 
-                // Rotate 180 degrees around the center of the image
-                g2.rotate(Math.toRadians(-90), w / 2.0, h / 2.0);
+                // Rotate deg degrees around the center of the image
+                g2.rotate(Math.toRadians(deg), w / 2.0, h / 2.0);
 
                 g2.drawImage(src, 0, 0, null);
                 g2.dispose();

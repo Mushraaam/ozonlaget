@@ -3,6 +3,7 @@ package no.uib.inf112.model.items.factory;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.IModel;
+import org.w3c.dom.css.Rect;
 
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
@@ -53,6 +54,10 @@ public class ItemFactory {
                 break;
             }
         }
+    }
+
+    public void dropSpecificItem(CollectableType type, Rectangle2D.Double targetLocation){
+        this.inventoryItemSpawnPoint.dropEssentialItem(type, targetLocation);
     }
 
     public void increment(){

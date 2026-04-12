@@ -20,6 +20,7 @@ public abstract class PuddleProjectile implements IProjectile {
     private PuddleType type;
 
     protected IModel map;
+    private int animationTick = 0;
 
     public PuddleProjectile(Rectangle2D.Double startPos, Rectangle2D.Double endPos, IModel map, double width,
             double height, int speed, PuddleType type) {
@@ -50,7 +51,13 @@ public abstract class PuddleProjectile implements IProjectile {
     }
 
     @Override
+    public int getAnimationTick() {
+        return this.animationTick;
+    }
+
+    @Override
     public void move() {
+        this.animationTick++;
         double dx = destX - startX;
         double dy = destY - startY;
 

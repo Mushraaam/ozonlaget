@@ -75,8 +75,8 @@ public class GameScreen implements IDrawer {
 
     private void drawProjectiles(Graphics2D graphic) {
         for (IProjectile projectile : this.map.getProjectiles()) {
-            drawRotated(graphic, this.handler.getProjectile(projectile.getType()), projectile.getBounds(),
-                    projectile.angle());
+            BufferedImage img = this.handler.getProjectile(projectile.getType(), projectile.getAnimationTick());
+            drawRotated(graphic, img, projectile.getBounds(), projectile.angle());
         }
     }
 

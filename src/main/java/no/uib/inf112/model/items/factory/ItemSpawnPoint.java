@@ -103,11 +103,12 @@ public class ItemSpawnPoint {
 
         Collections.shuffle(allSpots, this.random);
 
-        Rectangle2D.Double chopperKeycardSpot = allSpots.getFirst();
+        //if chopper card should spawn naturally
+        /*Rectangle2D.Double chopperKeycardSpot = allSpots.getFirst();
         ICollectable chopperKeycard = createItem(CollectableType.CHOPPER_KEYCARD, chopperKeycardSpot);
         this.map.addToActiveItems(chopperKeycard);
         this.spawnPoints.put(chopperKeycardSpot, chopperKeycard);
-        allSpots.removeFirst(); //exclude key spot
+        allSpots.removeFirst(); //exclude key spot*/
 
         int gasCansToSpawn = totalInventoryItemsOnMap.getOrDefault(CollectableType.GASCAN, 0);
 
@@ -172,5 +173,14 @@ public class ItemSpawnPoint {
 
             default -> throw new IllegalArgumentException("Unknown Item Type");
         }
+    }
+
+    /**
+     * Drops an essential item ignoring all loot caps.
+     * Does not mark it as "droppedLoot" so it won't despawn or count towards the limit.
+     */
+    public void dropEssentialItem(CollectableType itemType, Rectangle2D.Double targetLocation) {
+        ICollectable newItem = createItem(itemType, targetLocation);
+        this.map.addToActiveItems(newItem);
     }
 }

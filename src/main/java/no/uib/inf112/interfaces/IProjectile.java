@@ -11,6 +11,8 @@ public interface IProjectile {
      */
     public PuddleType getType();
 
+    int getAnimationTick();
+
     /**
      * Moves projectile - creates a puddle when it reaches target
      */

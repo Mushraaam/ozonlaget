@@ -196,6 +196,10 @@ public abstract class NPC implements IEnemy {
         return this.from;
     }
 
+    protected void dropLoot(){
+        map.getItemFactory().rollDropFromTable(this.getHitbox());
+    }
+
     @Override
     public void move(IGrid grid) {
 
@@ -211,7 +215,7 @@ public abstract class NPC implements IEnemy {
             setDeathAnimationIndex();
             if (this.deathDelay <= 0) {
                 this.map.removeEnemy(this);
-                map.getItemFactory().rollDropFromTable(this.getHitbox());
+                dropLoot();
 
             }
             return;
