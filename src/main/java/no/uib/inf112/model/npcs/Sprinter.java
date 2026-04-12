@@ -61,7 +61,7 @@ public class Sprinter extends NPC {
 
     @Override
     protected void rangedAttack(Double attackTarget2) {
-        return;
+        //Do nothing, has no ranged attack
     }
 
     @Override
@@ -87,8 +87,5 @@ public class Sprinter extends NPC {
         } else {
             super.animationIndex = 9;
         }
-        
     }
-
-
 }

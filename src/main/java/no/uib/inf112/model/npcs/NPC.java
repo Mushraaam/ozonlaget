@@ -47,6 +47,7 @@ public abstract class NPC implements IEnemy {
     private boolean sliding = false;
 
     private int health;
+    private int maxHealth;
 
     // Wander
     private IGrid grid;
@@ -75,7 +76,7 @@ public abstract class NPC implements IEnemy {
 
         this.player = map.getPlayer();
         this.grid = this.map.getGrid();
-
+        this.maxHealth = health;
         this.health = health;
         this.currentAction = EnemyAction.WALK;
         this.moving = false;
@@ -106,11 +107,7 @@ public abstract class NPC implements IEnemy {
         for (int attempts = 0; attempts < 20; attempts++) {
             ICell cell = nearbyCells.get(this.random.nextInt(nearbyCells.size()));
 
-            if (cell.equals(current)) {
-                continue;
-            }
-
-            if (!map.getPathfinder().canEnter(cell, size)) {
+            if (cell.equals(current) || !map.getPathfinder().canEnter(cell, size)) {
                 continue;
             }
 
@@ -308,6 +305,11 @@ public abstract class NPC implements IEnemy {
     }
 
     private void checkAggro() {
+        if (this.health < this.maxHealth){
+            this.aggroed = true; //we aggro if we take damage
+            return;
+        }
+
         double dist = distance(this.pos, this.player.getHitbox());
         if (dist <= this.aggroRange && hasLineOfSight()) {
             this.aggroed = true;
