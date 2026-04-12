@@ -195,4 +195,8 @@ public class MainMenu implements IDrawer {
         return helpButton;
     }
 
+    public Rectangle2D.Double getSettingButton() {
+        return settingsButton;
+    }
+
 }

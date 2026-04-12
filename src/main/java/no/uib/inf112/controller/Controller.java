@@ -520,6 +520,12 @@ public class Controller
             changeState(GameState.HELP);
             view.getHelpMenu().resetAnimation();
         }
+
+        var settingButton = view.getMainMenu().getSettingButton();
+        if (startButton != null && settingButton.contains(p)) {
+            changeState(GameState.SETTINGS);
+            return;
+        }
     }
 
     private void changeState(GameState state) {
