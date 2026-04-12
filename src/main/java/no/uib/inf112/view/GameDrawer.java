@@ -20,6 +20,7 @@ import no.uib.inf112.view.drawstates.GameScreen;
 import no.uib.inf112.view.drawstates.HelpMenu;
 import no.uib.inf112.view.drawstates.MainMenu;
 import no.uib.inf112.view.drawstates.RainbowBuffOverlay;
+import no.uib.inf112.view.drawstates.SettingMenu;
 import no.uib.inf112.view.drawstates.VictoryOverlay;
 
 public class GameDrawer extends JPanel {
@@ -32,6 +33,7 @@ public class GameDrawer extends JPanel {
     private IDrawer helpScreen;
     private IDrawer gameOverOverlay;
     private IDrawer victoryOverlay;
+    private IDrawer settingScreen;
 
     private ImageHandler handler;
     private Camera camera;
@@ -58,6 +60,7 @@ public class GameDrawer extends JPanel {
         this.helpScreen = new HelpMenu(handler);
         this.gameOverOverlay = new DeathOverlay(handler);
         this.victoryOverlay = new VictoryOverlay();
+        this.settingScreen = new SettingMenu(handler);
     }
 
     @Override
@@ -83,6 +86,9 @@ public class GameDrawer extends JPanel {
             case HELP -> {
                 this.helpScreen.draw(g2);
             }
+            case SETTINGS -> {
+                this.settingScreen.draw(g2);
+            }
 
             case GAME_OVER -> {
                 this.gameScreen.draw(g2);
@@ -105,8 +111,9 @@ public class GameDrawer extends JPanel {
                 /* Do nothing if none */}
 
             case RAINBOW -> {
-                
-                this.rainbowBuffOverlay.draw(g3);
+                if (getSettingMenu().isRainbowEnable()) {
+                    this.rainbowBuffOverlay.draw(g3);
+                }
             }
 
             default -> {
@@ -121,5 +128,9 @@ public class GameDrawer extends JPanel {
 
     public HelpMenu getHelpMenu(){
         return (HelpMenu) this.helpScreen;
+    }
+
+    public SettingMenu getSettingMenu() {
+        return (SettingMenu) this.settingScreen;
     }
 }
