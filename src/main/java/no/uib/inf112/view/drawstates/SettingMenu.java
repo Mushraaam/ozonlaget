@@ -59,7 +59,7 @@ public class SettingMenu implements IDrawer {
 
         Font font = graphic.getFont();
         graphic.setFont(new Font(font.getName(), font.getStyle(), 24));
-        graphic.drawString("Turn off rainbow effects", x, y);
+        graphic.drawString("Turn off blinking effects", x, y);
 
         int boxX = x + 300;
         int boxY = y - 30;
