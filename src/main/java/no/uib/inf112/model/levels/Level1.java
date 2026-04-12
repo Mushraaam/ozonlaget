@@ -141,11 +141,13 @@ public class Level1 implements ILevel {
                         throw new IllegalStateException("Map cannot be null");
                 }
 
-                //Covers entire map - attempt at less clogging in houses
-                //Should now not include helicopter bay
-                this.map.addSpawnPoint(new SpawnPoint(map, new Rectangle2D.Double(550, 0, this.bounds.width - 550, this.bounds.height)));
-                this.map.addSpawnPoint(new SpawnPoint(map, new Rectangle2D.Double(0, 415, this.bounds.width, this.bounds.height - 415)));
-                
+                // Covers entire map - attempt at less clogging in houses
+                // Should now not include helicopter bay
+                this.map.addSpawnPoint(new SpawnPoint(map,
+                                new Rectangle2D.Double(550, 0, this.bounds.width - 550, this.bounds.height)));
+                this.map.addSpawnPoint(new SpawnPoint(map,
+                                new Rectangle2D.Double(0, 415, this.bounds.width, this.bounds.height - 415)));
+
         }
 
         private void generateItemSpawnPoints() {
@@ -192,7 +194,8 @@ public class Level1 implements ILevel {
                 inventoryItemSpawnPoints.add(new Rectangle2D.Double(470, 890, width, height)); // House 3 NW
                 inventoryItemSpawnPoints.add(new Rectangle2D.Double(2380, 40, width, height)); // House 2 NE
                 // Outside houses
-                //inventoryItemSpawnPoints.add(new Rectangle2D.Double(25, 40, width, height)); // NW of helipad
+                // inventoryItemSpawnPoints.add(new Rectangle2D.Double(25, 40, width, height));
+                // // NW of helipad
                 inventoryItemSpawnPoints.add(new Rectangle2D.Double(2455, 820, width, height)); // NE of House 5
                 inventoryItemSpawnPoints.add(new Rectangle2D.Double(1145, 40, width, height)); // By north pon
                 inventoryItemSpawnPoints.add(new Rectangle2D.Double(905, 1860, width, height)); // W of house 6
@@ -207,8 +210,8 @@ public class Level1 implements ILevel {
                 // /////////
                 // helicopter area
                 this.floors.add(new RockRoad(new Rectangle2D.Double(0, 0, 545, 410)));
-                
-                //Fence
+
+                // Fence
                 staticObjects.add(new BarbedFence( // Bottom Left 1
                                 new Rectangle2D.Double(0, 430, 132.5, 15), StaticObjectType.BARBED_FENCE));
                 staticObjects.add(new BarbedFence( // Bottom Left 2
@@ -219,18 +222,19 @@ public class Level1 implements ILevel {
                                 new Rectangle2D.Double(550, 0, 15, 217.5), StaticObjectType.BARBED_FENCE));
                 staticObjects.add(new BarbedFence( // Right Bottom
                                 new Rectangle2D.Double(550, 217.5, 15, 217.5), StaticObjectType.BARBED_FENCE));
-                
+
                 // Door
                 staticObjects.add(new BarbedDoor( // Bottom Left 2
-                                new Rectangle2D.Double(265, 430, 97.5, 15), StaticObjectType.BARBED_DOOR));
+                                new Rectangle2D.Double(265, 430, 97.5, 15), StaticObjectType.BARBED_DOOR,
+                                this.map));
 
-                //helicopter
+                // helicopter
                 this.vehicles.add(new Helicopter(new Rectangle2D.Double(
                                 150, 130, 210, 162.5
 
                 )));
                 // /////////
-                
+
                 // /////////
                 // house 2
                 this.floors.add(new WoodFloor(new Rectangle2D.Double(1710, 20, (double) 2480 - 1710, 260)));
@@ -507,9 +511,9 @@ public class Level1 implements ILevel {
                                 new Rectangle2D.Double(2415, 1270, PLANTONEWIDTH, PLANTONEHEIGHT)));
 
                 // bottom room
-                this.staticObjects.add(new BeigeSmallBed( // Small bed 
+                this.staticObjects.add(new BeigeSmallBed( // Small bed
                                 new Rectangle2D.Double(2100, 1675, SMALLBEDWIDTH, SMALLBEDHEIGHT)));
-                this.staticObjects.add(new DarkWoodenTableSmall( // Small Table 
+                this.staticObjects.add(new DarkWoodenTableSmall( // Small Table
                                 new Rectangle2D.Double(2300, 1675, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
                 this.staticObjects.add(new PlantTwo( // Plant
                                 new Rectangle2D.Double(2300, 1675, PLANTONEWIDTH, PLANTONEHEIGHT)));
@@ -572,7 +576,7 @@ public class Level1 implements ILevel {
                 // top left room
                 this.staticObjects.add(new BeigeBigBed( // Big bed
                                 new Rectangle2D.Double(695, 1725, BIGBEDWIDTH, BIGBEDHEIGHT)));
-                this.staticObjects.add(new DarkWoodenTableSmall( // Small Table 
+                this.staticObjects.add(new DarkWoodenTableSmall( // Small Table
                                 new Rectangle2D.Double(795, 1775, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
                 this.staticObjects.add(new PlantOne( // Plant
                                 new Rectangle2D.Double(905, 1560, PLANTONEWIDTH, PLANTONEHEIGHT)));
@@ -581,7 +585,8 @@ public class Level1 implements ILevel {
 
                 // top middle room
                 this.staticObjects.add(new DarkWoodenTableSquare( // Small Table left
-                                new Rectangle2D.Double(1052, 1655, DARKWOODENTABLESQUAREWIDTH, DARKWOODENTABLESQUAREHEIGHT)));
+                                new Rectangle2D.Double(1052, 1655, DARKWOODENTABLESQUAREWIDTH,
+                                                DARKWOODENTABLESQUAREHEIGHT)));
                 this.staticObjects.add(new BeigeWoodChairDown( // chair facing down (left)
                                 new Rectangle2D.Double(1045, 1600, CHAIRWIDTH, CHAIRHEIGHT)));
                 this.staticObjects.add(new BeigeWoodChairDown( // chair facing down (right)
@@ -591,20 +596,21 @@ public class Level1 implements ILevel {
                 this.staticObjects.add(new BeigeWoodChairUp( // chair facing Up (right)
                                 new Rectangle2D.Double(1105, 1710, CHAIRWIDTH, CHAIRHEIGHT)));
 
-                //top right room
-                this.staticObjects.add(new BeigeSmallCouch( //couch
+                // top right room
+                this.staticObjects.add(new BeigeSmallCouch( // couch
                                 new Rectangle2D.Double(1240, 1570, BIGCOUCHWIDTH, BIGCOUCHHEIGHT)));
                 this.staticObjects.add(new DarkWoodenTableSquare( // TV table
-                                new Rectangle2D.Double(1240, 1680, DARKWOODENTABLESQUAREWIDTH, DARKWOODENTABLESQUAREHEIGHT)));
+                                new Rectangle2D.Double(1240, 1680, DARKWOODENTABLESQUAREWIDTH,
+                                                DARKWOODENTABLESQUAREHEIGHT)));
                 this.staticObjects.add(new GreyTv( // TV
                                 new Rectangle2D.Double(1260, 1680, GREYTVWIDTH, GREYTVHEIGHT)));
-                this.staticObjects.add(new DarkWoodenTableSmall( // Small Table 
+                this.staticObjects.add(new DarkWoodenTableSmall( // Small Table
                                 new Rectangle2D.Double(1460, 1780, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
                 this.staticObjects.add(new PlantTwo( // Plant
                                 new Rectangle2D.Double(1460, 1780, PLANTONEWIDTH, PLANTONEHEIGHT)));
                 this.staticObjects.add(new DarkLongDrawer( // Long Drawer / bench
                                 new Rectangle2D.Double(1315, 1453, 192, LONGDRAWERHEIGHT)));
-                this.staticObjects.add(new BeigeSmallBed( // Small bed 
+                this.staticObjects.add(new BeigeSmallBed( // Small bed
                                 new Rectangle2D.Double(1460, 1680, SMALLBEDWIDTH, SMALLBEDHEIGHT)));
                 // /////////
 
@@ -634,8 +640,8 @@ public class Level1 implements ILevel {
                 staticObjects.add(new WoodWall( // Right Bottom
                                 new Rectangle2D.Double(2235, 2360, 15, 120), StaticObjectType.WOODEN_WALL));
 
-                // furniture 
-                // middle room 
+                // furniture
+                // middle room
                 this.staticObjects.add(new GreyTv( // TV
                                 new Rectangle2D.Double(2100, 2310, GREYTVWIDTH, GREYTVHEIGHT)));
                 this.staticObjects.add(new BeigeSmallCouch( // Couch
@@ -648,16 +654,17 @@ public class Level1 implements ILevel {
                 // bottom room
                 this.staticObjects.add(new BeigeBigBed( // Big bed
                                 new Rectangle2D.Double(1775, 2385, BIGBEDWIDTH, BIGBEDHEIGHT)));
-                this.staticObjects.add(new DarkWoodenTableSmall( // Small Table 
+                this.staticObjects.add(new DarkWoodenTableSmall( // Small Table
                                 new Rectangle2D.Double(1873, 2430, SMALLTABLEWIDTH, SMALLTABLEHEIGHT)));
                 this.staticObjects.add(new PlantOne( // Plant
                                 new Rectangle2D.Double(1873, 2430, PLANTONEWIDTH, PLANTONEHEIGHT)));
                 this.staticObjects.add(new DarkSmallDrawer( // Small drawer
                                 new Rectangle2D.Double(2150, 2373, SMALLDRAWERWIDTH, SMALLDRAWERHEIGHT)));
-                                
-                //right room
+
+                // right room
                 this.staticObjects.add(new DarkWoodenTableSquare( // Dining table
-                                new Rectangle2D.Double(2320, 2250, DARKWOODENTABLESQUAREWIDTH, DARKWOODENTABLESQUAREHEIGHT)));
+                                new Rectangle2D.Double(2320, 2250, DARKWOODENTABLESQUAREWIDTH,
+                                                DARKWOODENTABLESQUAREHEIGHT)));
                 this.staticObjects.add(new BeigeWoodChairDown( // chair facing down (left)
                                 new Rectangle2D.Double(2315, 2195, CHAIRWIDTH, CHAIRHEIGHT)));
                 this.staticObjects.add(new BeigeWoodChairDown( // chair facing down (right)
