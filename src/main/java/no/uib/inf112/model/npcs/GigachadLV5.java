@@ -123,19 +123,13 @@ public class GigachadLV5 extends NPC {
                 candidate.y + padding,
                 candidate.width - (padding * 2),
                 candidate.height - (padding * 2));
-
-        // 1. Still stop if he hits the player
         if (movementHitbox.intersects(this.player.getHitbox())) {
             return false;
         }
-
-        // 2. Still stop if he hits a wall (Pathfinder check)
         ICell candidateCell = map.getGrid().getCellFromPos(candidate);
         if (candidateCell == null || !map.getPathfinder().canEnter(candidateCell, SIZE)) {
             return false;
         }
-
-        // 3. TRAMPLE LOGIC: Check for other enemies
         for (IEnemy enemy : map.getEnemies()) {
             if (enemy == this || !enemy.isAlive()) {
                 continue;
@@ -151,8 +145,6 @@ public class GigachadLV5 extends NPC {
                 }
             }
         }
-
-        // 4. Still stop for vehicles
         for (IVehicle vehicle : this.map.getVehicles()) {
             if (candidate.intersects(vehicle.getBounds())) {
                 return false;
