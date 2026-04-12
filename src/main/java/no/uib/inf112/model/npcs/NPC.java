@@ -638,8 +638,13 @@ public abstract class NPC implements IEnemy {
     }
 
     protected boolean inMeleeRange() {
+
         double w = this.pos.width;
-        return distance(this.pos, this.player.getHitbox()) <= w;
+        double pw = this.player.getHitbox().width;
+
+        double requiredDistance = Math.max(w, pw);
+
+        return distance(this.pos, this.player.getHitbox()) <= requiredDistance;
     }
 
     protected boolean canShootPlayer() {
