@@ -24,18 +24,19 @@ public class GameScreen implements IDrawer {
 
     public GameScreen(IModel map, ImageHandler handler, Camera camera, IDrawer settings) {
 
-        this.map = map;
-        this.ui = new GameUI(this.map, handler);
-        this.darkness = new DarknessOverlay(this.map);
-        this.handler = handler;
-        this.tiles = map.getTiles();
-        this.camera = camera;
-
         if (!(settings instanceof SettingMenu)) {
             throw new IllegalArgumentException("Settings must be of instance SettingMenu");
         } else {
             this.settings = (SettingMenu) settings;
         }
+
+        this.map = map;
+        this.ui = new GameUI(this.map, handler);
+        this.darkness = new DarknessOverlay(this.map, this.settings);
+        this.handler = handler;
+        this.tiles = map.getTiles();
+        this.camera = camera;
+
     }
 
     @Override
@@ -56,11 +57,8 @@ public class GameScreen implements IDrawer {
         }
         drawVehicles(graphic);
 
-        if (settings.isDarknessEnabled()) {
-            drawDarkness(graphic);
-
-        }
-
+        drawDarkness(graphic);
+        
         this.ui.draw(graphic);
     }
 
