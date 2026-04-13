@@ -482,6 +482,9 @@ public abstract class NPC implements IEnemy {
 
             Rectangle2D enemyCore = new Rectangle2D.Double(coreX, coreY, coreW, coreH);
             if (movementHitbox.intersects(enemyCore)) {
+                if (!this.aggroed){
+                    wander(); // If blocked while wandering, wander somewhere else
+                }
                 return false;
             }
         }

@@ -12,26 +12,26 @@ public interface IDrawer {
 
     /**
      * Draws an image
-     * 
+     * Visibility should be checked before calling this function
      * @param graphic
      * @param image   - Image to be drawn
      * @param bounds  - Bounds for the image
      */
     default void drawImage(Graphics2D graphic, BufferedImage image, Rectangle2D.Double bounds) {
-        if (isVisible(graphic, bounds)) {
-            graphic.drawImage(image,
-                    (int) bounds.getX(),
-                    (int) bounds.getY(),
-                    (int) bounds.getWidth(),
-                    (int) bounds.getHeight(),
-                    null);
-        }
+        graphic.drawImage(image,
+                (int) bounds.getX(),
+                (int) bounds.getY(),
+                (int) bounds.getWidth(),
+                (int) bounds.getHeight(),
+                null);
+
     }
 
     /**
+     * Checks if an object is in view
      * @param graphic
      * @param objectBounds
-     * @return true if object is withing view bounds
+     * @return true if object is withing view bounds.
      *         Use to decide if something should be drawn or not
      */
     default boolean isVisible(Graphics2D graphic, Rectangle2D.Double objectBounds) {
