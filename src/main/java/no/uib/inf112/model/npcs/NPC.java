@@ -491,13 +491,6 @@ public abstract class NPC implements IEnemy {
             }
         }
 
-        // Check vehicle collision
-        for (IVehicle vehicle : this.map.getVehicles()) {
-            if (candidate.intersects(vehicle.getBounds())) {
-                return false;
-            }
-        }
-
         return true;
     }
 

@@ -70,7 +70,13 @@ public class Grid implements IGrid {
         for (ArrayList<ICell> row : grid) {
             for (ICell cell : row) {
                 for (IVehicle vehicle : vehicles) {
-                    if (cell.getBounds().intersects(vehicle.getBounds())) {
+                    Rectangle2D vehicleBounds = new Rectangle2D.Double(
+                        vehicle.getBounds().getX() - 30,
+                        vehicle.getBounds().getY(),
+                        vehicle.getBounds().width + 60,
+                        vehicle.getBounds().height
+                    ); //expand slightly for pathing
+                    if (cell.getBounds().intersects(vehicleBounds)) {
                         cell.setPathType(PathType.BLOCKED);
                     }
                 }
