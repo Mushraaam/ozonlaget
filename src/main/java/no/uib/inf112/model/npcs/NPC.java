@@ -1,5 +1,6 @@
 package no.uib.inf112.model.npcs;
 
+import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.EnemyAction;
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.EnemyType;
@@ -55,6 +56,7 @@ public abstract class NPC implements IEnemy {
     private int wanderDelay;
     private int aggroRange;
     private ICell wanderGoal;
+    private static final double WANDERSPEED = Config.getInt("wanderSpeed");
 
 
 
@@ -270,7 +272,7 @@ public abstract class NPC implements IEnemy {
                 this.moving = true;
                 updateFacing(dx, dy, dist);
                 this.pathIndex = i;
-                if (dist <= speed) {
+                if (dist <= calculateSpeed()) {
                     pathIndex++;
                 }
                 break;
@@ -369,6 +371,7 @@ public abstract class NPC implements IEnemy {
 
     private boolean tryMove(double dx, double dy, double dist, Rectangle2D target) {
         Rectangle2D.Double candidate = generateCandidate(dx, dy, dist, target);
+        double currentSpeed = calculateSpeed();
 
         if (isLegal(candidate)) {
             this.sliding = false;
@@ -387,8 +390,8 @@ public abstract class NPC implements IEnemy {
                         this.pos.height);
                 Rectangle2D.Double testY = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width,
                         this.pos.height);
-                testX.x += slideXDir * speed;
-                testY.y += slideYDir * speed;
+                testX.x += slideXDir * currentSpeed;
+                testY.y += slideYDir * currentSpeed;
             }
 
             if (trySlide(dx, dy, dist, target)) {
@@ -403,22 +406,23 @@ public abstract class NPC implements IEnemy {
     private boolean trySlide(double dx, double dy, double dist, Rectangle2D target) {
         Rectangle2D.Double slideX = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
         Rectangle2D.Double slideY = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
+        double currentSpeed = calculateSpeed();
 
         // Slide X
-        if (dist <= speed) {
+        if (dist <= currentSpeed) {
             slideX.x = target.getCenterX() - pos.width / 2.0;
         } else {
-            slideX.x += (dx / dist) * speed;
+            slideX.x += (dx / dist) * currentSpeed;
         }
         if (isLegal(slideX)) {
             this.pos = slideX;
             return true;
 
         } else { // Slide Y
-            if (dist <= speed) {
+            if (dist <= currentSpeed) {
                 slideY.y = target.getCenterY() - pos.height / 2.0;
             } else {
-                slideY.y += (dy / dist) * speed;
+                slideY.y += (dy / dist) * currentSpeed;
             }
             if (isLegal(slideY)) {
                 this.pos = slideY;
@@ -434,13 +438,14 @@ public abstract class NPC implements IEnemy {
 
     private Rectangle2D.Double generateCandidate(double dx, double dy, double dist, Rectangle2D target) {
 
+        double currentSpeed = calculateSpeed();
         Rectangle2D.Double candidate = new Rectangle2D.Double(this.pos.x, this.pos.y, this.pos.width, this.pos.height);
-        if (dist <= speed) {
+        if (dist <= currentSpeed) {
             candidate.x = target.getCenterX() - pos.width / 2.0;
             candidate.y = target.getCenterY() - pos.height / 2.0;
         } else {
-            candidate.x += (dx / dist) * speed;
-            candidate.y += (dy / dist) * speed;
+            candidate.x += (dx / dist) * currentSpeed;
+            candidate.y += (dy / dist) * currentSpeed;
         }
         return candidate;
 
@@ -510,6 +515,15 @@ public abstract class NPC implements IEnemy {
         this.lastMaxR = maxR;
         this.lastMinC = minC;
         this.lastMaxC = maxC;
+    }
+
+    private double calculateSpeed(){
+        if (!this.aggroed){
+            return WANDERSPEED;
+        }
+        else{
+            return this.speed;
+        }
     }
 
     // //////////////////GETTERS////////////////////////
