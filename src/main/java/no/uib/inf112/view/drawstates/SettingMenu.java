@@ -132,7 +132,7 @@ public class SettingMenu implements IDrawer {
         double targetY = bounds.height / 1.2;
 
         if (!settingAnimationStarted) {
-            backButtonX = targetX;
+            backButtonX = targetX;  
             backButtonY = -BUTTON_HEIGHT;
             settingAnimationStarted = true;
         }
