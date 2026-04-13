@@ -58,8 +58,6 @@ public abstract class NPC implements IEnemy {
     private ICell wanderGoal;
     private static final double WANDERSPEED = Config.getInt("wanderSpeed");
 
-
-
     // Protected variables
     protected boolean aggroed;
     protected IModel map;
@@ -219,7 +217,7 @@ public abstract class NPC implements IEnemy {
             return;
 
         }
-        
+
         // Continue ongoing attacks
         if (this.currentAction == EnemyAction.ATTACK) {
             this.moving = true;
@@ -307,8 +305,8 @@ public abstract class NPC implements IEnemy {
     }
 
     private void checkAggro() {
-        if (this.health < this.maxHealth){
-            this.aggroed = true; //we aggro if we take damage
+        if (this.health < this.maxHealth) {
+            this.aggroed = true; // we aggro if we take damage
             return;
         }
 
@@ -317,7 +315,6 @@ public abstract class NPC implements IEnemy {
             this.aggroed = true;
         }
     }
-
 
     private void unStuck(boolean moveX, boolean moveY) {
         ICell myCell = this.getStandingCell();
@@ -487,7 +484,7 @@ public abstract class NPC implements IEnemy {
 
             Rectangle2D enemyCore = new Rectangle2D.Double(coreX, coreY, coreW, coreH);
             if (movementHitbox.intersects(enemyCore)) {
-                if (!this.aggroed){
+                if (!this.aggroed) {
                     wander(); // If blocked while wandering, wander somewhere else
                 }
                 return false;
@@ -517,11 +514,10 @@ public abstract class NPC implements IEnemy {
         this.lastMaxC = maxC;
     }
 
-    private double calculateSpeed(){
-        if (!this.aggroed){
+    private double calculateSpeed() {
+        if (!this.aggroed) {
             return WANDERSPEED;
-        }
-        else{
+        } else {
             return this.speed;
         }
     }
@@ -666,9 +662,7 @@ public abstract class NPC implements IEnemy {
 
     protected boolean canShootPlayer() {
         return inShootingRange() && hasLineOfSight() && this.hasRangedAmmo;
-
     }
-
     protected void setAggroRange(int range) {
         this.aggroRange = range;
     }

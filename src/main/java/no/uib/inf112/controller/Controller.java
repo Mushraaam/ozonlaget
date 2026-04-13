@@ -506,6 +506,14 @@ public class Controller
         if (rainbowToggle != null && rainbowToggle.contains(p)) {
             view.getSettingMenu().toggleRainbow();
             view.repaint();
+            return;
+        }
+
+        var darknessToggle = view.getSettingMenu().getDarknessToggle();
+        if (darknessToggle != null && darknessToggle.contains(p)) {
+            view.getSettingMenu().toggleDarkness();
+            view.repaint();
+            return;
         }
     }
 
