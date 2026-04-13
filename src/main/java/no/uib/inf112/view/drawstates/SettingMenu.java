@@ -113,6 +113,7 @@ public class SettingMenu implements IDrawer {
 
         graphic.setColor(Color.BLACK);
         graphic.draw(rainbowToggle);
+        graphic.draw(darknessToggle);
     }
 
     private void drawBackground(Graphics2D graphic) {
