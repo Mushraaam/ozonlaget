@@ -44,6 +44,11 @@ public class SettingMenu implements IDrawer {
         drawBackground(graphic);
         drawBackButton(graphic);
         drawSettingOptions(graphic);
+        drawCage(graphic);
+    }
+
+    private void drawCage(Graphics2D graphic) {
+        drawImage(graphic, handler.getCage(), new Rectangle2D.Double(550, 100, 600, 600));
     }
 
     public void resetAnimation() {
