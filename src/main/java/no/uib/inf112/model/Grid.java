@@ -23,7 +23,7 @@ public class Grid implements IGrid {
     // Enemy sizes
     private static final double SMALL = Config.getInt("smallEnemy") * 0.34;
     private static final double MEDIUM = Config.getInt("mediumEnemy") * 0.34;
-    private static final double LARGE = Config.getInt("largeEnemy") * 0.51;
+    private static final double LARGE = Config.getInt("largeEnemy") * 0.34;
     private final Set<ICell> taintedCells = new HashSet<>();
     private final HashMap<ICell, HashMap<Integer, List<ICell>>> neighbourMap = new HashMap<>();
     private ArrayList<ArrayList<ICell>> cellGrid;
