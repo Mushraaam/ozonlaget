@@ -98,7 +98,6 @@ public class GameDrawer extends JPanel {
                 throw new IllegalArgumentException(String.format("Unknown GameState: %s", gameState));
             }
         }
-
         if (map.debugMode() && gameState == GameState.ACTIVE_GAME) {
             this.debugScreen.draw(g2);
         }
