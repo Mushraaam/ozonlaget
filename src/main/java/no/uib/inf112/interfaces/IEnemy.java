@@ -17,6 +17,10 @@ import java.awt.geom.Rectangle2D;
 public interface IEnemy extends IMovingDrawableObject {
 
 
+    int getMaxHealth();
+
+    int getHealth();
+
     Ellipse2D.Double getTrueHitbox();
 
     /**

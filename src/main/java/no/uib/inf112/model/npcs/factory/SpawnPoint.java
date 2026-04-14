@@ -86,7 +86,7 @@ public class SpawnPoint {
                     double dy = centerY - player.getHitbox().getCenterY();
                     double distToCenter = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distToCenter <= SAFE_ZONE) {
+                    if (distToCenter <= SAFE_ZONE/2) {
                         return false;
                     }
                 }

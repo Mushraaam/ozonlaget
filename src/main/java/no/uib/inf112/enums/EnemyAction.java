@@ -6,7 +6,8 @@ public enum EnemyAction {
     WALK(0),
     ATTACK(1),
     RANGED_ATTACK(2),
-    DEAD(3);
+    DEAD(3),
+    LONG_RANGED_ATTACK(4);
 
     private final int index;
 

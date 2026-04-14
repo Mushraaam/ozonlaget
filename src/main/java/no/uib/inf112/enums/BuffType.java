@@ -8,4 +8,5 @@ public enum BuffType {
     SPEED,
     HEALTH,
     DAMAGE,
+    GIG,
 }

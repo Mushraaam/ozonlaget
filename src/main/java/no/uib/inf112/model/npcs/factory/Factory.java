@@ -15,6 +15,7 @@ public class Factory {
     private Random random;
     private int counter;
     private IModel model;
+    private boolean bossAlreadySpawned = false;
 
     private static final int GHOUL_INTENSITY = Config.getInt("ghoulIntensity");
     private static final int SPRINTER_INTENSITY = Config.getInt("sprinterIntensity");
@@ -63,15 +64,11 @@ public class Factory {
         }
 
         if (this.counter % MEGABOSS_INTENSITY == 0 && model.getPlayer().getKillCount() >= MEGABOSS_CRITERIA) {
-            boolean bossExists = model.getEnemies().stream()
-                    .anyMatch(e -> e instanceof GigachadLV5);
-
-            if (!bossExists) {
+            if (!this.bossAlreadySpawned) {
                 if (!spawnPoints.isEmpty()) {
                     spawnPoints.getFirst().spawnEnemy(EnemyType.MEGABOSS);
+                    this.bossAlreadySpawned = true;
                 }
             }
-        }
-
-    }
+        }}
 }

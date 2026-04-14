@@ -46,6 +46,16 @@ public abstract class NPC implements IEnemy {
     // test
     private boolean sliding = false;
 
+    @Override
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    @Override
+    public int getHealth() {
+        return health;
+    }
+
     private int health;
     private int maxHealth;
 

@@ -9,6 +9,7 @@ import java.util.Map;
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.IDrawer;
+import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IModel;
 import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.utility.ImageHandler;
@@ -31,6 +32,7 @@ public class GameUI implements IDrawer {
     private static final Color ORANGE = new Color(255, 215, 0);
     private static final Color RED = new Color(255, 70, 70);
     private static final Font HP_TEXT_FONT = new Font(ARIAL, Font.BOLD, 30);
+    private static final Font HP_TEXT_FONT_BOSS = new Font(ARIAL, Font.BOLD, 20);
     private static final Color HP_TEXT_COLOR = Color.BLACK;
     // inventory
     private static final int INV_WIDTH = 80;
@@ -91,6 +93,7 @@ public class GameUI implements IDrawer {
         drawHealthBar(graphic, (int) x1 + 755, (int) y1 + 45);
         // Objectives TAB
         drawObjectivesTab(graphic);
+        drawBossBarIfVisible(graphic);
 
         drawPlayerInventory(graphic);
         drawKillCountWindow(graphic);
@@ -308,6 +311,60 @@ public class GameUI implements IDrawer {
         g.setColor(HP_TEXT_COLOR);
         g.drawString(hpText, x1 + 110, y1 + 45);
 
+    }
+
+    private void drawBossBarIfVisible(Graphics2D graphic) {
+        Rectangle2D cameraBounds = graphic.getClipBounds().getBounds2D();
+
+        for (IEnemy enemy : map.getEnemies()) {
+            if (enemy.getEnemyType() == no.uib.inf112.enums.EnemyType.MEGABOSS && enemy.isAlive()) {
+                if (cameraBounds.intersects(enemy.getHitbox())) {
+
+                    int bossBarWidth = 500;
+
+                    int x = (int) (cameraBounds.getMinX() + (cameraBounds.getWidth() - bossBarWidth) / 2);
+                    int y = (int) cameraBounds.getMinY() + 20;
+
+                    drawHealthBarBoss(graphic, x, y, enemy, bossBarWidth);
+                }
+            }
+        }
+    }
+
+    private void drawHealthBarBoss(Graphics2D g, int x, int y, IEnemy boss, int barWidth) {
+        int maxHp = boss.getMaxHealth();
+        int currentHP = boss.getHealth();
+        int barHeight = 25;
+
+        // Background
+        g.setColor(HP_BACK);
+        g.fillRoundRect(x, y, barWidth, barHeight, 50, 50);
+
+        // Red Filling
+        double percentHP = Math.max(0, currentHP / (double) maxHp);
+        int innerWidth = (int) ((barWidth - 6) * percentHP);
+
+        if (innerWidth > 0) {
+            g.setColor(Color.red);
+            g.fillRoundRect(x + 3, y + 3, innerWidth, barHeight - 6, 10, 10);
+        }
+        // Border
+        g.setColor(HP_BORDER);
+        g.setStroke(new BasicStroke(2));
+        g.drawRoundRect(x, y, barWidth, barHeight, 15, 15);
+
+        // Centered Text
+        g.setFont(HP_TEXT_FONT_BOSS);
+        String hpText = String.format("GIGACHAD: %d / %d", currentHP, maxHp);
+        FontMetrics fm = g.getFontMetrics();
+        int textX = x + (barWidth - fm.stringWidth(hpText)) / 2;
+        int textY = y + ((barHeight - fm.getHeight()) / 2) + fm.getAscent();
+
+        // Drop shadow for readability against the red bar
+        g.setColor(Color.BLACK);
+        g.drawString(hpText, textX + 2, textY + 2);
+        g.setColor(Color.WHITE);
+        g.drawString(hpText, textX, textY);
     }
 
     private ArrayList<KillNotify> activeNotifications = new ArrayList<>();

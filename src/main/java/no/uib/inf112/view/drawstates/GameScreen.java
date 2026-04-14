@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.GameState;
+import no.uib.inf112.enums.PuddleType;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.utility.ImageHandler;
 import no.uib.inf112.utility.Camera;
@@ -47,6 +48,7 @@ public class GameScreen implements IDrawer {
         if (map.getGameState() == GameState.ACTIVE_GAME) {
             drawPlayer(graphic); // player disappears if not playing
         }
+        drawOverheadEffects(graphic);
         drawVehicles(graphic);
         drawDarkness(graphic);
 
@@ -82,11 +84,25 @@ public class GameScreen implements IDrawer {
 
     private void drawPuddles(Graphics2D graphic) {
         for (IPuddle puddle : this.map.getAOEPuddles()) {
+            if (puddle.getType() != PuddleType.EXPLOSION ||
+                    puddle.getType() != PuddleType.GASEXPLOSION){
             Rectangle2D.Double bounds = puddle.getBounds();
             drawImage(graphic,
                     this.handler.getPuddleImage(puddle.getType(), puddle.getAnimationIndex(), puddle.lifeTime()),
                     bounds);
 
+        }}
+    }
+
+    private void drawOverheadEffects(Graphics2D graphic) {
+        for (IPuddle puddle : this.map.getAOEPuddles()) {
+            if (puddle.getType() == PuddleType.EXPLOSION ||
+                    puddle.getType() == PuddleType.GASEXPLOSION){
+                Rectangle2D.Double bounds = puddle.getBounds();
+                drawImage(graphic,
+                        this.handler.getPuddleImage(puddle.getType(), puddle.getAnimationIndex(), puddle.lifeTime()),
+                        bounds);
+            }
         }
     }
 

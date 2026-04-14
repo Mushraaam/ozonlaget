@@ -22,6 +22,11 @@ public class ImageHandler {
         //Sprinter sprite
         private static final int SPRINTER_ANIMATION_COUNT = 8;
 
+        private static final int BOSS_ANIMATION_COUNT = 8;
+
+
+        private static final int BUG_ANIMATION_COUNT = 9;
+
         // Wall images
         private HashMap<StaticObjectType, HashMap<WallDirection, BufferedImage>> walls;
 
@@ -143,7 +148,7 @@ public class ImageHandler {
                 }
                 this.puddles.put(PuddleType.ACID, acidPuddles);
                 ArrayList<BufferedImage> acidList = new ArrayList<>();
-                acidList.add(ImageReader.fetchImage("/path/to/acid.png"));
+                acidList.add(ImageReader.fetchImage("/no/uib/inf112/npcs/ghoul/projectile/puddle_0.png"));
                 this.projectiles.put(PuddleType.ACID,acidList);
 
                 // MEGABOSS FIREBALL
@@ -164,6 +169,19 @@ public class ImageHandler {
                 this.projectiles.put(PuddleType.BOSS_FIREBALL, fireSpellFrames);
 
 
+                // GAS EXPLOSION
+                ArrayList<BufferedImage> gasExplosion = new ArrayList<>();
+                for (int i = 0; i < 11; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/megaboss/projectile/Explosion_%s.png", i);
+                        gasExplosion.add(ImageReader.fetchImage(path));
+                }
+                this.puddles.put(PuddleType.GASEXPLOSION, gasExplosion);
+
+                ArrayList<BufferedImage> bugProjectileList = new ArrayList<>();
+                bugProjectileList.add(rotateDeg(ImageReader.fetchImage("/no/uib/inf112/npcs/jihadbug/bug_spawn_projectile.png"), -90));
+                this.projectiles.put(PuddleType.BUGPROJECTILE,bugProjectileList);
+
+
         }
 
         public BufferedImage getProjectile(PuddleType type, int tick) {
@@ -179,7 +197,7 @@ public class ImageHandler {
         public BufferedImage getPuddleImage(PuddleType type, int index, int lifetime) {
 
 
-                if (type == PuddleType.EXPLOSION) {
+                if (type == PuddleType.EXPLOSION || type == PuddleType.GASEXPLOSION) {
                         int totalImages = this.puddles.get(type).size();
                         int frame = (int) (((double) index / lifetime) * totalImages);
                         frame = Math.min(frame, totalImages - 1);
@@ -479,7 +497,7 @@ public class ImageHandler {
 
                 ////////////
                 // MEGABOSS
-                int BOSS_ANIMATION_COUNT = 8;
+
 
                 // Walk
                 ArrayList<BufferedImage> bossWalk = new ArrayList<>();
@@ -521,6 +539,21 @@ public class ImageHandler {
                 }
                 this.dyingEnemies.put(EnemyType.MEGABOSS, bossDeath);
                 ////////////
+                // BUG
+                // Walk
+                ArrayList<BufferedImage> bugWalk = new ArrayList<>();
+                for (int i = 0; i < BUG_ANIMATION_COUNT; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/jihadbug/bug_walk%s.png", i);
+                        BufferedImage rawImage = ImageReader.fetchImage(path);
+                        bugWalk.add(rotateDeg(rawImage, 90));
+                }
+                this.walkingEnemies.put(EnemyType.BUG, bugWalk);
+
+                //its a basic bug, dont bully him
+                this.attackingEnemies.put(EnemyType.BUG, bugWalk);
+                this.rangedAttackingEnemies.put(EnemyType.BUG, bugWalk);
+                this.dyingEnemies.put(EnemyType.BUG, bugWalk);
+                /// //////
         }
 
         public BufferedImage getEnemySprites(EnemyType type, EnemyAction action, int index) {
@@ -533,6 +566,8 @@ public class ImageHandler {
                         case RANGED_ATTACK -> this.rangedAttackingEnemies.get(type).get(index);
 
                         case DEAD -> this.dyingEnemies.get(type).get(index);
+
+                        case LONG_RANGED_ATTACK -> this.longRangedAttackingEnemies.get(type).get(index);
 
                         default -> throw new IllegalArgumentException("Illegal argument: " + action);
                 };

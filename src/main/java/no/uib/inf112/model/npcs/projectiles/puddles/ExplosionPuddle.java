@@ -1,6 +1,5 @@
 package no.uib.inf112.model.npcs.projectiles.puddles;
 
-import com.badlogic.gdx.graphics.Camera;
 import no.uib.inf112.enums.PuddleType;
 import no.uib.inf112.interfaces.IModel;
 
@@ -9,12 +8,11 @@ import java.awt.geom.Rectangle2D;
 public class ExplosionPuddle extends Puddle {
     private static final int DAMAGE = 12;
     private static final int EXPLOSION_LIFE = 40;
-    private static final PuddleType TYPE = PuddleType.EXPLOSION;
 
     private boolean hasDealtDamage = false;
 
-    public ExplosionPuddle(Rectangle2D.Double bounds, IModel map) {
-        super(bounds, map, TYPE, DAMAGE);
+    public ExplosionPuddle(Rectangle2D.Double bounds, IModel map, PuddleType type) {
+        super(bounds, map, type, DAMAGE);
     }
 
     @Override

@@ -678,7 +678,8 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         return killCount;
     }
     @Override
-    public void increaseKillCount() {
+    public void increaseKillCount(){
         this.killCount++;
+        if(killCount == 69 ){map.getSoundHandler().playBuffSound(BuffType.GIG);}
     }
 }
