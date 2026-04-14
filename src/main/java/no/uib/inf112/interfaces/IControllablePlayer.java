@@ -32,6 +32,8 @@ public interface IControllablePlayer extends IPlayer{
 
     void openCloseInventory();
 
+    void openCloseObjectives();
+
     public void pressMove(Direction north);
 
     public void releaseMove(Direction north);

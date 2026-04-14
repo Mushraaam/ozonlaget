@@ -46,6 +46,7 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private int buffCounter;
 
     private Inventory inventory;
+    private boolean objectivesVisible = false;
 
     public Player(Rectangle2D.Double hitbox, Rectangle2D.Double bounds, IModel map) {
         this.hitbox = hitbox;
@@ -106,6 +107,14 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     @Override
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public void openCloseObjectives() {
+        this.objectivesVisible = !this.objectivesVisible;
+    }
+
+    public boolean objectivesVisible() {
+        return this.objectivesVisible;
     }
 
     public void pressMove(Direction dir) {

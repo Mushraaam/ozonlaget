@@ -17,6 +17,7 @@ import no.uib.inf112.utility.SoundHandler;
 import no.uib.inf112.utility.Camera;
 
 import java.awt.Point;
+import java.awt.RenderingHints.Key;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -339,7 +340,12 @@ public class Controller
             case KeyEvent.VK_B -> {
                 player.openCloseInventory();
             }
+
             case KeyEvent.VK_O -> {
+                player.openCloseObjectives();
+            }
+
+            case KeyEvent.VK_J -> {
                 map.addToActiveItems(new RainbowBuff(player.getHitbox(), CollectableType.POWERUP_RAINBOW, map)); // spawns
                                                                                                                  // rainbow
                                                                                                                  // item

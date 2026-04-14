@@ -28,6 +28,8 @@ public interface IViewablePlayer extends IPlayer {
      */
     public double getFacingAngle();
 
+    boolean objectivesVisible();
+
 
     @Override
     int getKillCount();

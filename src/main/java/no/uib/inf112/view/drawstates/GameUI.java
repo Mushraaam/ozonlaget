@@ -92,7 +92,7 @@ public class GameUI implements IDrawer {
         // HealthBar
         drawHealthBar(graphic, (int) x1 + 755, (int) y1 + 45);
         // Objectives TAB
-        drawObjectivesTab(graphic);
+        drawObjectives(graphic);
         drawBossBarIfVisible(graphic);
 
         drawPlayerInventory(graphic);
@@ -197,6 +197,26 @@ public class GameUI implements IDrawer {
         g.drawString(text, textX, textY);
     }
 
+    private void drawObjectivesTooltip(Graphics2D g) {
+        Rectangle2D bounds = g.getClipBounds().getBounds2D();
+        int tooltipWidth = 100;
+        int tooltipHeight = 30;
+
+        int x = (int) bounds.getMaxX() - tooltipWidth - 10;
+        int y = (int) bounds.getMinY() + 10;
+        g.setColor(OBJECTIVE_BG_COLOR);
+        g.fillRoundRect(x, y - 5, tooltipWidth, tooltipHeight + 5, 10, 10);
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font(ARIAL, Font.BOLD, 12));
+        String text = "(O)bjectives";
+        FontMetrics metrics = g.getFontMetrics();
+        int textX = x + (tooltipWidth - metrics.stringWidth(text)) / 2;
+        int textY = y + ((tooltipHeight - metrics.getHeight()) / 2) + metrics.getAscent();
+
+        g.drawString(text, textX, textY);
+    }
+
     private void drawObjectivesTab(Graphics2D g) {
         IViewablePlayer player = (IViewablePlayer) map.getPlayer();
         Rectangle2D bounds = g.getClipBounds().getBounds2D();
@@ -236,6 +256,15 @@ public class GameUI implements IDrawer {
         String prefix = completed ? "[X] " : "[  ] ";
         g.drawString(prefix + text, x, y);
 
+    }
+
+    private void drawObjectives(Graphics2D g) {
+        IViewablePlayer player = (IViewablePlayer) map.getPlayer();
+        if (!player.objectivesVisible()) {
+            drawObjectivesTooltip(g);
+            return;
+        }
+        drawObjectivesTab(g);
     }
 
     private void drawSlot(Graphics2D g, int x, int y, CollectableType item, int count) {
