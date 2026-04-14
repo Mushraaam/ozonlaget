@@ -2,7 +2,6 @@ package no.uib.inf112.terrain.doors;
 
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
-import java.util.ArrayList;
 import java.util.List;
 
 import no.uib.inf112.enums.PathType;
@@ -10,7 +9,6 @@ import no.uib.inf112.enums.StaticObjectType;
 import no.uib.inf112.enums.WallDirection;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IDoor;
-import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IModel;
 
 public class BarbedDoor implements IDoor {

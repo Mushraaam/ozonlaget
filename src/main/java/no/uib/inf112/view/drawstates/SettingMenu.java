@@ -14,6 +14,7 @@ public class SettingMenu implements IDrawer {
     private final ImageHandler handler;
     private boolean settingAnimationStarted = false;
     private boolean rainbowEnable = true;
+    private boolean darknessEnable = true;
 
     private static final int BUTTON_WIDTH = 320;
     private static final int BUTTON_HEIGHT = 150;
@@ -29,11 +30,13 @@ public class SettingMenu implements IDrawer {
     private double backButtonY;
     private Rectangle2D.Double backButton;
     private Rectangle2D.Double rainbowToggle;
+    private Rectangle2D.Double darknessToggle;
 
     public SettingMenu(ImageHandler handler) {
         this.handler = handler;
         this.backButton = new Rectangle2D.Double();
         this.rainbowToggle = new Rectangle2D.Double();
+        this.darknessToggle = new Rectangle2D.Double();
     }
 
     @Override
@@ -41,6 +44,11 @@ public class SettingMenu implements IDrawer {
         drawBackground(graphic);
         drawBackButton(graphic);
         drawSettingOptions(graphic);
+        drawCage(graphic);
+    }
+
+    private void drawCage(Graphics2D graphic) {
+        drawImage(graphic, handler.getCage(), new Rectangle2D.Double(550, 100, 600, 600));
     }
 
     public void resetAnimation() {
@@ -49,7 +57,7 @@ public class SettingMenu implements IDrawer {
 
     private void drawSettingOptions(Graphics2D graphic) {
         graphic.setColor(Color.DARK_GRAY);
-        Rectangle2D.Double background = new Rectangle.Double(10, 10, 430, 70);
+        Rectangle2D.Double background = new Rectangle.Double(10, 10, 430, 150);
         graphic.fill(background);
         graphic.setColor(Color.WHITE);
         graphic.draw(background);
@@ -59,10 +67,12 @@ public class SettingMenu implements IDrawer {
 
         Font font = graphic.getFont();
         graphic.setFont(new Font(font.getName(), font.getStyle(), 24));
+
+        // Blinking options
         graphic.drawString("Turn off blinking effects", x, y);
 
         int boxX = x + 300;
-        int boxY = y - 30;
+        int boxY = 30;
 
         if (rainbowEnable) {
             graphic.setColor(Color.RED);
@@ -70,8 +80,7 @@ public class SettingMenu implements IDrawer {
 
             graphic.setColor(Color.BLACK);
             graphic.drawString("OFF", boxX + 12, boxY + 25);
-        } 
-        else {
+        } else {
             graphic.setColor(Color.GREEN);
             graphic.fillRect(boxX, boxY, TOGGLEBOX_WIDTH, TOGGLEBOX_HEIGHT);
 
@@ -79,10 +88,32 @@ public class SettingMenu implements IDrawer {
             graphic.drawString("ON", boxX + 18, boxY + 25);
         }
 
+        // Draw darkness toggle
+
+        graphic.setColor(Color.WHITE);
+        graphic.drawString("Turn off darkness effect", x, y + 70);
+        int boxY2 = 90;
+
+        if (darknessEnable) {
+            graphic.setColor(Color.RED);
+            graphic.fillRect(boxX, boxY2, TOGGLEBOX_WIDTH, TOGGLEBOX_HEIGHT);
+
+            graphic.setColor(Color.BLACK);
+            graphic.drawString("OFF", boxX + 12, boxY2 + 25);
+        } else {
+            graphic.setColor(Color.GREEN);
+            graphic.fillRect(boxX, boxY2, TOGGLEBOX_WIDTH, TOGGLEBOX_HEIGHT);
+
+            graphic.setColor(Color.BLACK);
+            graphic.drawString("ON", boxX + 18, boxY2 + 25);
+        }
+
         rainbowToggle.setRect(boxX, boxY, TOGGLEBOX_WIDTH, TOGGLEBOX_HEIGHT);
+        darknessToggle.setRect(boxX, boxY2, TOGGLEBOX_WIDTH, TOGGLEBOX_HEIGHT);
 
         graphic.setColor(Color.BLACK);
         graphic.draw(rainbowToggle);
+        graphic.draw(darknessToggle);
     }
 
     private void drawBackground(Graphics2D graphic) {
@@ -101,7 +132,7 @@ public class SettingMenu implements IDrawer {
         double targetY = bounds.height / 1.2;
 
         if (!settingAnimationStarted) {
-            backButtonX = targetX;
+            backButtonX = targetX;  
             backButtonY = -BUTTON_HEIGHT;
             settingAnimationStarted = true;
         }
@@ -142,4 +173,17 @@ public class SettingMenu implements IDrawer {
     public boolean isRainbowEnable() {
         return rainbowEnable;
     }
+
+    public void toggleDarkness() {
+        darknessEnable = !darknessEnable;
+    }
+
+    public boolean isDarknessEnabled() {
+        return darknessEnable;
+    }
+
+    public Rectangle2D.Double getDarknessToggle() {
+        return darknessToggle;
+    }
+
 }

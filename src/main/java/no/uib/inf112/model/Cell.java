@@ -9,6 +9,7 @@ import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.IEnemy;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Set;
 
@@ -20,11 +21,8 @@ public class Cell implements ICell {
     private int col;
     private FloorType floorType;
     private PathType pathType;
-    private Set<IEnemy> smallOccupants;
-    private Set<IEnemy> mediumOccupants;
-    private Set<IEnemy> largeOccupants;
-    private ArrayList<Set<IEnemy>> occupants;
     private Set<IEnemy> allOccupants;
+    private Set<IEnemy> occupantSet;
 
     public Cell(Rectangle2D.Double bounds, int row, int col, FloorType floorType, PathType type) {
         this.bounds = bounds;
@@ -35,14 +33,9 @@ public class Cell implements ICell {
         this.pathType = type;
 
         // Occupants for pathing
-        this.smallOccupants = ConcurrentHashMap.newKeySet();
-        this.mediumOccupants = ConcurrentHashMap.newKeySet();
-        this.largeOccupants = ConcurrentHashMap.newKeySet();
-        this.occupants = new ArrayList<>();
+
         this.allOccupants = ConcurrentHashMap.newKeySet();
-        this.occupants.add(this.smallOccupants);
-        this.occupants.add(this.mediumOccupants);
-        this.occupants.add(this.largeOccupants);
+        this.occupantSet = new HashSet<>();
 
     }
 
@@ -111,84 +104,28 @@ public class Cell implements ICell {
 
     @Override
     public boolean isOccupied(EnemySize size) {
-        switch (size) {
-            case SMALL -> {
-                return (!this.smallOccupants.isEmpty());
-            }
-            case MEDIUM -> {
-                return (!this.mediumOccupants.isEmpty());
-            }
-            case LARGE -> {
-                return (!this.largeOccupants.isEmpty());
-            }
-            default -> {
-                /* */
-            }
-        }
-        throw new IllegalArgumentException("Unknown EnemySize");
-
+        return !this.occupantSet.isEmpty();
     }
 
     @Override
     public void setOccupant(IEnemy enemy, EnemySize size) {
-
-        allOccupants.add(enemy);
-        switch (size) {
-          case EnemySize.SMALL -> {
-              this.smallOccupants.add(enemy);
-          }
-          case EnemySize.MEDIUM -> {
-              this.mediumOccupants.add(enemy);
-          }
-          default -> {
-              this.largeOccupants.add(enemy);
-          }
-        }
+        this.occupantSet.add(enemy);
     }
 
     @Override
     public boolean occupiedBy(IEnemy enemy) {
-        EnemySize size = enemy.size();
-        switch (size) {
-            case SMALL -> {
-                return (this.smallOccupants.contains(enemy));
-            }
-            case MEDIUM -> {
-                return (this.mediumOccupants.contains(enemy));
-            }
-            case LARGE -> {
-                return (this.largeOccupants.contains(enemy));
-            }
-            default -> {
-                throw new IllegalArgumentException("Unknown enemy");
-            }
-        }
+        return this.occupantSet.contains(enemy);
     }
 
     @Override
     public int occupiedCount(EnemySize size) {
-        switch (size) {
-            case SMALL -> {
-                return (this.smallOccupants.size());
-            }
-            case MEDIUM -> {
-                return (this.mediumOccupants.size());
-            }
-            case LARGE -> {
-                return (this.largeOccupants.size());
-            }
-            default -> {
-                throw new IllegalArgumentException("Unknown enemy");
-            }
-        }
+        return this.occupantSet.size();
     }
 
     @Override
     public void clearOccupants() {
+        this.occupantSet.clear();
         allOccupants.clear();
-        for (Set<IEnemy> oc : this.occupants) {
-            oc.clear();
-        }
     }
 
     @Override
