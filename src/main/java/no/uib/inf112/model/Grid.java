@@ -21,7 +21,7 @@ public class Grid implements IGrid {
     private static final int CELLWIDTH = Config.getInt("cellWidth");
     private static final int CELLHEIGHT = Config.getInt("cellHeight");
     // Enemy sizes
-    private static final double SMALL = Config.getInt("smallEnemy") * 0.1;
+    private static final double SMALL = Config.getInt("smallEnemy") * 0.34;
     private static final double MEDIUM = Config.getInt("mediumEnemy") * 0.34;
     private static final double LARGE = Config.getInt("largeEnemy") * 0.51;
     private final Set<ICell> taintedCells = new HashSet<>();
@@ -70,7 +70,13 @@ public class Grid implements IGrid {
         for (ArrayList<ICell> row : grid) {
             for (ICell cell : row) {
                 for (IVehicle vehicle : vehicles) {
-                    if (cell.getBounds().intersects(vehicle.getBounds())) {
+                    Rectangle2D vehicleBounds = new Rectangle2D.Double(
+                        vehicle.getBounds().getX() - 30,
+                        vehicle.getBounds().getY(),
+                        vehicle.getBounds().width + 60,
+                        vehicle.getBounds().height
+                    ); //expand slightly for pathing
+                    if (cell.getBounds().intersects(vehicleBounds)) {
                         cell.setPathType(PathType.BLOCKED);
                     }
                 }

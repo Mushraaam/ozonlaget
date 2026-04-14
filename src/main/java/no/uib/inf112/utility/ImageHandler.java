@@ -68,6 +68,9 @@ public class ImageHandler {
         private BufferedImage mouseImage;
         private BufferedImage numbersImage;
 
+        // Settings Menu
+        private BufferedImage cageImage;
+
 
         // Collectables
         private HashMap<CollectableType, BufferedImage> collectables;
@@ -620,6 +623,7 @@ public class ImageHandler {
                 this.wasdImage = ImageReader.fetchImage("/no/uib/inf112/mainmenu/controls.png");
                 this.mouseImage = ImageReader.fetchImage("/no/uib/inf112/mainmenu/mouse.png");
                 this.numbersImage = ImageReader.fetchImage("/no/uib/inf112/mainmenu/numbers.png");
+                this.cageImage = ImageReader.fetchImage("/no/uib/inf112/mainmenu/cage.png");
         }
 
 
@@ -692,6 +696,10 @@ public class ImageHandler {
 
         public BufferedImage getNumbersImage(){
                 return this.numbersImage;
+        }
+
+        public BufferedImage getCage(){
+                return this.cageImage;
         }
 
 }

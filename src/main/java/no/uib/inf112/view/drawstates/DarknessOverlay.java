@@ -27,59 +27,69 @@ public class DarknessOverlay implements IDrawer {
 
     private final IModel map;
     private BufferedImage overlay;
+    private SettingMenu settings;
 
     /* https://www.youtube.com/watch?v=GMaterkzOSk */
-    public DarknessOverlay(IModel map) {
+    public DarknessOverlay(IModel map, SettingMenu settings) {
         this.map = map;
+        this.settings = settings;
     }
 
     @Override
     public void draw(Graphics2D graphic) {
-        Paint oldPaint = graphic.getPaint();
-        Composite oldComposite = graphic.getComposite();
-        Object oldAA = graphic.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
 
-        Rectangle2D clip = graphic.getClipBounds();
-        if (clip == null) {
-            return;
-        }
-
-        int width = Math.max(1, (int) Math.ceil(clip.getWidth()));
-        int height = Math.max(1, (int) Math.ceil(clip.getHeight()));
-        if (overlay == null || overlay.getWidth() != width || overlay.getHeight() != height) {
-            overlay = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        }
-
-        graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        graphic.setComposite(AlphaComposite.SrcOver);
-
-        Rectangle2D.Double hitbox = map.getPlayer().getHitbox();
-        double lightX = hitbox.getCenterX();
-        double lightY = hitbox.getCenterY();
-
-        Graphics2D overlayGraphics = overlay.createGraphics();
-        overlayGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        overlayGraphics.setComposite(AlphaComposite.Clear);
-        overlayGraphics.fillRect(0, 0, width, height);
-
-        overlayGraphics.setComposite(AlphaComposite.SrcOver);
         int redness = map.getPlayer().buffType() == BuffType.DAMAGE ? map.getPlayer().buffCountDown() * 4 : 0;
         int greenness = map.getPlayer().buffType() == BuffType.SPEED ? map.getPlayer().buffCountDown() * 4 : 0;
-        overlayGraphics.setColor(new Color(redness, greenness, 0, 220));
-        overlayGraphics.fillRect(0, 0, width, height);
 
-        drawLightGlow(
-                overlayGraphics,
-                lightX - clip.getX(),
-                lightY - clip.getY());
-        overlayGraphics.dispose();
+        boolean buffed = (redness > 0 || greenness > 0);
 
-        graphic.drawImage(overlay, (int) clip.getX(), (int) clip.getY(), null);
+        if (settings.isDarknessEnabled() || buffed) {
 
-        graphic.setPaint(oldPaint);
-        graphic.setComposite(oldComposite);
-        graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldAA);
+            Paint oldPaint = graphic.getPaint();
+            Composite oldComposite = graphic.getComposite();
+            Object oldAA = graphic.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+
+            Rectangle2D clip = graphic.getClipBounds();
+            if (clip == null) {
+                return;
+            }
+
+            int width = Math.max(1, (int) Math.ceil(clip.getWidth()));
+            int height = Math.max(1, (int) Math.ceil(clip.getHeight()));
+            if (overlay == null || overlay.getWidth() != width || overlay.getHeight() != height) {
+                overlay = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            }
+
+            graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphic.setComposite(AlphaComposite.SrcOver);
+
+            Rectangle2D.Double hitbox = map.getPlayer().getHitbox();
+            double lightX = hitbox.getCenterX();
+            double lightY = hitbox.getCenterY();
+
+            Graphics2D overlayGraphics = overlay.createGraphics();
+            overlayGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            overlayGraphics.setComposite(AlphaComposite.Clear);
+            overlayGraphics.fillRect(0, 0, width, height);
+
+            overlayGraphics.setComposite(AlphaComposite.SrcOver);
+
+            overlayGraphics.setColor(new Color(redness, greenness, 0, 220));
+            overlayGraphics.fillRect(0, 0, width, height);
+
+            drawLightGlow(
+                    overlayGraphics,
+                    lightX - clip.getX(),
+                    lightY - clip.getY());
+            overlayGraphics.dispose();
+
+            graphic.drawImage(overlay, (int) clip.getX(), (int) clip.getY(), null);
+
+            graphic.setPaint(oldPaint);
+            graphic.setComposite(oldComposite);
+            graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldAA);
+        }
     }
 
     private void drawLightGlow(Graphics2D g, double centerX, double centerY) {

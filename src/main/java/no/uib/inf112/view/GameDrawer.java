@@ -53,14 +53,14 @@ public class GameDrawer extends JPanel {
     }
 
     public void setScreens() {
-        this.gameScreen = new GameScreen(this.map, this.handler, this.camera);
+        this.settingScreen = new SettingMenu(handler);
+        this.gameScreen = new GameScreen(this.map, this.handler, this.camera, this.settingScreen);
         this.mainMenu = new MainMenu(this.handler);
         this.debugScreen = new DebugScreen(this.map);
         this.rainbowBuffOverlay = new RainbowBuffOverlay(map);
         this.helpScreen = new HelpMenu(handler);
         this.gameOverOverlay = new DeathOverlay(handler);
         this.victoryOverlay = new VictoryOverlay();
-        this.settingScreen = new SettingMenu(handler);
     }
 
     @Override
@@ -98,7 +98,6 @@ public class GameDrawer extends JPanel {
                 throw new IllegalArgumentException(String.format("Unknown GameState: %s", gameState));
             }
         }
-
         if (map.debugMode() && gameState == GameState.ACTIVE_GAME) {
             this.debugScreen.draw(g2);
         }
