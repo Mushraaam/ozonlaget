@@ -85,10 +85,6 @@ public class SpawnPoint {
                     double dx = centerX - player.getHitbox().getCenterX();
                     double dy = centerY - player.getHitbox().getCenterY();
                     double distToCenter = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distToCenter <= SAFE_ZONE/2) {
-                        return false;
-                    }
                 }
             }
 
@@ -99,7 +95,8 @@ public class SpawnPoint {
         if (player == null) {
             return false;
         }
-        if (distance(hitBox, player.getHitbox()) <= SAFE_ZONE) {
+        double requiredSafeZone = (type == EnemyType.MEGABOSS) ? (SAFE_ZONE / 3) : SAFE_ZONE;
+        if (distance(hitBox, player.getHitbox()) <= requiredSafeZone) {
             return false;
         }
 
