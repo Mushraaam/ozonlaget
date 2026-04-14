@@ -26,7 +26,7 @@ public class GigachadLV5 extends NPC {
     private static final int MEDIUM_RANGE = 450;
     private static final int AGGRO_RANGE = 700;
 
-    private static final int ATTACK_DELAY = 8;
+    private static final int ATTACK_DELAY = 4;
     private static final int RANGED_DELAY = 6;
 
     //COOLDOWNS

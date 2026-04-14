@@ -21,9 +21,9 @@ public class AcidPuddleProjectile extends PuddleProjectile {
 
     @Override
     protected void payload() {
-        Rectangle2D.Double target = new Rectangle2D.Double(this.target.getX() - 30, this.target.getY() - 30,
+        Rectangle2D.Double goal = new Rectangle2D.Double(this.target.getX() - 30, this.target.getY() - 30,
                 this.target.getWidth() + 60, this.target.getHeight() + 60);
-        map.addAOEPuddle(new AcidPuddle(target, super.map));
+        map.addAOEPuddle(new AcidPuddle(goal, super.map));
 
     }
 }

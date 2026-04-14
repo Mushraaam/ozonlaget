@@ -151,7 +151,7 @@ public class ImageHandler {
                 }
                 this.puddles.put(PuddleType.ACID, acidPuddles);
                 ArrayList<BufferedImage> acidList = new ArrayList<>();
-                acidList.add(ImageReader.fetchImage("/no/uib/inf112/npcs/ghoul/projectile/puddle_0.png"));
+                acidList.add(ImageReader.fetchImage("/no/uib/inf112/npcs/ghoul/projectile/projectile.png"));
                 this.projectiles.put(PuddleType.ACID,acidList);
 
                 // MEGABOSS FIREBALL

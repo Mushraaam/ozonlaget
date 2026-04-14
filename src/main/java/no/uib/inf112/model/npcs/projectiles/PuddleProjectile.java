@@ -22,7 +22,7 @@ public abstract class PuddleProjectile implements IProjectile {
     protected IModel map;
     private int animationTick = 0;
 
-    public PuddleProjectile(Rectangle2D.Double startPos, Rectangle2D.Double endPos, IModel map, double width,
+    protected PuddleProjectile(Rectangle2D.Double startPos, Rectangle2D.Double endPos, IModel map, double width,
             double height, int speed, PuddleType type) {
         this.startX = startPos.getCenterX();
         this.startY = startPos.getCenterY();
