@@ -22,7 +22,7 @@ public class Factory {
     private static final int MEGABOSS_INTENSITY = Config.getInt("gigachadIntensity");
     private static final int MEGABOSS_CRITERIA = Config.getInt("gigachadSpawnCriteria");
 
-    public Factory(IModel model){
+    public Factory(IModel model) {
         this.model = model;
         this.spawnPoints = model.getSpawnPoints();
         this.counter = 0;
@@ -32,43 +32,43 @@ public class Factory {
     /**
      * Increments counter - spawns enemy when counter reaches threshold
      */
-    public void increment(){
+    public void increment() {
 
-        if (this.model.getEnemies().size() >= ENEMY_CAP){
+        if (this.model.getEnemies().size() >= ENEMY_CAP) {
             return;
         }
-        this.counter =(this.counter + 1) % 100000;
-        
-        if (this.counter % GHOUL_INTENSITY == 0){
+        this.counter = (this.counter + 1) % 100000;
+
+        if (this.counter % GHOUL_INTENSITY == 0) {
 
             SpawnPoint point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
             boolean successfullSpawn = false;
             int count = 0;
-            while (!(successfullSpawn) && count < 10){
+            while (!(successfullSpawn) && count < 10) {
                 successfullSpawn = point.spawnEnemy(EnemyType.GHOUL);
                 point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
                 count++;
             }
         }
 
-        if (this.counter % SPRINTER_INTENSITY == 0){
+        if (this.counter % SPRINTER_INTENSITY == 0) {
 
             SpawnPoint point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
             boolean successfullSpawn = false;
             int count = 0;
-            while (!(successfullSpawn) && count < 10){
+            while (!(successfullSpawn) && count < 10) {
                 successfullSpawn = point.spawnEnemy(EnemyType.SPRINTER);
                 point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
                 count++;
             }
         }
 
-        if (this.counter % MEGABOSS_INTENSITY == 0 && model.getPlayer().getKillCount() >= MEGABOSS_CRITERIA) {
-            if (!this.bossAlreadySpawned) {
-                if (!spawnPoints.isEmpty()) {
-                    spawnPoints.getFirst().spawnEnemy(EnemyType.MEGABOSS);
-                    this.bossAlreadySpawned = true;
-                }
-            }
-        }}
+        if ((!this.bossAlreadySpawned) 
+            && this.counter % MEGABOSS_INTENSITY == 0 
+            && model.getPlayer().getKillCount() >= MEGABOSS_CRITERIA 
+            && !spawnPoints.isEmpty() 
+            && spawnPoints.getFirst().spawnEnemy(EnemyType.MEGABOSS)) {
+            this.bossAlreadySpawned = true;
+        }
+    }
 }

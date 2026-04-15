@@ -329,6 +329,12 @@ public class Controller
                 }
             }
 
+            case KeyEvent.VK_N -> {
+                for (int i = 0; i < 50; i++) {
+                    player.increaseKillCount();
+                }
+            }
+
             case KeyEvent.VK_M -> {
                 memoryDebug();
             }

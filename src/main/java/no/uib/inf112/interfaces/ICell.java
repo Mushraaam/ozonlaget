@@ -35,5 +35,5 @@ public interface ICell {
     public void clearOccupants();
 
 
-    Set<IEnemy> getEnemies();
+    Set<IEnemy> getEnemies(); //not used?
 }

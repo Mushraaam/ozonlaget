@@ -42,7 +42,7 @@ public class SpawnPoint {
 
         IPlayer player = map.getPlayer();
         if (player == null) {
-        return false;
+            return false;
         }
 
         // if (distance(this.bounds, player.getHitbox()) <= SAFE_ZONE) {
@@ -76,15 +76,13 @@ public class SpawnPoint {
             }
 
             case MEGABOSS -> {
+                System.out.println("Tries to spawn");
                 double centerX = 1080;
                 double centerY = 1080;
                 hitBox = new Rectangle2D.Double(centerX, centerY, LARGE, LARGE);
-
-                IPlayer player = map.getPlayer();
-                if (player != null) {
-                    double dx = centerX - player.getHitbox().getCenterX();
-                    double dy = centerY - player.getHitbox().getCenterY();
-                    double distToCenter = Math.sqrt(dx * dx + dy * dy);
+                if (isLegal(hitBox)) {
+                    addEnemy(type, hitBox);
+                    return true;
                 }
             }
 
@@ -95,7 +93,7 @@ public class SpawnPoint {
         if (player == null) {
             return false;
         }
-        double requiredSafeZone = (type == EnemyType.MEGABOSS) ? (SAFE_ZONE / 3) : SAFE_ZONE;
+        double requiredSafeZone = (type == EnemyType.MEGABOSS) ? 0 : SAFE_ZONE;
         if (distance(hitBox, player.getHitbox()) <= requiredSafeZone) {
             return false;
         }

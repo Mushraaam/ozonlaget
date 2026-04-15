@@ -135,8 +135,8 @@ class GridTest {
     @Test
     void getCellFromXYTest(){
 
-        int maxX = (int) Math.ceil(width / grid.getCellWidth() - 1);       //Adjust for 0-indexing
-        int maxY = (int) Math.ceil(height / grid.getCellHeight() - 1);     //Adjust for 0-indexing
+        int maxX = (int) width / grid.getCellWidth() - 1;       //Adjust for 0-indexing
+        int maxY = (int) height / grid.getCellHeight() - 1;     //Adjust for 0-indexing
         int minX = 0;
         int minY = 0;
 
@@ -157,7 +157,5 @@ class GridTest {
         assertEquals(minY, topRight.row());
         assertEquals(maxX, topRight.col());
 
-        
     }
-
 }
