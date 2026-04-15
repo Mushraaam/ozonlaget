@@ -107,12 +107,13 @@ class GridTest {
 
         assertEquals(3, grid.getNeighbours(cell).size()); //Expect diagonals now, down, left and down right.
 
-        ArrayList<ICell> expected = new ArrayList<>();
-
-
         cell = grid.getCell(2, 2);
 
-        assertEquals(8, grid.getNeighbours(cell).size()); //All directions should be open -> 8
+        ArrayList<ICell> cells =  grid.getNeighbours(cell);
+        assertEquals(8, cells.size()); //All directions should be open -> 8
+
+        assertFalse(cells.contains(grid.getCell(4, 4)));
+        assertTrue(cells.contains(grid.getCell(3, 3)));
         
         // Implement logic for "correct" neighbours also
     }
@@ -129,6 +130,34 @@ class GridTest {
         assertEquals(expectedCount, count);
 
         /*expand this testing */
+    }
+
+    @Test
+    void getCellFromXYTest(){
+
+        int maxX = (int) Math.ceil(width / grid.getCellWidth() - 1);       //Adjust for 0-indexing
+        int maxY = (int) Math.ceil(height / grid.getCellHeight() - 1);     //Adjust for 0-indexing
+        int minX = 0;
+        int minY = 0;
+
+        ICell botRight = grid.getCellFromXY(width, height);
+        assertEquals(maxY, botRight.row());
+        assertEquals(maxX, botRight.col());
+
+
+        ICell topLeft = grid.getCellFromXY(0, 0);
+        assertEquals(minY, topLeft.row());
+        assertEquals(minX, topLeft.col());
+
+        ICell botLeft = grid.getCellFromXY(0, height);
+        assertEquals(maxY, botLeft.row());
+        assertEquals(minX, botLeft.col());
+
+        ICell topRight = grid.getCellFromXY(width, 0);
+        assertEquals(minY, topRight.row());
+        assertEquals(maxX, topRight.col());
+
+        
     }
 
 }
