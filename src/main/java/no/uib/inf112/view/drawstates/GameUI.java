@@ -11,6 +11,7 @@ import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.interfaces.IDrawer;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.interfaces.IModel;
+import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IViewablePlayer;
 import no.uib.inf112.utility.ImageHandler;
 
@@ -41,6 +42,7 @@ public class GameUI implements IDrawer {
     private ImageHandler handler;
     private BufferedImage uiBar;
     private IModel map;
+    private IViewablePlayer player;
     // objectives TAB
     private static final Font OBJECTIVE_TITLE_FONT = new Font(ARIAL, Font.BOLD, 18);
     private static final Font OBJECTIVE_TEXT_FONT = new Font(ARIAL, Font.BOLD, 15);
@@ -50,20 +52,25 @@ public class GameUI implements IDrawer {
     private static final int OBJECTIVE_WIDTH = 300;
     private static final int OBJECTIVE_LINE_HEIGHT = 22;
 
-    //killcount
+    // killcount
     private BufferedImage killCountIcon;
-
 
     public GameUI(IModel map, ImageHandler handler) {
         this.map = map;
         this.handler = handler;
         this.uiBar = handler.uiBar();
         this.killCountIcon = handler.getKillCountIcon();
+        IPlayer playerCand = this.map.getPlayer();
+        if (playerCand instanceof IViewablePlayer){
+            this.player = (IViewablePlayer)playerCand;
+        }else{
+            throw new IllegalArgumentException("Player must be of type IViewablePlayer");
+        }
+
     }
 
     @Override
     public void draw(Graphics2D graphic) {
-        IViewablePlayer player = (IViewablePlayer) this.map.getPlayer();
         Rectangle2D bounds = graphic.getClipBounds().getBounds2D();
         double x1 = bounds.getMinX();
         double width = bounds.getMaxX() - x1;
@@ -100,7 +107,6 @@ public class GameUI implements IDrawer {
     }
 
     private void drawPlayerInventory(Graphics2D g) {
-        IViewablePlayer player = (IViewablePlayer) map.getPlayer();
         if (!player.getInventory().isVisible()) {
             drawInventoryTooltip(g);
             return;
@@ -111,6 +117,10 @@ public class GameUI implements IDrawer {
         Rectangle2D bounds = g.getClipBounds().getBounds2D();
         int x = (int) bounds.getMaxX() - INV_WIDTH - 10;
         int y = (int) bounds.getMinY() + 120;
+
+        if (!player.objectivesVisible()) {
+            y -= 90; // move up backpack to align with a folded objectives tab
+        }
         // bg
         g.setColor(INV_BG);
         g.fillRoundRect(x, y, INV_WIDTH, dynamicHeight, 15, 15);
@@ -127,7 +137,6 @@ public class GameUI implements IDrawer {
             currentY += SLOT_SIZE + 20;
         }
     }
-
 
     private void drawKillCountWindow(Graphics2D g) {
         updateKillNotifications();
@@ -183,7 +192,12 @@ public class GameUI implements IDrawer {
         int tooltipHeight = 30;
 
         int x = (int) bounds.getMaxX() - tooltipWidth - 10;
-        int y = (int) bounds.getMinY() + 120;
+        int y = (int) bounds.getMinY() + 130;
+
+        if (!player.objectivesVisible()) {
+            y -= 90; // move up backpack to align with a folded objectives tab
+        }
+
         g.setColor(INV_BG);
         g.fillRoundRect(x, y - 5, tooltipWidth, tooltipHeight + 5, 10, 10);
 
@@ -218,7 +232,6 @@ public class GameUI implements IDrawer {
     }
 
     private void drawObjectivesTab(Graphics2D g) {
-        IViewablePlayer player = (IViewablePlayer) map.getPlayer();
         Rectangle2D bounds = g.getClipBounds().getBounds2D();
 
         int gasCollected = player.getInventory().getCollectedGasCans();
@@ -244,10 +257,14 @@ public class GameUI implements IDrawer {
 
         g.setFont(OBJECTIVE_TEXT_FONT);
 
-        drawObjectiveLine(g, x + 15, y + 50, allDone, allDone ? "Ready to escape!" : "Find all required items to escape!");
-        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT, gasDone, String.format("Gas cans: %d/6", Math.min(gasCollected, 6)));
-        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 2, chopperKeycardDone, String.format("Chopper keycard: %d/1", Math.min(chopperKeycardCollected, 1)));
-        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 3, gatekeyDone, gatekeyDone ? "Gate is now open" : String.format("Gate key: %d/1", Math.min(gatekeyCollected, 1)));
+        drawObjectiveLine(g, x + 15, y + 50, allDone,
+                allDone ? "Ready to escape!" : "Find all required items to escape!");
+        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT, gasDone,
+                String.format("Gas cans: %d/6", Math.min(gasCollected, 6)));
+        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 2, chopperKeycardDone,
+                String.format("Chopper keycard: %d/1", Math.min(chopperKeycardCollected, 1)));
+        drawObjectiveLine(g, x + 15, y + 50 + OBJECTIVE_LINE_HEIGHT * 3, gatekeyDone,
+                gatekeyDone ? "Gate is now open" : String.format("Gate key: %d/1", Math.min(gatekeyCollected, 1)));
 
     }
 
@@ -259,7 +276,6 @@ public class GameUI implements IDrawer {
     }
 
     private void drawObjectives(Graphics2D g) {
-        IViewablePlayer player = (IViewablePlayer) map.getPlayer();
         if (!player.objectivesVisible()) {
             drawObjectivesTooltip(g);
             return;
@@ -300,7 +316,6 @@ public class GameUI implements IDrawer {
     }
 
     private void drawHealthBar(Graphics2D g, int x1, int y1) {
-        IViewablePlayer player = (IViewablePlayer) this.map.getPlayer();
         int maxHp = player.getMaxHP();
         int currentHP = player.getCurrentHP();
 
@@ -426,13 +441,11 @@ public class GameUI implements IDrawer {
         }
 
         boolean update() {
-            x += vx;      // Sideways spread
-            y += vy;      // Vertical ascent
+            x += vx; // Sideways spread
+            y += vy; // Vertical ascent
             vx *= 0.95f;
             alpha -= 0.015f;
             return alpha > 0;
         }
     }
 }
-
-
