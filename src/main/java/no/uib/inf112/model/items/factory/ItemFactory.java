@@ -28,10 +28,10 @@ public class ItemFactory {
     public void setDropTable() {
         dropTable.put(CollectableType.HEALTH, 3);
         dropTable.put(CollectableType.ARMOR, 2);
-        dropTable.put(CollectableType.AMMO_PISTOL, 10);
-        dropTable.put(CollectableType.AMMO_RIFLE, 10);
-        dropTable.put(CollectableType.AMMO_SHOTGUN, 10);
-        dropTable.put(CollectableType.NONE, 65);
+        dropTable.put(CollectableType.AMMO_PISTOL, 8);
+        dropTable.put(CollectableType.AMMO_RIFLE, 8);
+        dropTable.put(CollectableType.AMMO_SHOTGUN, 8);
+        dropTable.put(CollectableType.NONE, 71);
     }
 
     public ItemFactory(IModel map){
@@ -49,8 +49,10 @@ public class ItemFactory {
         int roll = RANDOM.nextInt(totweight)+1;
         for (HashMap.Entry<CollectableType, Integer> item : dropTable.entrySet()) {
             roll -= item.getValue();
-            if (roll <= 0 && item.getKey() != CollectableType.NONE) {
-                this.buffItemSpawnPoint.dropLoot(item.getKey(), targetLocation);
+            if (roll <= 0) {
+                if (item.getKey() != CollectableType.NONE) {
+                    this.buffItemSpawnPoint.dropLoot(item.getKey(), targetLocation);
+                }
                 break;
             }
         }
@@ -73,12 +75,11 @@ public class ItemFactory {
         if (this.counter % RAINBOW_RATE == 0){
             this.buffItemSpawnPoint.spawnBuffItem(CollectableType.POWERUP_RAINBOW);
         }
-        if (this.counter % DAMAGE_RATE == 0){
+        if (this.counter % DAMAGE_RATE == 0) {
             this.buffItemSpawnPoint.spawnBuffItem(CollectableType.POWERUP_DAMAGE);
-
+        }
         if (this.counter % SPEED_RATE == 0){
             this.buffItemSpawnPoint.spawnBuffItem(CollectableType.POWERUP_SPEED);
-        }
         }
     }
 

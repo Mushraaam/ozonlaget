@@ -161,6 +161,8 @@ public class ImageHandler {
                         fireSpellFrames.add(rotateDeg(ImageReader.fetchImage(path),180));
                 }
 
+
+
                 // MEGABOSS EXPLOSION
                 ArrayList<BufferedImage> bossExplosion = new ArrayList<>();
                 for (int i = 0; i < 10; i++) {
@@ -180,8 +182,13 @@ public class ImageHandler {
                 }
                 this.puddles.put(PuddleType.GASEXPLOSION, gasExplosion);
 
+
+                // MEGABOSS GasBall
                 ArrayList<BufferedImage> bugProjectileList = new ArrayList<>();
-                bugProjectileList.add(rotateDeg(ImageReader.fetchImage("/no/uib/inf112/npcs/jihadbug/bug_spawn_projectile.png"), -90));
+                for (int i = 0; i < 8; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/megaboss/projectile/gas_spell_%s.png", i);
+                        bugProjectileList.add(rotateDeg(ImageReader.fetchImage(path),180));
+                }
                 this.projectiles.put(PuddleType.BUGPROJECTILE,bugProjectileList);
 
 

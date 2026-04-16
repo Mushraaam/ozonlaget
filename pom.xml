@@ -179,9 +179,15 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<!-- gather coverage info while running tests -->
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
+
+				<configuration>
+					<excludes>
+						<exclude>no/uib/inf112/view/**</exclude>
+						<exclude>no/uib/inf112/utility/**</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<id>default-prepare-agent</id>

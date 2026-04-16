@@ -1,9 +1,6 @@
 package no.uib.inf112.model.npcs.projectiles;
-
-import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.PuddleType;
 import no.uib.inf112.interfaces.IModel;
-import no.uib.inf112.model.npcs.Ghoul; // Make sure to import your actual Ghoul/Sprinter class!
 import no.uib.inf112.model.npcs.KamikazeBug;
 import no.uib.inf112.model.npcs.NPC;
 
@@ -14,8 +11,8 @@ public class MinionProjectile extends PuddleProjectile {
     private Rectangle2D.Double target;
     private static final PuddleType TYPE = PuddleType.BUGPROJECTILE;
     private static final int SPEED = 8;
-    private static final double WIDTH = 14;
-    private static final double HEIGHT = 48;
+    private static final double WIDTH =64;
+    private static final double HEIGHT = 36;
 
     public MinionProjectile(Rectangle2D.Double startPos, Rectangle2D.Double endPos, IModel map) {
         super(startPos, endPos, map, WIDTH, HEIGHT, SPEED, TYPE);
