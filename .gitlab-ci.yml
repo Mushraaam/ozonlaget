@@ -103,6 +103,18 @@ verify:
   dependencies:
     - package
 
+pages:
+  stage: deploy
+  dependencies:
+    - verify
+  script:
+    - mkdir public
+    - cp -r target/site/jacoco/* public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 #check updates:
 #  stage: test
 #  script:
