@@ -106,7 +106,7 @@ verify:
 pages:
   stage: deploy
   dependencies:
-    - verify
+    - test
   script:
     - mkdir public
     - cp -r target/site/jacoco/* public/
