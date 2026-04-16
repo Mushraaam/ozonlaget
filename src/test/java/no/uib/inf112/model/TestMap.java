@@ -274,4 +274,16 @@ public class TestMap implements IModel {
         return new ArrayList<>();
     }
 
+    @Override
+    public int getDifficulty() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDifficulty'");
+    }
+
+    @Override
+    public void incrementDifficulty() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'incrementDifficulty'");
+    }
+
 }

@@ -34,12 +34,14 @@ public class Factory {
      */
     public void increment() {
 
+        double difficulty = (double)this.model.getDifficulty() + 1; //add 1 to avoid zero division
+
         if (this.model.getEnemies().size() >= ENEMY_CAP) {
             return;
         }
         this.counter = (this.counter + 1) % 100000;
 
-        if (this.counter % GHOUL_INTENSITY == 0) {
+        if (this.counter % Math.floor(GHOUL_INTENSITY / difficulty) == 0) {
 
             SpawnPoint point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
             boolean successfullSpawn = false;
@@ -51,7 +53,7 @@ public class Factory {
             }
         }
 
-        if (this.counter % SPRINTER_INTENSITY == 0) {
+        if (this.counter % Math.floor(SPRINTER_INTENSITY / difficulty) == 0) {
 
             SpawnPoint point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
             boolean successfullSpawn = false;

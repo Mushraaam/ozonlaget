@@ -53,7 +53,7 @@ public class GameDrawer extends JPanel {
     }
 
     public void setScreens() {
-        this.settingScreen = new SettingMenu(handler);
+        this.settingScreen = new SettingMenu(handler, this.map);
         this.gameScreen = new GameScreen(this.map, this.handler, this.camera, this.settingScreen);
         this.mainMenu = new MainMenu(this.handler);
         this.debugScreen = new DebugScreen(this.map);

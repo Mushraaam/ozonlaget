@@ -30,6 +30,7 @@ public class Model implements IModel {
     private ArrayList<IEnemy> enemies;
     private ArrayList<IFloor> floors;
     private Factory factory;
+    private int difficulty;
 
     private Camera camera;
     private SoundHandler soundHandler;
@@ -380,6 +381,18 @@ public class Model implements IModel {
     @Override
     public ArrayList<IVehicle> getVehicles() {
         return this.vehicles;
+    }
+
+    
+
+    @Override
+    public int getDifficulty() {
+        return this.difficulty;
+    }
+
+    @Override
+    public void incrementDifficulty() {
+        this.difficulty = (this.difficulty + 1) % 3;
     }
 
 }

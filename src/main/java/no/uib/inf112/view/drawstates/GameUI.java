@@ -436,7 +436,7 @@ public class GameUI implements IDrawer {
         KillNotify(int activeCount) {
             float pressure = 1.0f + (activeCount * 0.5f);
             this.vx = 0.2f + (float) (Math.random() * pressure);
-            // upward thrust
+            // upward thrust //(giggity)
             this.vy = -0.2f - (pressure);
         }
 

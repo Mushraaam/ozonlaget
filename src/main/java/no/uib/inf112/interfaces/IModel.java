@@ -240,4 +240,18 @@ public interface IModel {
 
     void setPlayer(IPlayer player);
 
+
+    /**
+     * 0->Eady, 1->Hard, 2->Suicide difficulty
+     * @return int representing difficulty
+     */
+    public int getDifficulty();
+
+    /**
+     * Increment difficulty:
+     * Easy -> Hard -> Suicide -> Easy
+     * 0 -> 1 -> 2 -> 0
+     */
+    public void incrementDifficulty();
+
 }

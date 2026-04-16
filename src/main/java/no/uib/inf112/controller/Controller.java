@@ -527,6 +527,13 @@ public class Controller
             view.repaint();
             return;
         }
+
+        var difficultyToggle = view.getSettingMenu().getDifficultyToggle();
+        if (difficultyToggle != null && difficultyToggle.contains(p)) {
+            this.map.incrementDifficulty();
+            view.repaint();
+            return;
+        }
     }
 
     private void helpMenuMousePressEvent(MouseEvent e) {

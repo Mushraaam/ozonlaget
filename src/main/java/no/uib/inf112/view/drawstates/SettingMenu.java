@@ -8,6 +8,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import no.uib.inf112.interfaces.IDrawer;
+import no.uib.inf112.interfaces.IModel;
 import no.uib.inf112.utility.ImageHandler;
 
 public class SettingMenu implements IDrawer {
@@ -31,12 +32,19 @@ public class SettingMenu implements IDrawer {
     private Rectangle2D.Double backButton;
     private Rectangle2D.Double rainbowToggle;
     private Rectangle2D.Double darknessToggle;
+    private Rectangle2D.Double difficultyToggle;
 
-    public SettingMenu(ImageHandler handler) {
+    private int difficulty;
+    private IModel model;
+
+    public SettingMenu(ImageHandler handler, IModel model) {
+        this.model = model;
         this.handler = handler;
         this.backButton = new Rectangle2D.Double();
         this.rainbowToggle = new Rectangle2D.Double();
         this.darknessToggle = new Rectangle2D.Double();
+        this.difficultyToggle = new Rectangle2D.Double();
+        this.difficulty = this.model.getDifficulty();
     }
 
     @Override
@@ -57,7 +65,7 @@ public class SettingMenu implements IDrawer {
 
     private void drawSettingOptions(Graphics2D graphic) {
         graphic.setColor(Color.DARK_GRAY);
-        Rectangle2D.Double background = new Rectangle.Double(10, 10, 430, 150);
+        Rectangle2D.Double background = new Rectangle.Double(10, 10, 430, 200);
         graphic.fill(background);
         graphic.setColor(Color.WHITE);
         graphic.draw(background);
@@ -108,12 +116,48 @@ public class SettingMenu implements IDrawer {
             graphic.drawString("ON", boxX + 18, boxY2 + 25);
         }
 
+        graphic.setColor(Color.WHITE);
+        graphic.drawString("Toggle difficulty:", x, y + 130);
+        int boxY3 = 150;
+
+        switch (this.model.getDifficulty()) {
+            case 0 -> {
+                graphic.setColor(Color.GREEN);
+                graphic.fillRect(boxX, boxY3, TOGGLEBOX_WIDTH + 20, TOGGLEBOX_HEIGHT);
+
+                graphic.setColor(Color.BLACK);
+                graphic.drawString("Easy", boxX + 10, boxY3 + 27);
+            }
+            case 1 -> {
+                graphic.setColor(Color.ORANGE);
+                graphic.fillRect(boxX, boxY3, TOGGLEBOX_WIDTH + 20, TOGGLEBOX_HEIGHT);
+
+                graphic.setColor(Color.BLACK);
+                graphic.drawString("Hard", boxX + 10, boxY3 + 27);
+            }
+            case 2 -> {
+                graphic.setColor(Color.RED);
+                graphic.fillRect(boxX, boxY3, TOGGLEBOX_WIDTH + 20, TOGGLEBOX_HEIGHT);
+
+                graphic.setColor(Color.BLACK);
+                graphic.drawString("Suicide", boxX + 10, boxY3 + 27);
+            }
+
+        }
+
         rainbowToggle.setRect(boxX, boxY, TOGGLEBOX_WIDTH, TOGGLEBOX_HEIGHT);
         darknessToggle.setRect(boxX, boxY2, TOGGLEBOX_WIDTH, TOGGLEBOX_HEIGHT);
+        difficultyToggle.setRect(boxX, boxY3, (double)TOGGLEBOX_WIDTH + 20, TOGGLEBOX_HEIGHT);
 
         graphic.setColor(Color.BLACK);
         graphic.draw(rainbowToggle);
         graphic.draw(darknessToggle);
+        graphic.draw(difficultyToggle);
+    }
+
+    public void toggleDifficulty() {
+        this.difficulty = (this.difficulty + 1) % 3;
+        
     }
 
     private void drawBackground(Graphics2D graphic) {
@@ -132,7 +176,7 @@ public class SettingMenu implements IDrawer {
         double targetY = bounds.height / 1.2;
 
         if (!settingAnimationStarted) {
-            backButtonX = targetX;  
+            backButtonX = targetX;
             backButtonY = -BUTTON_HEIGHT;
             settingAnimationStarted = true;
         }
@@ -184,6 +228,10 @@ public class SettingMenu implements IDrawer {
 
     public Rectangle2D.Double getDarknessToggle() {
         return darknessToggle;
+    }
+
+    public Rectangle2D.Double getDifficultyToggle(){
+        return difficultyToggle;
     }
 
 }
