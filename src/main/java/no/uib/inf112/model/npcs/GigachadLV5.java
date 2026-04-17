@@ -36,6 +36,10 @@ public class GigachadLV5 extends NPC {
     private static final int MINION_CD_MAX = 600;
     private int minionCooldown = 0;
 
+    public int getRange() {
+        return this.range;
+    }
+
     private enum BossState { IDLE, FIREBALL, MINION }
     private BossState activeRangedState = BossState.IDLE;
 
