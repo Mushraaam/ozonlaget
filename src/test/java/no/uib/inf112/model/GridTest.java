@@ -6,9 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -88,10 +95,10 @@ class GridTest {
         int desiredRow = 2;
         int desiredCol = 3;
         Rectangle2D.Double desiredBounds = new Rectangle2D.Double(
-                                                desiredCol * cellWidth,
-                                                desiredRow * cellHeight,
-                                                cellWidth,
-                                                cellHeight);
+                desiredCol * cellWidth,
+                desiredRow * cellHeight,
+                cellWidth,
+                cellHeight);
 
         ICell cell = grid.getCellFromPos(desiredBounds);
 
@@ -101,49 +108,48 @@ class GridTest {
     }
 
     @Test
-    void getNeighboursTest(){
+    void getNeighboursTest() {
 
         ICell cell = grid.getCell(0, 0);
 
-        assertEquals(3, grid.getNeighbours(cell).size()); //Expect diagonals now, down, left and down right.
+        assertEquals(3, grid.getNeighbours(cell).size()); // Expect diagonals now, down, left and down right.
 
         cell = grid.getCell(2, 2);
 
-        ArrayList<ICell> cells =  grid.getNeighbours(cell);
-        assertEquals(8, cells.size()); //All directions should be open -> 8
+        ArrayList<ICell> cells = grid.getNeighbours(cell);
+        assertEquals(8, cells.size()); // All directions should be open -> 8
 
         assertFalse(cells.contains(grid.getCell(4, 4)));
         assertTrue(cells.contains(grid.getCell(3, 3)));
-        
+
         // Implement logic for "correct" neighbours also
     }
 
     @Test
-    void iteratorTest(){
-        int expectedCount =(int) (height / cellHeight) * (width / cellWidth);
+    void iteratorTest() {
+        int expectedCount = (int) (height / cellHeight) * (width / cellWidth);
 
         int count = 0;
-        for (ICell cell : grid){
+        for (ICell cell : grid) {
             count++;
         }
 
         assertEquals(expectedCount, count);
 
-        /*expand this testing */
+        /* expand this testing */
     }
 
     @Test
-    void getCellFromXYTest(){
+    void getCellFromXYTest() {
 
-        int maxX = (int) width / grid.getCellWidth() - 1;       //Adjust for 0-indexing
-        int maxY = (int) height / grid.getCellHeight() - 1;     //Adjust for 0-indexing
+        int maxX = (int) width / grid.getCellWidth() - 1; // Adjust for 0-indexing
+        int maxY = (int) height / grid.getCellHeight() - 1; // Adjust for 0-indexing
         int minX = 0;
         int minY = 0;
 
         ICell botRight = grid.getCellFromXY(width, height);
         assertEquals(maxY, botRight.row());
         assertEquals(maxX, botRight.col());
-
 
         ICell topLeft = grid.getCellFromXY(0, 0);
         assertEquals(minY, topLeft.row());
@@ -158,4 +164,102 @@ class GridTest {
         assertEquals(maxX, topRight.col());
 
     }
+
+    @Test
+    void distanceTest() {
+
+        int maxX = (int) width / grid.getCellWidth() - 1; // Adjust for 0-indexing
+        int maxY = (int) height / grid.getCellHeight() - 1; // Adjust for 0-indexing
+        int minX = 0;
+        int minY = 0;
+
+        ICell botRight = grid.getCellFromXY(width, height);
+        ICell topLeft = grid.getCellFromXY(0, 0);
+        ICell botLeft = grid.getCellFromXY(0, height);
+        ICell topRight = grid.getCellFromXY(width, 0);
+
+        // Check equality
+        assertEquals(grid.distance(botLeft, topLeft), grid.distance(botRight, topRight));
+        assertEquals(grid.distance(botLeft, botRight), grid.distance(topLeft, topRight));
+        assertEquals(grid.distance(botLeft, topRight), grid.distance(botRight, topLeft));
+        assertEquals(grid.distance(botRight, topLeft), grid.distance(botLeft, topRight));
+
+        // Check mirroring
+        assertEquals(grid.distance(botRight, topLeft), grid.distance(topLeft, botRight));
+
+        // Check values
+        assertEquals(0, grid.distance(botLeft, botLeft));
+
+        double hypotenuse = Math.hypot(
+                (width - 1) / cellWidth,
+                (height - 1) / cellHeight); // Subtract 1 since distance is measured from centerXY
+        assertEquals(hypotenuse, grid.distance(botLeft, topRight));
+
+    }
+
+    @Test
+    void gettersTest() {
+        assertEquals(width, grid.getCellWidth() * grid.getColCount());
+        assertEquals(height, grid.getCellHeight() * grid.getRowCount());
+
+    }
+
+    @Test
+    void getCellsInViewTest() {
+        Graphics2D g = mock(Graphics2D.class);
+        when(g.getClipBounds()).thenReturn(new Rectangle(0, 0, this.width / 2, this.height / 2));
+        List<ICell> viewableCells = grid.getCellsInView(g);
+        HashSet<ICell> cellsSet = new HashSet<>(viewableCells);
+
+        int expectedCols = grid.getColCount() / 2;
+        int expectedRows = grid.getRowCount() / 2;
+        for (int i = 0; i < expectedRows; i++) {
+            for (int j = 0; j < expectedCols; j++) {
+
+                // Contains cells in view
+                assertTrue(cellsSet.contains(grid.getCell(i, j)));
+
+                // Does not contain cells not in view
+                assertFalse(cellsSet.contains(
+                        grid.getCell(grid.getRowCount() - i - 1,
+                                grid.getColCount() - j - 1))); // Subtract 1 for 0-indexing
+            }
+        }
+    }
+
+    @Test
+    void getNeighboursAtDepthTest() {
+
+        ICell cell = grid.getCell(10, 10);
+
+        List<ICell> depth0 = grid.getNeighboursAtDepth(cell, 0);
+        List<ICell> depth1 = grid.getNeighboursAtDepth(cell, 1);
+        List<ICell> depth2 = grid.getNeighboursAtDepth(cell, 2);
+        List<ICell> depth5 = grid.getNeighboursAtDepth(cell, 5);
+
+        assertTrue(depth0.isEmpty());
+
+        assertEquals(8, depth1.size());
+        assertEquals(24, depth2.size());
+
+        assertEquals(new HashSet<>(depth1).size(), depth1.size());
+        assertEquals(new HashSet<>(depth2).size(), depth2.size());
+
+        assertTrue(depth2.containsAll(depth1));
+
+        assertAllWithinDepth(cell, depth1, 1);
+        assertAllWithinDepth(cell, depth2, 2);
+    }
+
+    private void assertAllWithinDepth(ICell center, List<ICell> neighbours, int depth) {
+        for (ICell neighbour : neighbours) {
+            int rowDiff = Math.abs(neighbour.row() - center.row());
+            int colDiff = Math.abs(neighbour.col() - center.col());
+
+            int chebyshevDistance = Math.max(rowDiff, colDiff);
+
+            assertTrue(chebyshevDistance >= 1 && chebyshevDistance <= depth);
+        }
+    }
+
 }

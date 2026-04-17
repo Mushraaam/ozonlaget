@@ -32,6 +32,12 @@ public interface IGrid extends Iterable<ICell> {
         return grid;
     }
 
+    /**
+     * Returns neighbours of a given depth
+     * @param cell
+     * @param depth
+     * @return
+     */
     List<ICell> getNeighboursAtDepth(ICell cell, int depth);
 
     /**

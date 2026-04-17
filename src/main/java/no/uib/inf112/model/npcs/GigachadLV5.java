@@ -90,7 +90,7 @@ public class GigachadLV5 extends NPC {
 
     @Override
     protected boolean canShootPlayer() {
-        if (!super.canShootPlayer()) return false;
+        if (!super.canShootPlayer()) {return false;}
 
         double dist = distance(this.pos, this.player.getHitbox());
         boolean canFireball = (this.fireballCooldown <= 0 && dist <= MEDIUM_RANGE);
