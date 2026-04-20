@@ -18,9 +18,13 @@ import no.uib.inf112.utility.SoundHandler;
 public class TestMap implements IModel {
 
     private Rectangle2D.Double bounds;
+    private ArrayList<IEnemy> enemies;
+    private IGrid grid;
 
     public TestMap(Rectangle2D.Double bounds) {
         this.bounds = bounds;
+        this.enemies = new ArrayList<IEnemy>();
+        this.grid = new Grid(this);
     }
 
     @Override
@@ -55,27 +59,28 @@ public class TestMap implements IModel {
 
     @Override
     public ArrayList<IMovingDrawableObject> getMovingObjects() {
-        throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
+        return null;
     }
 
     @Override
     public IPlayer getPlayer() {
-        throw new UnsupportedOperationException("Unimplemented method 'getPlayer'");
+        return null;
     }
 
     @Override
     public GameState getGameState() {
-        throw new UnsupportedOperationException("Unimplemented method 'getGameState'");
+                return null;
+
     }
 
     @Override
     public void setGameState(GameState state) {
-        throw new UnsupportedOperationException("Unimplemented method 'setGameState'");
+
     }
 
     @Override
     public IGrid getGrid() {
-        throw new UnsupportedOperationException("Unimplemented method 'getGrid'");
+        return this.grid;
     }
 
     @Override
@@ -95,12 +100,12 @@ public class TestMap implements IModel {
 
     @Override
     public void addEnemy(IEnemy enemy) {
-        throw new UnsupportedOperationException("Unimplemented method 'addEnemy'");
+        this.enemies.add(enemy);
     }
 
     @Override
     public ArrayList<IEnemy> getEnemies() {
-        throw new UnsupportedOperationException("Unimplemented method 'getEnemies'");
+        return this.enemies;
     }
 
     @Override
@@ -165,7 +170,7 @@ public class TestMap implements IModel {
 
     @Override
     public void removeEnemy(NPC npc) {
-        throw new UnsupportedOperationException("Unimplemented method 'removeEnemy'");
+        this.enemies.remove(npc);
     }
 
     @Override

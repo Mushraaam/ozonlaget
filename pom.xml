@@ -15,7 +15,7 @@
 		<libgdx.version>1.14.0</libgdx.version>
 		<slf4j.version>2.0.17</slf4j.version>
 		<junit.version>6.0.2</junit.version>
-		<main.class>no.uib.inf112.core.Main</main.class>
+		<main.class>no.uib.inf112.Main</main.class>
 		<jvm.extra.args>--enable-native-access=ALL-UNNAMED</jvm.extra.args>
 	</properties>
 	<dependencies>

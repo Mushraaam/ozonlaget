@@ -1,4 +1,4 @@
-package no.uib.inf112.core;
+package no.uib.inf112;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;

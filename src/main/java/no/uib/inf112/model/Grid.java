@@ -63,7 +63,6 @@ public class Grid implements IGrid {
                 neighbourMap.put(cell, levels);
             }
         }
-
     }
 
     private void fillGridWithVehicles(ArrayList<ArrayList<ICell>> grid, ArrayList<IVehicle> vehicles) {

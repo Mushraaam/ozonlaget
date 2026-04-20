@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import no.uib.inf112.interfaces.IEnemy;
+import no.uib.inf112.interfaces.IGrid;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
@@ -20,8 +23,11 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.model.Grid;
+import no.uib.inf112.model.npcs.Ghoul;
+import no.uib.inf112.player.Player;
 
 class GridTest {
 
@@ -30,13 +36,15 @@ class GridTest {
     Grid grid;
     int cellWidth;
     int cellHeight;
+    TestMap testmap;
 
     @BeforeEach
     void makeGrid() {
 
         width = 1000;
         height = 1000;
-        grid = new Grid(new TestMap(new Rectangle2D.Double(0, 0, width, height)));
+        testmap = new TestMap(new Rectangle2D.Double(0, 0, width, height));
+        grid = (Grid) testmap.getGrid();
         cellWidth = grid.getCellWidth();
         cellHeight = grid.getCellHeight();
 
@@ -116,7 +124,7 @@ class GridTest {
 
         cell = grid.getCell(2, 2);
 
-        ArrayList<ICell> cells = grid.getNeighbours(cell);
+        List<ICell> cells = grid.getNeighbours(cell);
         assertEquals(8, cells.size()); // All directions should be open -> 8
 
         assertFalse(cells.contains(grid.getCell(4, 4)));
@@ -168,11 +176,6 @@ class GridTest {
     @Test
     void distanceTest() {
 
-        int maxX = (int) width / grid.getCellWidth() - 1; // Adjust for 0-indexing
-        int maxY = (int) height / grid.getCellHeight() - 1; // Adjust for 0-indexing
-        int minX = 0;
-        int minY = 0;
-
         ICell botRight = grid.getCellFromXY(width, height);
         ICell topLeft = grid.getCellFromXY(0, 0);
         ICell botLeft = grid.getCellFromXY(0, height);
@@ -199,8 +202,17 @@ class GridTest {
 
     @Test
     void gettersTest() {
+
+        
+        double expectedColCount = width / cellWidth;
+        double expectedRowCount = height / cellHeight;
+        assertEquals(expectedColCount, grid.getColCount());
+        assertEquals(expectedRowCount, grid.getRowCount());
+
         assertEquals(width, grid.getCellWidth() * grid.getColCount());
         assertEquals(height, grid.getCellHeight() * grid.getRowCount());
+        assertEquals(cellWidth, grid.getCellWidth());
+        assertEquals(cellHeight, grid.getCellHeight());
 
     }
 
@@ -208,6 +220,7 @@ class GridTest {
     void getCellsInViewTest() {
         Graphics2D g = mock(Graphics2D.class);
         when(g.getClipBounds()).thenReturn(new Rectangle(0, 0, this.width / 2, this.height / 2));
+
         List<ICell> viewableCells = grid.getCellsInView(g);
         HashSet<ICell> cellsSet = new HashSet<>(viewableCells);
 
@@ -235,7 +248,6 @@ class GridTest {
         List<ICell> depth0 = grid.getNeighboursAtDepth(cell, 0);
         List<ICell> depth1 = grid.getNeighboursAtDepth(cell, 1);
         List<ICell> depth2 = grid.getNeighboursAtDepth(cell, 2);
-        List<ICell> depth5 = grid.getNeighboursAtDepth(cell, 5);
 
         assertTrue(depth0.isEmpty());
 
@@ -249,6 +261,7 @@ class GridTest {
 
         assertAllWithinDepth(cell, depth1, 1);
         assertAllWithinDepth(cell, depth2, 2);
+
     }
 
     private void assertAllWithinDepth(ICell center, List<ICell> neighbours, int depth) {
@@ -260,6 +273,53 @@ class GridTest {
 
             assertTrue(chebyshevDistance >= 1 && chebyshevDistance <= depth);
         }
+    }
+
+    @Test
+    void gatherOccupiedCellsTest() {
+        IEnemy ghoul = new Ghoul(new Rectangle2D.Double(0, 0, cellWidth * 2, cellHeight * 2), testmap);
+        testmap.addEnemy(ghoul);
+        grid.gatherOccupiedCells();
+
+        for (int i = 0; i < 5; i++) {           // is expanded by size * 1.54 and rounded up
+            for (int j = 0; j < 5; j++) {       // therefore we set expected = Math.ceil(cellWidth * 2 * 1.54)
+                ICell cell = grid.getCell(i, j);
+                assertTrue(cell.isOccupied(ghoul.size()));
+            }
+        }
+
+        for (int i = 5; i < grid.getRowCount(); i++) {
+            for (int j = 5; j < grid.getColCount(); j++) {
+                ICell cell = grid.getCell(i, j);
+                assertFalse(cell.isOccupied(ghoul.size()));
+            }
+        }
+    }
+    
+    @Test
+    void resetOccupiedTest(){
+        IEnemy ghoul = new Ghoul(new Rectangle2D.Double(0, 0, cellWidth * 2, cellHeight * 2), testmap);
+        testmap.addEnemy(ghoul);
+        grid.gatherOccupiedCells();
+        boolean hasTested = false;
+        if (hasOccupiedCells(ghoul)){
+            grid.resetOccupied();
+            
+            for (ICell cell : grid){
+                assertFalse(cell.isOccupied(ghoul.size()));
+                hasTested = true;
+            }
+        }
+        assertTrue(hasTested, "Failed to run test");
+    }
+
+    private boolean hasOccupiedCells(IEnemy enemy) {
+        for (ICell cell : grid){
+            if (cell.isOccupied(enemy.size())){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
