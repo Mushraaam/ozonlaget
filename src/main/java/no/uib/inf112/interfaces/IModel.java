@@ -28,13 +28,27 @@ public interface IModel {
      */
     public ArrayList<IStaticObject> getStaticObjects();
 
-    int getTotalDroppedLoot();
+    /**
+     * @return total loot on map
+     */
+    public int getTotalDroppedLoot();
 
-    void increaseDroppedLoot();
+    /**
+     * Increments counter for loot on max
+     * Used for keeping track of item cap
+     */
+    public void increaseDroppedLoot();
 
-    void decreaseDroppedLoot();
+    /**
+     * Decrements counter for loot on max
+     * Used for keeping track of item cap
+     */
+    public void decreaseDroppedLoot();
 
-    Pathfinder getPathfinder();
+    /**
+     * @return the pathfinder used for pathfinding (for NPC's)
+     */
+    public Pathfinder getPathfinder();
 
     /**
      * @return The Player object
@@ -83,15 +97,16 @@ public interface IModel {
      */
     public void debugOff();
 
-    int getEnemyCount();
+    /**
+     * @return count of enemies on the map
+     */
+    public int getEnemyCount();
 
     /**
      * @param enemy Adds this enemy to the collection of enemies for map to keep control of.
      * Only enemies in this collection are relevant for the game (They are in the "loop")
      */
     void addEnemy(IEnemy enemy);
-
-    // void updateEnemyLocations(List<IEnemy> allEnemies);
 
     /**
      * @return a list of all enemies on the level.
@@ -224,21 +239,50 @@ public interface IModel {
      */
     public ArrayList<IVehicle> getVehicles();
 
-    ArrayList<ICollectable> getActiveItems();
+    /**
+     * @return list of items on the map
+     */
+    public ArrayList<ICollectable> getActiveItems();
 
-    void addToActiveItems(ICollectable item);
+    /**
+     * Adds item to the list of items on the map
+     * @param item
+     */
+    public void addToActiveItems(ICollectable item);
 
-    void removeActiveItem(ICollectable item);
+    /**
+     * Removes the item from the list of items on the map
+     * @param item
+     */
+    public void removeActiveItem(ICollectable item);
 
-    void setItemSpawnPoints(ArrayList<Rectangle2D.Double> buffItemSpawnPoints, ArrayList<Rectangle2D.Double> itemSpawnPoints);
+    /**
+     * Sets the spawnpoints for items and buffs
+     * @param buffItemSpawnPoints - a list of buff spawnpoints
+     * @param itemSpawnPoints - a list of item spawnpoints
+     */
+    public void setItemSpawnPoints(ArrayList<Rectangle2D.Double> buffItemSpawnPoints, ArrayList<Rectangle2D.Double> itemSpawnPoints);
 
-    List<Rectangle2D.Double> getBuffItemSpawnpoint();
+    /**
+     * @return list of buff item spawnpoints
+     */
+    public List<Rectangle2D.Double> getBuffItemSpawnpoint();
 
-    List<Rectangle2D.Double> getInventoryItemSpawnpoint();
+    /**
+     * @return list of inventory-item spawnpoints
+     */
+    public List<Rectangle2D.Double> getInventoryItemSpawnpoint();
 
-    ItemFactory getItemFactory();
+    /**
+     * @return the itemfactory in charge of spawning items
+     */
+    public ItemFactory getItemFactory();
 
-    void setPlayer(IPlayer player);
+    /**
+     * Places the player on the map
+     * @param player
+     */
+    public void setPlayer(IPlayer player);
 
 
     /**

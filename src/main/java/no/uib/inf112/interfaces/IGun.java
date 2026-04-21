@@ -32,9 +32,14 @@ public interface IGun {
      */
     public double accuracy();
 
-    void increaseAmmo(int byAmount);
+    /**
+     * Increases ammo for weapon byAmount
+     * Ammo is clampes 0 <= ammo <= maxAmmo
+     * @param byAmount
+     */
+    public void increaseAmmo(int byAmount);
 
-    CollectableType getAmmoType();
+    public CollectableType getAmmoType();
 
     /**
      * @return how far this gun shoots

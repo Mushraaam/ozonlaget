@@ -39,6 +39,14 @@ public interface IDrawer {
         return objectBounds.intersects(clip);
     }
 
+    /**
+     * Draws cells in view
+     * Uses some math to calculate only the cells that should be drawn before drawing (is in view)
+     * @param graphics
+     * @param grid
+     * @param handler
+     * @param debug - if this is run from debug mode or not, changes behavior
+     */
     default void drawCellsInView(Graphics2D graphics, IGrid grid, ImageHandler handler, boolean debug) {
 
         int cellWidth = grid.getCellWidth();

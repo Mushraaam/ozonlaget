@@ -8,24 +8,52 @@ import java.awt.geom.Rectangle2D;
 
 public interface ICollectable {
 
+    /**
+     * Sets loot to be of dropped loot or not 
+     * Honestly i have no idea what the fuck this means, i didnt write the code
+     * @param b
+     */
+    public void isItemDroppedLoot(boolean b);
 
-    void isItemDroppedLoot(boolean b);
+    /**
+     * @return bounds/hitbox for the item
+     */
+    public Rectangle2D.Double getHitbox();
 
-    Rectangle2D.Double getHitbox();
+    /**
+     * @return type of the item
+     */
+    public CollectableType getType();
 
-    CollectableType getType();
+    /**
+     * @return the amount of effect the buff has registered. Like: 10 seconds, or 15 charges, 20 bullets etc.
+     */
+    public int getAmount();
 
-    int getAmount();
+    /**
+     * Sets the amount of effect the buff has registered. Like: 10 seconds, or 15 charges, 20 bullets etc.
+     * @param amount
+     */
+    public void setNewAmount(int amount);
 
-    void setNewAmount(int amount);
+    /**
+     * Player picks up item
+     */
+    public void pickUp();
 
-    void pickUp();
+    /**
+     * @return type of buff for this item
+     */
+    public BuffType getBuffType();
 
+    /**
+     * Makes the item affect player
+     */
+    public void affectPlayer();
 
-    BuffType getBuffType();
-
-    void affectPlayer();
-
-    InvItemType getInventoryItemType();
+    /**
+     * @return which type of inventory item this is
+     */
+    public InvItemType getInventoryItemType();
 }
 

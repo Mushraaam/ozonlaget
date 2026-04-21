@@ -11,7 +11,6 @@ import no.uib.inf112.interfaces.IGrid;
 import no.uib.inf112.interfaces.IModel;
 import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IStaticObject;
-import no.uib.inf112.interfaces.IVehicle;
 import no.uib.inf112.model.npcs.pathfinding.Pathfinder;
 
 import java.awt.geom.Ellipse2D;
@@ -129,11 +128,6 @@ public abstract class NPC implements IEnemy {
     }
 
     @Override
-    public Ellipse2D.Double getTrueHitbox() {
-        return null;
-    }
-
-    @Override
     public void requestPath(IGrid grid, Pathfinder pathfinder, Rectangle2D.Double targetBounds,
             boolean fromController) {
         if (!this.aggroed) {
@@ -201,10 +195,10 @@ public abstract class NPC implements IEnemy {
         this.animationIndex = (this.animationIndex + 1) % animationCount;
     }
 
-    @Override
-    public ICell getOldCell() {
-        return this.from;
-    }
+    // @Override
+    // public ICell getOldCell() {
+    //     return this.from;
+    // }
 
     protected void dropLoot(){
         map.getItemFactory().rollDropFromTable(this.getHitbox());
@@ -508,19 +502,6 @@ public abstract class NPC implements IEnemy {
         return true;
     }
 
-    @Override
-    public boolean boundsChanged(int minR, int maxR, int minC, int maxC) {
-        return minR != lastMinR || maxR != lastMaxR || minC != lastMinC || maxC != lastMaxC;
-    }
-
-    @Override
-    public void updateBounds(int minR, int maxR, int minC, int maxC) {
-        this.lastMinR = minR;
-        this.lastMaxR = maxR;
-        this.lastMinC = minC;
-        this.lastMaxC = maxC;
-    }
-
     private double calculateSpeed() {
         if (!this.aggroed) {
             return WANDERSPEED;
@@ -531,32 +512,9 @@ public abstract class NPC implements IEnemy {
 
     // //////////////////GETTERS////////////////////////
 
-    @Override
-    public int getLastMinR() {
-        return lastMinR;
-    }
-
-    @Override
-    public int getLastMaxR() {
-        return lastMaxR;
-    }
-
-    @Override
-    public int getLastMinC() {
-        return lastMinC;
-    }
-
-    public int getLastMaxC() {
-        return lastMaxC;
-    }
 
     public IEnemy getNextInCell() {
         return this.nextInCell;
-    }
-
-    @Override
-    public void setNextInCell(IEnemy next) {
-        this.nextInCell = next;
     }
 
     @Override

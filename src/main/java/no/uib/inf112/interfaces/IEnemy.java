@@ -17,11 +17,15 @@ import java.awt.geom.Rectangle2D;
 public interface IEnemy extends IMovingDrawableObject {
 
 
-    int getMaxHealth();
+    /**
+     * @return max health
+     */
+    public int getMaxHealth();
 
-    int getHealth();
-
-    Ellipse2D.Double getTrueHitbox();
+    /**
+     * @return current health
+     */
+    public int getHealth();
 
     /**
      * Requests a new path for the enemy to follow towards a specific target.
@@ -68,24 +72,9 @@ public interface IEnemy extends IMovingDrawableObject {
      */
     public double getFacingAngle();
 
-    ICell getOldCell();
-
-    boolean boundsChanged(int minR, int maxR, int minC, int maxC);
-
-    void updateBounds(int minR, int maxR, int minC, int maxC);
-
-    int getLastMinR();
-
-    int getLastMaxR();
-
-    int getLastMinC();
-
-    int getLastMaxC();
-
-    IEnemy getNextInCell();
-
-    void setNextInCell(IEnemy next);
-
+    /**
+     * @return 
+     */
     ICell getStandingCell();
 
     /**

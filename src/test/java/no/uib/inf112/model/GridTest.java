@@ -10,24 +10,18 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import no.uib.inf112.interfaces.IEnemy;
-import no.uib.inf112.interfaces.IGrid;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.interfaces.ICell;
-import no.uib.inf112.model.Grid;
 import no.uib.inf112.model.npcs.Ghoul;
-import no.uib.inf112.player.Player;
 
 class GridTest {
 
@@ -321,5 +315,7 @@ class GridTest {
         }
         return false;
     }
+
+    
 
 }

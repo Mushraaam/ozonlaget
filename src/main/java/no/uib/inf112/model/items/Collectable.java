@@ -48,10 +48,7 @@ public abstract class Collectable implements ICollectable {
         return this.type;
     }
 
-    /**
-     *
-     * @return the amount of effect the buff has registered. Like: 10 seconds, or 15 charges, 20 bullets etc.
-     */
+
     @Override
     public int getAmount() {
         return this.amount;

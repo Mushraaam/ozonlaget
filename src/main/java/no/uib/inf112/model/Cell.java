@@ -128,8 +128,4 @@ public class Cell implements ICell {
         allOccupants.clear();
     }
 
-    @Override
-    public Set<IEnemy> getEnemies() {
-        return this.allOccupants;
-    }
 }

@@ -29,19 +29,44 @@ public interface IControllablePlayer extends IPlayer{
      */
     public void incrementAnimationIndex();
 
+    /**
+     * Opens/Closes the inventory tab
+     */
+    public void openCloseInventory();
 
-    void openCloseInventory();
+    /**
+     * Opens/Closes the objectives tab
+     */
+    public void openCloseObjectives();
 
-    void openCloseObjectives();
+    /**
+     * Tries to move the player in the given direction
+     * @param dir
+     */
+    public void pressMove(Direction dir);
 
-    public void pressMove(Direction north);
+    /**
+     * Stops moving the player in the given direction
+     * @param dir
+     */
+    public void releaseMove(Direction dir);
 
-    public void releaseMove(Direction north);
-
+    /**
+     * @return true if player is moving
+     */
     public boolean isMoving();
 
+    /**
+     * Calculates view/world coorsinate translation and faces player accordingly
+     * @param worldX
+     * @param worldY
+     */
     public void aimAtWorldPosition(double worldX, double worldY);
 
+    /**
+     * Moves player and sets player facing the correct direction
+     * Used in a timer in controller
+     */
     public void updateMovement();
 
     /**

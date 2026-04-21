@@ -9,8 +9,14 @@ import no.uib.inf112.utility.SoundHandler;
 
 public interface IPlayer {
 
+    /**
+     * @return bounds/hitbox of player
+     */
     public Rectangle2D.Double getHitbox();
 
+    /**
+     * @return type of currently equipped gun
+     */
     public GunType gunType();
 
     /**
@@ -78,6 +84,9 @@ public interface IPlayer {
      */
     public void decrementBuff(SoundHandler soundHandler);
 
+    /**
+     * @return current armour value
+     */
     public int getArmor();
 
     /**
@@ -92,8 +101,14 @@ public interface IPlayer {
      */
     public void setPlayerSpeed(int amount);
 
-    void increaseKillCount();
+    /**
+     * Increases the kill count by 1
+     */
+    public void increaseKillCount();
 
+    /**
+     * @return kill count
+     */
     public int getKillCount();
 }
 

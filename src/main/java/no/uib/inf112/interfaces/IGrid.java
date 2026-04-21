@@ -11,6 +11,17 @@ import no.uib.inf112.model.Cell;
 
 public interface IGrid extends Iterable<ICell> {
 
+    /**
+     * Creates a grid within the width and height parameters.
+     * Calculates width/height of cells based on rows/cols.
+     * FloorType is set to default FloorType
+     * @param rows
+     * @param cols
+     * @param width
+     * @param height
+     * @param type
+     * @return
+     */
     default ArrayList<ArrayList<ICell>> makeGrid(int rows, int cols, int width, int height, FloorType type) {
 
         ArrayList<ArrayList<ICell>> grid = new ArrayList<>(rows);

@@ -7,11 +7,23 @@ import no.uib.inf112.player.Inventory;
 
 public interface IViewablePlayer extends IPlayer {
 
+    /**
+     * Returns the current ammount of item in inventory
+     * @param item
+     * @return
+     */
     int getAmountInInventory(CollectableType item);
 
-    Inventory getInventory();
+    /**
+     * Returns the current inventory of player
+     * @return
+     */
+    public Inventory getInventory();
 
-    GunType gunType();
+    /**
+     * Returns type of gun equipped
+     */
+    public GunType gunType();
 
     /**
      * @return current direction
@@ -28,9 +40,15 @@ public interface IViewablePlayer extends IPlayer {
      */
     public double getFacingAngle();
 
-    boolean objectivesVisible();
+    /**
+     * @return whether objectives tab should be visible
+     */
+    public boolean objectivesVisible();
 
 
-    @Override
-    int getKillCount();
+    /**
+     * Returns the kill count
+     * enemies killed
+     */
+    public int getKillCount();
 }

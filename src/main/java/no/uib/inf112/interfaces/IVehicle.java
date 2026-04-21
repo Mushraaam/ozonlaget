@@ -9,18 +9,25 @@ public interface IVehicle {
      */
     public Rectangle2D.Double getBounds();
 
-    boolean isFuelFull();
+    /**
+     * @return if IVehicle has full fuel
+     */
+    public boolean isFuelFull();
 
-    void depositGas();
+    /**
+     * Deposits gas to IVehicle
+     * Reduces inventory count for item to 0
+     */
+    public void depositGas();
 
     /**
      * @return index for vehicle animation
      */
     public int getIndex();
-    
+
     /**
      * Increments animation index
      */
     public void increment();
-    
+
 }
