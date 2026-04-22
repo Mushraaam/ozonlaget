@@ -17,7 +17,6 @@ import no.uib.inf112.utility.SoundHandler;
 import no.uib.inf112.utility.Camera;
 
 import java.awt.Point;
-import java.awt.RenderingHints.Key;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
