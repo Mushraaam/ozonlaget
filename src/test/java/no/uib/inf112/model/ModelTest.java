@@ -3,8 +3,10 @@ package no.uib.inf112.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockConstruction;
 
 import java.util.ArrayList;
@@ -18,11 +20,26 @@ import java.awt.geom.Rectangle2D;
 import com.badlogic.gdx.backends.lwjgl3.audio.Mp3.Sound;
 
 import no.uib.inf112.config.Config;
+import no.uib.inf112.enums.GameState;
+import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.interfaces.ICollectable;
 import no.uib.inf112.interfaces.IEnemy;
+import no.uib.inf112.interfaces.IFloor;
 import no.uib.inf112.interfaces.IGrid;
+import no.uib.inf112.interfaces.IGunShot;
+import no.uib.inf112.interfaces.IPlayer;
+import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.interfaces.IPuddle;
 import no.uib.inf112.interfaces.IStaticObject;
+import no.uib.inf112.interfaces.IVehicle;
+import no.uib.inf112.model.items.factory.ItemFactory;
+import no.uib.inf112.model.npcs.Ghoul;
+import no.uib.inf112.model.npcs.factory.Factory;
+import no.uib.inf112.model.npcs.factory.SpawnPoint;
+import no.uib.inf112.model.npcs.pathfinding.Pathfinder;
+import no.uib.inf112.model.npcs.projectiles.puddles.AcidPuddle;
+import no.uib.inf112.player.Helicopter;
+import no.uib.inf112.utility.Camera;
 import no.uib.inf112.utility.SoundHandler;
 
 public class ModelTest {
@@ -48,18 +65,50 @@ public class ModelTest {
     }
 
     @Test
-    void getEnemiesTest() {
+    void EnemiesTest() {
         ArrayList<IEnemy> enemies = model.getEnemies();
         assertNotNull(enemies);
         assertTrue(enemies.isEmpty()); // Should be empty at start
+
+        assertEquals(enemies.size(), model.getEnemyCount());
+
+        Ghoul enemy = new Ghoul(new Rectangle2D.Double(0, 0, 10, 10), model);
+        model.addEnemy(enemy);
+        enemies = model.getEnemies();
+        assertFalse(enemies.isEmpty());
+
+        assertEquals(enemies.size(), model.getEnemyCount());
+        assertEquals(1, model.getEnemyCount());
+
+        model.removeEnemy(enemy);
+
+        enemies = model.getEnemies();
+        assertNotNull(enemies);
+        assertTrue(enemies.isEmpty());
+
     }
 
     @Test
-    void getPuddlesTest() {
+    void PuddlesTest() {
 
         ArrayList<IPuddle> puddles = model.getAOEPuddles();
         assertNotNull(puddles);
         assertTrue(puddles.isEmpty());
+        assertEquals(0, puddles.size());
+
+        IPuddle puddle = new AcidPuddle(new Rectangle2D.Double(0, 0, 10, 10), model);
+        model.addAOEPuddle(puddle);
+        puddles = model.getAOEPuddles();
+        assertNotNull(puddles);
+        assertFalse(puddles.isEmpty());
+        assertEquals(1, puddles.size());
+
+        model.removeAOEPuddle(puddle);
+        puddles = model.getAOEPuddles();
+        assertNotNull(puddles);
+        assertTrue(puddles.isEmpty());
+        assertEquals(0, puddles.size());
+
     }
 
     @Test
@@ -90,6 +139,19 @@ public class ModelTest {
     }
 
     @Test
+    void getTileGridTest() {
+        int expectedWidth = Config.getInt("mapWidth");
+        int expectedHeight = Config.getInt("mapHeight");
+
+        IGrid grid = model.getTiles();
+        int expectedCols = expectedWidth / Config.getInt("tileWidth");
+        int expectedRows = expectedHeight / Config.getInt("tileHeight");
+
+        assertEquals(expectedCols, grid.getColCount());
+        assertEquals(expectedRows, grid.getRowCount());
+    }
+
+    @Test
     void boundsTest() {
 
         int expectedWidth = Config.getInt("mapWidth");
@@ -104,292 +166,247 @@ public class ModelTest {
         ArrayList<ICollectable> activeITems = model.getActiveItems();
         assertNotNull(activeITems);
         assertFalse(activeITems.isEmpty());
+
+        assertEquals(0, model.getTotalDroppedLoot());
+
+        model.increaseDroppedLoot();
+        assertEquals(1, model.getTotalDroppedLoot());
+
+        model.decreaseDroppedLoot();
+        assertEquals(0, model.getTotalDroppedLoot());
+
+        model.decreaseDroppedLoot();
+        assertEquals(0, model.getTotalDroppedLoot());
+
     }
 
+    @Test
+    void getPathfinderTest() {
+        Pathfinder pathfinder = model.getPathfinder();
+        assertNotNull(pathfinder);
+        assertTrue(pathfinder instanceof Pathfinder);
+    }
+
+    @Test
+    void getPlayerTest() {
+        IPlayer player = model.getPlayer();
+        assertNotNull(player);
+        assertTrue(player instanceof IPlayer);
+        int expectedWidth = Config.getInt("playerWidth");
+        int expectedHeight = Config.getInt("playerHeight");
+        assertEquals(expectedWidth, player.getHitbox().width);
+        assertEquals(expectedHeight, player.getHitbox().height);
+    }
+
+    @Test
+    void gameStateTest() {
+
+        assertEquals(GameState.MAIN_MENU, model.getGameState());
+        for (GameState state : GameState.values()) {
+            model.setGameState(state);
+            assertEquals(state, model.getGameState());
+        }
+    }
+
+    @Test
+    void debugTest() {
+        assertFalse(model.debugMode());
+        model.debugOn();
+        assertTrue(model.debugMode());
+        model.debugOn();
+        assertTrue(model.debugMode());
+        model.debugOff();
+        assertFalse(model.debugMode());
+        model.debugOff();
+        assertFalse(model.debugMode());
+
+    }
+
+    @Test
+    void getVehicleTest() {
+        assertNotNull(model.getVehicles());
+        assertEquals(1, model.getVehicles().size()); // for now there is only 1 vehicle
+
+        assertNotNull(model.getHelicopter());
+        assertTrue(model.getHelicopter() instanceof Helicopter);
+
+    }
+
+    @Test
+    void gatherOccupiedCellsTest() {
+        Ghoul ghoul = new Ghoul(new Rectangle2D.Double(0, 0, 10, 10), model);
+        model.addEnemy(ghoul);
+        model.gatherOccupiedCells();
+
+        IGrid grid = model.getGrid();
+
+        ICell cell = grid.getCellFromPos(new Rectangle2D.Double(0, 0, 10, 10));
+
+        assertTrue(cell.occupiedBy(ghoul));
+
+        model.resetOccupied();
+
+        assertFalse(cell.occupiedBy(ghoul));
+
+    }
+
+    @Test
+    void floorsTest() {
+        ArrayList<IFloor> floors = model.getFloors();
+        assertNotNull(floors);
+        assertFalse(floors.isEmpty());
+
+        int initialSize = floors.size();
+
+        IFloor mockFloor = floors.get(0);
+        model.addFloor(mockFloor);
+
+        assertEquals(initialSize + 1, model.getFloors().size());
+    }
+
+    // Time to do some big time mocking
+
+    @Test
+    void gunShotTest() {
+        assertNotNull(model.gunShots());
+        assertFalse(model.gunShots().iterator().hasNext());
+
+        IGunShot shot = mock(IGunShot.class);
+        model.addShot(shot);
+
+        Iterable<IGunShot> shots = model.gunShots();
+        assertTrue(shots.iterator().hasNext());
+
+        model.removeShot(shot);
+        assertFalse(model.gunShots().iterator().hasNext());
+    }
+
+    @Test
+    void cameraTest() {
+        assertNotNull(model.getCamera());
+        assertTrue(model.getCamera() instanceof Camera);
+    }
+
+    @Test
+    void projectileTest() {
+        assertNotNull(model.getProjectiles());
+        assertTrue(model.getProjectiles().isEmpty());
+
+        IProjectile projectile = mock(IProjectile.class);
+        model.addProjectile(projectile);
+
+        assertEquals(1, model.getProjectiles().size());
+
+        model.removeProjectile(projectile);
+        assertTrue(model.getProjectiles().isEmpty());
+    }
+
+    @Test
+    void spawnPointTest() {
+        assertNotNull(model.getSpawnPoints());
+        assertFalse(model.getSpawnPoints().isEmpty());
+
+        SpawnPoint point = mock(SpawnPoint.class);
+        int size = model.getSpawnPoints().size();
+        model.addSpawnPoint(point);
+
+        assertEquals(size + 1, model.getSpawnPoints().size());
+    }
+
+    @Test
+    void resetMapTest() {
+        model.addEnemy(new Ghoul(new Rectangle2D.Double(0, 0, 10, 10), model));
+
+        IGrid grid = model.getGrid();
+        IGrid tileGrid = model.getTiles();
+        Pathfinder pathfinder = model.getPathfinder();
+
+        model.resetMap();
+
+        assertEquals(0, model.getEnemyCount());
+        assertNotSame(grid, model.getGrid());
+        assertNotSame(tileGrid, model.getTiles());
+        assertNotSame(pathfinder, model.getPathfinder());
+    }
+
+    @Test
+    void setLevelTest() {
+        assertEquals(1, model.level());
+
+        model.setLevel(2);
+        assertEquals(2, model.level());
+
+        model.setLevel(1);
+        assertEquals(1, model.level());
+    }
+
+    @Test
+    void activeItemsTest() {
+        ArrayList<ICollectable> items = model.getActiveItems();
+        assertNotNull(items);
+        assertFalse(items.isEmpty());
+
+        int initialSize = items.size();
+
+        ICollectable item = mock(ICollectable.class);
+        model.addToActiveItems(item);
+        assertEquals(initialSize + 1, model.getActiveItems().size());
+
+        model.removeActiveItem(item);
+        assertEquals(initialSize, model.getActiveItems().size());
+    }
+
+
+    @Test
+    void itemSpawnPointsTest() {
+        ArrayList<Rectangle2D.Double> buffSpawnPoints = new ArrayList<>();
+        ArrayList<Rectangle2D.Double> inventorySpawnPoints = new ArrayList<>();
+
+        buffSpawnPoints.add(new Rectangle2D.Double(0, 0, 10, 10));
+        inventorySpawnPoints.add(new Rectangle2D.Double(0, 0, 10, 10));
+
+        model.setItemSpawnPoints(buffSpawnPoints, inventorySpawnPoints);
+
+        assertSame(buffSpawnPoints, model.getBuffItemSpawnpoint());
+        assertSame(inventorySpawnPoints, model.getInventoryItemSpawnpoint());
+    }
+
+    @Test
+    void setItemSpawnPointsTest() {
+        ArrayList<Rectangle2D.Double> buff = new ArrayList<>();
+        ArrayList<Rectangle2D.Double> inv = new ArrayList<>();
+
+        model.setItemSpawnPoints(buff, inv);
+
+        assertSame(buff, model.getBuffItemSpawnpoint());
+        assertSame(inv, model.getInventoryItemSpawnpoint());
+    }
+
+    @Test
+    void getBuffItemSpawnpointTest() {
+        ArrayList<Rectangle2D.Double> buff = new ArrayList<>();
+        model.setItemSpawnPoints(buff, new ArrayList<>());
+
+        assertSame(buff, model.getBuffItemSpawnpoint());
+    }
+
+    @Test
+    void getInventoryItemSpawnpointTest() {
+        ArrayList<Rectangle2D.Double> inv = new ArrayList<>();
+        model.setItemSpawnPoints(new ArrayList<>(), inv);
+
+        assertSame(inv, model.getInventoryItemSpawnpoint());
+    }
+
+    @Test
+    void itemFactoryTest() {
+        assertNotNull(model.getItemFactory());
+        assertTrue(model.getItemFactory() instanceof ItemFactory);
+    }
+
+    @Test
+    void factoryTest() {
+        assertNotNull(model.getFactory());
+        assertTrue(model.getFactory() instanceof Factory);
+    }
 }
-
-// /**
-// * A list of all the moving objects
-// * @return Immuteable ArrayList
-// */
-// public ArrayList<IMovingDrawableObject> getMovingObjects();
-
-// /**
-// * A list of all static objects (buildings etc)
-// * @return Immuteable ArrayList
-// */
-// public ArrayList<IStaticObject> getStaticObjects();
-
-// /**
-// * @return total loot on map
-// */
-// public int getTotalDroppedLoot();
-
-// /**
-// * Increments counter for loot on max
-// * Used for keeping track of item cap
-// */
-// public void increaseDroppedLoot();
-
-// /**
-// * Decrements counter for loot on max
-// * Used for keeping track of item cap
-// */
-// public void decreaseDroppedLoot();
-
-// /**
-// * @return the pathfinder used for pathfinding (for NPC's)
-// */
-// public Pathfinder getPathfinder();
-
-// /**
-// * @return The Player object
-// */
-// public IPlayer getPlayer();
-
-// /**
-// * Returns what state the game is in
-// * @return GameState
-// */
-// public GameState getGameState();
-
-// /**
-// * Sets what state the game is in
-// * @param state GameState
-// */
-// public void setGameState(GameState state);
-
-// /**
-// * @return Dimensions of the map
-// */
-// public Rectangle2D.Double getBounds();
-
-// /**
-// * @return the grid
-// */
-// public IGrid getGrid();
-
-// /**
-// * @return IGrid of tiles
-// */
-// public IGrid getTiles();
-
-// /**
-// * @return true if debug mode active
-// */
-// public boolean debugMode();
-
-// /**
-// * Turns on debug mode
-// */
-// public void debugOn();
-
-// /**
-// * Turns off debug mode
-// */
-// public void debugOff();
-
-// /**
-// * @return count of enemies on the map
-// */
-// public int getEnemyCount();
-
-// /**
-// * @param enemy Adds this enemy to the collection of enemies for map to keep
-// control of.
-// * Only enemies in this collection are relevant for the game (They are in the
-// "loop")
-// */
-// void addEnemy(IEnemy enemy);
-
-// /**
-// * @return a list of all enemies on the level.
-// */
-// ArrayList<IEnemy> getEnemies();
-
-// IVehicle getHelicopter();
-
-// /**
-// * Refreshes occupied cells
-// */
-// public void gatherOccupiedCells();
-
-// /**
-// * @return gets a list of all floors
-// */
-// public ArrayList<IFloor> getFloors();
-
-// /**
-// * Adds a floor
-// */
-// public void addFloor(IFloor floor);
-
-// /**
-// * @return number of the current level
-// */
-// public int level();
-
-// /**
-// * Sets all cells in grid to unoccupied
-// */
-// public void resetOccupied();
-
-// /**
-// * Removes the gunShot from the list of gunshots;
-// * @param shot
-// */
-// public void removeShot(IGunShot shot);
-
-// /**
-// * @return iterable of all gunshots
-// */
-// public Iterable<IGunShot> gunShots();
-
-// /**
-// * Adds the gunshot to map
-// * @param shot
-// */
-// public void addShot(IGunShot shot);
-
-// /**
-// * @return camera object
-// */
-// public Camera getCamera();
-
-// /**
-// * Removes the enemy from the list of enemies
-// * @param npc
-// */
-// public void removeEnemy(NPC npc);
-
-// /**
-// * @return list of all IPuddles
-// */
-// public ArrayList<IPuddle> getAOEPuddles();
-
-// /**
-// * Removes puddle from map
-// * @param puddle
-// */
-// public void removeAOEPuddle(IPuddle puddle);
-
-// /**
-// * Adds puddle to map
-// * @param puddle
-// */
-// public void addAOEPuddle(IPuddle puddle);
-
-// /**
-// * @return list of all projectiles
-// */
-// public ArrayList<IProjectile> getProjectiles();
-
-// /**
-// * Removes projectile from map
-// * @param projectile
-// */
-// public void removeProjectile(IProjectile projectile);
-
-// /**
-// * Adds projectile to map
-// * @param projectile
-// */
-// public void addProjectile(IProjectile projectile);
-
-// /**
-// * @return list of all spawnpoints
-// */
-// public ArrayList<SpawnPoint> getSpawnPoints();
-
-// /**
-// * Adds spawnPoint to the list of spawnPoints
-// * @param point
-// */
-// public void addSpawnPoint(SpawnPoint point);
-
-// /**
-// * @return factory (spawn factory) of current map
-// */
-// public Factory getFactory();
-
-// /**
-// * @return the sound handler
-// */
-// public SoundHandler getSoundHandler();
-
-// /**
-// * Resets the map, clears all lists etc
-// */
-// public void resetMap();
-
-// /**
-// * Resets the map, sets new level
-// * @input int level
-// */
-// public void setLevel(int level);
-
-// /**
-// * @return list of all vehicles
-// */
-// public ArrayList<IVehicle> getVehicles();
-
-// /**
-// * @return list of items on the map
-// */
-// public ArrayList<ICollectable> getActiveItems();
-
-// /**
-// * Adds item to the list of items on the map
-// * @param item
-// */
-// public void addToActiveItems(ICollectable item);
-
-// /**
-// * Removes the item from the list of items on the map
-// * @param item
-// */
-// public void removeActiveItem(ICollectable item);
-
-// /**
-// * Sets the spawnpoints for items and buffs
-// * @param buffItemSpawnPoints - a list of buff spawnpoints
-// * @param itemSpawnPoints - a list of item spawnpoints
-// */
-// public void setItemSpawnPoints(ArrayList<Rectangle2D.Double>
-// buffItemSpawnPoints, ArrayList<Rectangle2D.Double> itemSpawnPoints);
-
-// /**
-// * @return list of buff item spawnpoints
-// */
-// public List<Rectangle2D.Double> getBuffItemSpawnpoint();
-
-// /**
-// * @return list of inventory-item spawnpoints
-// */
-// public List<Rectangle2D.Double> getInventoryItemSpawnpoint();
-
-// /**
-// * @return the itemfactory in charge of spawning items
-// */
-// public ItemFactory getItemFactory();
-
-// /**
-// * Places the player on the map
-// * @param player
-// */
-// public void setPlayer(IPlayer player);
-
-// /**
-// * 0->Eady, 1->Hard, 2->Suicide difficulty
-// * @return int representing difficulty
-// */
-// public int getDifficulty();
-
-// /**
-// * Increment difficulty:
-// * Easy -> Hard -> Suicide -> Easy
-// * 0 -> 1 -> 2 -> 0
-// */
-// public void incrementDifficulty();
-
-// }

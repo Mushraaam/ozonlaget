@@ -134,11 +134,6 @@ public class Model implements IModel {
         this.grid.resetOccupied();
     }
 
-    @Override
-    public ArrayList<IMovingDrawableObject> getMovingObjects() {
-        throw new UnsupportedOperationException("Unimplemented method 'getMovingObjects'");
-    }
-
     // //////////////// GETTERS AND SETTERS
 
     public ArrayList<IEnemy> getEnemies() {

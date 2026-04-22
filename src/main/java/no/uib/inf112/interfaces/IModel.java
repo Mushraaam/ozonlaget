@@ -17,12 +17,6 @@ public interface IModel {
     
 
     /**
-     * A list of all the moving objects
-     * @return Immuteable ArrayList
-     */
-    public ArrayList<IMovingDrawableObject> getMovingObjects();
-
-    /**
      * A list of all static objects (buildings etc)
      * @return Immuteable ArrayList
      */

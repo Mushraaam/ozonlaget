@@ -58,11 +58,6 @@ public class TestMap implements IModel {
     }
 
     @Override
-    public ArrayList<IMovingDrawableObject> getMovingObjects() {
-        return null;
-    }
-
-    @Override
     public IPlayer getPlayer() {
         return null;
     }
