@@ -2,11 +2,14 @@ package no.uib.inf112.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.when;
 
 import no.uib.inf112.interfaces.IEnemy;
@@ -14,41 +17,55 @@ import no.uib.inf112.interfaces.IEnemy;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedConstruction;
 
+import no.uib.inf112.config.Config;
+import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.model.npcs.Ghoul;
+import no.uib.inf112.utility.SoundHandler;
 
 class GridTest {
 
     int width;
     int height;
     Grid grid;
+    TileGrid tileGrid;
     int cellWidth;
     int cellHeight;
-    TestMap testmap;
+    Model testmap;
+
+    MockedConstruction<SoundHandler> mockedSoundHandler;
+
+    @BeforeEach
+    void createModel() {
+        mockedSoundHandler = mockConstruction(SoundHandler.class);
+        testmap = new Model();
+    }
+
+    @AfterEach
+    void closeMockedSoundHandler() {
+        mockedSoundHandler.close();
+    }
 
     @BeforeEach
     void makeGrid() {
 
-        width = 1000;
-        height = 1000;
-        testmap = new TestMap(new Rectangle2D.Double(0, 0, width, height));
+        width = Config.getInt("mapWidth");
+        height = Config.getInt("mapHeight");
         grid = (Grid) testmap.getGrid();
+        tileGrid = (TileGrid) testmap.getTiles();
         cellWidth = grid.getCellWidth();
         cellHeight = grid.getCellHeight();
 
     }
-
-    /*
-     * yet to test:
-     * distance
-     * 
-     */
 
     @Test
     void getCellTest() {
@@ -77,6 +94,23 @@ class GridTest {
         assertSame(cell, cell3);
         assertNotSame(cell2, cell3);
 
+    }
+
+    @Test
+    void getNearbyCellsTest(){
+        ICell cell = grid.getCell(5, 5);
+
+        ArrayList<ICell> nearbyCells = grid.getNearbyCells(cell.getBounds(), cellWidth * 3);
+        
+        int count = 0;
+
+        for (int i = 2; i <= 8; i++){
+            for (int j = 2; j <= 8; j++){
+                assertEquals(i, nearbyCells.get(count).row());
+                assertEquals(j, nearbyCells.get(count).col());
+                count++;
+            }
+        }
     }
 
     @Test
@@ -197,7 +231,6 @@ class GridTest {
     @Test
     void gettersTest() {
 
-        
         double expectedColCount = width / cellWidth;
         double expectedRowCount = height / cellHeight;
         assertEquals(expectedColCount, grid.getColCount());
@@ -275,10 +308,11 @@ class GridTest {
         testmap.addEnemy(ghoul);
         grid.gatherOccupiedCells();
 
-        for (int i = 0; i < 5; i++) {           // is expanded by size * 1.54 and rounded up
-            for (int j = 0; j < 5; j++) {       // therefore we set expected = Math.ceil(cellWidth * 2 * 1.54)
+        for (int i = 0; i < 5; i++) { // is expanded by size * 1.54 and rounded up
+            for (int j = 0; j < 5; j++) { // therefore we set expected = Math.ceil(cellWidth * 2 * 1.54)
                 ICell cell = grid.getCell(i, j);
                 assertTrue(cell.isOccupied(ghoul.size()));
+                assertEquals(1, cell.occupiedCount(ghoul.size()));
             }
         }
 
@@ -288,18 +322,28 @@ class GridTest {
                 assertFalse(cell.isOccupied(ghoul.size()));
             }
         }
+
+        grid.resetOccupied();
+
+        ghoul.takeDamage(10000); //kill
+
+        grid.gatherOccupiedCells();
+
+        for (ICell cell : grid){
+            assertFalse(cell.isOccupied(ghoul.size()));
+        }
     }
-    
+
     @Test
-    void resetOccupiedTest(){
+    void resetOccupiedTest() {
         IEnemy ghoul = new Ghoul(new Rectangle2D.Double(0, 0, cellWidth * 2, cellHeight * 2), testmap);
         testmap.addEnemy(ghoul);
         grid.gatherOccupiedCells();
         boolean hasTested = false;
-        if (hasOccupiedCells(ghoul)){
+        if (hasOccupiedCells(ghoul)) {
             grid.resetOccupied();
-            
-            for (ICell cell : grid){
+
+            for (ICell cell : grid) {
                 assertFalse(cell.isOccupied(ghoul.size()));
                 hasTested = true;
             }
@@ -308,14 +352,139 @@ class GridTest {
     }
 
     private boolean hasOccupiedCells(IEnemy enemy) {
-        for (ICell cell : grid){
-            if (cell.isOccupied(enemy.size())){
+        for (ICell cell : grid) {
+            if (cell.isOccupied(enemy.size())) {
                 return true;
             }
         }
         return false;
     }
 
-    
+    @Test
+    void cellTest() {
+        // This tests the remaining cell functions that have not been passively tested
+        // above
 
+        ICell cell = grid.getCell(1, 1);
+        ICell cell2 = grid.getCell(1, 1);
+        ICell cell3 = grid.getCell(1, 2);
+        assertSame(cell, cell2);
+        assertEquals(cell, cell2);
+        assertNotSame(cell, cell3);
+        assertNotSame(cell2, cell3);
+        assertNotEquals(cell, cell3);
+        assertNotEquals(cell2, cell3);
+
+        int row = cell.row();
+        int col = cell.col();
+        Rectangle2D.Double bounds = cell.getBounds();
+        boolean blocked = false;
+
+        String expectedOutput = String.format("Row: %s, Col: %s, Bounds: %s, Blocked: %s",
+                row,
+                col,
+                bounds,
+                blocked);
+
+        assertEquals(expectedOutput, cell.toString());
+
+        assertSame(FloorType.NONE, cell.floorType());
+
+    }
+
+    // essentially same tests only for TileGrid
+@Test
+void getCellFromXYTileGridTest() {
+    ICell topLeft = tileGrid.getCellFromXY(0, 0);
+    assertEquals(0, topLeft.row());
+    assertEquals(0, topLeft.col());
+
+    ICell bottomRight = tileGrid.getCellFromXY(width, height);
+    assertEquals(tileGrid.getRowCount() - 1, bottomRight.row());
+    assertEquals(tileGrid.getColCount() - 1, bottomRight.col());
+
+    ICell middle = tileGrid.getCellFromXY(80, 120);
+    assertEquals(3, middle.row());
+    assertEquals(2, middle.col());
+}
+
+@Test
+void getCellFromPosTileGridTest() {
+    ICell cell = tileGrid.getCell(2, 3);
+    Rectangle2D.Double bounds = cell.getBounds();
+
+    ICell found = tileGrid.getCellFromPos(bounds);
+
+    assertSame(cell, found);
+}
+
+@Test
+void getCellTileGridTest() {
+    ICell cell = tileGrid.getCell(0, 0);
+    assertEquals(0, cell.row());
+    assertEquals(0, cell.col());
+    assertEquals(new Rectangle2D.Double(0, 0, tileGrid.getCellWidth(), tileGrid.getCellHeight()), cell.getBounds());
+
+    ICell other = tileGrid.getCell(4, 4);
+    assertEquals(4, other.row());
+    assertEquals(4, other.col());
+}
+
+@Test
+void getNeighboursTileGridTest() {
+    ICell cell = tileGrid.getCell(1, 1);
+    assertEquals(null, tileGrid.getNeighbours(cell));
+}
+
+@Test
+void distanceTileGridTest() {
+    ICell a = tileGrid.getCell(0, 0);
+    ICell b = tileGrid.getCell(10, 10);
+
+    assertEquals(0, tileGrid.distance(a, b));
+    assertEquals(0, tileGrid.distance(a, a));
+}
+
+@Test
+void gatherOccupiedCellsTileGridTest() {
+    tileGrid.gatherOccupiedCells();
+
+    ICell cell = tileGrid.getCell(0, 0);
+    assertFalse(cell.isOccupied(null));
+}
+
+@Test
+void resetOccupiedTileGridTest() {
+    tileGrid.resetOccupied();
+
+    ICell cell = tileGrid.getCell(0, 0);
+    assertFalse(cell.isOccupied(null));
+}
+
+@Test
+void getNearbyCellsTileGridTest() {
+    Rectangle2D.Double pos = new Rectangle2D.Double(50, 50, 10, 10);
+    assertEquals(null, tileGrid.getNearbyCells(pos, 20));
+}
+
+@Test
+void getNeighboursAtDepthTileGridTest() {
+    ICell cell = tileGrid.getCell(10, 10);
+
+    List<ICell> depth0 = tileGrid.getNeighboursAtDepth(cell, 0);
+    List<ICell> depth1 = tileGrid.getNeighboursAtDepth(cell, 1);
+
+    assertTrue(depth0.isEmpty());
+    assertTrue(depth1.isEmpty());
+}
+
+@Test
+void getCellWidthTileGridTest() {
+    assertEquals(40, tileGrid.getCellWidth());
+}
+
+@Test
+void getCellHeightTileGridTest() {
+    assertEquals(40, tileGrid.getCellHeight());
+}
 }

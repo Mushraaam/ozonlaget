@@ -97,7 +97,7 @@ public class TileGrid implements IGrid {
 
     @Override
     public ArrayList<ICell> getNeighbours(ICell cell) {
-        throw new UnsupportedOperationException("Unimplemented method 'getNeighbours'");
+        return null;
     }
 
     @Override
@@ -112,22 +112,20 @@ public class TileGrid implements IGrid {
     // Not used, should be abstracted out at a later date
     @Override
     public double distance(ICell from, ICell to) {
-        throw new UnsupportedOperationException("Unimplemented method 'distance'");
+        return 0;
     }
 
     @Override
     public void gatherOccupiedCells() {
-        throw new UnsupportedOperationException("Unimplemented method 'gatherOccupiedCells'");
     }
 
     @Override
     public void resetOccupied() {
-        throw new UnsupportedOperationException("Unimplemented method 'resetOccupied'");
     }
 
     @Override
     public ArrayList<ICell> getNearbyCells(Double current, double distance) {
-        throw new UnsupportedOperationException("Unimplemented method 'getNearbyCells'");
+        return null;
     }
 
 }
