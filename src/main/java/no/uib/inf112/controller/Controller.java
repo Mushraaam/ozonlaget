@@ -375,8 +375,9 @@ public class Controller
             case KeyEvent.VK_R -> {
                 this.map.setLevel(1);
                 this.map.resetMap();
-                this.view.setScreens();
                 initiateMap();
+                this.view.setScreens();
+                this.view.repaint();
             }
 
             default -> {
@@ -391,7 +392,9 @@ public class Controller
             case KeyEvent.VK_R -> {
                 this.map.setLevel(1);
                 this.map.resetMap();
+                this.view.setScreens();
                 initiateMap();
+                this.view.repaint();
             }
 
             default -> {

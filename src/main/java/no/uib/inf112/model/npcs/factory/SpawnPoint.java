@@ -46,10 +46,6 @@ public class SpawnPoint {
             return false;
         }
 
-        // if (distance(this.bounds, player.getHitbox()) <= SAFE_ZONE) {
-        // return false;
-        // }
-
         // try to spawn 10 times, break if failed 10 times or success
         for (int i = 0; i < 10; i++) {
             if (createEnemy(type)) {
@@ -82,7 +78,6 @@ public class SpawnPoint {
                         SMALL, SMALL);
             }
             case MEGABOSS -> {
-                System.out.println("Tries to spawn");
                 double centerX = 1080;
                 double centerY = 1080;
                 hitBox = new Rectangle2D.Double(centerX, centerY, LARGE, LARGE);
