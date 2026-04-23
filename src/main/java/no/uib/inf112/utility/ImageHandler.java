@@ -22,8 +22,11 @@ public class ImageHandler {
         //Sprinter sprite
         private static final int SPRINTER_ANIMATION_COUNT = 8;
 
-        private static final int BOSS_ANIMATION_COUNT = 8;
+        //Bighands sprite
+        private static final int BIGHANDS_ANIMATION_COUNT = 8;
 
+        //Boss sprite
+        private static final int BOSS_ANIMATION_COUNT = 8;
 
         private static final int BUG_ANIMATION_COUNT = 9;
 
@@ -38,7 +41,7 @@ public class ImageHandler {
         private HashMap<EnemyType, ArrayList<BufferedImage>> attackingEnemies;
         private HashMap<EnemyType, ArrayList<BufferedImage>> rangedAttackingEnemies;
         private HashMap<EnemyType, ArrayList<BufferedImage>> dyingEnemies;
-        private HashMap<EnemyType, ArrayList<BufferedImage>>  longRangedAttackingEnemies;
+        private HashMap<EnemyType, ArrayList<BufferedImage>> longRangedAttackingEnemies;
 
         // Helicopter
         private ArrayList<BufferedImage> helicopter;
@@ -504,11 +507,39 @@ public class ImageHandler {
                 }
                 this.dyingEnemies.put(EnemyType.SPRINTER, sprinterDeath);
                 ////////////
+                
+                ////////////
+                // BIGHANDS
+                // Walk
+                ArrayList<BufferedImage> bigHandsWalk = new ArrayList<>();
+                for (int i = 0; i < BIGHANDS_ANIMATION_COUNT; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/Zombie_big_hands/Walk/walk_00%s.png", i);
+                        BufferedImage rawImage = ImageReader.fetchImage(path);
+                        bigHandsWalk.add(rawImage);
+                }
+                this.walkingEnemies.put(EnemyType.BIGHANDS, bigHandsWalk);
+
+                // Melee
+                ArrayList<BufferedImage> bigHandsMelee = new ArrayList<>();
+                for (int i = 0; i < BIGHANDS_ANIMATION_COUNT; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/Zombie_big_hands/Attack/Attack_00%s.png", i);
+                        BufferedImage rawImage = ImageReader.fetchImage(path);
+                        bigHandsMelee.add(rawImage);
+                }
+                this.attackingEnemies.put(EnemyType.BIGHANDS, bigHandsMelee);
+
+                // Death
+                ArrayList<BufferedImage> bigHandsDeath = new ArrayList<>();
+                for (int i = 0; i < 6; i++) { // bigHands death has 6 images
+                        String path = String.format("/no/uib/inf112/npcs/Zombie_big_hands/Death/Death_00%s.png", i);
+                        BufferedImage rawImage = ImageReader.fetchImage(path);
+                        bigHandsDeath.add(rawImage);
+                }
+                this.dyingEnemies.put(EnemyType.BIGHANDS, bigHandsDeath);
+                ////////////
 
                 ////////////
                 // MEGABOSS
-
-
                 // Walk
                 ArrayList<BufferedImage> bossWalk = new ArrayList<>();
                 for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {

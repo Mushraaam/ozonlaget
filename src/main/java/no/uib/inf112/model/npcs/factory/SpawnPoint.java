@@ -14,6 +14,7 @@ import no.uib.inf112.interfaces.IVehicle;
 import no.uib.inf112.model.npcs.Ghoul;
 import no.uib.inf112.model.npcs.GigachadLV5;
 import no.uib.inf112.model.npcs.Sprinter;
+import no.uib.inf112.model.npcs.BigHands;
 
 public class SpawnPoint {
     private Rectangle2D.Double bounds;
@@ -68,13 +69,18 @@ public class SpawnPoint {
                         random.nextDouble(this.bounds.getMinY(), this.bounds.getMaxY() - MEDIUM),
                         MEDIUM, MEDIUM);
             }
+            case BIGHANDS -> {
+                hitBox = new Rectangle2D.Double(
+                        random.nextDouble(this.bounds.getMinX(), this.bounds.getMaxX() - MEDIUM),
+                        random.nextDouble(this.bounds.getMinY(), this.bounds.getMaxY() - MEDIUM),
+                        MEDIUM, MEDIUM);
+            }
             case SPRINTER -> {
                 hitBox = new Rectangle2D.Double(
                         random.nextDouble(this.bounds.getMinX(), this.bounds.getMaxX() - SMALL),
                         random.nextDouble(this.bounds.getMinY(), this.bounds.getMaxY() - SMALL),
                         SMALL, SMALL);
             }
-
             case MEGABOSS -> {
                 System.out.println("Tries to spawn");
                 double centerX = 1080;
@@ -115,6 +121,9 @@ public class SpawnPoint {
             }
             case MEGABOSS -> {
                 this.map.addEnemy(new GigachadLV5(hitBox, map));
+            }
+            case BIGHANDS -> {
+                this.map.addEnemy(new BigHands(hitBox, map));
             }
 
             default -> throw new IllegalArgumentException("Unknown EnemyType");
