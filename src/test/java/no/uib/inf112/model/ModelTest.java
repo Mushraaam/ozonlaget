@@ -17,8 +17,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
 import java.awt.geom.Rectangle2D;
 
-import com.badlogic.gdx.backends.lwjgl3.audio.Mp3.Sound;
-
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.GameState;
 import no.uib.inf112.interfaces.ICell;
@@ -31,7 +29,6 @@ import no.uib.inf112.interfaces.IPlayer;
 import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.interfaces.IPuddle;
 import no.uib.inf112.interfaces.IStaticObject;
-import no.uib.inf112.interfaces.IVehicle;
 import no.uib.inf112.model.items.factory.ItemFactory;
 import no.uib.inf112.model.npcs.Ghoul;
 import no.uib.inf112.model.npcs.factory.Factory;
