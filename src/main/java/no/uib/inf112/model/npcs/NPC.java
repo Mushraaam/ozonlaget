@@ -38,10 +38,6 @@ public abstract class NPC implements IEnemy {
     private EnemyAction currentAction;
     private boolean moving;
 
-    private int lastMinR = -1;
-    private int lastMaxR = -1;
-    private int lastMinC = -1;
-    private int lastMaxC = -1;
 
     // test
     private boolean sliding = false;
@@ -194,11 +190,6 @@ public abstract class NPC implements IEnemy {
         }
         this.animationIndex = (this.animationIndex + 1) % animationCount;
     }
-
-    // @Override
-    // public ICell getOldCell() {
-    //     return this.from;
-    // }
 
     protected void dropLoot(){
         map.getItemFactory().rollDropFromTable(this.getHitbox());
