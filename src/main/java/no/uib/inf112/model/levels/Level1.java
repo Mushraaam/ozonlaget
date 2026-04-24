@@ -1,6 +1,5 @@
 package no.uib.inf112.model.levels;
 
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -133,7 +132,6 @@ public class Level1 implements ILevel {
                 return this.itemFactory;
         }
 
-        // midlertidig løsning -> spawner implementeres senere
 
         private void generateSpawnPoints() {
 

@@ -39,6 +39,7 @@ public class Factory {
         if (this.model.getEnemies().size() >= ENEMY_CAP) {
             return;
         }
+        
         this.counter = (this.counter + 1) % 100000;
 
         if (this.counter % Math.floor(GHOUL_INTENSITY / difficulty) == 0) {
