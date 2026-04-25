@@ -8,14 +8,16 @@ import no.uib.inf112.interfaces.IModel;
 import no.uib.inf112.model.Model;
 import no.uib.inf112.view.GameDrawer;
 import no.uib.inf112.view.LoadScreen;
+import no.uib.inf112.view.LoadStatus;
 
 public class Main {
 
     public static void main(String[] args) {
 
         // Load screen
-        JFrame loadingFrame = new JFrame("Loading");
-        LoadScreen loadScreen = new LoadScreen();
+        LoadStatus status = new LoadStatus();
+        JFrame loadingFrame = new JFrame("Loading Model");
+        LoadScreen loadScreen = new LoadScreen(status);
         loadingFrame.setContentPane(loadScreen);
         loadingFrame.pack();
         loadingFrame.setResizable(false);
@@ -23,10 +25,12 @@ public class Main {
         loadingFrame.setVisible(true);
         
         // Start loading the game
-        IModel map = new Model();
-        GameDrawer view = new GameDrawer(map);
+        IModel map = new Model(status);
+        GameDrawer view = new GameDrawer(map, status);
+        status.setStatus("Packing frame...", 95);
         JFrame frame = new JFrame("Ozonlaget");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        status.setStatus("Initiallizing controls...", 99);
         new Controller(map, view);
         
         frame.setContentPane(view);

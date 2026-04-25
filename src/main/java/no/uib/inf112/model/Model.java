@@ -15,6 +15,7 @@ import no.uib.inf112.model.npcs.factory.SpawnPoint;
 import no.uib.inf112.model.npcs.pathfinding.Pathfinder;
 import no.uib.inf112.utility.Camera;
 import no.uib.inf112.utility.SoundHandler;
+import no.uib.inf112.view.LoadStatus;
 
 public class Model implements IModel {
     private ILevel level;
@@ -52,13 +53,15 @@ public class Model implements IModel {
 
     private ArrayList<IVehicle> vehicles;
 
-    public Model() {
+    public Model(LoadStatus status) {
+        status.setStatus("Loading audio...", 5);
         this.camera = new Camera(0, 0);
         this.soundHandler = new SoundHandler();
 
         setLevel(1);
         resetMap();
 
+        status.setStatus("Initiallizing grid...", 10);
         gatherOccupiedCells();
 
     }

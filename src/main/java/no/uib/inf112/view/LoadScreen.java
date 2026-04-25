@@ -23,9 +23,11 @@ public class LoadScreen extends JPanel implements IDrawer{
 
     private ImageIcon gif;
     private BufferedImage cage;
-    private static final Rectangle2D.Double CAGE = new Rectangle2D.Double(300, 300, 100, 100);
+    private static final Rectangle2D.Double CAGEBOUNDS = new Rectangle2D.Double(300, 300, 100, 100);
+    private LoadStatus status;
 
-    public LoadScreen() {
+    public LoadScreen(LoadStatus status) {
+        this.status = status;
         this.setPreferredSize(new Dimension(400, 400));
         this.setBackground(Color.BLACK);
         this.gif = new ImageIcon(getClass().getResource("/no/uib/inf112/loadingicon.gif"));
@@ -51,8 +53,10 @@ public class LoadScreen extends JPanel implements IDrawer{
     public void draw(Graphics2D g) {
         g.setFont(new Font("Arial", Font.BOLD, 32));
         g.setColor(Color.WHITE);
-        g.drawString("Please wait...", 30, 40);
 
-        drawImage(g, cage, CAGE);
+        g.drawString(status.getStatus(), 10, 40);
+        g.drawString(status.percentComplete(), 20, 370);
+
+        drawImage(g, cage, CAGEBOUNDS);
     }
 }

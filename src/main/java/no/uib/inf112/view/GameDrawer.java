@@ -38,9 +38,9 @@ public class GameDrawer extends JPanel {
     private ImageHandler handler;
     private Camera camera;
 
-    public GameDrawer(IModel map) {
+    public GameDrawer(IModel map, LoadStatus status) {
         this.map = map;
-        this.handler = new ImageHandler();
+        this.handler = new ImageHandler(status);
         this.camera = map.getCamera();
 
         // Screens

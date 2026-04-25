@@ -30,6 +30,7 @@ import no.uib.inf112.enums.FloorType;
 import no.uib.inf112.interfaces.ICell;
 import no.uib.inf112.model.npcs.Ghoul;
 import no.uib.inf112.utility.SoundHandler;
+import no.uib.inf112.view.LoadStatus;
 
 class GridTest {
 
@@ -46,7 +47,7 @@ class GridTest {
     @BeforeEach
     void createModel() {
         mockedSoundHandler = mockConstruction(SoundHandler.class);
-        testmap = new Model();
+        testmap = new Model(mock(LoadStatus.class));
     }
 
     @AfterEach

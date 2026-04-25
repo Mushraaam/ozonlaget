@@ -38,6 +38,7 @@ import no.uib.inf112.model.npcs.projectiles.puddles.AcidPuddle;
 import no.uib.inf112.player.Helicopter;
 import no.uib.inf112.utility.Camera;
 import no.uib.inf112.utility.SoundHandler;
+import no.uib.inf112.view.LoadStatus;
 
 public class ModelTest {
     private MockedConstruction<SoundHandler> mockedSoundHandler;
@@ -46,7 +47,7 @@ public class ModelTest {
     @BeforeEach
     void createModel() {
         mockedSoundHandler = mockConstruction(SoundHandler.class);
-        model = new Model();
+        model = new Model(mock(LoadStatus.class));
     }
 
     @AfterEach

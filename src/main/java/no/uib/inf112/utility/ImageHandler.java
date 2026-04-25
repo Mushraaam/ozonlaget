@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import no.uib.inf112.config.Config;
 import no.uib.inf112.enums.*;
+import no.uib.inf112.view.LoadStatus;
 
 public class ImageHandler {
 
@@ -19,13 +20,13 @@ public class ImageHandler {
         // Ghoul sprite
         private static final int GHOUL_ANIMATION_COUNT = 8;
 
-        //Sprinter sprite
+        // Sprinter sprite
         private static final int SPRINTER_ANIMATION_COUNT = 8;
 
-        //Bighands sprite
+        // Bighands sprite
         private static final int BIGHANDS_ANIMATION_COUNT = 8;
 
-        //Boss sprite
+        // Boss sprite
         private static final int BOSS_ANIMATION_COUNT = 8;
 
         private static final int BUG_ANIMATION_COUNT = 9;
@@ -79,28 +80,22 @@ public class ImageHandler {
         // Settings Menu
         private BufferedImage cageImage;
 
-
         // Collectables
         private HashMap<CollectableType, BufferedImage> collectables;
 
-
-        public ImageHandler() {
+        public ImageHandler(LoadStatus status) {
+                status.setStatus("Loading player sprites...", 15);
                 this.longRangedAttackingEnemies = new HashMap<>();
                 this.playerBodySprites = new HashMap<>();
                 this.playerFeetSprites = new HashMap<>();
                 loadPlayerSprites();
 
+                status.setStatus("Loading terrain...", 20);
                 this.walls = new HashMap<>();
                 loadWalls();
 
                 this.staticObjects = new HashMap<>();
                 loadStaticObjects();
-
-                this.walkingEnemies = new HashMap<>();
-                this.attackingEnemies = new HashMap<>();
-                this.rangedAttackingEnemies = new HashMap<>();
-                this.dyingEnemies = new HashMap<>();
-                loadEnemies();
 
                 this.floors = new HashMap<>();
                 loadFloors();
@@ -108,22 +103,33 @@ public class ImageHandler {
                 this.levelBackground = new HashMap<>();
                 loadBackgrounds();
 
+                status.setStatus("Loading enemy sprites...", 25);
+                this.walkingEnemies = new HashMap<>();
+                this.attackingEnemies = new HashMap<>();
+                this.rangedAttackingEnemies = new HashMap<>();
+                this.dyingEnemies = new HashMap<>();
+                loadEnemies(status);
+
+                status.setStatus("Loading UI...", 60);
                 this.gunUI = new HashMap<>();
                 loadGunUI();
                 this.uiBar = ImageReader.fetchImage("/no/uib/inf112/UI/ui-bar.png");
                 this.youDied = ImageReader.fetchImage("/no/uib/inf112/UI/youdied.png");
                 this.killCountIcon = ImageReader.fetchImage("/no/uib/inf112/UI/killcountIcon.png");
 
-
+                status.setStatus("Loading menus...", 65);
                 loadMenu();
 
+                status.setStatus("Loading projectiles...", 70);
                 this.puddles = new HashMap<>();
                 this.projectiles = new HashMap<>();
                 loadPuddles();
 
+                status.setStatus("Loading collectables...", 80);
                 this.collectables = new HashMap<>();
                 loadCollectables();
 
+                status.setStatus("Loading helicopter...", 85);
                 this.helicopter = new ArrayList<>();
                 loadHelicopter();
         }
@@ -155,16 +161,15 @@ public class ImageHandler {
                 this.puddles.put(PuddleType.ACID, acidPuddles);
                 ArrayList<BufferedImage> acidList = new ArrayList<>();
                 acidList.add(ImageReader.fetchImage("/no/uib/inf112/npcs/ghoul/projectile/projectile.png"));
-                this.projectiles.put(PuddleType.ACID,acidList);
+                this.projectiles.put(PuddleType.ACID, acidList);
 
                 // MEGABOSS FIREBALL
                 ArrayList<BufferedImage> fireSpellFrames = new ArrayList<>();
                 for (int i = 0; i < 8; i++) {
-                        String path = String.format("/no/uib/inf112/npcs/megaboss/projectile/Fire Spell_Frame_%s.png", i);
-                        fireSpellFrames.add(rotateDeg(ImageReader.fetchImage(path),180));
+                        String path = String.format("/no/uib/inf112/npcs/megaboss/projectile/Fire Spell_Frame_%s.png",
+                                        i);
+                        fireSpellFrames.add(rotateDeg(ImageReader.fetchImage(path), 180));
                 }
-
-
 
                 // MEGABOSS EXPLOSION
                 ArrayList<BufferedImage> bossExplosion = new ArrayList<>();
@@ -176,7 +181,6 @@ public class ImageHandler {
                 this.puddles.put(PuddleType.EXPLOSION, bossExplosion);
                 this.projectiles.put(PuddleType.BOSS_FIREBALL, fireSpellFrames);
 
-
                 // GAS EXPLOSION
                 ArrayList<BufferedImage> gasExplosion = new ArrayList<>();
                 for (int i = 0; i < 11; i++) {
@@ -185,15 +189,13 @@ public class ImageHandler {
                 }
                 this.puddles.put(PuddleType.GASEXPLOSION, gasExplosion);
 
-
                 // MEGABOSS GasBall
                 ArrayList<BufferedImage> bugProjectileList = new ArrayList<>();
                 for (int i = 0; i < 8; i++) {
                         String path = String.format("/no/uib/inf112/npcs/megaboss/projectile/gas_spell_%s.png", i);
-                        bugProjectileList.add(rotateDeg(ImageReader.fetchImage(path),180));
+                        bugProjectileList.add(rotateDeg(ImageReader.fetchImage(path), 180));
                 }
-                this.projectiles.put(PuddleType.BUGPROJECTILE,bugProjectileList);
-
+                this.projectiles.put(PuddleType.BUGPROJECTILE, bugProjectileList);
 
         }
 
@@ -208,7 +210,6 @@ public class ImageHandler {
         }
 
         public BufferedImage getPuddleImage(PuddleType type, int index, int lifetime) {
-
 
                 if (type == PuddleType.EXPLOSION || type == PuddleType.GASEXPLOSION) {
                         int totalImages = this.puddles.get(type).size();
@@ -285,18 +286,20 @@ public class ImageHandler {
                 ArrayList<BufferedImage> playerfeetSprites = new ArrayList<>();
 
                 for (int i = 0; i < PLAYER_SPRITE_COUNT; i++) {
-                        BufferedImage bodySprite = ImageReader.fetchImage(String.format("/no/uib/inf112/player/%s/player_move%s.png", folder, i + 1));
-                        
-                        BufferedImage feetSprite = ImageReader.fetchImage(String.format("/no/uib/inf112/player/handgun/player_feet%s.png", i + 1));
+                        BufferedImage bodySprite = ImageReader.fetchImage(
+                                        String.format("/no/uib/inf112/player/%s/player_move%s.png", folder, i + 1));
+
+                        BufferedImage feetSprite = ImageReader.fetchImage(
+                                        String.format("/no/uib/inf112/player/handgun/player_feet%s.png", i + 1));
 
                         playerbodySprites.add(bodySprite);
                         playerfeetSprites.add(feetSprite);
 
                 }
-                
+
                 this.playerBodySprites.put(gunType, playerbodySprites);
                 this.playerFeetSprites.put(gunType, playerfeetSprites);
-                
+
         }
 
         public BufferedImage getPlayerBodySprite(GunType gunType, int index) {
@@ -334,14 +337,16 @@ public class ImageHandler {
                                 ImageReader.fetchImage("/no/uib/inf112/walls/barbedFenceVertical.png"));
 
                 HashMap<WallDirection, BufferedImage> gateWall = new HashMap<>();
-                gateWall.put(WallDirection.HORIZONTAL, ImageReader.fetchImage("/no/uib/inf112/walls/GateWallHorizontal.png"));
-                gateWall.put(WallDirection.VERTICAL, ImageReader.fetchImage("/no/uib/inf112/walls/GateWallVertical.png"));
-                        
+                gateWall.put(WallDirection.HORIZONTAL,
+                                ImageReader.fetchImage("/no/uib/inf112/walls/GateWallHorizontal.png"));
+                gateWall.put(WallDirection.VERTICAL,
+                                ImageReader.fetchImage("/no/uib/inf112/walls/GateWallVertical.png"));
+
                 this.walls.put(StaticObjectType.WOODEN_WALL, shortWoodenWalls);
                 this.walls.put(StaticObjectType.LONG_WOODEN_WALL, longWoodenWalls);
                 this.walls.put(StaticObjectType.BARBED_FENCE, barbedFences);
-                
-                //TODO fix correct door image
+
+                // TODO fix correct door image
                 this.walls.put(StaticObjectType.BARBED_DOOR, gateWall);
 
         }
@@ -437,7 +442,7 @@ public class ImageHandler {
 
         // / /////////// START ENEMY LOGIC //////////////
 
-        private void loadEnemies() {
+        private void loadEnemies(LoadStatus status) {
 
                 ////////////
                 // GHOUL
@@ -476,8 +481,9 @@ public class ImageHandler {
                         ghoulDeath.add(rawImage);
                 }
                 this.dyingEnemies.put(EnemyType.GHOUL, ghoulDeath);
+                status.setStatus("Loading enemy sprites...", 30);
                 ////////////
-                
+
                 ////////////
                 // SPRINTER
                 // Walk
@@ -506,8 +512,9 @@ public class ImageHandler {
                         sprinterDeath.add(rawImage);
                 }
                 this.dyingEnemies.put(EnemyType.SPRINTER, sprinterDeath);
+                status.setStatus("Loading enemy sprites...", 40);
                 ////////////
-                
+
                 ////////////
                 // BIGHANDS
                 // Walk
@@ -536,6 +543,7 @@ public class ImageHandler {
                         bigHandsDeath.add(rawImage);
                 }
                 this.dyingEnemies.put(EnemyType.BIGHANDS, bigHandsDeath);
+                status.setStatus("Loading enemy sprites...", 50);
                 ////////////
 
                 ////////////
@@ -552,7 +560,7 @@ public class ImageHandler {
                 ArrayList<BufferedImage> bossMelee = new ArrayList<>();
                 for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
                         String path = String.format("/no/uib/inf112/npcs/megaboss/Attack1/attack1_%s.png", i);
-                        bossMelee.add(rotateDeg(ImageReader.fetchImage(path),-90 ));
+                        bossMelee.add(rotateDeg(ImageReader.fetchImage(path), -90));
                 }
                 this.attackingEnemies.put(EnemyType.MEGABOSS, bossMelee);
 
@@ -590,7 +598,7 @@ public class ImageHandler {
                 }
                 this.walkingEnemies.put(EnemyType.BUG, bugWalk);
 
-                //its a basic bug, dont bully him
+                // its a basic bug, dont bully him
                 this.attackingEnemies.put(EnemyType.BUG, bugWalk);
                 this.rangedAttackingEnemies.put(EnemyType.BUG, bugWalk);
                 this.dyingEnemies.put(EnemyType.BUG, bugWalk);
@@ -713,8 +721,8 @@ public class ImageHandler {
                 this.cageImage = ImageReader.fetchImage("/no/uib/inf112/mainmenu/cage.png");
         }
 
-
-        //some gippity code to rotate images instead of manually editing 60 .png sprites
+        // some gippity code to rotate images instead of manually editing 60 .png
+        // sprites
         public static BufferedImage rotateDeg(BufferedImage src, int deg) {
                 int w = src.getWidth();
                 int h = src.getHeight();
@@ -764,28 +772,32 @@ public class ImageHandler {
         public BufferedImage getbackButton() {
                 return this.backButton;
         }
+
         public BufferedImage getfartButton() {
-            return this.fartButton;
+                return this.fartButton;
         }
+
         public BufferedImage youDied() {
                 return this.youDied;
         }
+
         public BufferedImage getKillCountIcon() {
                 return this.killCountIcon;
         }
-        public BufferedImage getWASD(){
+
+        public BufferedImage getWASD() {
                 return this.wasdImage;
         }
 
-        public BufferedImage getMouseImage(){
+        public BufferedImage getMouseImage() {
                 return this.mouseImage;
         }
 
-        public BufferedImage getNumbersImage(){
+        public BufferedImage getNumbersImage() {
                 return this.numbersImage;
         }
 
-        public BufferedImage getCage(){
+        public BufferedImage getCage() {
                 return this.cageImage;
         }
 
