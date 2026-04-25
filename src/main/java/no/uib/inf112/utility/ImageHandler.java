@@ -483,7 +483,7 @@ public class ImageHandler {
                 // Walk
                 ArrayList<BufferedImage> sprinterWalk = new ArrayList<>();
                 for (int i = 0; i < SPRINTER_ANIMATION_COUNT; i++) {
-                        String path = String.format("/no/uib/inf112/npcs/sprinter/Walk/walk_00%s.png", i);
+                        String path = String.format("/no/uib/inf112/npcs/sprinter/Walk/Walk_00%s.png", i);
                         BufferedImage rawImage = ImageReader.fetchImage(path);
                         sprinterWalk.add(rawImage);
                 }
@@ -522,7 +522,7 @@ public class ImageHandler {
                 // Melee
                 ArrayList<BufferedImage> bigHandsMelee = new ArrayList<>();
                 for (int i = 0; i < BIGHANDS_ANIMATION_COUNT; i++) {
-                        String path = String.format("/no/uib/inf112/npcs/Zombie_big_hands/Attack/Attack_00%s.png", i);
+                        String path = String.format("/no/uib/inf112/npcs/Zombie_big_hands/Attack/attack_00%s.png", i);
                         BufferedImage rawImage = ImageReader.fetchImage(path);
                         bigHandsMelee.add(rawImage);
                 }

@@ -13,6 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // Load screen
         JFrame loadingFrame = new JFrame("Loading");
         LoadScreen loadScreen = new LoadScreen();
         loadingFrame.setContentPane(loadScreen);
@@ -21,20 +22,22 @@ public class Main {
         loadingFrame.setLocationRelativeTo(null);
         loadingFrame.setVisible(true);
         
-        
-
+        // Start loading the game
         IModel map = new Model();
         GameDrawer view = new GameDrawer(map);
         JFrame frame = new JFrame("Ozonlaget");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         new Controller(map, view);
+        
         frame.setContentPane(view);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
 
+        // Close loadscreen
         loadingFrame.dispose();
+
+        // Display game
         frame.setVisible(true);
     }
 }
