@@ -587,6 +587,7 @@ public class ImageHandler {
                         bossDeath.add(rotateDeg(ImageReader.fetchImage(path), -90));
                 }
                 this.dyingEnemies.put(EnemyType.MEGABOSS, bossDeath);
+                status.setStatus("Loading enemy sprites...", 55);
                 ////////////
                 // BUG
                 // Walk
