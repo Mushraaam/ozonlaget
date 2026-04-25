@@ -9,7 +9,7 @@ public class ShotGun extends Gun {
     private static final GunType GUNTYPE = GunType.SHOTGUN;
 
     public ShotGun() {
-        super(32);
+        super(40);
         setMaxAmmo(MAX_AMMO);
         setCurrentAmmo(MAX_AMMO);
         setGunType(GUNTYPE);
