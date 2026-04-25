@@ -59,9 +59,9 @@ public class Model implements IModel {
         this.soundHandler = new SoundHandler();
 
         setLevel(1);
+        status.setStatus("Initiallizing grid...", 10);
         resetMap();
 
-        status.setStatus("Initiallizing grid...", 10);
         gatherOccupiedCells();
 
     }
