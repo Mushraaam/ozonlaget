@@ -571,7 +571,7 @@ public class ImageHandler {
                         bossMediumRanged.add(rotateDeg(ImageReader.fetchImage(path), -90));
                 }
                 this.rangedAttackingEnemies.put(EnemyType.MEGABOSS, bossMediumRanged);
-
+                status.setStatus("Loading enemy sprites...", 55);
                 // Long Ranged (Attack 4)
                 ArrayList<BufferedImage> bossLongRanged = new ArrayList<>();
                 for (int i = 0; i < BOSS_ANIMATION_COUNT; i++) {
@@ -587,7 +587,7 @@ public class ImageHandler {
                         bossDeath.add(rotateDeg(ImageReader.fetchImage(path), -90));
                 }
                 this.dyingEnemies.put(EnemyType.MEGABOSS, bossDeath);
-                status.setStatus("Loading enemy sprites...", 55);
+
                 ////////////
                 // BUG
                 // Walk

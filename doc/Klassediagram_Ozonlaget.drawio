@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="Page-1" id="iyVYykCxJl1IDAkTc6Gs">
-        <mxGraphModel dx="1792" dy="659" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="2563" dy="1198" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -384,7 +384,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="Mmh8NJfIJk-YyZL0nv0n-142" value="Camera" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="-110" y="540" width="160" height="180" as="geometry"/>
+                    <mxGeometry x="-30" y="540" width="160" height="180" as="geometry"/>
                 </mxCell>
                 <mxCell id="Mmh8NJfIJk-YyZL0nv0n-143" value="Used to translate between player coordinates/screen and map coordinates.&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Used by both GameDrawer for drawing the correct location and Controller for translating mouseclicks&lt;/div&gt;" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;whiteSpace=wrap;" parent="Mmh8NJfIJk-YyZL0nv0n-142" vertex="1">
                     <mxGeometry y="50" width="160" height="130" as="geometry"/>
