@@ -15,7 +15,7 @@
 
 # Avtale presentasjon
 
-- Vi har valgt å sende melding til Anya med ønskede tidspunkt rangsjert som følgende:
+- Vi har valgt å sende melding til Anya med ønskede tidspunkt rangert som følgende:
 
     - 1: 6. mai 12–14
     - 2: 6. mai 14–16
