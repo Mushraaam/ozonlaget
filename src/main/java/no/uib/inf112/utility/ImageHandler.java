@@ -544,9 +544,9 @@ public class ImageHandler {
                 }
                 this.dyingEnemies.put(EnemyType.BIGHANDS, bigHandsDeath);
                 status.setStatus("Loading enemy sprites...", 50);
-                ////////////
+                // //////////
 
-                ////////////
+                // //////////
                 // MEGABOSS
                 // Walk
                 ArrayList<BufferedImage> bossWalk = new ArrayList<>();
