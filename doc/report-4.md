@@ -221,14 +221,34 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 
     Konkrete arbeidsoppgave(r):
         - Legge til en knapp i settings for å skru av darkness.
-### Akseptansekriterier
-Definer hva som må være oppfylt for at funksjonaliteten skal være ferdig, Husk at akseptansekriterier ofte skrives mer eller mindre som tester.
-
-### Arbeidsoppgaver
-List opp konkrete utviklingsoppgaver som må gjøres for å implementere kravene.
 
 ### Planlagte oppgaver
-Dersom dere har oppgaver som dere skal til å starte med, hvor dere har oversikt over både brukerhistorie, akseptansekriterier og arbeidsoppgaver, kan dere ta med disse i innleveringen også.
+    - Istedenfor å liste opp alle punktene på tavla vår så kan vi heller nevne de viktigste punktene vi skal jobbe med fremover. Vi har nå et feature complete spill, videre fram mot innleveringsfristen er det en del finpuss og testing som må gjøres.
+
+        - Accessability options:
+            - Ekstra stor font?
+
+        - Implementere større variasjon av fiender
+            - Alle skal implementere 1 fiende - dette gjøres ved bruk av den generiske NPC klassen
+        
+        - Testing:
+            - Rein
+                - Model
+                - Grid
+            - Alexander
+                - Pathfinding
+                - Items/Buffs
+            - William
+                - Movement
+                - Collision
+            - Sander
+                - Controller
+                - NPC minus stiffing og movement
+            - Johs
+                - Factory
+                - Projectiles
+                - Levels
+        Testing utvides ved behov.
 
 ### Prioritering fremover
 Forklar hvordan dere prioriterer oppgavene videre.
