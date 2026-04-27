@@ -251,13 +251,10 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
         Testing utvides ved behov.
 
 ### Prioritering fremover
-Forklar hvordan dere prioriterer oppgavene videre.
-
-### Endringer i MVP-krav
-Har dere gjort justeringer på kravene som er med i MVP? Forklar i så fall hvorfor. Hvis det er gjort endringer i rekkefølge utfra hva som er gitt fra kunde, hvorfor er dette gjort?
+Videre vil den største prioritering være å lage tester, samt implementere det siste monsteret.
 
 ### Fremdrift siden forrige rapport
-Oppdater hvilke krav dere har prioritert, hvor langt dere har kommet og hva dere har gjort siden forrige gang.
+- Vi har prioritert å implementere de siste fiendene, legge til tester for å øke test coverage og logikken rundt victory conditionen(e).
 
 ### Kjente bugs
 Husk å skrive hvilke bugs som finnes i de kravene dere har utført (dersom det finnes bugs).
@@ -273,16 +270,30 @@ Kravlisten er lang, men det er ikke nødvendig å levere på alle kravene hvis d
 Har dere gjort eller burde dere gjøre noen store endringer / refaktoreringer?
 
 ### Arkitektur og designvalg
-Hvordan er arkitektur, designvalg etc? Er det lett/vanskelig å få ting til å henge sammen?
+- Arkitekturen vår er veldig modulær og følger MVC konseptet. Vi har valgt å designe det slik fordi det fører til færre konflikter i git, gjør endringer i programmet lettere å utføre, samt at det gjør det lettere å utvide senere. Vi har jobbet hard med å benytte oss av interfaces, samt abstrakte klasser som NPC og GUN klassene som gjør det veldig lett å legge til nye lignende klasser som oppfører seg relativt likt.
+
+    Vi har hele tiden jobbet med MVC konseptet i tankene der vi har de tre følgende kjernefunksjonene:
+        - Model:
+            - Inneholder all "data", alle objekter og gamestates.
+        - Controller:
+            - Oversetter input fra bruker til funksjonskall på objekter i Model.
+            - Bruker timere til å gjøre automatiske funksjonkall på objekter i Model for å "få spillet til å gå".
+        - View:
+            - Henter ut objekter fra Model og tegner de.
+            - Inkluderer en relativt komplisert debug-modus.
 
 ### Kodekvalitet
-Hvordan er det med kodekvalitet, kodestil osv? Fungerer det OK å utvide og vedlikeholde koden? Kan alle forstå / bruke alle deler av koden?
+    - Koden har gjennomgående god struktur og konsistent stil.
+    - Vi bruker MVC designmønsteret med meningsfulle navn på metoder og variabler.
+    - God dokumentasjon og kommentarer der det er nødvendig. 
+    - Det er lagt opp til enkel utvidelse av koden. 
+    - Vha. punktene over forstår alle koden som alle skriver.
 
 ### Testing
-Hvordan ligger dere an med testing?
+    - Vi har hatt fokus på og skrevet en del tester, men det mangler fortsatt noe. Dette er av høyeste prioritet opp mot innleveringsfristen.
 
 ### Behov for hjelp eller ny kunnskap
-Er det noe dere trenger hjelp med eller må sette dere inn i til neste gang?
+ - Vi har god kontroll, dersom noen trenger hjelp diskuterer vi dette in-house. 
 
 
 
