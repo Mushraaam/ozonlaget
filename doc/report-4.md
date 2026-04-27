@@ -4,10 +4,34 @@
 ## Team / Prosjekt
 
 ### Roller i teamet
-Hvordan fungerer rollene i teamet? Trenger dere å oppdatere hvem som er teamlead eller kundekontakt?
+    - Rein: TeamLead/HeadHoncho/GloriousLeaderOfTheRepublic
+        - Arbeidsfordeling/Samkjøring
+        - System-design
+        - Musikk/Lyd
+        - NPC design
+    
+    - Alexander:
+        - Algoritmeansvarlig
+        - Stifinning
+        - Pickup-items
+
+    - Johs:
+        - Resource manager
+        - Grand artist of sprites
+        - Accessibility
+
+    - Sander:
+        - Menyansvarlig
+        - Assistant level designer
+
+    - William:
+        - Character controls
+        - Bøllefrø (les: idemyldrer)
+        - Lead level designer
+
 
 ### Eventuelle nye roller
-Trenger dere andre roller? Skriv ned noen linjer om hva de ulike rollene faktisk innebærer for dere.
+- Vi har ikke implementert noen nye roller siden rapport 3
 
 ### Erfaringer med samarbeid og prosjektmetodikk
 Er det noen erfaringer enten teammessig eller mtp prosjektmetodikk som er verdt å nevne? Synes teamet at de valgene dere har tatt er gode? Hvis ikke, hva kan dere gjøre annerledes for å forbedre måten teamet fungerer på?

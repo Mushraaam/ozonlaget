@@ -186,6 +186,7 @@
 					<excludes>
 						<exclude>no/uib/inf112/view/**</exclude>
 						<exclude>no/uib/inf112/utility/**</exclude>
+						<ecvlude>no/uib/inf112/interfaces/**</ecvlude>
 					</excludes>
 				</configuration>
 				<executions>

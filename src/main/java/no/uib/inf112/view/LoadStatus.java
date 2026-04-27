@@ -26,7 +26,7 @@ public class LoadStatus {
         //Sleep so the new status actually has time to show
         //this is purely cosmetic and actually increases laod time
         try {
-            Thread.sleep(100);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
