@@ -212,7 +212,15 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     Konkrete arbeidsoppgave(r):
         - Legge til en knapp i settings for å skru av blinkende lys
     
+#### Brukerhistorie 7:
+    Historie:
+        - Bruker har en svært svak, relativt sett, pc som sliter med å kjøre spillet med darkness og vil ha en måte å skru dette av på.
 
+    Akseptansekritere: 
+        - Bruker har mulighet for å skru av darkness og dermed kjøre spillet bedre.
+
+    Konkrete arbeidsoppgave(r):
+        - Legge til en knapp i settings for å skru av darkness.
 ### Akseptansekriterier
 Definer hva som må være oppfylt for at funksjonaliteten skal være ferdig, Husk at akseptansekriterier ofte skrives mer eller mindre som tester.
 
