@@ -564,7 +564,7 @@ public class ImageHandler {
                 // Melee
                 ArrayList<BufferedImage> tankMelee = new ArrayList<>();
                 for (int i = 0; i < TANK_ANIMATION_COUNT; i++) {
-                        String path = String.format("/no/uib/inf112/npcs/tank/Melee/Melee_00%s.png", i);
+                        String path = String.format("/no/uib/inf112/npcs/tank/Attack/Attack_00%s.png", i);
                         BufferedImage rawImage = ImageReader.fetchImage(path);
                         tankMelee.add(rawImage);
                 }
