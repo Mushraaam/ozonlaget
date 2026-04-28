@@ -19,6 +19,7 @@ public class Factory {
     private static final int GHOUL_INTENSITY = Config.getInt("ghoulIntensity");
     private static final int SPRINTER_INTENSITY = Config.getInt("sprinterIntensity");
     private static final int BIGHANDS_INTENSITY = Config.getInt("bighandsIntensity");
+    private static final int TANK_INTENSITY = Config.getInt("tankIntensity");
     private static final int MEGABOSS_INTENSITY = Config.getInt("gigachadIntensity");
     private static final int MEGABOSS_CRITERIA = Config.getInt("gigachadSpawnCriteria");
 
@@ -73,6 +74,18 @@ public class Factory {
             int count = 0;
             while (!(successfullSpawn) && count < 10) {
                 successfullSpawn = point.spawnEnemy(EnemyType.BIGHANDS);
+                point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
+                count++;
+            }
+        }
+
+        if (this.counter % Math.floor(TANK_INTENSITY / difficulty) == 0) {
+
+            SpawnPoint point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
+            boolean successfullSpawn = false;
+            int count = 0;
+            while (!(successfullSpawn) && count < 10) {
+                successfullSpawn = point.spawnEnemy(EnemyType.TANK);
                 point = this.spawnPoints.get(this.random.nextInt(0, this.spawnPoints.size()));
                 count++;
             }
