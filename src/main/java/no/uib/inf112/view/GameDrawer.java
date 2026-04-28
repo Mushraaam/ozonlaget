@@ -49,6 +49,7 @@ public class GameDrawer extends JPanel {
         // Options
         this.setPreferredSize(new Dimension(Config.getInt("screenWidth"), Config.getInt("screenHeight")));
         this.setBackground(Color.DARK_GRAY);
+        Graphics2D g2 = (Graphics2D) getGraphics();
 
     }
 
