@@ -19,6 +19,8 @@ public class Tank extends NPC {
     private static final int DAMAGE = 8;
     private static final int ANIMATION_COUNT = 8;
     private static final int AGGRO_RANGE = 300;
+    private int attackSlowDown;
+    private boolean meleeSwing;
 
     public Tank(Double pos, IModel map) {
         super(pos, map, Config.getInt("tankHP"));
@@ -46,8 +48,9 @@ public class Tank extends NPC {
         }
         if (this.animationIndex == 5 && this.meleeSwing) {
             Rectangle2D.Double playerPos = this.player.getHitbox();
-            if (inMeleeRange()) {
+            if (playerPos.intersects(this.attackTarget)) {
                 this.player.takeDamage(DAMAGE);
+                
             }
             this.meleeSwing = false;
         }
@@ -58,7 +61,7 @@ public class Tank extends NPC {
     }
 
     @Override
-    protected void rangedAttack(Dubble attackTarget2) {
+    protected void rangedAttack(Double attackTarget2) {
         // Tank has no ranged attack
     }
     
