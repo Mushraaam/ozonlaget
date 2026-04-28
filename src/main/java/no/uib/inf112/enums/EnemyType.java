@@ -6,5 +6,6 @@ public enum EnemyType {
     SPRINTER,
     MEGABOSS,
     BUG,
-    BIGHANDS
+    BIGHANDS,
+    TANK
 }
