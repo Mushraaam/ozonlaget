@@ -2,6 +2,7 @@ package no.uib.inf112.utility;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,6 +26,9 @@ public class ImageHandler {
 
         // Bighands sprite
         private static final int BIGHANDS_ANIMATION_COUNT = 8;
+
+        // Tank sprite
+        private static final int TANK_ANIMATION_COUNT = 8;
 
         // Boss sprite
         private static final int BOSS_ANIMATION_COUNT = 8;
@@ -545,6 +549,36 @@ public class ImageHandler {
                 this.dyingEnemies.put(EnemyType.BIGHANDS, bigHandsDeath);
                 status.setStatus("Loading enemy sprites...", 50);
                 // //////////
+
+                ////////////
+                // TANK
+                // Walk
+                ArrayList<BufferedImage> tankWalk = new ArrayList<>();
+                for (int i = 0; i < TANK_ANIMATION_COUNT; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/tank/Walk/Walk_00%s.png", i);
+                        BufferedImage rawImage = ImageReader.fetchImage(path);
+                        tankWalk.add(rawImage);
+                }
+                this.walkingEnemies.put(EnemyType.TANK, tankWalk);
+
+                // Melee
+                ArrayList<BufferedImage> tankMelee = new ArrayList<>();
+                for (int i = 0; i < TANK_ANIMATION_COUNT; i++) {
+                        String path = String.format("/no/uib/inf112/npcs/tank/Melee/Melee_00%s.png", i);
+                        BufferedImage rawImage = ImageReader.fetchImage(path);
+                        tankMelee.add(rawImage);
+                }
+                this.attackingEnemies.put(EnemyType.TANK, tankMelee);
+
+                // Death
+                ArrayList<BufferedImage> tankDeath = new ArrayList<>();
+                for (int i = 0; i < 10; i++) { // tank death has 10 images
+                        String path = String.format("/no/uib/inf112/npcs/tank/Death/Death_00%s.png", i);
+                        BufferedImage rawImage = ImageReader.fetchImage(path);
+                        tankDeath.add(rawImage);
+                }
+                this.dyingEnemies.put(EnemyType.TANK, tankDeath);
+                //////////////
 
                 // //////////
                 // MEGABOSS
