@@ -15,6 +15,7 @@ import no.uib.inf112.model.npcs.Ghoul;
 import no.uib.inf112.model.npcs.GigachadLV5;
 import no.uib.inf112.model.npcs.Sprinter;
 import no.uib.inf112.model.npcs.BigHands;
+import no.uib.inf112.model.npcs.Tank;
 
 public class SpawnPoint {
     private Rectangle2D.Double bounds;
@@ -86,6 +87,12 @@ public class SpawnPoint {
                     return true;
                 }
             }
+            case TANK -> {
+                hitBox = new Rectangle2D.Double(
+                        random.nextDouble(this.bounds.getMinX(), this.bounds.getMaxX() - LARGE),
+                        random.nextDouble(this.bounds.getMinY(), this.bounds.getMaxY() - LARGE),
+                        LARGE, LARGE);
+            }
 
             default -> throw new IllegalArgumentException("Unknown EnemyType");
         }
@@ -119,6 +126,9 @@ public class SpawnPoint {
             }
             case BIGHANDS -> {
                 this.map.addEnemy(new BigHands(hitBox, map));
+            }
+            case TANK -> {
+                this.map.addEnemy(new Tank(hitBox, map));
             }
 
             default -> throw new IllegalArgumentException("Unknown EnemyType");
