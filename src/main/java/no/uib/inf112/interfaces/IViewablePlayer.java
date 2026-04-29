@@ -12,7 +12,7 @@ public interface IViewablePlayer extends IPlayer {
      * @param item
      * @return
      */
-    int getAmountInInventory(CollectableType item);
+    public int getAmountInInventory(CollectableType item);
 
     /**
      * Returns the current inventory of player

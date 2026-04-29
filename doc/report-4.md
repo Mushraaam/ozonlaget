@@ -31,8 +31,18 @@ Ozonlaget
         - Bøllefrø (les: idemyldrer)
         - Lead level designer
 
+## KANBAN
+
+Vi valgte Kanban da dette for oss lot oss jobbe mer individuelt i eget tempo - til fordel for et mer synkronisert og høy-organisert alternativ i Scrum. Vi er alle studenter med ulik arbeidskapasitet og tidsbudsjett noe som passer bedre for en kontinuerlig arbeidsflyt som Kanban tilbyr. Scrum krever også vesentlig mer planlegging og samkjøring, noe som ville krevd flere møter enn vi var interressert i.
+
+Vi har benyttet oss av issue-board på git som en virituell table der vi har opprettet ting vi enten på møter eller individuelt har funnet ut at trengs å gjøres, og vi har "plukket" oppgaver fra tavlen og utført de kontinuerlig igjennom hele semesteret.
+
+En liten modifikasjon vi har gjort er at vi har fordelt litt arbeidsoppgaver manuelt også, og ikke bare latt folk plukke oppgaver på måfå - dette hjalp litt med struturen, både for å få arbeidsmengden rettferdig fordelt, samt å få gjort viktige oppgaver i med en høyere prioritet. (litt scrum-aktig).
+
+
+------------
 ### Erfaringer med samarbeid og prosjektmetodikk
-- I starten var rapportene ikke opp til par, i tillegg til at arbeidsmetodikken ikke fulgte noen spesifikk form. Men etter "reiterasjoner" av rapportene og over tid har både samarbeidskvaliteten og strukturen forbedret seg kraftig. Ved bruk av kanban og git-issue boardet som en virituell tavle, har folk plukket opp arbeidsoppgaver og gjennomført de på en god måte. Vi har nå et godt samarbeid der det er tydelig hvem som gjør hva, samt at alle har et klart bilde av hva som er neste steg i utviklingen. Det bør påpekes at vi har fordelt arbeidsoppgaver utover dette vha. kommunikasjon i discord, rundt forelesninger og i avtalte møter. Dette er skrevet opp i meldinger i discord gruppen eller i møtereferater.
+I starten var rapportene ikke opp til par, i tillegg til at arbeidsmetodikken ikke fulgte noen spesifikk form. Men etter "reiterasjoner" av rapportene og over tid har både samarbeidskvaliteten og strukturen forbedret seg kraftig. Ved bruk av kanban og git-issue boardet som en virituell tavle, har folk plukket opp arbeidsoppgaver og gjennomført de på en god måte. Vi har nå et godt samarbeid der det er tydelig hvem som gjør hva, samt at alle har et klart bilde av hva som er neste steg i utviklingen. Det bør påpekes at vi har fordelt arbeidsoppgaver utover dette vha. kommunikasjon i discord, rundt forelesninger og i avtalte møter. Dette er skrevet opp i meldinger i discord gruppen eller i møtereferater.
 
 
 ### Gruppedynamikk
@@ -98,8 +108,8 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 
 ##### Fiender
     NPC med stifinning: ferdig
-    Fiendetyper: 4/5 - delvis ferdig
-    Fiender animert: 4/5 - delvis ferdig
+    Fiendetyper: 5/5 - ferdig
+    Fiender animert: 5/5 - ferdig
     Fiender oppsøker player og angriper: ferdig
     Fiender kan bli skutt og dør: ferdig
 
@@ -250,7 +260,31 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
                 - Levels
         Testing utvides ved behov.
 
-### Prioritering fremover
+## SOLID
+
+#### Single Responsibility Principle
+
+    Vi har tydelig separert ansvarsområder for klassene våre, for eksempel ved bruk av MVC prinsippet. View (GameDrawer) er ansvarlig for å tegne, Model er ansvarlig for å holde på informasjon og Controller er ansvarlig for å få "ting til å skje". Et annet eksempel er NPC og Pathfinder, der NPC er ansvarlig for å håndtere bevegelse, mens Pathfinder er ansvarlig for å finne beste rute. Fordelen her er at NPC ikke trenger å bekymre seg for hvilken implementasjon Pathfinder bruker så lenge den får en sti å følge - noe som gjør implementasjonen veldig fleksibel for fremtidig utvidelse eller endring.
+
+#### Open/Closed Principle
+
+    Dette er et konsept som gjennomsyrer hele prosjektet. Faktisk så brukte vi første halvpart av semesteret på å bygge rammeværk vi senere kunne utvide - men som i teorien ikke skal trenge å endres.
+    Eksempler på dette er f.eks den abstrakte NPC klassen, som implementerer all logikk som en fiende trenger, bortsett fra de abstrakte metodene attack() og rangedAttack() som er unik for hver fiende. NPC implementerer også IEnemy, slik at når f.eks en Ghoul (extends NPC implements IEnemy) skal lages, så trenger man ikke å gjøre nevneverdige endreinger andre steder i prosjektet for å tilpasse dette - det er allerede laget logikk som håndterer den. View tegner alle IEnemy objekter og controller sørger for å kalle move() på de. 
+    På denne måten er det veldig lett å utvide med flere fiender (open for extension), men vi skal ikke gjøre endringer verken på NPC eller andre steder i koden (closed for modification).
+
+#### Liskov Substitution Principle
+
+    Generelt sett så har vi fulgt dette. Subklassene våre kan gjøre alt parent-klassene våre kan.
+
+#### Interface Segregation Principle
+
+    Vi har benyttet oss av dette prinsippet med f.eks å implementere et IPlayer interface som er implementert både av IViewablePlayer og IControllablePlayer - slik at view-relaterte funksjoner og kontroll-relaterte funksjoner er segregert igjennom interface. Hadde vi hatt mer tid skulle vi også implementert samme logikken f.eks på NPC.
+
+#### Dependency Inversion Principle
+
+    Denne har vi brukt en god del, igjennom delte interfaces som IStaticObjects som omfatter alle møbler og vegger, samt IEnemy som omfatter alle fiender og ICollectible som har alle opp-plukkbare items. View/Model/Controller ser ikke på noe tidspunkt de individuelle klassene, de håndterer kun klasser av abstrakte typer. Dette gjør at vi kan ha en liste av f.eks alle fiender, noe som er vesentlig enklere å håndtere og vedlikeholde enn om alle fiendene skulle hatt egen liste, egen tegnelogikk, egen logikk i controller etc.
+
+## Prioritering fremover
 Videre vil den største prioritering være å lage tester, samt implementere det siste monsteret.
 
 ### Fremdrift siden forrige rapport
