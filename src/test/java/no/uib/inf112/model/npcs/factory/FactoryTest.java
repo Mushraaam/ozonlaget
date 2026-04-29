@@ -101,7 +101,7 @@ public class FactoryTest {
             factory.increment();
         }
 
-        assertTrue(spawnPoint.getMegaBossSpawns() > 0);
+        assertTrue(spawnPoint.getTankSpawns() > 0);
     }
 
     @Test
@@ -169,6 +169,7 @@ public class FactoryTest {
         private int sprinterSpawns;
         private int bigHandsSpawns;
         private int megaBossSpawns;
+        private int tankSpawns;
         private boolean shouldSpawn = true;
 
         public TestSpawnPoint(IModel model) {
@@ -182,6 +183,7 @@ public class FactoryTest {
                 case SPRINTER -> sprinterSpawns++;
                 case BIGHANDS -> bigHandsSpawns++;
                 case MEGABOSS -> megaBossSpawns++;
+                case TANK -> tankSpawns++;
                 default -> {
                 }
             }
@@ -207,6 +209,10 @@ public class FactoryTest {
 
         public int getMegaBossSpawns() {
             return megaBossSpawns;
+        }
+
+        public int getTankSpawns() {
+            return tankSpawns;
         }
 
         public int getTotalSpawnAttempts() {
