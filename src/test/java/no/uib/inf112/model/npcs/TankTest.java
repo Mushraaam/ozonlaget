@@ -1,9 +1,6 @@
 package no.uib.inf112.model.npcs;
 
-import no.uib.inf112.enums.EnemyAction;
-import no.uib.inf112.enums.EnemySize;
-import no.uib.inf112.enums.EnemyType;
-import no.uib.inf112.enums.GameState;
+import no.uib.inf112.enums.*;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.model.npcs.pathfinding.Pathfinder;
 
@@ -15,12 +12,11 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-public class BigHandsTest {
+public class TankTest {
 
-    private BigHands bigHands;
+    private Tank tank;
     private IModel map;
     private IPlayer player;
     private IGrid grid;
@@ -46,45 +42,43 @@ public class BigHandsTest {
 
         when(player.getHitbox()).thenReturn(new Rectangle2D.Double(130, 100, 40, 40));
 
-        bigHands = new BigHands(new Rectangle2D.Double(100, 100, 40, 40), map);
+        tank = new Tank(new Rectangle2D.Double(100, 100, 40, 40), map);
     }
 
     @Test
     void constructorSetsCorrectTypeAndSize() {
-        assertEquals(EnemyType.BIGHANDS, bigHands.getEnemyType());
-        assertEquals(EnemySize.MEDIUM, bigHands.size());
-        assertFalse(bigHands.hasRangedAmmo);
+        assertEquals(EnemyType.TANK, tank.getEnemyType());
+        assertEquals(EnemySize.LARGE, tank.size());
+        assertFalse(tank.hasRangedAmmo);
     }
 
     @Test
     void attackDamagesPlayer() {
-        bigHands.aggroed = true;
+        tank.aggroed = true;
 
-        for (int i = 0; i < 50; i++) {
-            bigHands.move(grid);
+        for (int i = 0; i < 75; i++) {
+            tank.move(grid);
         }
 
-        verify(player).takeDamage(4);
-    }
-
-    @Test
-    void rangedAttackDoesNothing() {
-        Rectangle2D.Double target = new Rectangle2D.Double(130, 100, 40, 40);
-
-        bigHands.rangedAttack(target);
-
-        verify(player, never()).takeDamage(anyInt());
-        verify(map, never()).addProjectile(any());
+        verify(player).takeDamage(8);
     }
 
     @Test
     void attackSwitchesToWalkWhenAnimationIndexIsZeroAndPlayerIsOutOfRange() {
-        bigHands.setAction(EnemyAction.ATTACK);
+        tank.setAction(EnemyAction.ATTACK);
 
         when(player.getHitbox()).thenReturn(new Rectangle2D.Double(1000, 1000, 40, 40));
 
-        bigHands.attack(player.getHitbox());
+        tank.attack(player.getHitbox());
 
-        assertEquals(EnemyAction.WALK, bigHands.currentAction());
-}
+        assertEquals(EnemyAction.WALK, tank.currentAction());
+    }
+
+    @Test
+    void rangedAttackDoesNothing() {
+        tank.rangedAttack(new Rectangle2D.Double(130, 100, 40, 40));
+
+        verify(player, never()).takeDamage(anyInt());
+        verify(map, never()).addProjectile(any());
+    }
 }

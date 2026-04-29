@@ -1,9 +1,6 @@
 package no.uib.inf112.model.npcs;
 
-import no.uib.inf112.enums.EnemyAction;
-import no.uib.inf112.enums.EnemySize;
-import no.uib.inf112.enums.EnemyType;
-import no.uib.inf112.enums.GameState;
+import no.uib.inf112.enums.*;
 import no.uib.inf112.interfaces.*;
 import no.uib.inf112.model.npcs.pathfinding.Pathfinder;
 
@@ -15,12 +12,11 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-public class BigHandsTest {
+public class KamikazeBugTest {
 
-    private BigHands bigHands;
+    private KamikazeBug bug;
     private IModel map;
     private IPlayer player;
     private IGrid grid;
@@ -44,47 +40,55 @@ public class BigHandsTest {
         when(grid.getCellFromPos(any(Rectangle2D.Double.class))).thenReturn(cell);
         when(pathfinder.canEnter(any(ICell.class), any(EnemySize.class))).thenReturn(true);
 
-        when(player.getHitbox()).thenReturn(new Rectangle2D.Double(130, 100, 40, 40));
+        when(player.getHitbox()).thenReturn(new Rectangle2D.Double(1000, 1000, 40, 40));
 
-        bigHands = new BigHands(new Rectangle2D.Double(100, 100, 40, 40), map);
+        bug = new KamikazeBug(new Rectangle2D.Double(100, 100, 40, 40), map);
     }
 
     @Test
-    void constructorSetsCorrectTypeAndSize() {
-        assertEquals(EnemyType.BIGHANDS, bigHands.getEnemyType());
-        assertEquals(EnemySize.MEDIUM, bigHands.size());
-        assertFalse(bigHands.hasRangedAmmo);
+    void constructorSetsCorrectTypeSizeAndAggro() {
+        assertEquals(EnemyType.BUG, bug.getEnemyType());
+        assertEquals(EnemySize.SMALL, bug.size());
+        assertTrue(bug.aggroed);
     }
 
     @Test
-    void attackDamagesPlayer() {
-        bigHands.aggroed = true;
+    void attackCreatesExplosionAndRemovesEnemy() {
+        bug.attack(new Rectangle2D.Double(100, 100, 40, 40));
 
-        for (int i = 0; i < 50; i++) {
-            bigHands.move(grid);
-        }
+        verify(map).addAOEPuddle(any());
+        verify(map).removeEnemy(bug);
+        assertFalse(bug.isAlive());
+    }
 
-        verify(player).takeDamage(4);
+    @Test
+    void moveExplodesWhenTouchingPlayer() {
+        bug.aggroed = false;
+        when(player.getHitbox()).thenReturn(new Rectangle2D.Double(100, 100, 40, 40));
+
+        bug.move(grid);
+
+        verify(map).addAOEPuddle(any());
+        assertFalse(bug.isAlive());
+    }
+
+    @Test
+    void moveDoesNotExplodeWhenNotTouchingPlayer() {
+        bug.aggroed = false;
+
+        when(player.getHitbox()).thenReturn(new Rectangle2D.Double(1000, 1000, 40, 40));
+
+        bug.move(grid);
+
+        verify(map, never()).addAOEPuddle(any());
+        assertTrue(bug.isAlive());
     }
 
     @Test
     void rangedAttackDoesNothing() {
-        Rectangle2D.Double target = new Rectangle2D.Double(130, 100, 40, 40);
+        bug.rangedAttack(new Rectangle2D.Double(100, 100, 40, 40));
 
-        bigHands.rangedAttack(target);
-
-        verify(player, never()).takeDamage(anyInt());
         verify(map, never()).addProjectile(any());
+        verify(map, never()).addAOEPuddle(any());
     }
-
-    @Test
-    void attackSwitchesToWalkWhenAnimationIndexIsZeroAndPlayerIsOutOfRange() {
-        bigHands.setAction(EnemyAction.ATTACK);
-
-        when(player.getHitbox()).thenReturn(new Rectangle2D.Double(1000, 1000, 40, 40));
-
-        bigHands.attack(player.getHitbox());
-
-        assertEquals(EnemyAction.WALK, bigHands.currentAction());
-}
 }
