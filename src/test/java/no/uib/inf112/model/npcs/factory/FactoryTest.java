@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.awt.geom.Rectangle2D;
+import java.beans.Transient;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -93,6 +94,17 @@ public class FactoryTest {
     }
 
     @Test
+    void tankIntensityTest() {
+        int tankIntensity = Config.getInt("tankIntensity");
+
+        for (int i = 0; i < tankIntensity; i++) {
+            factory.increment();
+        }
+
+        assertTrue(spawnPoint.getTankSpawns() > 0);
+    }
+
+    @Test
     void retrySpawnTest() {
         spawnPoint.setShouldSpawn(false);
 
@@ -156,6 +168,7 @@ public class FactoryTest {
         private int ghoulSpawns;
         private int sprinterSpawns;
         private int bigHandsSpawns;
+        private int tankSpawns;
         private int megaBossSpawns;
         private boolean shouldSpawn = true;
 
@@ -169,6 +182,7 @@ public class FactoryTest {
                 case GHOUL -> ghoulSpawns++;
                 case SPRINTER -> sprinterSpawns++;
                 case BIGHANDS -> bigHandsSpawns++;
+                case TANK -> tankSpawns++;
                 case MEGABOSS -> megaBossSpawns++;
                 default -> {
                 }
@@ -193,12 +207,16 @@ public class FactoryTest {
             return bigHandsSpawns;
         }
 
+        public int getTankSpawns() {
+            return tankSpawns;
+        }
+
         public int getMegaBossSpawns() {
             return megaBossSpawns;
         }
 
         public int getTotalSpawnAttempts() {
-            return ghoulSpawns + sprinterSpawns + bigHandsSpawns + megaBossSpawns;
+            return ghoulSpawns + sprinterSpawns + bigHandsSpawns + tankSpawns + megaBossSpawns;
         }
     }
 }
