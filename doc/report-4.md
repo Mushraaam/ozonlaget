@@ -98,8 +98,8 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 
 ##### Fiender
     NPC med stifinning: ferdig
-    Fiendetyper: 4/5 - delvis ferdig
-    Fiender animert: 4/5 - delvis ferdig
+    Fiendetyper: 5/5 ferdig
+    Fiender animert: 5/5 ferdig
     Fiender oppsøker player og angriper: ferdig
     Fiender kan bli skutt og dør: ferdig
 
