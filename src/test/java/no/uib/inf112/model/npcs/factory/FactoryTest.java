@@ -170,7 +170,6 @@ public class FactoryTest {
         private int bigHandsSpawns;
         private int tankSpawns;
         private int megaBossSpawns;
-        private int tankSpawns;
         private boolean shouldSpawn = true;
 
         public TestSpawnPoint(IModel model) {
@@ -185,7 +184,6 @@ public class FactoryTest {
                 case BIGHANDS -> bigHandsSpawns++;
                 case TANK -> tankSpawns++;
                 case MEGABOSS -> megaBossSpawns++;
-                case TANK -> tankSpawns++;
                 default -> {
                 }
             }
@@ -215,10 +213,6 @@ public class FactoryTest {
 
         public int getMegaBossSpawns() {
             return megaBossSpawns;
-        }
-
-        public int getTankSpawns() {
-            return tankSpawns;
         }
 
         public int getTotalSpawnAttempts() {
