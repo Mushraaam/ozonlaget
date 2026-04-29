@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.awt.geom.Rectangle2D;
+import java.beans.Transient;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -90,6 +91,17 @@ public class FactoryTest {
         }
 
         assertTrue(spawnPoint.getBigHandsSpawns() > 0);
+    }
+
+    @Test
+    void tankIntensityTest() {
+        int tankIntensity = Config.getInt("tankIntensity");
+
+        for (int i = 0; i < tankIntensity; i++) {
+            factory.increment();
+        }
+
+        assertTrue(spawnPoint.getMegaBossSpawns() > 0);
     }
 
     @Test
