@@ -23,8 +23,6 @@ public class Ammo extends Collectable {
                 map.getSoundHandler().playBuffSound(this.buffType);
                 break;
             }
-
         }
-
     }
 }

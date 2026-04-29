@@ -156,12 +156,15 @@ public class Pathfinder {
                                          // layers?
         switch (size) {
             case SMALL -> {
-                return type != PathType.BLOCKED;// && type != PathType.BLOCKED_FOR_MEDIUM;
+                return type != PathType.BLOCKED;
             }
             case MEDIUM -> {
                 return type != PathType.BLOCKED && type != PathType.BLOCKED_FOR_MEDIUM;
             }
             case LARGE -> {
+                return type == PathType.UNBLOCKED;
+            }
+            case HUGE -> {
                 return type == PathType.UNBLOCKED;
             }
             default -> throw new IllegalStateException("No known case for size");

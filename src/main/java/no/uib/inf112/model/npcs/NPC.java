@@ -34,7 +34,6 @@ public abstract class NPC implements IEnemy {
     private ICell lastStart;
     private ICell lastGoal;
     private IEnemy nextInCell = null;
-    private ICell from;
     private EnemyAction currentAction;
     private boolean moving;
 
@@ -253,7 +252,6 @@ public abstract class NPC implements IEnemy {
 
         this.currentAction = EnemyAction.WALK;
 
-        this.from = getStandingCell();
         if (currentPath == null || pathIndex >= currentPath.size()) {
             return;
         }

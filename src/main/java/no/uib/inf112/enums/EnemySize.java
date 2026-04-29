@@ -6,7 +6,8 @@ import java.awt.Color;
 public enum EnemySize {
     SMALL(Config.getInt("smallEnemy")/10, Color.lightGray),
     MEDIUM(Config.getInt("mediumEnemy")/10, Color.CYAN),
-    LARGE(Config.getInt("largeEnemy")/10, Color.GREEN);
+    LARGE(Config.getInt("largeEnemy")/10, Color.GREEN),
+    HUGE(Config.getInt("hugeEnemy")/10, Color.RED);
 
     private final int footprintValue;
     private final Color debugColor;

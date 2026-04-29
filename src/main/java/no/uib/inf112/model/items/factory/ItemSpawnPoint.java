@@ -171,7 +171,7 @@ public class ItemSpawnPoint {
             case GATE_KEY, GASCAN, CHOPPER_KEYCARD -> {
                 return new InventoryItem(hitBox, type, map);}
 
-            default -> throw new IllegalArgumentException("Unknown Item Type");
+            default -> throw new IllegalArgumentException("Unknown Item Type" + type.toString());
         }
     }
 

@@ -417,6 +417,9 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void healHP(int heal) {
+        if (heal < 0){
+            throw new IllegalArgumentException("Heal cannot be negative");
+        }
         int newHP = this.currentHP + heal;
         if (newHP > this.getMaxHP()) {
             this.currentHP = MAX_HP;
@@ -427,6 +430,10 @@ public class Player implements IControllablePlayer, IViewablePlayer {
 
     @Override
     public void takeDamage(int damage) {
+        if (damage < 0){
+            throw new IllegalArgumentException("Damage taken cannot be negative.");
+        }
+
         if (this.map.getGameState() != GameState.ACTIVE_GAME) {
             return;
         }

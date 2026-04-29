@@ -25,6 +25,7 @@ public class SpawnPoint {
     private static final int SMALL = Config.getInt("smallEnemy");
     private static final int MEDIUM = Config.getInt("mediumEnemy");
     private static final int LARGE = Config.getInt("largeEnemy");
+    private static final int HUGE = Config.getInt("hugeEnemy");
 
     /* Ensures no zombies spawn in view of / near player */
     private static final double SAFE_ZONE = Math
@@ -81,7 +82,7 @@ public class SpawnPoint {
             case MEGABOSS -> {
                 double centerX = 1080;
                 double centerY = 1080;
-                hitBox = new Rectangle2D.Double(centerX, centerY, LARGE, LARGE);
+                hitBox = new Rectangle2D.Double(centerX, centerY, HUGE, HUGE);
                 if (isLegal(hitBox)) {
                     addEnemy(type, hitBox);
                     return true;
