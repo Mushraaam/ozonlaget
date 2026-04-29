@@ -25,6 +25,7 @@ public class Grid implements IGrid {
     private static final double SMALL = Config.getInt("smallEnemy") * 0.54;
     private static final double MEDIUM = Config.getInt("mediumEnemy") * SCALAR;
     private static final double LARGE = Config.getInt("largeEnemy") * SCALAR;
+    private static final double HUGE = Config.getInt("hugeEnemy") * SCALAR;
     private final Set<ICell> taintedCells = new HashSet<>();
     private final HashMap<ICell, HashMap<Integer, List<ICell>>> neighbourMap = new HashMap<>();
     private ArrayList<ArrayList<ICell>> cellGrid;
@@ -395,8 +396,10 @@ public class Grid implements IGrid {
             return SMALL;
         } else if (size == EnemySize.MEDIUM) {
             return MEDIUM;
+        }else if (size == EnemySize.LARGE){
+            return LARGE;
         }
-        return LARGE;
+        return HUGE;
     }
 
     @Override

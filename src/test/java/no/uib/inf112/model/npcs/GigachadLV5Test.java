@@ -10,7 +10,6 @@ import no.uib.inf112.model.npcs.projectiles.ExplosionProjectile;
 import no.uib.inf112.model.npcs.projectiles.MinionProjectile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.awt.geom.Rectangle2D;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GigachadLV5Test {
+class GigachadLV5Test {
 
     private GigachadLV5 boss;
     private IModel mockMap;
@@ -30,7 +29,7 @@ public class GigachadLV5Test {
     private ArrayList<IVehicle> fakeVehicleList;
 
     @BeforeEach
-    public void setUp() {
+   void setUp() {
         mockMap = Mockito.mock(IModel.class);
         mockPlayer = Mockito.mock(IPlayer.class);
         mockGrid = Mockito.mock(IGrid.class);
@@ -60,7 +59,7 @@ public class GigachadLV5Test {
 
 
     @Test
-    public void testIsLegalReturnsFalseWhenHittingPlayer() {
+    void testIsLegalReturnsFalseWhenHittingPlayer() {
         Rectangle2D.Double bossMove = new Rectangle2D.Double(1010, 1000, 50, 50);
 
         Mockito.when(mockPlayer.getHitbox()).thenReturn(new Rectangle2D.Double(1015, 1005, 10, 10));
@@ -71,7 +70,7 @@ public class GigachadLV5Test {
     }
 
     @Test
-    public void testIsLegalSquashesSmallEnemies() {
+    void testIsLegalSquashesSmallEnemies() {
         IEnemy fakeGhoul = Mockito.mock(Ghoul.class);
         fakeEnemyList.add(fakeGhoul);
 
@@ -92,7 +91,7 @@ public class GigachadLV5Test {
     }
 
     @Test
-    public void testIsLegalBlockedByLargeEnemies() {
+    void testIsLegalBlockedByLargeEnemies() {
         IEnemy fakeBigGhoul = Mockito.mock(Ghoul.class);
         fakeEnemyList.add(fakeBigGhoul);
 
@@ -112,7 +111,7 @@ public class GigachadLV5Test {
     }
 
     @Test
-    public void testIsLegalIgnoresBugs() {
+    void testIsLegalIgnoresBugs() {
         IEnemy fakeBug = Mockito.mock(KamikazeBug.class);
         fakeEnemyList.add(fakeBug);
 
@@ -135,7 +134,7 @@ public class GigachadLV5Test {
 
 
     @Test
-    public void testRangedAttackFiresMinionAtLongRange() {
+    void testRangedAttackFiresMinionAtLongRange() {
         Rectangle2D.Double playerHitbox = new Rectangle2D.Double(1600, 1000, 50, 50);
         Mockito.when(mockPlayer.getHitbox()).thenReturn(playerHitbox);
 
@@ -147,7 +146,7 @@ public class GigachadLV5Test {
     }
 
     @Test
-    public void testRangedAttackFiresExplosionAtMediumRange() {
+    void testRangedAttackFiresExplosionAtMediumRange() {
         Rectangle2D.Double playerHitbox = new Rectangle2D.Double(1400, 1000, 50, 50);
         Mockito.when(mockPlayer.getHitbox()).thenReturn(playerHitbox);
 
@@ -159,7 +158,7 @@ public class GigachadLV5Test {
     }
 
     @Test
-    public void testMoveReducesCooldowns() {
+    void testMoveReducesCooldowns() {
         Rectangle2D.Double playerHitbox = new Rectangle2D.Double(1400, 1000, 50, 50);
         Mockito.when(mockPlayer.getHitbox()).thenReturn(playerHitbox);
 
@@ -171,7 +170,7 @@ public class GigachadLV5Test {
     }
 
     @Test
-    public void testBossDropsChopperKeycardOnDeath() {
+    void testBossDropsChopperKeycardOnDeath() {
         boss.dropLoot();
         Mockito.verify(mockItemFactory).dropSpecificItem(
                 Mockito.eq(CollectableType.CHOPPER_KEYCARD),
