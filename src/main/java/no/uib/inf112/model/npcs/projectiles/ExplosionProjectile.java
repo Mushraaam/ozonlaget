@@ -27,5 +27,6 @@ public class ExplosionProjectile extends PuddleProjectile {
                 this.target.getWidth() + 120,
                 this.target.getHeight() + 120);
         map.addAOEPuddle(new ExplosionPuddle(explosionArea, super.map, PuddleType.EXPLOSION ));
+
     }
 }

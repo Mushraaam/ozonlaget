@@ -27,6 +27,7 @@ public class SoundHandler {
     private HashMap<EnemyAction, HashMap<EnemyType, String>> enemySounds;
 
     private ArrayList<String> damageSounds;
+    private ArrayList<String> effectSounds;
 
     // Clips
     private ArrayList<Clip> clips;
@@ -50,6 +51,7 @@ public class SoundHandler {
         loadDamageSounds();
         loadBuffSounds();
         loadFarts();
+        loadEffectSounds();
 
         // Clips
         this.counter = 0;
@@ -77,6 +79,10 @@ public class SoundHandler {
         this.buffSounds.put(BuffType.AMMO, "/no/uib/inf112/sound/buffs/ammoPickupSound.wav");
         this.buffSounds.put(BuffType.GIG, "/no/uib/inf112/sound/buffs/giggity.wav");
 
+    }
+    private void loadEffectSounds() {
+        this.effectSounds = new ArrayList<>();
+        this.effectSounds.add("/no/uib/inf112/sound/effects/explosion.wav");
     }
 
     private void loadGunSounds() {
@@ -234,6 +240,15 @@ public class SoundHandler {
      */
     public void playPlayerDamageSound(int index) {
         playClip(SoundReader.loadSound(this.damageSounds.get(index)));
+    }
+
+    /**
+     * Plays explosion effect sound (currently index 0 only)
+     *
+     * @param index
+     */
+    public void playExplosionEffectSound(int index) {
+        playClip(SoundReader.loadSound(this.effectSounds.get(index)));
     }
 
     /**

@@ -11,7 +11,9 @@
   * AI-Generated via Elevenlabs: https://elevenlabs.io/sound-effects/oh-yeah
 * Ammo pickup sound:
   * https://pixabay.com/sound-effects/film-special-effects-1911-reload-6248/
-
+* Explosion sound: 
+  * https://pixabay.com/sound-effects/film-special-effects-explosion-sound-effect-425455/
+  * Edited before use. 
 
 ## Images (2D assets and UI)
 * Buffs & Ammo crates:

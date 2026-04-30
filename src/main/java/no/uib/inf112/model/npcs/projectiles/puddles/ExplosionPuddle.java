@@ -19,7 +19,8 @@ public class ExplosionPuddle extends Puddle {
     public void dealDamage() {
 
         if (!hasDealtDamage && this.animationIndex >= 1) {
-            map.getCamera().startShake(25, 8);
+            map.getCamera().startShake(10, 10);
+            map.getSoundHandler().playExplosionEffectSound(0);
             if (this.bounds.intersects(this.map.getPlayer().getHitbox())) {
                 this.map.getPlayer().takeDamage(DAMAGE);
                 map.getCamera().startShake(25, 8);

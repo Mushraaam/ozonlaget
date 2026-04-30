@@ -11,7 +11,8 @@ public class Camera {
     private double translateX;
     private double translateY;
     private static final int UI_HEIGHT = Config.getInt("uiSize");
-
+    double currentOffsetX = 0;
+    double currentOffsetY = 0;
     private int shakeFrames = 0;
     private double shakeMagnitude = 0;
 
@@ -41,17 +42,19 @@ public class Camera {
 
         this.translateX = tx;
         this.translateY = ty;
+
+
+        if (this.shakeFrames > 0) {
+            this.currentOffsetX = (Math.random() * 2 - 1) * this.shakeMagnitude;
+            this.currentOffsetY = (Math.random() * 2 - 1) * this.shakeMagnitude;
+            this.shakeFrames--;
+        } else {
+            this.currentOffsetX = 0;
+            this.currentOffsetY = 0;
+        }
     }
 
     public void apply(Graphics2D g) {
-        double currentOffsetX = 0;
-        double currentOffsetY = 0;
-
-        if (this.shakeFrames > 0) {
-            currentOffsetX = (Math.random() * 2 - 1) * this.shakeMagnitude;
-            currentOffsetY = (Math.random() * 2 - 1) * this.shakeMagnitude;
-            this.shakeFrames--;
-        }
         g.translate(this.translateX + currentOffsetX, this.translateY + currentOffsetY);
     }
 
