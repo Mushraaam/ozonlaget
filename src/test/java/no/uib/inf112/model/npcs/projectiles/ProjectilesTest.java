@@ -1,4 +1,4 @@
-package no.uib.inf112.model;
+package no.uib.inf112.model.npcs.projectiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -16,15 +16,13 @@ import org.mockito.MockedConstruction;
 import no.uib.inf112.enums.PuddleType;
 import no.uib.inf112.interfaces.IProjectile;
 import no.uib.inf112.interfaces.IPuddle;
-import no.uib.inf112.model.npcs.projectiles.AcidPuddleProjectile;
-import no.uib.inf112.model.npcs.projectiles.ExplosionProjectile;
-import no.uib.inf112.model.npcs.projectiles.MinionProjectile;
+import no.uib.inf112.model.Model;
 import no.uib.inf112.model.npcs.projectiles.puddles.AcidPuddle;
 import no.uib.inf112.model.npcs.projectiles.puddles.ExplosionPuddle;
 import no.uib.inf112.utility.SoundHandler;
 import no.uib.inf112.view.LoadStatus;
 
-public class ProjectilesTest {
+class ProjectilesTest {
     private MockedConstruction<SoundHandler> mockedSoundHandler;
     private Model model;
 

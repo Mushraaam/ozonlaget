@@ -61,7 +61,7 @@ I starten var rapportene ikke opp til par, i tillegg til at arbeidsmetodikken ik
         - Jevne ut antall commits
 
 ### Bidrag til kodebasen
-- Vi har prøvd å få en gjevn fordeling av hvem som bidrar, det bør nevnes at noen har bidratt mer enn man kan forvente og at dette ikke bør trekke ned de andre. Noen commits er også en felles commit fra en person sin bruker. 
+- Vi har prøvd å få en gjevn fordeling av hvem som bidrar - men det er fortsatt ujevn fordeling. Det skal riktignok enighet i at vi alle har bidratt nok til at dette ikke er et problem. Noen commits er også en felles commit fra en person sin bruker - f.eks møtereferat/rapportskriving.
 
 ### Referat fra møter
 Referat fra møter siden forrige leveranse skal legges ved (mange av punktene over er typisk ting som havner i referat).

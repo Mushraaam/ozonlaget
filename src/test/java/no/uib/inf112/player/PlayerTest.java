@@ -189,4 +189,22 @@ class PlayerTest {
         assertEquals(timeRemaining - 1, player.buffCountDown());
         
     }
+
+    @Test
+    void openCloseInventoryTest(){
+        Player player = (Player) model.getPlayer();
+        model.setGameState(GameState.ACTIVE_GAME);
+
+        assertFalse(player.objectivesVisible());
+        player.openCloseObjectives();
+        assertTrue(player.objectivesVisible());
+        player.openCloseObjectives();
+        assertFalse(player.objectivesVisible());
+
+        assertFalse(player.getInventory().isVisible());
+        player.openCloseInventory();
+        assertTrue(player.getInventory().isVisible());
+        player.openCloseInventory();
+        assertFalse(player.getInventory().isVisible());
+    }
 }

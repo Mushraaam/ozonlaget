@@ -40,7 +40,7 @@ import no.uib.inf112.utility.Camera;
 import no.uib.inf112.utility.SoundHandler;
 import no.uib.inf112.view.LoadStatus;
 
-public class ModelTest {
+class ModelTest {
     private MockedConstruction<SoundHandler> mockedSoundHandler;
     private Model model;
 
