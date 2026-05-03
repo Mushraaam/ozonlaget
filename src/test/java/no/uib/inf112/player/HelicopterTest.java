@@ -96,5 +96,4 @@ class HelicopterTest {
             heli.increment();
         }
     }
-
 }

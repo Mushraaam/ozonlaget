@@ -3,10 +3,11 @@
 
 ## Team / Prosjekt
 
-Ozonlaget
+    Ozonlaget
+    Kurt-Mario Zombie Adventure
 
 ### Roller i teamet
-- Rein: TeamLead/HeadHoncho/GloriousLeaderOfTheRepublic
+    Rein: TeamLead/HeadHoncho/GloriousLeaderOfTheRepublic
         - Arbeidsfordeling/Samkjøring
         - System-design
         - Musikk/Lyd
@@ -28,31 +29,55 @@ Ozonlaget
 
     - William:
         - Character controls
-        - Bøllefrø (les: idemyldrer)
         - Lead level designer
+
+
+## Konsept
+
+    Vi har laget et zombie-shooter spill der målet er å navigere seg rundt på kartet med WASD eller piltastene for å plukke opp diverse objekter vi trenger for å vinne spillet.
+    På veien vil player møte på ulike typer zombier som vil hindre progresjon og (som zombier gjør) prøve å angripe player. Man kan forsvare seg med enten å løpe vekk eller å skyte zombiene med tre ulike våpentyper. Dette kan gjøres ved å trykke på skjermen for å skyte - og ved å bruke 1-2-3 knappene for å bytte våpen.
+    
+    En av utfordringene er definitivt å rasjonere ammunisjon slik at man ikke går tom på værst tenkelige øyeblikk.
+
+    Player kan også ta i bruk et sortiment av buffs som vil assistere på ulike måter, som raskere bevegelse, mer skade og ammunisjon.
+
+    Når spiller har herjet nok rundt i nabolaget så vil han tiltrekke seg oppmerksomheten til Gigachad - bossen. Det er hell i uhell, for Gigachad har også nøkkelkortet man trenger for å bruke helikopteret.
+
+    Helikopteret er veien ut - men det er tomt for bensin, innelåst bak et piggtrådgjærde og vi har som sagt ikke nøkkelkortet. Player må finne en nøkkel for å låse opp porten, samle inn nok bensin, samt som sagt finne nøkkelkortet.
+
+    I menyen finner du alternativer for å starte spiller, se på settings der man kan velge mellom vanskelighet, samt et par accessibility options, og help-menyen som fungerer som en kjapp introduksjon ti spillet.
 
 ## KANBAN
 
-Vi valgte Kanban da dette for oss lot oss jobbe mer individuelt i eget tempo - til fordel for et mer synkronisert og høy-organisert alternativ i Scrum. Vi er alle studenter med ulik arbeidskapasitet og tidsbudsjett noe som passer bedre for en kontinuerlig arbeidsflyt som Kanban tilbyr. Scrum krever også vesentlig mer planlegging og samkjøring, noe som ville krevd flere møter enn vi var interressert i.
+    Vi valgte Kanban da dette for oss lot oss jobbe mer individuelt i eget tempo - til fordel for et mer synkronisert og høy-organisert alternativ i Scrum. Vi er alle studenter med ulik arbeidskapasitet og tidsbudsjett noe som passer bedre for en kontinuerlig arbeidsflyt som Kanban tilbyr. Scrum krever også vesentlig mer planlegging og samkjøring, noe som ville krevd flere møter enn vi var interressert i.
 
-Vi har benyttet oss av issue-board på git som en virituell table der vi har opprettet ting vi enten på møter eller individuelt har funnet ut at trengs å gjøres, og vi har "plukket" oppgaver fra tavlen og utført de kontinuerlig igjennom hele semesteret.
+    Vi har benyttet oss av issue-board på git som en virituell table der vi har opprettet ting vi enten på møter eller individuelt har funnet ut at trengs å gjøres, og vi har "plukket" oppgaver fra tavlen og utført de kontinuerlig igjennom hele semesteret.
 
-En liten modifikasjon vi har gjort er at vi har fordelt litt arbeidsoppgaver manuelt også, og ikke bare latt folk plukke oppgaver på måfå - dette hjalp litt med struturen, både for å få arbeidsmengden rettferdig fordelt, samt å få gjort viktige oppgaver i med en høyere prioritet. (litt scrum-aktig).
+    En liten modifikasjon vi har gjort er at vi har fordelt litt arbeidsoppgaver manuelt også, og ikke bare latt folk plukke oppgaver på måfå - dette hjalp litt med struturen, både for å få arbeidsmengden rettferdig fordelt, samt å få gjort viktige oppgaver i med en høyere prioritet. (litt scrum-aktig).
 
 
-------------
 ### Erfaringer med samarbeid og prosjektmetodikk
-I starten var rapportene ikke opp til par, i tillegg til at arbeidsmetodikken ikke fulgte noen spesifikk form. Men etter "reiterasjoner" av rapportene og over tid har både samarbeidskvaliteten og strukturen forbedret seg kraftig. Ved bruk av kanban og git-issue boardet som en virituell tavle, har folk plukket opp arbeidsoppgaver og gjennomført de på en god måte. Vi har nå et godt samarbeid der det er tydelig hvem som gjør hva, samt at alle har et klart bilde av hva som er neste steg i utviklingen. Det bør påpekes at vi har fordelt arbeidsoppgaver utover dette vha. kommunikasjon i discord, rundt forelesninger og i avtalte møter. Dette er skrevet opp i meldinger i discord gruppen eller i møtereferater.
+
+    I starten var rapportene ikke opp til par, i tillegg til at arbeidsmetodikken ikke fulgte noen spesifikk form. Men etter "reiterasjoner" av rapportene og over tid har både samarbeidskvaliteten og strukturen forbedret seg kraftig. 
+    
+    Ved bruk av kanban og git-issue boardet som en virituell tavle, har folk plukket opp arbeidsoppgaver og gjennomført de på en god måte. Vi har nå et godt samarbeid der det er tydelig hvem som gjør hva, samt at alle har et klart bilde av hva som er neste steg i utviklingen. 
+    
+    Det bør påpekes at vi har fordelt arbeidsoppgaver utover dette vha. kommunikasjon i discord, rundt forelesninger og i avtalte møter. Dette er skrevet opp i meldinger i discord gruppen eller i møtereferater.
 
 
 ### Gruppedynamikk
-- Gruppedynamikken er gjevnt over god, vi har god kommunikasjon i tillegg til deltakende medlemmer. Vi har dog diskutert proaktivitet i forhold til det å være kreativ og kunne ta til seg arbeidsoppgaver som man selv ser som nødvendig/forbedringer. Vi strever etter at alle er komfortable med det de holder på med, diskuterer kode konstruktivt og at det skal være lov å komme med meninger som vi diskuterer og eventuelt stemmer over.
+
+    Gruppedynamikken er gjevnt over god, vi har god kommunikasjon i tillegg til deltakende medlemmer. 
+    Vi har dog diskutert proaktivitet i forhold til det å være kreativ og kunne ta til seg arbeidsoppgaver som man selv ser som nødvendig/forbedringer. 
+    Vi strever etter at alle er komfortable med det de holder på med, diskuterer kode konstruktivt og at det skal være lov å komme med meninger som vi diskuterer og eventuelt stemmer over.
 
 ### Kommunikasjon i teamet
-- Vi har kommunisert bra, både med ukentlige møter, samt discord. Vi kunne derimot ha avtalt møter litt tydligere og vurdert en frist for å si ifra når/hvis man kommer.
+
+    Vi har kommunisert bra, både med ukentlige møter, samt discord. Vi kunne derimot ha avtalt møter litt tydligere og vurdert en frist for å si ifra når/hvis man kommer.
 
 ### Retrospektiv
- - Dette var ikke noe vi startet med i begynnelsen av prosjektet, men er nå inkorporert i fellesmøtene våre og gjøres helt i starten slik at vi har et utgangspunkt. Det har fungert bra, selv om vi er relativt nytt.
+
+    Dette var ikke noe vi startet med i begynnelsen av prosjektet, men er nå inkorporert i fellesmøtene våre og gjøres helt i starten slik at vi har et utgangspunkt. Det har fungert bra, selv om vi er relativt nytt.
 
     - Ting som har blitt nevnt er som følger:
         - Skrevet tester fra starten av
@@ -61,17 +86,18 @@ I starten var rapportene ikke opp til par, i tillegg til at arbeidsmetodikken ik
         - Jevne ut antall commits
 
 ### Bidrag til kodebasen
-- Vi har prøvd å få en gjevn fordeling av hvem som bidrar - men det er fortsatt ujevn fordeling. Det skal riktignok enighet i at vi alle har bidratt nok til at dette ikke er et problem. Noen commits er også en felles commit fra en person sin bruker - f.eks møtereferat/rapportskriving.
+
+    Vi har prøvd å få en gjevn fordeling av hvem som bidrar - men det er fortsatt ujevn fordeling. Det skal riktignok enighet i at vi alle har bidratt nok til at dette ikke er et problem. Noen commits er også en felles commit fra en person sin bruker - f.eks møtereferat/rapportskriving.
 
 ### Referat fra møter
+
 Referat fra møter siden forrige leveranse skal legges ved (mange av punktene over er typisk ting som havner i referat).
 
 Møtereferatene er lagt til i en egen mappe (Ozonlaget\doc\møtereferat).
 
-### Forbedringspunkter til neste sprint
-Vi skal få skrevet tester slik at minimum test coverage er dekket som et absolutt minimum. 
 
-### Siste innlevering
+### Oppsummering og retrospektiv #TODO
+
 For siste innlevering: Gjør et retrospektiv hvor dere vurderer hvordan hele prosjektet har gått. Hva har dere gjort bra, hva hadde dere gjort annerledes hvis dere begynte på nytt?
 
 ---
@@ -79,6 +105,7 @@ For siste innlevering: Gjør et retrospektiv hvor dere vurderer hvordan hele pro
 ## Krav og spesifikasjon
 
 ### Status på krav
+
 Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill". 
 
     - Vi har implementert en generisk NPC klasse og en fullt fungerende fiende.
@@ -100,6 +127,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     Help-meny: ferdig
 
 ##### Player
+
     Kan bevege player: ferdig
     Player er animert: ferdig
     Player kan skyte: ferdig
@@ -107,6 +135,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     3 ulike våpen: ferdig
 
 ##### Fiender
+
     NPC med stifinning: ferdig
     Fiendetyper: 5/5 - ferdig
     Fiender animert: 5/5 - ferdig
@@ -114,6 +143,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     Fiender kan bli skutt og dør: ferdig
 
 ##### Lyd
+
     Lydeffekter: ferdig
     Musikk: ferdig
 
@@ -135,16 +165,21 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
         - Nøkkel/Bensin: ferdig
 
 ##### Victory-condition og objektiver
-    Implementere bensinkanner/helikopterkeycard: ferdig
-    Implementere gate/gatekey: ferdig
-    Implementere helikopter: ferdig
-    Animere helikopter: ferdig
-    Victory-condition (drepe final boss, levere keycard og bensin til helikopter og fly avgårde): ferdig
-    Kan restarte etter game-over eller victory: ferdig
+
+    - Implementere bensinkanner/helikopterkeycard: ferdig
+    - Implementere gate/gatekey: ferdig
+    - Implementere helikopter: ferdig
+    - Animere helikopter: ferdig
+    - Victory-condition (drepe final boss, levere keycard og bensin til helikopter og fly avgårde): ferdig
+    - Kan restarte etter game-over eller victory: ferdig
 
 
-### Brukerhistorier
+## Brukerhistorier
+
+    Under finner dere noen eksempler på brukerhistorier vi har laget for å forbedre visjonen vår for spillets utvikling
+
 #### Brukerhistorie 1:
+
     Historie:
     - Bruker vil kunne skyte zombier
 
@@ -157,6 +192,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     - Implementere zombie død
 
 #### Brukerhistorie 2:
+
     Historie:
     - Bruker vil kunne plukke opp items og power-ups
 
@@ -169,6 +205,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     - Implementere healthpacks og ammo crates
 
 #### Brukerhistorie 3:
+
     Historie:
     - Bruker vil ha et godt designet level med mange detaljer.
 
@@ -180,6 +217,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     - Implementere bygninger med rom som bruker kan gå inn i.
 
 #### Brukerhistorie 4:
+
     Historie:
     - Brukeren ønsker en startmeny med flere animerte knapper slik at det er enkelt og oversiktlig å navigere i spillet og velge ulike funksjoner ved hjelp av museklikk.
 
@@ -198,6 +236,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     - Koble knappene til riktig funksjonalitet (bytte GameState).
     
 #### Brukerhistorie 5:
+
     Historie:
     - Bruker vil oppleve en utfordrende overlevelsesmodus der fiendene føles smarte og aktivt jakter på karakteren.
     
@@ -213,6 +252,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
     - Implementere pathfinding (A*-algoritme) og forfølgelseslogikk slik at fiender effektivt kan navigere rundt hindringer for å ta brukeren.
 
 #### Brukerhistorie 6:
+
     Historie:
         - Bruker er sensitiv for blinkende lys og vil ha en mulighet for å unngå dette
     
@@ -223,6 +263,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
         - Legge til en knapp i settings for å skru av blinkende lys
     
 #### Brukerhistorie 7:
+
     Historie:
         - Bruker har en svært svak, relativt sett, pc som sliter med å kjøre spillet med darkness og vil ha en måte å skru dette av på.
 
@@ -233,7 +274,9 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
         - Legge til en knapp i settings for å skru av darkness.
 
 ### Planlagte oppgaver
-    - Istedenfor å liste opp alle punktene på tavla vår så kan vi heller nevne de viktigste punktene vi skal jobbe med fremover. Vi har nå et feature complete spill, videre fram mot innleveringsfristen er det en del finpuss og testing som må gjøres.
+
+    I stede for å liste opp alle punktene på tavla vår så kan vi heller nevne de viktigste punktene vi skal jobbe med fremover. 
+    Vi har nå et feature complete spill, videre fram mot innleveringsfristen er det en del finpuss og testing som må gjøres.
 
         - Accessability options:
             - Ekstra stor font?
@@ -264,7 +307,12 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 
 #### Single Responsibility Principle
 
-    Vi har tydelig separert ansvarsområder for klassene våre, for eksempel ved bruk av MVC prinsippet. View (GameDrawer) er ansvarlig for å tegne, Model er ansvarlig for å holde på informasjon og Controller er ansvarlig for å få "ting til å skje". Et annet eksempel er NPC og Pathfinder, der NPC er ansvarlig for å håndtere bevegelse, mens Pathfinder er ansvarlig for å finne beste rute. Fordelen her er at NPC ikke trenger å bekymre seg for hvilken implementasjon Pathfinder bruker så lenge den får en sti å følge - noe som gjør implementasjonen veldig fleksibel for fremtidig utvidelse eller endring.
+    Vi har tydelig separert ansvarsområder for klassene våre, for eksempel ved bruk av MVC prinsippet. 
+    View (GameDrawer) er ansvarlig for å tegne. 
+    Model er ansvarlig for å holde på informasjon.
+    Controller er ansvarlig for å få "ting til å skje". 
+
+    Et annet eksempel er NPC og Pathfinder, der NPC er ansvarlig for å håndtere bevegelse, mens Pathfinder er ansvarlig for å finne beste rute. Fordelen her er at NPC ikke trenger å bekymre seg for hvilken implementasjon Pathfinder bruker så lenge den får en sti å følge - noe som gjør implementasjonen veldig fleksibel for fremtidig utvidelse eller endring.
 
 #### Open/Closed Principle
 
@@ -284,27 +332,24 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
 
     Denne har vi brukt en god del, igjennom delte interfaces som IStaticObjects som omfatter alle møbler og vegger, samt IEnemy som omfatter alle fiender og ICollectible som har alle opp-plukkbare items. View/Model/Controller ser ikke på noe tidspunkt de individuelle klassene, de håndterer kun klasser av abstrakte typer. Dette gjør at vi kan ha en liste av f.eks alle fiender, noe som er vesentlig enklere å håndtere og vedlikeholde enn om alle fiendene skulle hatt egen liste, egen tegnelogikk, egen logikk i controller etc.
 
-## Prioritering fremover
-Videre vil den største prioritering være å lage tester, samt implementere det siste monsteret.
-
 ### Fremdrift siden forrige rapport
-- Vi har prioritert å implementere de siste fiendene, legge til tester for å øke test coverage og logikken rundt victory conditionen(e).
+
+    Vi har prioritert å implementere de siste fiendene, legge til tester for å øke test coverage og logikken rundt victory conditionen(e).
 
 ### Kjente bugs
-Husk å skrive hvilke bugs som finnes i de kravene dere har utført (dersom det finnes bugs).
 
+    Det er ingen kjente "bugs" per-se, men vi har igjennom hele prosjektet jobbet med stifinningen for å få den til å funke som vi vil. For øyeblikket funker den veldig bra, men det skjer av og til at fiender med ulik størrelse kan skape litt traffikk-kork i trange passasjer. Det er lagt ned mye arbeid i å hindre dette, så det skjer ikke så ofte - men det skjer.
 
-Kravlisten er lang, men det er ikke nødvendig å levere på alle kravene hvis det ikke er realistisk. Det er viktigere at de oppgavene som er utført holder høy kvalitet. Utførte oppgaver skal være ferdige.
-
----
+    Det er også et irritasjonsmoment der spillet kjører i ulik hastighet på ulike maskiner og maskinvare. Løsningen på dette er trolig å bruke libgdx neste gang.
 
 ## Kode
 
 ### Refaktorering
-Har dere gjort eller burde dere gjøre noen store endringer / refaktoreringer?
+    Har dere gjort eller burde dere gjøre noen store endringer / refaktoreringer?
 
 ### Arkitektur og designvalg
-- Arkitekturen vår er veldig modulær og følger MVC konseptet. Vi har valgt å designe det slik fordi det fører til færre konflikter i git, gjør endringer i programmet lettere å utføre, samt at det gjør det lettere å utvide senere. Vi har jobbet hard med å benytte oss av interfaces, samt abstrakte klasser som NPC og GUN klassene som gjør det veldig lett å legge til nye lignende klasser som oppfører seg relativt likt.
+
+    Arkitekturen vår er veldig modulær og følger MVC konseptet. Vi har valgt å designe det slik fordi det fører til færre konflikter i git, gjør endringer i programmet lettere å utføre, samt at det gjør det lettere å utvide senere. Vi har jobbet hard med å benytte oss av interfaces, samt abstrakte klasser som NPC og GUN klassene som gjør det veldig lett å legge til nye lignende klasser som oppfører seg relativt likt.
 
     Vi har hele tiden jobbet med MVC konseptet i tankene der vi har de tre følgende kjernefunksjonene:
         - Model:
@@ -317,18 +362,32 @@ Har dere gjort eller burde dere gjøre noen store endringer / refaktoreringer?
             - Inkluderer en relativt komplisert debug-modus.
 
 ### Kodekvalitet
+
     - Koden har gjennomgående god struktur og konsistent stil.
     - Vi bruker MVC designmønsteret med meningsfulle navn på metoder og variabler.
     - God dokumentasjon og kommentarer der det er nødvendig. 
     - Det er lagt opp til enkel utvidelse av koden. 
     - Vha. punktene over forstår alle koden som alle skriver.
 
+### Accessibility
+
+    Vi har lagt til et par accessibility options:
+        - Disable blinking av lys for de som er sårbar for slikt
+        - Skru av darkness-effekten for de som er mørkredd (eller har svak pc)
+        - Justere vanskelighetsgrad
+
+
 ### Testing
-    - Vi har hatt fokus på og skrevet en del tester, men det mangler fortsatt noe. Dette er av høyeste prioritet opp mot innleveringsfristen.
 
-### Behov for hjelp eller ny kunnskap
- - Vi har god kontroll, dersom noen trenger hjelp diskuterer vi dette in-house. 
+    Vi har hatt fokus på dette siste ukene og skrevet flere tusen linjer med tester.
+    Til rapport 3 hadde vi bare noen få tester i mål og vi hadde en stor jobb foran oss med et såpass omfattelig prosjekt som måtte testes. Med stort fokus opp mot siste innlevering kom vi godt i mål med 85% coverage.
+
+    Vi har valgt å ekskludere en del ting fra testing:
+        - View: inneholder alle IDrawer objektene
+        - Utility: Inneholder bilde/lydhåndtering og er relatert til view
+        - Interfaces: Eneste relevante var et par default metoder som ble brukt i view
 
 
 
 
+![Test Coverage](Testrapport.png)

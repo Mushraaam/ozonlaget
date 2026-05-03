@@ -20,13 +20,8 @@ Snacks på veien: Plukk opp helse, rustning og ammo rundt omkring på kartet. Vi
 
 
 ## Kjøring
-* Kompileres med `mvn clean package -DskipTests` - Skip kompilering av tester
+* Kompileres med `mvn clean package -DskipTests` - Skip kompilering av tester (tidkrevende)
 * Kjøres med `java -jar target/ozonlaget-1.26-SNAPSHOT-fat.jar`
 * Krever Java 21 eller senere
 
-
-## Kjente feil
-
-
-## Credits
 
