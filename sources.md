@@ -43,5 +43,10 @@
 
 * Kamikaze Bug:
     - https://shandsparil.itch.io/ants-pixelart
+  
+* Explosion sprite
+  *   https://craftpix.net/freebies/free-animated-explosion-sprite-pack/
 
+* Firespell/Fireball/Gasball projectile
+  *   https://craftpix.net/freebies/free-water-and-fire-magic-sprite-vector-pack/
 * Remaining: Either hand-drawn or AI generated images
