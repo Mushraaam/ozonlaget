@@ -48,7 +48,7 @@
 
 ## KANBAN
 
-    Vi valgte Kanban da dette for oss lot oss jobbe mer individuelt i eget tempo - til fordel for et mer synkronisert og høy-organisert alternativ i Scrum. Vi er alle studenter med ulik arbeidskapasitet og tidsbudsjett, noe som passer bedre for en kontinuerlig arbeidsflyt som Kanban tilbyr. Scrum krever også vesentlig mer planlegging og samkjøring, noe som ville krevd flere møter enn vi var interressert i.
+    Vi valgte Kanban da dette lot oss jobbe mer individuelt i eget tempo - til fordel for et mer synkronisert og høy-organisert alternativ i Scrum. Vi er alle studenter med ulik arbeidskapasitet og tidsbudsjett, noe som passer bedre for en kontinuerlig arbeidsflyt som Kanban tilbyr. Scrum krever også vesentlig mer planlegging og samkjøring, noe som ville krevd flere møter enn vi var interressert i.
 
     Vi har benyttet oss av issue-board på git som en virituell table der vi har opprettet ting vi enten på møter eller individuelt har funnet ut at trengs å gjøres, og vi har plukket oppgaver fra tavlen og utført de kontinuerlig gjennom hele semesteret.
 
@@ -61,13 +61,13 @@
     
     Ved bruk av kanban og git-issue boardet som en virituell tavle, har folk plukket opp arbeidsoppgaver og gjennomført de på en god måte. Vi har nå et godt samarbeid der det er tydelig hvem som gjør hva, samt at alle har et klart bilde av hva som er neste steg i utviklingen. 
     
-    Det bør påpekes at vi har fordelt arbeidsoppgaver utover dette vha. kommunikasjon i discord, rundt forelesninger og i avtalte møter. Dette er skrevet opp i meldinger i discord gruppen eller i møtereferater.
+    Det bør påpekes at vi har fordelt arbeidsoppgaver utover dette vha. kommunikasjon i discord, rundt forelesninger og i avtalte møter. Dette er skrevet opp i meldinger i discord gruppen, eller i møtereferater.
 
 
 ### Gruppedynamikk
 
     Gruppedynamikken er jevnt over god, vi har god kommunikasjon i tillegg til deltakende medlemmer. 
-    Vi har dog diskutert proaktivitet i forhold til det å være kreativ og å ta til seg arbeidsoppgaver som man selv ser som nødvendig/vil være forbedringer. 
+    Vi har diskutert proaktivitet i forhold til det å være kreativ og å ta til seg arbeidsoppgaver som man selv ser som nødvendige/forbedringer. 
     Vi strever etter at alle er komfortable med det de holder på med, diskuterer kode konstruktivt og at det skal være lov å komme med meninger som vi diskuterer og eventuelt stemmer over.
 
 ### Kommunikasjon i teamet
@@ -76,7 +76,7 @@
 
 ### Retrospektiv
 
-    Dette var ikke noe vi startet med i begynnelsen av prosjektet, men er nå inkorporert i fellesmøtene våre og gjøres helt i starten slik at vi har et utgangspunkt. Det har fungert bra, selv om det er relativt nytt.
+    Dette var ikke noe vi startet med i begynnelsen av prosjektet, men er nå inkorporert i fellesmøtene våre og blir gjort helt i starten slik at vi har et utgangspunkt. Dette har fungert bra, selv om det er relativt nytt.
 
     - Ting som har blitt nevnt er som følger:
         - Skrevet tester fra starten av
@@ -103,17 +103,17 @@ For siste innlevering: Gjør et retrospektiv hvor dere vurderer hvordan hele pro
 
 ### Status på krav
 
-Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill". 
+Siden forrige møte har vi fokusert veldig på å få et mer spillbart spill. 
 
-    - Vi har implementert en generisk NPC klasse og en fullt fungerende fiende
-    - Vi har implementert skyting og at fiender dør når de har tatt nok skade
+    - Vi har implementert en generisk NPC klasse og en fullt fungerende fiende.
+    - Vi har implementert skyting og at fiender dør når de har tatt nok skade.
         - 3 ulike våpen
-    - Vi har implementert at fiender "vandrer rundt tilfeldig" frem til de ser player
-    - Fiender angriper player og player tar skade og dør om HP <= 0
-    - Vi har implementert buffs, helse/skjold og ammunisjon pickup items
-    - Du kan nå utføre objektet i spillet og vinne med å fly avgårde i et helikopter
-    - Vi har nå musikk for mange ulike omstendigheter, samt skytelyder og en del andre lydeffekter
-    - Kartet er nå ferdig "møblert" med hus og inventar/terreng
+    - Vi har implementert at fiender vandrer rundt tilfeldig frem til de ser player.
+    - Fiender angriper player og player tar skade og dør om HP <= 0.
+    - Vi har implementert buffs, helse/skjold og ammunisjon pickup items.
+    - Du kan nå utføre objektet i spillet og vinne med å fly avgårde i et helikopter.
+    - Vi har nå musikk for mange ulike omstendigheter, samt skytelyder og en del andre lydeffekter.
+    - Kartet er nå ferdig "møblert" med hus og inventar/terreng.
 
 
 ### MVP-status
