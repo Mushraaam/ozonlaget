@@ -30,6 +30,11 @@ public class DarknessOverlay implements IDrawer {
     private SettingMenu settings;
 
     /* https://www.youtube.com/watch?v=GMaterkzOSk */
+    /**
+     * Draws the darkness overlay
+     * @param map
+     * @param settings
+     */
     public DarknessOverlay(IModel map, SettingMenu settings) {
         this.map = map;
         this.settings = settings;

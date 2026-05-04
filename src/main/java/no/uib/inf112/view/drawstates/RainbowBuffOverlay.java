@@ -29,6 +29,10 @@ public class RainbowBuffOverlay implements IDrawer {
             new Color(0, 255, 128, ALPHA) // turquoise
     ));
 
+    /**
+     * Draws the rainbow buff overlay
+     * @param map
+     */
     public RainbowBuffOverlay(IModel map) {
         this.map = map;
         //

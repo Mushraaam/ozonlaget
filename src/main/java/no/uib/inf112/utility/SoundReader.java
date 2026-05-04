@@ -13,6 +13,11 @@ public final class SoundReader {
         /* This utility class should not be instantiated */
     }
 
+    /**
+     * Reads the URL and returns the AudioInputStream of that path
+     * @param url
+     * @return
+     */
     static AudioInputStream loadSound(String url) {
 
         URL path = SoundReader.class.getResource(url);

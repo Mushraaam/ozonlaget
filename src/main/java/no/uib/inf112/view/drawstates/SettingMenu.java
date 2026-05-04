@@ -37,6 +37,11 @@ public class SettingMenu implements IDrawer {
     private int difficulty;
     private IModel model;
 
+    /**
+     * Draws the settings menu
+     * @param handler
+     * @param model
+     */
     public SettingMenu(ImageHandler handler, IModel model) {
         this.model = model;
         this.handler = handler;

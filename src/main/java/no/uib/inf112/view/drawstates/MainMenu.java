@@ -35,6 +35,10 @@ public class MainMenu implements IDrawer {
 
     private static final int TITLE_OFFSET_Y = -80;
 
+    /**
+     * Draws the main menu
+     * @param handler
+     */
     public MainMenu(ImageHandler handler) {
         this.handler = handler;
         this.startButton = new Rectangle2D.Double();

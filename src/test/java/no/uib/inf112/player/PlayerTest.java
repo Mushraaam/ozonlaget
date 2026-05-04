@@ -112,21 +112,21 @@ class PlayerTest {
     @Test
     void playerShootDamageEnemy() {
         Player player = (Player) model.getPlayer();
-        Rectangle2D.Double PHB = player.getHitbox();
+        Rectangle2D.Double playerHitbox = player.getHitbox();
 
-        Rectangle2D.Double EHB = new Rectangle2D.Double(PHB.getX(), PHB.getY(), PHB.getWidth() + 50, PHB.getHeight());
+        Rectangle2D.Double enemyHitbox = new Rectangle2D.Double(playerHitbox.getX(), playerHitbox.getY(), playerHitbox.getWidth() + 50, playerHitbox.getHeight());
 
-        Ghoul ghoul = new Ghoul(EHB, model);
+        Ghoul ghoul = new Ghoul(enemyHitbox, model);
         model.addEnemy(ghoul);
         assertEquals(100, ghoul.getHealth());
-        player.shoot(generateMouseClick((int) EHB.getCenterX(), (int) EHB.getCenterY()));
+        player.shoot(generateMouseClick((int) enemyHitbox.getCenterX(), (int) enemyHitbox.getCenterY()));
         assertEquals(50, ghoul.getHealth());
 
         for (int i = 0; i<100; i++){
             player.reload();
         }
 
-        player.shoot(generateMouseClick((int) EHB.getCenterX(), (int) EHB.getCenterY()));
+        player.shoot(generateMouseClick((int) enemyHitbox.getCenterX(), (int) enemyHitbox.getCenterY()));
         assertEquals(0, ghoul.getHealth());
         assertFalse(ghoul.isAlive());
 
