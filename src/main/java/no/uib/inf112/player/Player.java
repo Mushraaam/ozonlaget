@@ -153,7 +153,12 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         }
     }
 
-
+    /**
+     * Aims the player's weapon at a position in the world.
+     *
+     * @param worldX the x-coordinate of the target position
+     * @param worldY the y-coordinate of the target position
+     */
     public void aimAtWorldPosition(double worldX, double worldY) {
         double playerCenterX = this.hitbox.getCenterX();
         double playerCenterY = this.hitbox.getCenterY();

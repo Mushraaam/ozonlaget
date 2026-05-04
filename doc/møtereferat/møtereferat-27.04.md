@@ -23,6 +23,7 @@
 
 # Live presentasjon
 
+- Noen snakker om at vi har lært mye dette semesteret, startet ustrukturert men så fått struktur
 - Noen forklarer at vi har brukt kanban, ukentlige møter etc
 
 - Rein går kjapt over klassediagram
@@ -48,4 +49,5 @@
 # Diverse
 
 - Vi må lage en sources.md og skrive inn kilder
+
 

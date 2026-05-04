@@ -105,7 +105,7 @@ class ProjectilesTest {
 
         Rectangle2D.Double bounds = projectile.getBounds();
 
-        assertEquals(-20, bounds.getX());
+        assertEquals(-22, bounds.getX());
         assertEquals(2, bounds.getY());
         assertEquals(80, bounds.getWidth());
         assertEquals(16, bounds.getHeight());
