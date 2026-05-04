@@ -16,16 +16,33 @@ public class Camera {
     private int shakeFrames = 0;
     private double shakeMagnitude = 0;
 
+    /**
+     * Translates between screen coordinates and map coordinates
+     * @param translateX
+     * @param translateY
+     */
     public Camera(double translateX, double translateY) {
         this.translateX = translateX;
         this.translateY = translateY;
     }
 
+    /**
+     * Creates a screen shake - starts it
+     * @param frames
+     * @param magnitude
+     */
     public void startShake(int frames, double magnitude) {
         this.shakeFrames = frames;
         this.shakeMagnitude = magnitude;
     }
 
+    /**
+     * Updates the coordinates to player on map
+     * @param playerHitbox
+     * @param screenWidth
+     * @param screenHeight
+     * @param mapBounds
+     */
     public void update(Rectangle2D.Double playerHitbox, double screenWidth, double screenHeight,
             Rectangle2D.Double mapBounds) {
         double playerCenterX = playerHitbox.getCenterX();
@@ -54,18 +71,34 @@ public class Camera {
         }
     }
 
+    /**
+     * Applies translation
+     * @param g
+     */
     public void apply(Graphics2D g) {
         g.translate(this.translateX + currentOffsetX, this.translateY + currentOffsetY);
     }
 
+    /**
+     * returns translated coordinates screen to world
+     * @param screenX
+     * @param screenY
+     * @return
+     */
     public Point2D.Double screenToWorld(double screenX, double screenY) {
         return new Point2D.Double(screenX - translateX, screenY - translateY);
     }
 
+    /**
+     * @return translated x
+     */
     public double getTranslateX() {
         return translateX;
     }
 
+    /**
+     * @return translated y
+     */
     public double getTranslateY() {
         return translateY;
     }

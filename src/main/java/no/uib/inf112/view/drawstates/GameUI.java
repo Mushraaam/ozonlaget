@@ -55,6 +55,11 @@ public class GameUI implements IDrawer {
     // killcount
     private BufferedImage killCountIcon;
 
+    /**
+     * Draws the games UI
+     * @param map
+     * @param handler
+     */
     public GameUI(IModel map, ImageHandler handler) {
         this.map = map;
         this.handler = handler;
