@@ -388,6 +388,4 @@ Siden forrige møte har vi fokusert veldig på å få et mer "spillbart spill".
         - Interfaces: Eneste relevante var et par default metoder som ble brukt i view
 
 
-
-
 ![Test Coverage](Testrapport.png)
