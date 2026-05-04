@@ -377,7 +377,7 @@ Siden forrige møte har vi fokusert veldig på å få et mer spillbart spill.
 ### Testing
 
     Vi har hatt fokus på dette siste ukene og skrevet flere tusen linjer med tester.
-    Til rapport 3 hadde vi bare noen få tester i mål og vi hadde en stor jobb foran oss med et såpass omfattelig prosjekt som måtte testes. Med stort fokus opp mot siste innlevering kom vi godt i mål med 85% coverage.
+    Til rapport 3 hadde vi bare noen få tester i mål og vi hadde en stor jobb foran oss med et såpass omfattelig prosjekt som måtte testes. Med stort fokus opp mot siste innlevering kom vi godt i mål med 87% coverage.
 
     Vi har valgt å ekskludere en del ting fra testing:
         - View: inneholder alle IDrawer objektene.

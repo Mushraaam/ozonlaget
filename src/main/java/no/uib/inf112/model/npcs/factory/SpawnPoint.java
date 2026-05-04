@@ -102,7 +102,7 @@ public class SpawnPoint {
         if (player == null) {
             return false;
         }
-        double requiredSafeZone = (type == EnemyType.MEGABOSS) ? 0 : SAFE_ZONE;
+        double requiredSafeZone = (type == EnemyType.MEGABOSS) ? SAFE_ZONE / 2 : SAFE_ZONE;
         if (distance(hitBox, player.getHitbox()) <= requiredSafeZone) {
             return false;
         }
@@ -140,6 +140,11 @@ public class SpawnPoint {
         if (hitBox == null) {
             return false;
         }
+
+        if (hitBox.intersects(this.map.getPlayer().getHitbox())){
+            return false;
+        }
+
         for (IEnemy enemy : this.map.getEnemies()) {
             if (hitBox.intersects(enemy.getHitbox())) {
                 return false;
