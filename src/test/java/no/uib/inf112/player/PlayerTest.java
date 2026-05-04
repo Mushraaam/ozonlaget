@@ -64,7 +64,7 @@ class PlayerTest {
 
     MouseEvent generateMouseClick(int x, int y) {
         return new MouseEvent(
-                new java.awt.Button(),
+                mock(java.awt.Component.class),
                 MouseEvent.MOUSE_CLICKED,
                 System.currentTimeMillis(),
                 0,
