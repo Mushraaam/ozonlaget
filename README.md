@@ -24,4 +24,6 @@ Snacks på veien: Plukk opp helse, rustning og ammo rundt omkring på kartet. Vi
 * Kjøres med `java -jar target/ozonlaget-1.26-SNAPSHOT-fat.jar`
 * Krever Java 21 eller senere
 
+## Kilder m.m.
 
+* Informasjon om kilder og lenker til dette finnes i sources.md.

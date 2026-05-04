@@ -13,12 +13,6 @@ public class DarkWoodenTableSquare implements IStaticDrawableObject {
 
     public DarkWoodenTableSquare(Rectangle2D.Double bounds) {
         this.bounds = bounds;
-
-        //TODO: this is annoying when creating custom width / height
-        // if (this.bounds.width != Config.getInt("tableWidth")
-        //         || this.bounds.getHeight() != Config.getInt("tableHeight")) {
-        //     throw new IllegalArgumentException("Height/Width must be consistent with config height/width");
-        // }
     }
 
     @Override

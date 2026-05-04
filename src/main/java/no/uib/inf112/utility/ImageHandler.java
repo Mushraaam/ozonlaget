@@ -350,7 +350,6 @@ public class ImageHandler {
                 this.walls.put(StaticObjectType.LONG_WOODEN_WALL, longWoodenWalls);
                 this.walls.put(StaticObjectType.BARBED_FENCE, barbedFences);
 
-                // TODO fix correct door image
                 this.walls.put(StaticObjectType.BARBED_DOOR, gateWall);
 
         }
