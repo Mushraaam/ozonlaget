@@ -54,6 +54,13 @@ public class Inventory {
         }
     }
 
+    /**
+     * Uses one item from the inventory.
+     * Decreases the amount or removes it if it was the last one.
+     *
+     * @param item the item to use
+     * @return true if the item was used, false if not found
+     */
     public boolean useItemFromInventory(CollectableType item) {
         if (!inventory.containsKey(item))
             return false;

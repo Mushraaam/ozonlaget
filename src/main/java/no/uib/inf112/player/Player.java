@@ -538,6 +538,17 @@ public class Player implements IControllablePlayer, IViewablePlayer {
         return true;
     }
 
+    /**
+     * Casts a ray from a starting point in a given direction to detect hits.
+     * 
+     * Checks for intersections with walls and enemies, and returns the closest hit.
+     *
+     * @param startX the x-coordinate of the shot origin
+     * @param startY the y-coordinate of the shot origin
+     * @param angle the direction of the shot
+     * @param range the maximum distance of the shot
+     * @return a ShotDestination containing the hit position and any enemy hit
+     */
     // Gippity helped with the math and calculations for the raycast functions - the
     // core idea was my own
     public ShotDestination raycastShot(double startX, double startY, double angle, double range) {

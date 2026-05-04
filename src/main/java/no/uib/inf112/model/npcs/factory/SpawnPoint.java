@@ -41,6 +41,14 @@ public class SpawnPoint {
         return this.bounds;
     }
 
+    /**
+     * Attempts to spawn an enemy of the given type.
+     * 
+     * The method tries up to 10 times to find a valid position.
+     *
+     * @param type the type of enemy to spawn
+     * @return true if spawning was successful, false otherwise
+     */
     public boolean spawnEnemy(EnemyType type) {
 
         IPlayer player = map.getPlayer();

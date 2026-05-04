@@ -12,6 +12,14 @@ public class DirectionHandler {
         this.currentDirections = EnumSet.noneOf(Direction.class);
     }
 
+    /**
+     * Resolves the current set of directions into a single direction.
+     * 
+     * Opposite directions cancel each other out (NORTH + SOUTH, EAST + WEST).
+     * Diagonal movement is returned if two compatible directions are active.
+     *
+     * @return the resulting Direction, or null if no valid direction is found
+     */
     public Direction getDirection(){
         boolean north = currentDirections.contains(Direction.NORTH) ||
                         currentDirections.contains(Direction.NORTH_EAST) ||
