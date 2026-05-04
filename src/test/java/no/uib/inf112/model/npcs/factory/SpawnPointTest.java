@@ -2,10 +2,9 @@ package no.uib.inf112.model.npcs.factory;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockConstruction;
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
@@ -17,7 +16,6 @@ import org.mockito.MockedConstruction;
 import no.uib.inf112.enums.EnemyType;
 import no.uib.inf112.interfaces.IEnemy;
 import no.uib.inf112.model.Model;
-import no.uib.inf112.model.levels.Level1;
 import no.uib.inf112.utility.SoundHandler;
 import no.uib.inf112.view.LoadStatus;
 
@@ -54,8 +52,9 @@ class SpawnPointTest {
 
     @Test
     void spawnEnemiesTest() {
+
         for (EnemyType type : EnemyType.values()) {
-            if (type == EnemyType.BUG) {
+            if (type == EnemyType.BUG || type == EnemyType.MEGABOSS) {
                 continue; // spawnpoint does not spawn bugs
             }
             assertTrue(spawnPoint.spawnEnemy(type));

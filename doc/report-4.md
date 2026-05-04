@@ -6,6 +6,7 @@
     Ozonlaget / Kurt-Mario Zombie Adventure
 
 ### Roller i teamet
+
     - Rein:
         - Arbeidsfordeling/Samkjøring
         - System-design
@@ -91,13 +92,6 @@
 ### Referat fra møter
 
 Møtereferatene er lagt til i en egen mappe (Ozonlaget\doc\møtereferat).
-
-
-### Oppsummering og retrospektiv #TODO
-
-For siste innlevering: Gjør et retrospektiv hvor dere vurderer hvordan hele prosjektet har gått. Hva har dere gjort bra, hva hadde dere gjort annerledes hvis dere begynte på nytt?
-
----
 
 ## Krav og spesifikasjon
 
@@ -272,33 +266,8 @@ Siden forrige møte har vi fokusert veldig på å få et mer spillbart spill.
 
 ### Planlagte oppgaver
 
-    I stedet for å liste opp alle punktene på tavla vår så kan vi heller nevne de viktigste punktene vi skal jobbe med fremover. 
-    Vi har nå et feature complete spill, videre fram mot innleveringsfristen er det en del finpuss og testing som må gjøres.
-
-        - Accessability options:
-            - Ekstra stor font?
-
-        - Implementere større variasjon av fiender
-            - Alle skal implementere 1 fiende - dette gjøres ved bruk av den generiske NPC klassen.
-        
-        - Testing:
-            - Rein
-                - Model
-                - Grid
-            - Alexander
-                - Pathfinding
-                - Items/Buffs
-            - William
-                - Movement
-                - Collision
-            - Sander
-                - Controller
-                - NPC minus stifinning og movement.
-            - Johs
-                - Factory
-                - Projectiles
-                - Levels
-        Testing utvides ved behov.
+    Vi er nå ferdig med spillet og det eneste som gjestår er presentasjon. 
+    I dette øyeblikk diskuterer vi hvordan dette skal gjøres, samt diverse finpuss på programmet ifbm presentasjon.
 
 ## SOLID
 
@@ -342,7 +311,10 @@ Siden forrige møte har vi fokusert veldig på å få et mer spillbart spill.
 ## Kode
 
 ### Refaktorering
-    Har dere gjort eller burde dere gjøre noen store endringer / refaktoreringer?
+
+    - Vi har refaktorert Map og IMap til å bli Model og IModel for å ha en bedre navnekonvensjon iht MVC konseptet
+    - Vi har flyttet main til /inf112 mappen for å gjøre det lettere for gruppeleder å finne den
+    - Helt i starten måtte vi flytte resources folderen vår fra /java til /main
 
 ### Arkitektur og designvalg
 
@@ -386,3 +358,19 @@ Siden forrige møte har vi fokusert veldig på å få et mer spillbart spill.
 
 
 ![Test Coverage](Testrapport.png)
+
+
+## Oppsummering
+
+    I starten hadde vi liten kunnskap/erfaring med både arbeidsmetodikk og rapportskriving. Individuelt sett hadde vi riktignok skrevet en god del kode fra før - men ingen erfaring med å jobbe med andre i et litt større prosjekt. 
+
+    Det var litt utfordringer i starten før alle fikk samkjørt visjon og planen vår var også litt løs. 
+    Dette ordnet seg relativt kjapt og har forbedret seg ytterligere utover i semesteret. 
+
+    Vi har lært mye dette semesteret og vi føler dette reflekteres i utviklingen vår - både igjennom arbeidsmetodikk og rapportskriving - der vi startet ustrukturert og vagt, men forbedret oss uke etter uke.
+    
+    Vi lærte oss kanban, git og effektivt gruppearbeid, samt viktigheten av møtereferat - spesielt for de som ikke alltid har muligheten til å stille på møte.
+
+    Til slutt sitter vi nå igjen med et produkt vi er stolt av, har eierskap til og synes det er kjekt å ha vært en del av.
+
+

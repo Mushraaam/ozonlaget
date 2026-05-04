@@ -10,7 +10,7 @@ public class ExplosionProjectile extends PuddleProjectile {
 
     private Rectangle2D.Double target;
     private static final PuddleType TYPE = PuddleType.BOSS_FIREBALL;
-    private static final int SPEED = 12;
+    private static final int SPEED = 8;
     private static final double WIDTH =64;
     private static final double HEIGHT = 36;
 

@@ -10,7 +10,7 @@ public class AcidPuddleProjectile extends PuddleProjectile {
 
     private Rectangle2D.Double target;
     private static final PuddleType TYPE = PuddleType.ACID;
-    private static final int SPEED = 10;
+    private static final int SPEED = 8;
     private static final double WIDTH = 80;
     private static final double HEIGHT = 16;
 
