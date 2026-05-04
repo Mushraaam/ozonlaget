@@ -82,7 +82,7 @@ public class Controller
         this.drawRunning = false;
 
         // TIMERS
-        this.playerAnimationTimer = new Timer(120, (ActionEvent e) -> {
+        this.playerAnimationTimer = new Timer(150, (ActionEvent e) -> {
             if (player.isMoving()) {
                 this.player.incrementAnimationIndex();
             }
@@ -153,7 +153,7 @@ public class Controller
 
         });
 
-        this.repaintTimer = new Timer(12, e -> {
+        this.repaintTimer = new Timer(16, e -> {
             if (this.drawRunning) {
                 return;
             }
@@ -175,7 +175,7 @@ public class Controller
             }
         });
 
-        this.reloadTimer = new Timer(20, e -> {
+        this.reloadTimer = new Timer(23, e -> {
             this.player.reload();
         });
 
