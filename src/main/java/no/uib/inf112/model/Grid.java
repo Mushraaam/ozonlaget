@@ -120,6 +120,9 @@ public class Grid implements IGrid {
         return neighbourMap.get(cell).getOrDefault(depth, Collections.emptyList());
     }
 
+    /**
+     * @return a list of ICell objects within a given distance from a given cell.
+     */
     public ArrayList<ICell> getNearbyCells(Rectangle2D.Double current, double distance) {
         ArrayList<ICell> cells = new ArrayList<>();
 
@@ -208,6 +211,9 @@ public class Grid implements IGrid {
         }
     }
 
+    /**
+     * @return ICell at given row & col indexes
+     */
     public ICell getCell(int row, int col) {
         if (row < 0 || row >= rowCount || col < 0 || col >= colCount) {
             throw new IndexOutOfBoundsException();
@@ -215,6 +221,9 @@ public class Grid implements IGrid {
         return cellGrid.get(row).get(col);
     }
 
+    /**
+     * @return a list of cells in a circle around the given cell. 8 are given unless close to a corner.
+     */
     public ArrayList<ICell> getNeighbours(ICell cell) {
 
         if (cell == null) {
@@ -310,6 +319,9 @@ public class Grid implements IGrid {
         return getCell(row, col);
     }
 
+    /**
+     * @return a list of cells visible in the view
+     */
     public List<ICell> getCellsInView(Graphics2D graphics) {
 
         // optimalisert versjon av kommenter kode over
