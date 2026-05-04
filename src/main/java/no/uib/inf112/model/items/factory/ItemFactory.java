@@ -25,6 +25,9 @@ public class ItemFactory {
 
     private HashMap<CollectableType, Integer> dropTable = new HashMap<>();
 
+    /**
+     * Initializes chances for drop table items
+     */
     public void setDropTable() {
         dropTable.put(CollectableType.HEALTH, 3);
         dropTable.put(CollectableType.ARMOR, 2);
@@ -41,6 +44,9 @@ public class ItemFactory {
         setDropTable();
     }
 
+    /**
+     * Rolls from drop table. If the roll is not NONE, item spawns in a given targetLocation
+     */
     public void rollDropFromTable(Rectangle2D.Double targetLocation){
         int totweight = 0;
         for(int weight : dropTable.values()){
@@ -58,10 +64,16 @@ public class ItemFactory {
         }
     }
 
+    /**
+     * Drop as specific item (e.g quest items) at a given targetLocation
+     */
     public void dropSpecificItem(CollectableType type, Rectangle2D.Double targetLocation){
         this.inventoryItemSpawnPoint.dropEssentialItem(type, targetLocation);
     }
 
+    /**
+     * Clock to keep track of item spawn. Increments every call and checks if the given events line up.
+     */
     public void increment(){
         this.counter = (this.counter + 1) % 100000;
 
