@@ -11,12 +11,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedConstruction;
-
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 import no.uib.inf112.enums.CollectableType;
 import no.uib.inf112.enums.GameState;

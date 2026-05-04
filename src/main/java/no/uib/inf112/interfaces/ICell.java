@@ -1,7 +1,6 @@
 package no.uib.inf112.interfaces;
 
 import java.awt.geom.Rectangle2D;
-import java.util.Set;
 
 import no.uib.inf112.enums.EnemySize;
 import no.uib.inf112.enums.FloorType;
