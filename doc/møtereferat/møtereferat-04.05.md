@@ -1,7 +1,9 @@
 # Til stede
 - Rein
 - Alexander
-- 
+- Sander
+- Johs
+- William
 
 # Formål med møte
 
@@ -57,7 +59,4 @@
         - Brukt mer tid på illustrering og forklaring av prosjektidé
         - Mer jevn jobbing igjennom hele prosjektet (tok litt tid å komme i gang)
         - Satt oss mer inn i design-patterns fra starten av
-
-    
-
 
