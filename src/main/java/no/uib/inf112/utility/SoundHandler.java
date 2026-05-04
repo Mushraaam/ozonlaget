@@ -228,6 +228,9 @@ public class SoundHandler {
         }
     }
 
+    /**
+     * Resumes backgroundmusic if paused
+     */
     public void resumeMusic() {
         this.currentBuffMusic.stop();
         this.currentMusic.start();

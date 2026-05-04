@@ -21,6 +21,9 @@ public class ItemSpawnPoint {
     private Map<CollectableType, Integer> totalInventoryItemsOnMap;
     int MAX_DROPPED_LOOT = 10;
 
+    /**
+     * Initializes caps. Puts a spawnpoint in a predetermined spot from a given list.
+     */
     public ItemSpawnPoint(IModel map, List<Rectangle2D.Double> preDeterminedSpots) {
         this.map = map;
         this.random = new Random();
@@ -50,7 +53,9 @@ public class ItemSpawnPoint {
 
     }
 
-
+    /**
+     * Spawns an item of a given itemType on the given targetLocation.
+     */
     public void dropLoot(CollectableType itemType, Rectangle2D.Double targetLocation){
         if(map.getTotalDroppedLoot() >= this.MAX_DROPPED_LOOT){
             return;
@@ -62,6 +67,9 @@ public class ItemSpawnPoint {
     }
 
 
+    /**
+     * Used when initializing the level. Gives buffs a spawn point in a pseudo random manner.
+     */
     public void spawnBuffItem(CollectableType type) {
         refreshNodes();
 
@@ -90,6 +98,9 @@ public class ItemSpawnPoint {
         this.spawnPoints.put(chosenSpot, newItem);
     }
 
+    /**
+     * Used when initializing the level. Gives items a spawn point in a pseudo random manner.
+     */
     public void spawnInventoryItems() {
         List<Rectangle2D.Double> allSpots = new ArrayList<>(spawnPoints.keySet());
 
@@ -102,13 +113,6 @@ public class ItemSpawnPoint {
         allSpots.removeFirst(); //exclude key spot
 
         Collections.shuffle(allSpots, this.random);
-
-        //if chopper card should spawn naturally
-        /*Rectangle2D.Double chopperKeycardSpot = allSpots.getFirst();
-        ICollectable chopperKeycard = createItem(CollectableType.CHOPPER_KEYCARD, chopperKeycardSpot);
-        this.map.addToActiveItems(chopperKeycard);
-        this.spawnPoints.put(chopperKeycardSpot, chopperKeycard);
-        allSpots.removeFirst(); //exclude key spot*/
 
         int gasCansToSpawn = totalInventoryItemsOnMap.getOrDefault(CollectableType.GASCAN, 0);
 

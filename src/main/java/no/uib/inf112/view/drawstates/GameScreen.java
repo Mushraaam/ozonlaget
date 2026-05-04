@@ -23,6 +23,13 @@ public class GameScreen implements IDrawer {
     private DarknessOverlay darkness;
     private SettingMenu settings;
 
+    /**
+     * Draws the gamescreen during active game
+     * @param map
+     * @param handler
+     * @param camera
+     * @param settings
+     */
     public GameScreen(IModel map, ImageHandler handler, Camera camera, IDrawer settings) {
 
         if (!(settings instanceof SettingMenu)) {

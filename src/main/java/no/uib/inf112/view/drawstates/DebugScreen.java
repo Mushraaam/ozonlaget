@@ -11,6 +11,10 @@ public class DebugScreen implements IDrawer {
     private IModel map;
     private IGrid grid;
 
+    /**
+     * Draws the debug screen
+     * @param map
+     */
     public DebugScreen(IModel map) {
         this.map = map;
         this.grid = this.map.getGrid();

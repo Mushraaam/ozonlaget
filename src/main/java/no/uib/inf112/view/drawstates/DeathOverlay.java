@@ -13,6 +13,10 @@ public class DeathOverlay implements IDrawer {
     private ImageHandler handler;
     private float alpha;
 
+    /**
+     * Draws the death overlay
+     * @param handler
+     */
     public DeathOverlay(ImageHandler handler) {
         this.handler = handler;
         this.alpha = 0;

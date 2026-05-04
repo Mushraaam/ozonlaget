@@ -29,7 +29,6 @@
         - Rein snakker om klassediagram
         - William snakker over en som spiller spillet og forklarer
 
-
 # Punkter for presentasjon
 
     Demo av spill - klar
@@ -59,4 +58,5 @@
         - Brukt mer tid på illustrering og forklaring av prosjektidé
         - Mer jevn jobbing igjennom hele prosjektet (tok litt tid å komme i gang)
         - Satt oss mer inn i design-patterns fra starten av
+        - Vært flinkere til å skrive dokumentasjon fortløpende
 

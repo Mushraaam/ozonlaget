@@ -32,6 +32,10 @@ public class HelpMenu implements IDrawer {
     private double fartButtonX;
     private double fartButtonY;
 
+    /**
+     * Draws the help menu
+     * @param handler
+     */
     public HelpMenu(ImageHandler handler) {
         this.handler = handler;
         this.backButton = new Rectangle2D.Double();

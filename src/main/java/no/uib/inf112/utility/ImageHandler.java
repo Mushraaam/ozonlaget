@@ -87,6 +87,10 @@ public class ImageHandler {
         // Collectables
         private HashMap<CollectableType, BufferedImage> collectables;
 
+        /**
+         * Loads and handles images
+         * @param status
+         */
         public ImageHandler(LoadStatus status) {
                 status.setStatus("Loading player sprites...", 15);
                 this.longRangedAttackingEnemies = new HashMap<>();

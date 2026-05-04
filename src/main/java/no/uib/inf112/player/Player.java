@@ -24,9 +24,6 @@ public class Player implements IControllablePlayer, IViewablePlayer {
     private static final int ANIMATION_COUNT = 20;
     private static final int MAX_HP = 100;
     private int currentHP;
-
-
-
     private int killCount = 0;
 
     private final DirectionHandler dirHandler;
