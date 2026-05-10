@@ -670,7 +670,7 @@ public class ImageHandler {
                 // BUFFS
                 this.collectables.put(CollectableType.HEALTH,
                                 ImageReader.resizeExact(
-                                                ImageReader.fetchImage("/no/uib/inf112/map/items/healthBox.png"), buffW,
+                                                ImageReader.fetchImage("/no/uib/inf112/map/items/healthBox2.png"), buffW,
                                                 buffH));
                 this.collectables.put(CollectableType.ARMOR,
                                 ImageReader.resizeExact(ImageReader.fetchImage("/no/uib/inf112/map/items/armorBox.png"),
