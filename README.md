@@ -1,7 +1,6 @@
 # INF112 Project – *Kurt-Mario in the Land of the Mushroom Princess*
 
 * Team: *Ozonlaget* (Gruppe 2): *Alexander Nåmdal, Johs Grødem Larsen, Rein Endre Landmark, Sander Aubell Ahlgren, William Sjølett*
-* Lenke til [Gitlab](git.app.uib.no/inf112/26v/proj/ozonlaget)
 
 ## Om spillet
 Velkommen til Kurt-Mario in the Land of the Mushroom Princess – vårt hjertebarn av et 2D top-down overlevelsesspill, og et levende bevis på at nok koffein kan konverteres til (stort sett) fungerende Java-kode.
