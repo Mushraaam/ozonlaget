@@ -1,9 +1,9 @@
-# INF112 Project – *Kurt-Mario in the Land of the Mushroom Princess*
+# INF112 Project – *Kurt-Mario Zombie Adventure
 
 * Team: *Ozonlaget* (Gruppe 2): *Alexander Nåmdal, Johs Grødem Larsen, Rein Endre Landmark, Sander Aubell Ahlgren, William Sjølett*
 
 ## Om spillet
-Velkommen til Kurt-Mario in the Land of the Mushroom Princess – vårt hjertebarn av et 2D top-down overlevelsesspill, og et levende bevis på at nok koffein kan konverteres til (stort sett) fungerende Java-kode.
+Velkommen til Kurt-Mario Zombie Adventure – vårt hjertebarn av et 2D top-down overlevelsesspill, og et levende bevis på at nok koffein kan konverteres til (stort sett) fungerende Java-kode.
 
 Konseptet er fryktelig enkelt: Du er fanget på et kart fullt av fiender. Målet ditt er å samle nok bensinkanner, finne en helikopternøkkel, og komme deg vekk før du blir zombiemat. Hvorfor Kurt-Mario roter rundt her inne for en sopp-prinsesse? Ikke tenk for mye på det, vi trengte bare et kult navn.
 
